@@ -34,3 +34,10 @@ extension_points = [
     type = "single_line_text_field"
     name = "Countdown message after timer"
     description = "Enter a short message for countdown or leave empty for default. Use $timer variable in the middle of your text to show the timer"
+    [[settings.fields]]
+    key = "style"
+    type = "single_line_text_field"
+    name = "Style"
+      [[settings.fields.validations]]
+      name = "choices"
+      value = '["info","success","warning","critical"]'

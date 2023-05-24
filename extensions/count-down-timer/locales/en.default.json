@@ -1,3 +1,3 @@
 {
-  "welcome": "Items in your cart are in high demand. No worries, we have reserved your order for  {{ timer }}!"
+  "countdown": "Items in your cart are in high demand. No worries, we have reserved your order for  {{ time }}!"
 }

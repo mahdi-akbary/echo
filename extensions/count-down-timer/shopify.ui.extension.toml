@@ -1,5 +1,5 @@
 type = "checkout_ui_extension"
-name = "Count-down-timer"
+name = "Count down timer"
 
 extension_points = [
   'Checkout::Dynamic::Render'
@@ -14,9 +14,16 @@ extension_points = [
 # key = "my-key-2"
 
 # Read more on extension settings at https://shopify.dev/api/checkout-extensions/checkout/configuration
-# [settings]
-#   [[settings.fields]]
-#   key = "banner_title"
-#   type = "single_line_text_field"
-#   name = "Banner title"
-#   description = "Enter a title for the banner"
+ [settings]
+   [[settings.fields]]
+   key = "time_start_at"
+   type = "single_line_text_field"
+   name = "Countdown start at"
+   description = "Enter a number for the the minutes countdown starts at"
+
+ [settings]
+   [[settings.fields]]
+   key = "countdown_message"
+   type = "single_line_text_field"
+   name = "Countdown message"
+   description = "Enter a short message for countdown or leave empty for default. Use $timer variable in the middle of your text to show the timer"

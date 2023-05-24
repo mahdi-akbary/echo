@@ -49,13 +49,3 @@ extension_points = [
     [[settings.fields.validations]]
       name = "choices"
       value = '["base","small","large","fullyRounded", "none"]'
-
-   [[settings.fields]]
-   key = "aspect_ratio"
-   type = "single_line_text_field"
-   name = "Aspect ratio"
-    [[settings.fields.validations]]
-      name = "choices"
-      value = '["squire","portrait","landscape", "none"]'
-
-

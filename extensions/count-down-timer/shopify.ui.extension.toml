@@ -25,6 +25,11 @@ extension_points = [
     name = "Countdown start at"
     description = "Enter a number for the minutes countdown starts at: Eg: 10"
     [[settings.fields]]
+    key = "reset_delay"
+    type = "single_line_text_field"
+    name = "Reset countdown delay"
+    description = "After countdown times out, wait this minutes before restarting"
+    [[settings.fields]]
     key = "countdown_message"
     type = "multi_line_text_field"
     name = "Countdown message"

@@ -12,9 +12,9 @@ render('Checkout::Dynamic::Render', () => <App />);
 
 function App() {
 
-  const { title, countdown_message, countdown_message_after, time_start_at, style } = useSettings();
+  const { title, countdown_message, countdown_message_after, time_start_at, reset_delay, style } = useSettings();
+  
   const timeStartAt = time_start_at ? time_start_at : 10;
-
   const [countdown, setCountdown] = useState(timeStartAt * 60); // Initial countdown value in seconds
 
   useEffect(() => {
@@ -51,12 +51,12 @@ function App() {
     set('countdown', countdown);
   }, [countdown]);
 
-  // When the countdown value reaches 0, wait 20 minutes, remove it from IndexedDB
+  // When the countdown value reaches 0, wait x minutes, remove it from IndexedDB
   useEffect(() => {
     if (countdown === 0) {
       setTimeout(() => {
         del('countdown');
-      }, 20 * 60 * 1000);
+      }, reset_delay * 60 * 1000);
     }
   }, [countdown]);
   

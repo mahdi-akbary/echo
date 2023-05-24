@@ -51,13 +51,15 @@ function App() {
     set('countdown', countdown);
   }, [countdown]);
 
+  // When the countdown value reaches 0, wait 20 minutes, remove it from IndexedDB
   useEffect(() => {
     if (countdown === 0) {
       setTimeout(() => {
-        setCountdown(timeStartAt * 60);
-      }, 60 * 1000); // 5 minutes delay in milliseconds
+        del('countdown');
+      }, 20 * 60 * 1000);
     }
   }, [countdown]);
+  
 
   // Convert the countdown value to a string in the format m:ss
   const countdownString = `${Math.floor(countdown / 60)} minutes ${countdown % 60} seconds`;

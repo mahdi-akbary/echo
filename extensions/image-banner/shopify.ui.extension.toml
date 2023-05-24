@@ -48,4 +48,4 @@ extension_points = [
    name = "Corner Radius"
     [[settings.fields.validations]]
       name = "choices"
-      value = '["base","small","large","fullyRounded", "none"]'
+      value = '["small","base","large","fullyRounded", "none"]'

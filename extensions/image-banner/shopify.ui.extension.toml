@@ -1,5 +1,5 @@
 type = "checkout_ui_extension"
-name = "Image-banner"
+name = "Image banner"
 
 extension_points = [
   'Checkout::Dynamic::Render'
@@ -14,9 +14,9 @@ extension_points = [
 # key = "my-key-2"
 
 # Read more on extension settings at https://shopify.dev/api/checkout-extensions/checkout/configuration
-# [settings]
-#   [[settings.fields]]
-#   key = "banner_title"
-#   type = "single_line_text_field"
-#   name = "Banner title"
-#   description = "Enter a title for the banner"
+ [settings]
+   [[settings.fields]]
+   key = "image_url"
+   type = "single_line_text_field"
+   name = "Image url"
+   description = "Please paste the image url here. You can upload your icons/images in shopify files"

@@ -1,19 +1,19 @@
-import React from 'react';
-import {
-  useExtensionApi,
-  render,
-  Banner,
-  useTranslate,
-} from '@shopify/checkout-ui-extensions-react';
-
-render('Checkout::Dynamic::Render', () => <App />);
-
+import { 
+  render, 
+  Image,
+  useSettings,
+  SkeletonImage,
+  } from "@shopify/checkout-ui-extensions-react";
+render("Checkout::Dynamic::Render", () => <App />);
 function App() {
-  const {extensionPoint} = useExtensionApi();
-  const translate = useTranslate();
+  const { image_url } = useSettings();
   return (
-    <Banner title="Image-banner">
-      {translate('welcome', {extensionPoint})}
-    </Banner>
+    <>
+      {image_url ? (
+        <Image source={image_url} />
+      ) : (
+        <SkeletonImage inlineSize={300} blockSize={300}  />
+      )}
+    </>
   );
 }

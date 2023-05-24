@@ -13,8 +13,10 @@ function App() {
     fit,
     border,
     corner_radius,
+    aspect_ratio,
   } = useSettings();
 
+  const aspectRatio = aspect_ratio == "square" ? '1/1': aspect_ratio == "portrait" ? '3/4' : aspect_ratio == "landscape" ? '4/3' : '2/1';
 
   return (
     <>
@@ -28,7 +30,7 @@ function App() {
           cornerRadius={corner_radius}
         />
       ) : (
-        <SkeletonImage inlineSize={300} blockSize={300} aspectRatio={1 / 2} />
+        <SkeletonImage inlineSize={300} blockSize={300} aspectRatio={aspectRatio} />
       )}
     </>
   );

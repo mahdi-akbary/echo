@@ -15,13 +15,22 @@ extension_points = [
 
 # Read more on extension settings at https://shopify.dev/api/checkout-extensions/checkout/configuration
  [settings]
-   [[settings.fields]]
-   key = "time_start_at"
-   type = "single_line_text_field"
-   name = "Countdown start at"
-   description = "Enter a number for the the minutes countdown starts at"
-   [[settings.fields]]
-   key = "countdown_message"
-   type = "single_line_text_field"
-   name = "Countdown message"
-   description = "Enter a short message for countdown or leave empty for default. Use $timer variable in the middle of your text to show the timer"
+    [[settings.fields]]
+    key = "title"
+    type = "single_line_text_field"
+    name = "Title"
+    [[settings.fields]]
+    key = "time_start_at"
+    type = "single_line_text_field"
+    name = "Countdown start at"
+    description = "Enter a number for the minutes countdown starts at: Eg: 10"
+    [[settings.fields]]
+    key = "countdown_message"
+    type = "multi_line_text_field"
+    name = "Countdown message"
+    description = "Enter a short message for countdown or leave empty for default. Use $timer variable in the middle of your text to show the timer"
+    [[settings.fields]]
+    key = "countdown_message_after"
+    type = "single_line_text_field"
+    name = "Countdown message after timer"
+    description = "Enter a short message for countdown or leave empty for default. Use $timer variable in the middle of your text to show the timer"

@@ -1,5 +1,5 @@
 import {useState, useEffect } from 'react';
-import { get, set, update, del } from 'idb-keyval';
+import { get, set, del } from 'idb-keyval';
 
 import {
   render,
@@ -12,7 +12,7 @@ render('Checkout::Dynamic::Render', () => <App />);
 
 function App() {
 
-  const { countdown_message, time_start_at } = useSettings();
+  const { title, countdown_message, time_start_at } = useSettings();
   const timeStartAt = time_start_at ? time_start_at : 10;
 
   const [countdown, setCountdown] = useState(timeStartAt * 60); // Initial countdown value in seconds
@@ -69,7 +69,7 @@ function App() {
   // Replace $timer with the countdown value
 
   return (
-    <Banner title="Count-down-timer">
+    <Banner title={title ?? 'Count down timer'}>
       {/* If countdown > 0 else show another message  */}
       {countdown > 0 ? (
         <Text>{ message.replace('$timer', countdownString )}</Text>

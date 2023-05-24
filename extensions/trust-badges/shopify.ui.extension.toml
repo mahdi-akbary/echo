@@ -1,5 +1,5 @@
 type = "checkout_ui_extension"
-name = "Trust-badges"
+name = "Trust badges"
 
 extension_points = [
   'Checkout::Dynamic::Render'

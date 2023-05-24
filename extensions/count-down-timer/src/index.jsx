@@ -12,7 +12,7 @@ render('Checkout::Dynamic::Render', () => <App />);
 
 function App() {
 
-  const { title, countdown_message, time_start_at, style } = useSettings();
+  const { title, countdown_message, countdown_message_after, time_start_at, style } = useSettings();
   const timeStartAt = time_start_at ? time_start_at : 10;
 
   const [countdown, setCountdown] = useState(timeStartAt * 60); // Initial countdown value in seconds
@@ -74,7 +74,7 @@ function App() {
       {countdown > 0 ? (
         <Text>{ message.replace('$timer', countdownString )}</Text>
       ) : (
-        <Text>You're out of time! Checkout now to avoid losing your order!</Text>
+        <Text> { countdown_message_after ?? "You're out of time! Checkout now to avoid losing your order!" }</Text>
       )}
     </Banner>
   );

@@ -28,3 +28,11 @@ extension_points = [
    type = "single_line_text_field"
    name = "Image url"
    description = "Please paste the image url here. You can upload your icons/images in shopify files"
+   [[settings.fields]]
+   key = "image_width"
+   type = "single_line_text_field"
+   name = "Image width"
+   description = "Please specify percentage for image width"
+    [[settings.fields.validations]]
+    name = "choices"
+    value = '["small","medium","large","extraLarge"]'

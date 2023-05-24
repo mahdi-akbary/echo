@@ -20,8 +20,6 @@ extension_points = [
    type = "single_line_text_field"
    name = "Countdown start at"
    description = "Enter a number for the the minutes countdown starts at"
-
- [settings]
    [[settings.fields]]
    key = "countdown_message"
    type = "single_line_text_field"

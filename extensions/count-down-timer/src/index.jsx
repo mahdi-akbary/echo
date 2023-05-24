@@ -1,5 +1,5 @@
 import {useState, useEffect } from 'react';
-import { get, set } from 'idb-keyval';
+import { get, set, update, del } from 'idb-keyval';
 
 import {
   render,
@@ -11,7 +11,7 @@ import {
 render('Checkout::Dynamic::Render', () => <App />);
 
 function App() {
-  
+
   const { countdown_message, time_start_at } = useSettings();
   const timeStartAt = time_start_at ? time_start_at : 10;
 
@@ -51,15 +51,13 @@ function App() {
     set('countdown', countdown);
   }, [countdown]);
 
-  // Reset the countdown to 10 minutes when it reaches 0 after waiting 5 minutes
   useEffect(() => {
     if (countdown === 0) {
       setTimeout(() => {
-        setCountdown(600);
-      }, 20000);
+        setCountdown(timeStartAt * 60);
+      }, 60 * 1000); // 5 minutes delay in milliseconds
     }
   }, [countdown]);
-  
 
   // Convert the countdown value to a string in the format m:ss
   const countdownString = `${Math.floor(countdown / 60)} minutes ${countdown % 60} seconds`;

@@ -6,13 +6,21 @@ import {
   Banner,
   useSettings,
   Text,
+  TextBlock,
+  Heading,
+  BlockSpacer
 } from '@shopify/checkout-ui-extensions-react';
 
 render('Checkout::Dynamic::Render', () => <App />);
 
 function App() {
 
-  const { title, countdown_message, countdown_message_after, time_start_at, reset_delay, style } = useSettings();
+  const { title, countdown_message, countdown_message_after, time_start_at, reset_delay, style, alignment, fontsize, emphasis, classic } = useSettings();
+  
+  const alignmentStyle = alignment ? alignment : 'start';
+  const fontSizeStyle = fontsize ? fontsize : 'base';
+  const emphasisStyle = emphasis ? emphasis : 'base';
+  const isClassic = classic ? classic : false;
   
   const timeStartAt = time_start_at ? time_start_at : 10;
   const [countdown, setCountdown] = useState(timeStartAt * 60); // Initial countdown value in seconds
@@ -66,16 +74,24 @@ function App() {
 
   // if countdown_message is not empty then use it. Otherwise use the default message
   const message = countdown_message ? countdown_message : '🔥 Items in your cart are in high demand. No worries, we have reserved your order for $timer';
-  // Replace $timer with the countdown value
 
-  return (
+
+  // If isClassic true, then use Text component to display the message. Otherwise use Banner component
+  return isClassic ? (
+    <TextBlock inlineAlignment={alignmentStyle}>
+      <Heading alignmentStyle={alignmentStyle}>{ title ?? 'Count down timer' }</Heading>
+      <BlockSpacer spacing="extraTight" />
+      <Text size={fontSizeStyle } emphasis={emphasisStyle}>{ message.replace('$timer', countdownString) }</Text>
+    </TextBlock>
+  ) : (
     <Banner title={title ?? 'Count down timer'} status={style}>
       {/* If countdown > 0 else show another message  */}
       {countdown > 0 ? (
-        <Text>{ message.replace('$timer', countdownString )}</Text>
+        <Text size={fontSizeStyle} emphasis={emphasisStyle}>{ message.replace('$timer', countdownString )}</Text>
       ) : (
-        <Text> { countdown_message_after ?? "You're out of time! Checkout now to avoid losing your order!" }</Text>
+        <Text size={fontSizeStyle} emphasis={emphasisStyle}> { countdown_message_after ?? "You're out of time! Checkout now to avoid losing your order!" }</Text>
       )}
     </Banner>
   );
+
 }

@@ -40,9 +40,38 @@ extension_points = [
     name = "Countdown message after timer"
     description = "Enter a short message for countdown or leave empty for default. Use $timer variable in the middle of your text to show the timer"
     [[settings.fields]]
-    key = "style"
+    key = "classic"
+    type = "boolean"
+    name = "Classic"
+    description = "The classic style will change the design of countdown"
+    [[settings.fields]]
+    key = "status"
     type = "single_line_text_field"
-    name = "Style"
+    name = "Status"
+    [[settings.fields.validations]]
+    name = "choices"
+    value = '["accent","subdued","info","success","warning","critical"]'
+
+    [[settings.fields]]
+    key = "alignment"
+    type = "single_line_text_field"
+    name = "Text alignment"
       [[settings.fields.validations]]
-      name = "choices"
-      value = '["info","success","warning","critical"]'
+        name = "choices"
+        value = '["start","center","end"]'
+
+    [[settings.fields]]
+    key = "fontsize"
+    type = "single_line_text_field"
+    name = "Text size"
+      [[settings.fields.validations]]
+        name = "choices"
+        value = '["extraSmall","small","base", "medium", "large", "extraLarge"]'
+
+    [[settings.fields]]
+    key = "emphasis"
+    type = "single_line_text_field"
+    name = "Emphasis"
+      [[settings.fields.validations]]
+        name = "choices"
+        value = '["italic","bold", "base"]'

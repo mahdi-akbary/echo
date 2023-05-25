@@ -1,9 +1,12 @@
 type = "checkout_ui_extension"
-name = "Upsell"
+name = "Checkout upsell"
 
 extension_points = [
   'Checkout::Dynamic::Render'
 ]
+[capabilities]
+api_access = true
+network_access = true
 
 # [[metafields]]
 # namespace = "my-namespace"
@@ -14,9 +17,8 @@ extension_points = [
 # key = "my-key-2"
 
 # Read more on extension settings at https://shopify.dev/api/checkout-extensions/checkout/configuration
-# [settings]
-#   [[settings.fields]]
-#   key = "banner_title"
-#   type = "single_line_text_field"
-#   name = "Banner title"
-#   description = "Enter a title for the banner"
+ [settings]
+   [[settings.fields]]
+   key = "upsell_product"
+   type = "variant_reference"
+   name = "Upsell product"

@@ -28,6 +28,7 @@ function App() {
   const { i18n, query, localization } = useExtensionApi();
   const [ data, setData ] = useState();
   const [ error, setError ] = useState();
+  const [ loading, setLoading ] = useState(false);
   const { upsell_product } = useSettings();
   const variantId = upsell_product ? upsell_product : 'gid://shopify/ProductVariant/44638843535640';
   const { currencyCode } = useTotalAmount();
@@ -94,8 +95,7 @@ function App() {
   const applyCartLinesChange = useApplyCartLinesChange();
 
   async function handleAddToCart() {
-    console.log('data: ', data);
-
+    setLoading(true);
     const newCartLines = {
         type: 'addCartLine',
         merchandiseId: merchandiseId,
@@ -106,6 +106,11 @@ function App() {
     if(result.type == 'error') {
       setError(result.message);
     }
+    if(result.type == 'success') {
+      setError(null);
+      // Submit report: future work
+    }
+    setLoading(false);
   }
   
   const hasProduct = true;
@@ -122,7 +127,7 @@ function App() {
             <Text size="base" emphasis="bold">{ formattedPrice }</Text>
           </TextBlock>
           <View inlineAlignment='end'> 
-            <Button kind='primary' onPress={handleAddToCart} size="slim" fullWidth={true} > Add to cart</Button>
+            <Button kind='primary' loading={loading} disabled={error} onPress={handleAddToCart} size="slim" fullWidth={true} > Add to cart</Button>
           </View>
         </InlineLayout>
          {/* display error if exist */}

@@ -1,9 +1,15 @@
 type = "checkout_ui_extension"
-name = "Recommendation"
+name = "AI Product recommendation"
+api_version = "2023-04"
+
 
 extension_points = [
   'Checkout::Dynamic::Render'
 ]
+
+[capabilities]
+api_access = true
+network_access = true
 
 # [[metafields]]
 # namespace = "my-namespace"
@@ -14,9 +20,44 @@ extension_points = [
 # key = "my-key-2"
 
 # Read more on extension settings at https://shopify.dev/api/checkout-extensions/checkout/configuration
-# [settings]
-#   [[settings.fields]]
-#   key = "banner_title"
-#   type = "single_line_text_field"
-#   name = "Banner title"
-#   description = "Enter a title for the banner"
+[settings]
+  [[settings.fields]]
+  key = "title"
+  type = "single_line_text_field"
+  name = "Title"
+  description = "Eg: You might also like"
+
+  [[settings.fields]]
+  key = "recommendation_source"
+  type = "single_line_text_field"
+  name = "Recommendation source"
+  description = "The product recommendation will based on this condition"
+  [[settings.fields.validations]]
+    name = "choices"
+    value = '["First line item","Last line item","Most expensive item","Least expensive item"]'
+
+  [[settings.fields]]
+  key = "recommendation_algorithm"
+  type = "single_line_text_field"
+  name = "Recommendation algorithm"
+  description = "How you want to recommend products"
+  [[settings.fields.validations]]
+    name = "choices"
+    value = '["Related","Complementary"]'
+
+  [[settings.fields]]
+  key = "limit"
+  type = "single_line_text_field"
+  name = "Products limit"
+  description = "Number of products to recommend"
+
+  [[settings.fields]]
+  key = "show_variants"
+  type = "boolean"
+  name = "Show variants"
+  description = "You can hide variant selector if you want to display only product"
+
+  [[settings.fields]]
+  key = "border"
+  type = "boolean"
+  name = "Border"

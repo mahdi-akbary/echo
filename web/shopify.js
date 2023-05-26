@@ -16,6 +16,7 @@ const billingConfig = {
   },
 };
 
+
 const shopify = shopifyApp({
   api: {
     apiVersion: LATEST_API_VERSION,

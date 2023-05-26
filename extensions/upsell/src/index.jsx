@@ -4,7 +4,7 @@ import {
   render,
   InlineLayout,
   View,
-  useCartLines,
+  Banner,
   useExtensionApi,
   useSettings,
   SkeletonImage,
@@ -15,8 +15,8 @@ import {
   Image,
   Text,
   useTotalAmount,
-  useCurrency,
   BlockSpacer,
+  useApplyCartLinesChange,
 } from '@shopify/checkout-ui-extensions-react';
 
 import { getCountryCode } from './getCountryCode.jsx';
@@ -27,9 +27,10 @@ function App() {
 
   const { i18n, query, localization } = useExtensionApi();
   const [ data, setData ] = useState();
+  const [ error, setError ] = useState();
   const { upsell_product } = useSettings();
   const variantId = upsell_product ? upsell_product : 'gid://shopify/ProductVariant/44638843535640';
-  const { amount, currencyCode } = useTotalAmount();
+  const { currencyCode } = useTotalAmount();
 
   // userCountryCode is two letter currencyCode
   const userCountryCode = getCountryCode(currencyCode);
@@ -83,47 +84,56 @@ function App() {
   let  title = data?.node?.product.title;
   let  image  = data?.node.image ? data?.node.image : data?.node?.product?.featuredImage;
   let  price  = data?.node?.price?.amount;
-  let  compareAtPrice  = data?.node?.compareAtPrice?.amount;
   let  variant_id = data?.node?.id.split('/').pop();
-
+  let  merchandiseId = data?.node?.id;
   let  formattedPrice = i18n.formatCurrency(price, { currencyCode: currencyCode });
 
   // let selectedVariant = data?.node?.product?.variants?.edges?.find(({node}) => node.id === variantId);
   let variants = data?.node?.product?.variants?.edges;
 
-  const { addItem } = useCartLines();
+  const applyCartLinesChange = useApplyCartLinesChange();
 
+  async function handleAddToCart() {
+    console.log('data: ', data);
 
-  const handleAddToCart = () => {
-    // addItem({
-    //   variantId: variant_id,
-    //   quantity: 1,
+    const newCartLines = {
+        type: 'addCartLine',
+        merchandiseId: merchandiseId,
+        quantity: 1,
+      };
 
-    // });
-    console.log('add to cart', formattedPrice);
-    console.log('Local: ', localization);
-    console.log('totalAmount: ', currencyCode);
-  };
-
+    const result = await applyCartLinesChange(newCartLines);
+    if(result.type == 'error') {
+      setError(result.message);
+    }
+  }
   
   const hasProduct = true;
 
   return hasProduct ? (
-      <InlineLayout blockAlignment="center" spacing="base" padding="base" cornerRadius="base" border="dotted" columns={['20%', 'fill', '30%']}>
-       <View>
-         <Image border='base' cornerRadius='base' source={ image?.url }/>
-        </View>
-        <TextBlock>
-          <Text size="base" emphasis="bold">{ title }</Text>
-          <BlockSpacer spacing="extraTight" />
-          <Text size="base" emphasis="bold">{ formattedPrice }</Text>
-        </TextBlock>
-        <View inlineAlignment='end'> 
-          <Button kind='primary' onPress={handleAddToCart} size="slim" fullWidth={true} > Add to cart</Button>
-        </View>
-      </InlineLayout>
-    ) : (
-
+      <>
+        <InlineLayout blockAlignment="center" spacing="base" padding="base" cornerRadius="base" border="dotted" columns={['20%', 'fill', '30%']}>
+        <View>
+          <Image border='base' cornerRadius='base' source={ image?.url }/>
+          </View>
+          <TextBlock>
+            <Text size="base" emphasis="bold">{ title }</Text>
+            <BlockSpacer spacing="extraTight" />
+            <Text size="base" emphasis="bold">{ formattedPrice }</Text>
+          </TextBlock>
+          <View inlineAlignment='end'> 
+            <Button kind='primary' onPress={handleAddToCart} size="slim" fullWidth={true} > Add to cart</Button>
+          </View>
+        </InlineLayout>
+         {/* display error if exist */}
+         { error && 
+            <View>
+              <BlockSpacer spacing="extraTight" />
+              <Banner status="info" padding="extraTight"> { error} </Banner>
+            </View>
+          }
+      </>
+      ) : (
       <InlineLayout blockAlignment="center" spacing="base" padding="base" cornerRadius="base" border="dotted" columns={['20%', 'fill', '20%']}>
         <View>
           <SkeletonImage inlineSize={100} blockSize={80} />

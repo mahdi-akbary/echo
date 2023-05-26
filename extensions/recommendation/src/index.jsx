@@ -5,6 +5,7 @@ import {
   Banner,
   useSettings,
   InlineLayout,
+  BlockLayout,
   View,
   TextBlock,
   Text,
@@ -18,6 +19,9 @@ import {
   useApplyCartLinesChange,
   useCartLines,
 } from '@shopify/checkout-ui-extensions-react';
+
+import { getCountryCode } from './getCountryCode.jsx';
+import { ProductCard } from './productCard.jsx';
 
 render('Checkout::Dynamic::Render', () => <App />);
 
@@ -33,8 +37,8 @@ function App() {
   const bannerTitle = title || 'You may also like ';
   // lowercase the recommendation source
   const recommendationSource = recommendation_source == 'First line item ' ? 'first' : recommendation_source == 'Last line item ' ? 'last' : recommendation_source == 'Most expensive item' ? 'expensive' : recommendation_source == 'Least expensive item' ? 'cheap' : 'first';
-  const recommendationAlgorithm = recommendation_algorithm == 'Related' ? 'RELATED' : 'COMPLEMENTARY';
-  const recommendationLimit = limit || 3;
+  const recommendationAlgorithm = recommendation_algorithm == 'Related' ? 'RELATED' : 'RELATED';
+  const recommendationLimit = limit || 2;
   const showVariants = show_variants == 'Yes' ? true : false;
 
   // Get the merchandise id from the first line item
@@ -68,22 +72,35 @@ function App() {
     recommendationSourceID = cartLines[minPriceIndex]?.merchandise?.product?.id;
   }
 
-  console.log('recommendationSourceID', recommendationAlgorithm);
+  // userCountryCode is two letter currencyCode
+  const userCountryCode = getCountryCode(currencyCode);
 
   // Use Shopify graphql to get the recommended products based on recommendationSourceID
-
-
   useEffect(() => {  
-      query( 
-        `query Recommendations {
-          productRecommendations( intend: ${ recommendationAlgorithm }, productId: "${ recommendationSourceID }") {
+      query(
+        `query Recommendations @inContext(country: ${ userCountryCode ?? 'US' }) {
+          productRecommendations(intent: ${recommendationAlgorithm}, productId: "${ recommendationSourceID }") {
             title
             id
+            priceRange{
+              maxVariantPrice{
+                amount
+                currencyCode
+              }
+              minVariantPrice{
+                amount
+                currencyCode
+              }
+            }
             variants(first:20){
               edges{
                 node{
                   id
                   title
+                  price{
+                    amount
+                    currencyCode
+                  }
                   image{
                     altText
                     url
@@ -108,47 +125,23 @@ function App() {
         console.log('error: ', error);
       });
   }, [query]);
-
-  console.log('data', data);
      
 
-  const applyCartLinesChange = useApplyCartLinesChange();
-  async function handleAddToCart() {
-    setLoading(true);
-    const newCartLines = { 
-        type: 'addCartLine',
-        merchandiseId: merchandiseId,
-        quantity: 1,
-      };
-
-    const result = await applyCartLinesChange(newCartLines);
-    if(result.type == 'error') {
-      setError(result.message);
-    }
-    if(result.type == 'success') {
-      setError(null);
-      // Submit report: future work
-    }
-    setLoading(false);
+  let hasProduct = true; 
+  if(data?.productRecommendations?.length == 0) {
+    hasProduct = false;
   }
-  
-  const hasProduct = true; 
+  // Return product list with limit
+  let productList = data?.productRecommendations?.slice(0, recommendationLimit);
 
   return hasProduct ? (
       <>
-        <InlineLayout blockAlignment="center" spacing="base" padding="base" cornerRadius="base" border="dotted" columns={['20%', 'fill', '30%']}>
-        <View>
-         
-          </View>
-          <TextBlock>
-            <Text size="base" emphasis="bold">{ title }</Text>
-            <BlockSpacer spacing="extraTight" />
-            {/* <Text size="base" emphasis="bold">{ formattedPrice }</Text> */}
-          </TextBlock>
-          <View inlineAlignment='end'> 
-            <Button kind='primary' loading={loading} disabled={error} onPress={handleAddToCart} size="slim" fullWidth={true} > Add to cart</Button>
-          </View>
-        </InlineLayout>
+          {/* Loop through productList and display */}
+          <BlockLayout spacing="tight">
+            {productList?.map((product, index) => (
+              <ProductCard key={index} product={product} />
+            ))}
+          </BlockLayout>
          {/* display error if exist */}
          { error && 
             <View>
@@ -171,5 +164,5 @@ function App() {
         </View>
       </InlineLayout>
     );
-  
+
 }

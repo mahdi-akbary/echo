@@ -8,8 +8,6 @@ import {
   BlockLayout,
   View,
   TextBlock,
-  Text,
-  Image,
   Button,
   BlockSpacer,
   SkeletonImage,
@@ -26,9 +24,7 @@ import { ProductCard } from './productCard.jsx';
 render('Checkout::Dynamic::Render', () => <App />);
 
 function App() {
-  const { query, i18n } = useExtensionApi();
-  const [ error, setError ] = useState();
-  const [ loading, setLoading ] = useState(false);
+  const { query } = useExtensionApi();
   const [ data, setData ] = useState();
   const { currencyCode } = useTotalAmount();
   const { title, recommendation_source, recommendation_algorithm, limit, show_variants, border } = useSettings();
@@ -142,13 +138,6 @@ function App() {
               <ProductCard key={index} product={product} />
             ))}
           </BlockLayout>
-         {/* display error if exist */}
-         { error && 
-            <View>
-              <BlockSpacer spacing="extraTight" />
-              <Banner status="info" padding="extraTight"> { error} </Banner>
-            </View>
-          }
       </>
       ) : (
       <InlineLayout blockAlignment="center" spacing="base" padding="base" cornerRadius="base" border="dotted" columns={['20%', 'fill', '20%']}>

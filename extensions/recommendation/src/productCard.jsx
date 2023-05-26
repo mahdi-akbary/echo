@@ -10,6 +10,7 @@ import {
     useApplyCartLinesChange,
     useExtensionApi,
     useTotalAmount,
+    Banner,
 } from "@shopify/checkout-ui-extensions-react";
 import { useState } from "react";
 import { getCountryCode } from './getCountryCode.jsx';
@@ -64,9 +65,16 @@ export function ProductCard({ product }) {
                 {product.title}{" "}
                 </Text>
                 <BlockSpacer spacing="extraTight" />
-                <Text size="base" emphasis="bold">
-                {firstVariantPrice(product)}
+                    <Text size="base" emphasis="bold">
+                    {firstVariantPrice(product)}
                 </Text>
+                 {/* display error if exist */}
+                { error && 
+                    <View>
+                        <BlockSpacer spacing="extraTight" />
+                        <Text appearance="critical" padding="extraTight"> { error} </Text>
+                    </View>
+                }
             </TextBlock>
             <View inlineAlignment="end">
                 <Button

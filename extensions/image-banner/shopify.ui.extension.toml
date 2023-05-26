@@ -1,5 +1,6 @@
 type = "checkout_ui_extension"
 name = "Image banner"
+api_version = "2023-04"
 
 extension_points = [
   'Checkout::Dynamic::Render'

@@ -46,8 +46,6 @@ export function ProductCard({ product, showVariants }) {
         setLoading(false);
     }
 
-    console.log('activeVariant: ', activeVariant);
-
     return (
         <InlineLayout
             blockAlignment="center"

@@ -38,6 +38,7 @@ function App() {
 
   // Get the merchandise id from the first line item
   const cartLines = useCartLines();
+
   let recommendationSourceID = cartLines[0]?.merchandise?.product?.id; 
 
   if(recommendationSource == 'first') {
@@ -66,7 +67,7 @@ function App() {
     }
     recommendationSourceID = cartLines[minPriceIndex]?.merchandise?.product?.id;
   }
-
+   
   // userCountryCode is two letter currencyCode
   const userCountryCode = getCountryCode(currencyCode);
 
@@ -126,10 +127,18 @@ function App() {
   if(data?.productRecommendations?.length == 0) {
     hasProduct = false;
   }
-  
+
+  // filter out products that are not available for sale and already in cart
+  const cartProductIDs = cartLines.map((cartLine) => {
+    return cartLine.merchandise.product.id;
+  });
+
+  let productList = data?.productRecommendations?.filter((product) => {
+    return product.availableForSale && !cartProductIDs.includes(product.id);
+  });
+
   // Return product list with limit
-  let productList = data?.productRecommendations?.slice(0, recommendationLimit);
-  console.log('productList: ', productList);
+  productList = productList?.slice(0, recommendationLimit);
 
   return hasProduct ? (
       <>

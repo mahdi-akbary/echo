@@ -11,17 +11,22 @@ import {
     useExtensionApi,
     useTotalAmount,
     Banner,
+    Select,
 } from "@shopify/checkout-ui-extensions-react";
 import { useState } from "react";
 import { getCountryCode } from './getCountryCode.jsx';
+import { set } from "idb-keyval";
 
-export function ProductCard({ product }) {
+export function ProductCard({ product, showVariants }) {
     const { i18n } = useExtensionApi();
     const { currencyCode } = useTotalAmount();
     const [ error, setError ] = useState();
+    // activeVariant is the first variant from product.variants.edges which has availableForSale = true
+    const [ activeVariant, setActiveVariant ] = useState(product.variants.edges.find(variant => variant.node.availableForSale));
+    // activeVariant is first available variant from product.variants.edges
 
     const [ loading, setLoading ] = useState(false);
-    const applyCartLinesChange = useApplyCartLinesChange();
+    const applyCartLinesChange = useApplyCartLinesChange(); 
 
     async function handleAddToCart(product) {
         const merchandiseId = product.variants.edges[0].node.id;
@@ -42,7 +47,9 @@ export function ProductCard({ product }) {
         }
         setLoading(false);
     }
-    
+
+    console.log('activeVariant: ', activeVariant);
+
     return (
         <InlineLayout
             blockAlignment="center"
@@ -67,7 +74,25 @@ export function ProductCard({ product }) {
                     <Text size="base" emphasis="bold">
                     {firstVariantPrice(product)}
                 </Text>
-                 {/* display error if exist */}
+                <BlockSpacer spacing="extraTight" />
+                { showVariants &&
+                    <Select
+                        label="Select variant"
+                        labelHidden
+                        value={activeVariant.node.id}
+                        onChange={(value) => {
+                            setActiveVariant(product.variants.edges.find(variant => variant.node.id == value));
+                        }}
+                        options={
+                            product.variants.edges.map(variant => {
+                                return {
+                                    label: variant.node.title,
+                                    value: variant.node.id,
+                                }
+                            })
+                        }/>
+                }
+                 
                 { error && 
                     <View>
                         <BlockSpacer spacing="extraTight" />

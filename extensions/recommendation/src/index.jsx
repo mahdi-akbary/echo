@@ -126,8 +126,10 @@ function App() {
   if(data?.productRecommendations?.length == 0) {
     hasProduct = false;
   }
+  
   // Return product list with limit
   let productList = data?.productRecommendations?.slice(0, recommendationLimit);
+  console.log('productList: ', productList);
 
   return hasProduct ? (
       <>
@@ -136,7 +138,7 @@ function App() {
           <BlockSpacer />
           <BlockLayout spacing="tight">
               {productList?.map((product, index) => (
-                <ProductCard key={index} product={product} />
+                <ProductCard key={index} product={product} showVariants={true}  />
               ))}
           </BlockLayout>
       </>

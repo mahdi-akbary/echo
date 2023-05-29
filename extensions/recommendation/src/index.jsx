@@ -3,14 +3,7 @@ import {
   useExtensionApi,
   render,
   useSettings,
-  InlineLayout,
   BlockLayout,
-  View,
-  TextBlock,
-  Button,
-  SkeletonImage,
-  SkeletonTextBlock,
-  SkeletonText,
   useTotalAmount,
   useCartLines,
   Heading,
@@ -26,7 +19,7 @@ function App() {
   const { query } = useExtensionApi();
   const [ data, setData ] = useState();
   const { currencyCode } = useTotalAmount();
-  const { title, recommendation_source, recommendation_algorithm, limit, show_variants, border } = useSettings();
+  const { title, recommendation_source, recommendation_algorithm, limit } = useSettings();
 
   // If title is not set, use default title
   const bannerTitle = title || 'You may also like ';
@@ -34,7 +27,6 @@ function App() {
   const recommendationSource = recommendation_source == 'First line item ' ? 'first' : recommendation_source == 'Last line item ' ? 'last' : recommendation_source == 'Most expensive item' ? 'expensive' : recommendation_source == 'Least expensive item' ? 'cheap' : 'first';
   const recommendationAlgorithm = recommendation_algorithm == 'Related' ? 'RELATED' : 'RELATED';
   const recommendationLimit = limit || 2;
-  const showVariants = show_variants == 'Yes' ? true : false;
 
   // Get the merchandise id from the first line item
   const cartLines = useCartLines();
@@ -140,17 +132,16 @@ function App() {
     hasProduct = false;
   }
 
-  return hasProduct ? (
+  return hasProduct ? ( 
       <>
           {/* Loop through productList and display */}
           <Heading>{ bannerTitle }</Heading>
           <BlockSpacer />
           <BlockLayout spacing="tight">
               {productList?.map((product, index) => (
-                <ProductCard key={index} product={product} showVariants={showVariants}  />
+                <ProductCard key={index} product={product}/>
               ))}
           </BlockLayout>
       </>
       ) : null;
-
 }

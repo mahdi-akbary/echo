@@ -10,17 +10,20 @@ import {
     useApplyCartLinesChange,
     useExtensionApi,
     useTotalAmount,
-    Banner,
     Select,
+    useSettings,
 } from "@shopify/checkout-ui-extensions-react";
 import { useState } from "react";
 
-export function ProductCard({ product, showVariants }) {
+export function ProductCard({ product }) {
     const { i18n } = useExtensionApi();
     const { currencyCode } = useTotalAmount();
     const [ error, setError ] = useState();
+    const { show_variants } = useSettings();
+    const showVariants = show_variants ? true : false;
+
     // activeVariant is the first variant from product.variants.edges which has availableForSale = true
-    const [ activeVariant, setActiveVariant ] = useState(product.variants.edges.find(variant => variant.node.availableForSale));
+    const [ activeVariant, setActiveVariant ] = useState(product?.variants?.edges.find(variant => variant.node.availableForSale));
     // activeVariant is first available variant from product.variants.edges
 
     const [ loading, setLoading ] = useState(false);

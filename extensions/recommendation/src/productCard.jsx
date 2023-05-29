@@ -19,8 +19,10 @@ export function ProductCard({ product }) {
     const { i18n } = useExtensionApi();
     const { currencyCode } = useTotalAmount();
     const [ error, setError ] = useState();
-    const { show_variants } = useSettings();
+    const { show_variants, border, padding, button_style, add_to_cart_label } = useSettings();
     const showVariants = show_variants ? true : false;
+    const borderStyle = border ? 'base' : 'none';
+    const addToCartLabel = add_to_cart_label ? add_to_cart_label : 'Add to cart';
 
     // activeVariant is the first variant from product.variants.edges which has availableForSale = true
     const [ activeVariant, setActiveVariant ] = useState(product?.variants?.edges.find(variant => variant.node.availableForSale));
@@ -53,8 +55,9 @@ export function ProductCard({ product }) {
         <InlineLayout
             blockAlignment="center"
             spacing="base"
-            padding="none" 
             cornerRadius="base"
+            border={borderStyle}
+            padding={padding}
             columns={["20%", "fill", "30%"]}>
             <View>
                 <Image
@@ -101,16 +104,13 @@ export function ProductCard({ product }) {
             </TextBlock>
             <View inlineAlignment="end">
                 <Button
-                kind="primary"
-                loading={loading}
-                disabled={error}
-                onPress={handleAddToCart}
-                size="slim"
-                fullWidth={true}
-                >
-                {" "}
-                Add to cart
-                </Button>
+                    kind={button_style}
+                    loading={loading}
+                    disabled={error}
+                    onPress={handleAddToCart}
+                    size="slim"
+                    fullWidth={true}
+                    > {addToCartLabel} </Button>
             </View>
         </InlineLayout>
     );

@@ -61,3 +61,24 @@ network_access = true
   key = "border"
   type = "boolean"
   name = "Border"
+
+  [[settings.fields]]
+  key = "padding"
+  type = "single_line_text_field"
+  name = "Padding"
+  [[settings.fields.validations]]
+    name = "choices"
+    value = '["none","base", "tight", "extraTight", "loose", "extraLoose"]'
+
+  [[settings.fields]]
+  key = "add_to_cart_label"
+  type = "single_line_text_field"
+  name = "Add to cart label"
+
+  [[settings.fields]]
+  key = "button_style"
+  type = "single_line_text_field"
+  name = "Button style"
+  [[settings.fields.validations]]
+  name = "choices"
+  value = '["primary","secondary","plain"]'

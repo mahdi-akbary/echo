@@ -13,6 +13,8 @@ import {
   SkeletonText,
   useTotalAmount,
   useCartLines,
+  Heading,
+  BlockSpacer,
 } from '@shopify/checkout-ui-extensions-react';
 
 import { getCountryCode } from './getCountryCode.jsx';
@@ -130,10 +132,12 @@ function App() {
   return hasProduct ? (
       <>
           {/* Loop through productList and display */}
+          <Heading>{ bannerTitle }</Heading>
+          <BlockSpacer />
           <BlockLayout spacing="tight">
-            {productList?.map((product, index) => (
-              <ProductCard key={index} product={product} />
-            ))}
+              {productList?.map((product, index) => (
+                <ProductCard key={index} product={product} />
+              ))}
           </BlockLayout>
       </>
       ) : (

@@ -47,9 +47,8 @@ export function ProductCard({ product }) {
         <InlineLayout
             blockAlignment="center"
             spacing="base"
-            padding="base" 
+            padding="none" 
             cornerRadius="base"
-            border="dotted"
             columns={["20%", "fill", "30%"]}>
             <View>
                 <Image

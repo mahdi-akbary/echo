@@ -123,11 +123,6 @@ function App() {
   }, [query]);
      
 
-  let hasProduct = true; 
-  if(data?.productRecommendations?.length == 0) {
-    hasProduct = false;
-  }
-
   // filter out products that are not available for sale and already in cart
   const cartProductIDs = cartLines.map((cartLine) => {
     return cartLine.merchandise.product.id;
@@ -140,6 +135,11 @@ function App() {
   // Return product list with limit
   productList = productList?.slice(0, recommendationLimit);
 
+  let hasProduct = true; 
+  if(productList?.length == 0) {
+    hasProduct = false;
+  }
+
   return hasProduct ? (
       <>
           {/* Loop through productList and display */}
@@ -151,19 +151,6 @@ function App() {
               ))}
           </BlockLayout>
       </>
-      ) : (
-      <InlineLayout blockAlignment="center" spacing="base" padding="base" cornerRadius="base" border="dotted" columns={['20%', 'fill', '20%']}>
-        <View>
-          <SkeletonImage inlineSize={100} blockSize={80} />
-        </View>
-        <TextBlock>
-          <SkeletonTextBlock size="base" />
-          <SkeletonText size="base" />
-        </TextBlock>
-        <View> 
-          <Button kind='primary' disabled='true' size="slim" fullWidth={true} > Add to cart</Button>
-        </View>
-      </InlineLayout>
-    );
+      ) : null;
 
 }

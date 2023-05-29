@@ -26,7 +26,7 @@ function App() {
   // lowercase the recommendation source
   const recommendationSource = recommendation_source == 'First line item ' ? 'first' : recommendation_source == 'Last line item ' ? 'last' : recommendation_source == 'Most expensive item' ? 'expensive' : recommendation_source == 'Least expensive item' ? 'cheap' : 'first';
   const recommendationAlgorithm = recommendation_algorithm == 'Related' ? 'RELATED' : 'RELATED';
-  const recommendationLimit = limit ? limit : 2;
+  const recommendationLimit = limit ? limit : 3;
 
   // Get the merchandise id from the first line item
   const cartLines = useCartLines();

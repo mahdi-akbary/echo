@@ -49,7 +49,7 @@ network_access = true
   key = "limit"
   type = "single_line_text_field"
   name = "Products limit"
-  description = "Number of products to recommend"
+  description = "Number of products to recommend. You might not see more then 2 product on editor mode"
 
   [[settings.fields]]
   key = "show_variants"

@@ -14,8 +14,6 @@ import {
     Select,
 } from "@shopify/checkout-ui-extensions-react";
 import { useState } from "react";
-import { getCountryCode } from './getCountryCode.jsx';
-import { set } from "idb-keyval";
 
 export function ProductCard({ product, showVariants }) {
     const { i18n } = useExtensionApi();

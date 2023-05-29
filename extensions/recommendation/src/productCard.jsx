@@ -26,8 +26,8 @@ export function ProductCard({ product, showVariants }) {
     const [ loading, setLoading ] = useState(false);
     const applyCartLinesChange = useApplyCartLinesChange(); 
 
-    async function handleAddToCart(product) {
-        const merchandiseId = product.variants.edges[0].node.id;
+    async function handleAddToCart() {
+        const merchandiseId = activeVariant.node.id;
         setLoading(true);
         const newCartLines = { 
             type: 'addCartLine',
@@ -103,7 +103,7 @@ export function ProductCard({ product, showVariants }) {
                 kind="primary"
                 loading={loading}
                 disabled={error}
-                onPress={() => handleAddToCart(product)}
+                onPress={handleAddToCart}
                 size="slim"
                 fullWidth={true}
                 >

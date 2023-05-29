@@ -2,19 +2,16 @@ import {useEffect, useState} from 'react';
 import {
   useExtensionApi,
   render,
-  Banner,
   useSettings,
   InlineLayout,
   BlockLayout,
   View,
   TextBlock,
   Button,
-  BlockSpacer,
   SkeletonImage,
   SkeletonTextBlock,
   SkeletonText,
   useTotalAmount,
-  useApplyCartLinesChange,
   useCartLines,
 } from '@shopify/checkout-ui-extensions-react';
 

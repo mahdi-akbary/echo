@@ -138,7 +138,7 @@ function App() {
           <BlockSpacer />
           <BlockLayout spacing="tight">
               {productList?.map((product, index) => (
-                <ProductCard key={index} product={product} showVariants={true}  />
+                <ProductCard key={index} product={product} showVariants={showVariants}  />
               ))}
           </BlockLayout>
       </>

@@ -18,25 +18,23 @@ export function TrustList({ title, description, icon, width }) {
     
     return (
         <BlockLayout
-            spacing="extraTight"
+            spacing="tight"
             cornerRadius="base"
             border={borderStyle}
             rows={['auto', 'fill', 'auto']}
             padding={padding}>
 
-            <InlineStack spacing="tight">
-                <View border={border}>
-                    <Image accessibilityDescription={description} source={icon ?? "https://cdn.shopify.com/s/files/1/0725/8836/2008/files/trust-badge.png"} />
-                </View>
-                <View>
-                    <TextBlock emphasis="bold" inlineAlignment={alignment}>{ title }</TextBlock>
-                </View>
-                <View border={border}>
-                    <TextBlock size="small" appearance="subdued" inlineAlignment={alignment}>
-                        { description }
-                    </TextBlock>
-                </View>
-            </InlineStack>
+            <View border={border}>
+                <Image accessibilityDescription={description} source={icon ?? "https://cdn.shopify.com/s/files/1/0725/8836/2008/files/trust-badge.png"} />
+            </View>
+            <View>
+                <TextBlock emphasis="bold" inlineAlignment={alignment}>{ title }</TextBlock>
+            </View>
+            <View border={border}>
+                <TextBlock size="small" appearance="subdued" inlineAlignment={alignment}>
+                    { description }
+                </TextBlock>
+            </View>
         </BlockLayout>
     );
     

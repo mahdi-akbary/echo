@@ -19,9 +19,8 @@ export function ProductList({ product }) {
     const { i18n } = useExtensionApi();
     const { currencyCode } = useTotalAmount();
     const [ error, setError ] = useState();
-    const { show_variants, border, padding, button_style, add_to_cart_label, include_price, button_size } = useSettings();
+    let { show_variants, border, padding, button_style, add_to_cart_label, include_price, button_size } = useSettings();
     const showVariants = show_variants ? true : false;
-    const borderStyle = border ? 'base' : 'none';
     const addToCartLabel = add_to_cart_label ? add_to_cart_label : 'Add to cart';
     const includePrice = include_price ? true : false;
 
@@ -51,18 +50,17 @@ export function ProductList({ product }) {
         }
         setLoading(false);
     }
-
     return (
         <BlockLayout
             spacing="extraTight"
             cornerRadius="base"
-            border={borderStyle}
+            border={border}
             rows={['auto', 'fill', 'auto']}
             padding={padding}>
 
             <View>
                 <Image
-                border="base"
+                border={border ? "none" : "base"}
                 cornerRadius="base"
                 source={product.featuredImage.url}
                 alt={product.featuredImage.altText}

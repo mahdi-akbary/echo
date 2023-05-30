@@ -75,8 +75,11 @@ network_access = true
 
   [[settings.fields]]
   key = "border"
-  type = "boolean"
+  type = "single_line_text_field"
   name = "Border"
+  [[settings.fields.validations]]
+    name = "choices"
+    value = '["none", "base", "dotted"]'
 
   [[settings.fields]]
   key = "padding"

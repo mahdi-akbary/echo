@@ -15,7 +15,6 @@ export function TrustCard({ title, description, icon, width }) {
 
     let { border, padding, alignment } = useSettings();
 
-    const borderStyle = border ? 'base' : 'none';
     const imageWidth = width === "small" ? "16%" : width === "medium" ? "20%" : width === "large" ? "32%" : width === "extraLarge" ? "48%" : "16%";
     
     return (

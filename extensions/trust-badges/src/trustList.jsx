@@ -14,23 +14,22 @@ import {
 export function TrustList({ title, description, icon, width }) {
 
     let { border, padding, alignment } = useSettings();
-    const borderStyle = border ? 'base' : 'none';
     
     return (
         <BlockLayout
             spacing="tight"
             cornerRadius="base"
-            border={borderStyle}
+            border={border}
             rows={['auto', 'fill', 'auto']}
             padding={padding}>
 
-            <View border={border}>
+            <View>
                 <Image accessibilityDescription={description} source={icon ?? "https://cdn.shopify.com/s/files/1/0725/8836/2008/files/trust-badge.png"} />
             </View>
             <View>
                 <TextBlock emphasis="bold" inlineAlignment={alignment}>{ title }</TextBlock>
             </View>
-            <View border={border}>
+            <View>
                 <TextBlock size="small" appearance="subdued" inlineAlignment={alignment}>
                     { description }
                 </TextBlock>

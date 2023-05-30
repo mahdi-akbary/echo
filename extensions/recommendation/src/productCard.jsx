@@ -12,6 +12,7 @@ import {
     useTotalAmount,
     Select,
     useSettings,
+    InlineStack,
 } from "@shopify/checkout-ui-extensions-react";
 import { useState } from "react";
 
@@ -19,10 +20,11 @@ export function ProductCard({ product }) {
     const { i18n } = useExtensionApi();
     const { currencyCode } = useTotalAmount();
     const [ error, setError ] = useState();
-    const { show_variants, border, padding, button_style, add_to_cart_label } = useSettings();
+    const { show_variants, border, padding, button_style, add_to_cart_label, include_price } = useSettings();
     const showVariants = show_variants ? true : false;
     const borderStyle = border ? 'base' : 'none';
     const addToCartLabel = add_to_cart_label ? add_to_cart_label : 'Add to cart';
+    const includePrice = include_price ? true : false;
 
     // activeVariant is the first variant from product.variants.edges which has availableForSale = true
     const [ activeVariant, setActiveVariant ] = useState(product?.variants?.edges.find(variant => variant.node.availableForSale));
@@ -74,7 +76,9 @@ export function ProductCard({ product }) {
                 </Text>
                 <BlockSpacer spacing="extraTight" />
                     <Text size="base" emphasis="bold">
-                    {firstVariantPrice(product)}
+                    { !includePrice &&
+                        <Text size="base" emphasis="bold"> {firstVariantPrice(product)} </Text>
+                    }
                 </Text>
                 <BlockSpacer spacing="extraTight" />
                 { showVariants &&
@@ -103,20 +107,33 @@ export function ProductCard({ product }) {
                 }
             </TextBlock>
             <View inlineAlignment="end">
-                <Button
+                <Button 
                     kind={button_style}
                     loading={loading}
                     disabled={error}
-                    onPress={handleAddToCart}
-                    size="slim"
-                    fullWidth={true}
-                    > {addToCartLabel} </Button>
+                    onPress={handleAddToCart}                    
+                    > 
+
+                    <InlineStack spacing="tight" blockAlignment={"center"} inlineAlignment={"start"}>
+                        <View>
+                            { addToCartLabel }
+                        </View>
+                        { includePrice &&
+                            <>
+                                <View> &#x2022; </View>
+                                <View>
+                                    {firstVariantPrice(product)}
+                                </View>
+                            </>
+                        }
+                    </InlineStack>
+                </Button>
             </View>
         </InlineLayout>
     );
 
     function firstVariantPrice(product) {
         const price = product.variants.edges[0].node.price.amount;
-        return i18n.formatCurrency(price, { currencyCode: currencyCode });
+        return i18n.formatCurrency(price, { currencyCode: currencyCode }).replace(/\.\d+$/, '');
     }        
 }

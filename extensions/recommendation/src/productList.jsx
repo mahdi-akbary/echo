@@ -103,7 +103,7 @@ export function ProductList({ product }) {
                     onPress={handleAddToCart}                    
                     > 
 
-                    <InlineStack spacing="base" blockAlignment={"center"} inlineAlignment={"center"}>
+                    <InlineStack spacing="tight" blockAlignment={"center"} inlineAlignment={"center"}>
                         <View>
                             { addToCartLabel }
                         </View>
@@ -116,8 +116,7 @@ export function ProductList({ product }) {
                             </>
                         }
                     </InlineStack>
-                  
-                    </Button>
+                </Button>
             </View>
 
         </BlockLayout>

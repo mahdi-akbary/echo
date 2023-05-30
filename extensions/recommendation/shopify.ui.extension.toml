@@ -46,6 +46,14 @@ network_access = true
     value = '["Related","Complementary"]'
 
   [[settings.fields]]
+  key = "layout"
+  type = "single_line_text_field"
+  name = "Layout"
+  [[settings.fields.validations]]
+  name = "choices"
+  value = '["Grids","Rows"]'
+
+  [[settings.fields]]
   key = "limit"
   type = "single_line_text_field"
   name = "Products limit"
@@ -82,3 +90,9 @@ network_access = true
   [[settings.fields.validations]]
   name = "choices"
   value = '["primary","secondary","plain"]'
+  
+  [[settings.fields]]
+  key = "include_price"
+  type = "boolean"
+  name = "Include price"
+  description = "Add price in the add to cart label"

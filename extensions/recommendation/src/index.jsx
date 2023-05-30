@@ -8,10 +8,13 @@ import {
   useCartLines,
   Heading,
   BlockSpacer,
+  View,
+  Grid
 } from '@shopify/checkout-ui-extensions-react';
 
 import { getCountryCode } from './getCountryCode.jsx';
 import { ProductCard } from './productCard.jsx';
+import { ProductList } from './productList.jsx';
 
 render('Checkout::Dynamic::Render', () => <App />);
 
@@ -19,14 +22,15 @@ function App() {
   const { query } = useExtensionApi();
   const [ data, setData ] = useState();
   const { currencyCode } = useTotalAmount();
-  const { title, recommendation_source, recommendation_algorithm, limit } = useSettings();
+  const { title, recommendation_source, recommendation_algorithm, limit, layout } = useSettings();
 
   // If title is not set, use default title
   const bannerTitle = title || 'You may also like ';
   // lowercase the recommendation source
   const recommendationSource = recommendation_source == 'First line item ' ? 'first' : recommendation_source == 'Last line item ' ? 'last' : recommendation_source == 'Most expensive item' ? 'expensive' : recommendation_source == 'Least expensive item' ? 'cheap' : 'first';
   const recommendationAlgorithm = recommendation_algorithm == 'Related' ? 'RELATED' : 'RELATED';
-  const recommendationLimit = limit ? limit : 3;
+  const recommendationLimit = limit ? limit : 2;
+  const recommendationLayout = layout == 'Grids' ? 'grids' : 'rows';
 
   // Get the merchandise id from the first line item
   const cartLines = useCartLines();
@@ -134,14 +138,34 @@ function App() {
 
   return hasProduct ? ( 
       <>
-          {/* Loop through productList and display */}
           <Heading>{ bannerTitle }</Heading>
           <BlockSpacer />
-          <BlockLayout spacing="tight">
-              {productList?.map((product, index) => (
-                <ProductCard key={index} product={product}/>
-              ))}
-          </BlockLayout>
+          { recommendationLayout == 'grids' ? 
+            <Grid spacing="tight" columns={['fill', 'fill', 'fill']}>
+              { productList?.map((product) => {
+                return (
+                    <ProductList 
+                      key={product.id}
+                      product={product}
+                    />
+                );
+               }
+              )}
+            </Grid> 
+            :
+            <BlockLayout spacing="tight" rows="auto" columns="1fr">
+              { productList?.map((product) => {
+                return (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                  />
+                );
+                }
+              )}
+            </BlockLayout>
+          }
+         
       </>
       ) : null;
 }

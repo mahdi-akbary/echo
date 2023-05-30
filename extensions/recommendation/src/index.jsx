@@ -31,7 +31,7 @@ function App() {
   const recommendationAlgorithm = recommendation_algorithm == 'Related' ? 'RELATED' : 'RELATED';
   const recommendationLimit = limit ? limit : 2;
   const recommendationLayout = layout == 'Grids' ? 'grids' : 'rows';
-  const gridLayout = grids == '1 column' ? ['fill'] : grids == '2 columns' ? ['fill', 'fill'] : grids == '3' ? ['fill', 'fill', 'fill'] : ['fill', 'fill', 'fill'];
+  const gridLayout = grids == '1 column' ? ['fill'] : grids == '2 columns' ? ['fill', 'fill'] : grids == '3 columns' ? ['fill', 'fill', 'fill'] : ['fill', 'fill', 'fill'];
 
   // Get the merchandise id from the first line item
   const cartLines = useCartLines();

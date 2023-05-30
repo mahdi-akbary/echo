@@ -13,10 +13,13 @@ import { useState } from "react";
 
 export function TrustCard({ title, description, icon, width }) {
 
-    const { border, padding } = useSettings();
+    let { border, padding, alignment } = useSettings();
+
+    alignment = 'center';
+
     const borderStyle = border ? 'base' : 'none';
     const imageWidth = width === "small" ? "16%" : width === "medium" ? "20%" : width === "large" ? "32%" : width === "extraLarge" ? "48%" : "16%";
-
+    
     return (
         <InlineLayout columns={[imageWidth, "fill"]}>
             <View border={border} padding="tight">
@@ -24,9 +27,9 @@ export function TrustCard({ title, description, icon, width }) {
             </View>
     
             <View border={border} padding="tight">
-                <Text emphasis="bold">{ title }</Text>
+                <TextBlock emphasis="bold" inlineAlignment={alignment}>{ title }</TextBlock>
                 <BlockSpacer spacing="extraTight" />
-                <TextBlock size="small" appearance="subdued">
+                <TextBlock size="small" inlineAlignment={alignment} appearance="subdued">
                     { description }
                 </TextBlock>
             </View>

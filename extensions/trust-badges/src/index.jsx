@@ -7,6 +7,7 @@ import {
   BlockSpacer,
   Text,
   Image,
+  Grid,
 } from "@shopify/checkout-ui-extensions-react";
 
 import { TrustCard } from "./trustCard.jsx";
@@ -32,8 +33,8 @@ function App() {
   
   const imageWidth = image_width === "small" ? "16%" : image_width === "medium" ? "20%" : image_width === "large" ? "32%" : image_width === "extraLarge" ? "48%" : "16%";
 
-  const recommendationLayout = layout == 'Grids' ? 'grids' : 'rows';
-  const gridLayout = grids == '1 column' ? ['fill'] : grids == '2 columns' ? ['fill', 'fill'] : grids == '3' ? ['fill', 'fill', 'fill'] : ['fill', 'fill', 'fill'];
+  const recommendationLayout = layout == 'Grids' ? 'grids' : 'grids';
+  const gridLayout = grids == '1 column' ? ['fill'] : grids == '2 columns' ? ['fill', 'fill'] : grids == '3' ? ['fill', 'fill', 'fill']: grids == '4' ? ['fill', 'fill', 'fill', 'fill'] : ['fill', 'fill', 'fill'];
 
   // Set default values for trust badges 1 
   if (!trust_title1) {
@@ -77,7 +78,7 @@ function App() {
         </>
 
       ) : (
-        <>
+        <Grid spacing="tight" columns={gridLayout}>
           { trust_title1  && (
             <TrustList
               title={trust_title1}
@@ -102,8 +103,7 @@ function App() {
               imageWidth={imageWidth}
             />
           )}
-
-        </>
+        </Grid>
       )}
     </>
   );

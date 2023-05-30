@@ -37,7 +37,7 @@ extension_points = [
     name = "Grids"
     [[settings.fields.validations]]
     name = "choices"
-    value = '["1 column","2 columns", "3 columns"]'
+    value = '["1 column","2 columns", "3 columns", "4 columns"]'
 
 
     [[settings.fields]]

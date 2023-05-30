@@ -16,15 +16,15 @@ render("Checkout::Dynamic::Render", () => <App />);
 
 function App() {
   let { 
-    trust1_title, 
-    trust1_description, 
-    trust1_icon, 
-    trust2_title, 
-    trust2_description, 
-    trust2_icon, 
-    trust3_title, 
-    trust3_description, 
-    trust3_icon, 
+    trust_title1, 
+    trust_description1, 
+    trust_icon1, 
+    trust_title2, 
+    trust_description2, 
+    trust_icon2, 
+    trust_title3, 
+    trust_description3, 
+    trust_icon3, 
     layout, 
     image_width,
     grids 
@@ -36,41 +36,41 @@ function App() {
   const gridLayout = grids == '1 column' ? ['fill'] : grids == '2 columns' ? ['fill', 'fill'] : grids == '3' ? ['fill', 'fill', 'fill'] : ['fill', 'fill', 'fill'];
 
   // Set default values for trust badges 1 
-  if (!trust1_title) {
-    trust1_title = "Trusted by 1000s of customers";
+  if (!trust_title1) {
+    trust_title1 = "Trusted by 1000s of customers";
   }
-  if (!trust1_description) {
-    trust1_description = "Happy customers, end to end tracking and reliable customer service"; 
+  if (!trust_description1) {
+    trust_description1 = "Happy customers, end to end tracking and reliable customer service"; 
   }
-  if (!trust1_icon) {
-    trust1_icon = "https://cdn.shopify.com/s/files/1/0725/8836/2008/files/trust-badge.png";
+  if (!trust_icon1) {
+    trust_icon1 = "https://cdn.shopify.com/s/files/1/0725/8836/2008/files/trust-badge.png";
   }
 
   return (
     <>
       { recommendationLayout === 'rows' ? (
         <>
-          { trust1_title  && (
+          { trust_title1  && (
             <TrustCard
-              title={trust1_title}
-              description={trust1_description}
-              icon={trust1_icon}
+              title={trust_title1}
+              description={trust_description1}
+              icon={trust_icon1}
               imageWidth={imageWidth}
             />
           )}
-          { trust2_title  && (
+          { trust_title2  && (
             <TrustCard
-              title={trust2_title} 
-              description={trust2_description}
-              icon={trust2_icon}
+              title={trust_title2} 
+              description={trust_description2}
+              icon={trust_icon2}
               imageWidth={imageWidth}
             />
           )}
-          { trust3_title  && (
+          { trust_title3  && (
             <TrustCard
-              title={trust3_title}
-              description={trust3_description}
-              icon={trust3_icon}
+              title={trust_title3}
+              description={trust_description3}
+              icon={trust_icon3}
               imageWidth={imageWidth}
             />
           )}
@@ -78,27 +78,27 @@ function App() {
 
       ) : (
         <>
-          { trust1_title  && (
+          { trust_title1  && (
             <TrustList
-              title={trust1_title}
-              description={trust1_description}
-              icon={trust1_icon}
+              title={trust_title1}
+              description={trust_description1}
+              icon={trust_icon1}
               imageWidth={imageWidth}
             />
           )}
-          { trust2_title  && (
+          { trust_title2  && (
             <TrustList
-              title={trust2_title}
-              description={trust2_description}
-              icon={trust2_icon}
+              title={trust_title2}
+              description={trust_description2}
+              icon={trust_icon2}
               imageWidth={imageWidth}
             />
           )}
-          { trust3_title  && (
+          { trust_title3  && (
             <TrustList
-              title={trust3_title}
-              description={trust3_description}
-              icon={trust3_icon}
+              title={trust_title3}
+              description={trust_description3}
+              icon={trust_icon3}
               imageWidth={imageWidth}
             />
           )}

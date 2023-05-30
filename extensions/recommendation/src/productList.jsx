@@ -19,7 +19,7 @@ export function ProductList({ product }) {
     const { i18n } = useExtensionApi();
     const { currencyCode } = useTotalAmount();
     const [ error, setError ] = useState();
-    const { show_variants, border, padding, button_style, add_to_cart_label, include_price } = useSettings();
+    const { show_variants, border, padding, button_style, add_to_cart_label, include_price, button_size } = useSettings();
     const showVariants = show_variants ? true : false;
     const borderStyle = border ? 'base' : 'none';
     const addToCartLabel = add_to_cart_label ? add_to_cart_label : 'Add to cart';

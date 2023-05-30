@@ -57,6 +57,7 @@ extension_points = [
     key = "alignment"
     type = "single_line_text_field"
     name = "Text alignment"
+    description = "Only works for classic style"
       [[settings.fields.validations]]
         name = "choices"
         value = '["start","center","end"]'

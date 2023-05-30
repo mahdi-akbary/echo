@@ -20,7 +20,7 @@ export function ProductCard({ product }) {
     const { i18n } = useExtensionApi();
     const { currencyCode } = useTotalAmount();
     const [ error, setError ] = useState();
-    const { show_variants, border, padding, button_style, add_to_cart_label, include_price } = useSettings();
+    const { show_variants, border, padding, button_style, add_to_cart_label, include_price, button_size } = useSettings();
     const showVariants = show_variants ? true : false;
     const borderStyle = border ? 'base' : 'none';
     const addToCartLabel = add_to_cart_label ? add_to_cart_label : 'Add to cart';
@@ -71,15 +71,12 @@ export function ProductCard({ product }) {
             </View>
             <TextBlock>
                 <Text size="base" emphasis="bold">
-                {" "}
-                {product.title}{" "}
+                    {product.title}
                 </Text>
                 <BlockSpacer spacing="extraTight" />
-                    <Text size="base" emphasis="bold">
-                    { !includePrice &&
-                        <Text size="base" emphasis="bold"> {firstVariantPrice(product)} </Text>
-                    }
-                </Text>
+                { !includePrice &&
+                    <Text size={button_size} appearance="subdued"> {firstVariantPrice(product)} </Text>
+                }
                 <BlockSpacer spacing="extraTight" />
                 { showVariants &&
                     <Select
@@ -102,7 +99,7 @@ export function ProductCard({ product }) {
                 { error && 
                     <View>
                         <BlockSpacer spacing="extraTight" />
-                        <Text appearance="critical" padding="extraTight"> { error} </Text>
+                        <Text appearance="critical" size="small" padding="extraTight"> { error} </Text>
                     </View>
                 }
             </TextBlock>
@@ -116,14 +113,16 @@ export function ProductCard({ product }) {
 
                     <InlineStack spacing="tight" blockAlignment={"center"} inlineAlignment={"start"}>
                         <View>
-                            { addToCartLabel }
+                            <Text size={ button_size }>
+                                {addToCartLabel}
+                            </Text>
                         </View>
                         { includePrice &&
                             <>
-                                <View> &#x2022; </View>
-                                <View>
+                                <TextBlock> &#x2022; </TextBlock>
+                                <Text size={ button_size }>
                                     {firstVariantPrice(product)}
-                                </View>
+                                </Text>
                             </>
                         }
                     </InlineStack>

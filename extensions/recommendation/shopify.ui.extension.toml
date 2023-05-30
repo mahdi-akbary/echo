@@ -92,6 +92,14 @@ network_access = true
   value = '["primary","secondary","plain"]'
   
   [[settings.fields]]
+  key = "button_size"
+  type = "single_line_text_field"
+  name = "Button size"
+  [[settings.fields.validations]]
+  name = "choices"
+  value = '["extraSmall","small","base", "large", "extraLarge", "medium"]'
+  
+  [[settings.fields]]
   key = "include_price"
   type = "boolean"
   name = "Include price"

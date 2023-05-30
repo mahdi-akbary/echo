@@ -5,7 +5,7 @@ import {
     Text,
     View,
     InlineLayout,
-    InlineSpacer,
+    TextBlock,
     BlockSpacer,
     useApplyCartLinesChange,
     useExtensionApi,
@@ -93,7 +93,7 @@ export function ProductList({ product }) {
             </View>
             <View>
                 { !includePrice &&
-                    <Text size="base" emphasis="bold"> {firstVariantPrice(product)} </Text>
+                    <Text size="base" emphasis=""> {firstVariantPrice(product)} </Text>
                 }
                 <BlockSpacer spacing="tight" />
                 <Button 

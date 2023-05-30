@@ -1,11 +1,11 @@
 import { Card, Page, Layout, TextContainer, Text } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 
-export default function PageName() {
+export default function Pricing() {
   return (
     <Page>
       <TitleBar
-        title="Page name"
+        title="Pricing"
         primaryAction={{
           content: "Primary action",
           onAction: () => console.log("Primary action"),

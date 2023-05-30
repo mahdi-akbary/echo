@@ -79,11 +79,10 @@ export default function HomePage() {
             <Text variant="headingLg" as="h2">
               Dashboard & Analytics
             </Text>
-
             <Text as="span" color="subdued">No supplier listed</Text>
-          </VerticalStack>
-          
+            <Divider borderWidth="0" />
 
+          </VerticalStack>
         </Layout.Section>
         <Layout.Section>
           <VerticalStack gap={{ xs: "8", sm: "4" }}>
@@ -94,10 +93,10 @@ export default function HomePage() {
                   paddingInlineEnd={{ xs: 4, sm: 0 }}>
                   <VerticalStack gap="4">
                     <Text as="h3" variant="headingMd">
-                      InterJambs
+                      AI Product Recommendations
                     </Text>
                     <Text as="p" variant="bodyMd">
-                      Interjambs are the rounded protruding bits of your puzzlie piece
+                      Use AI to recommend products to your customers. View analytics to see how your recommendations are performing.
                     </Text>
                   </VerticalStack>
                 </Box>

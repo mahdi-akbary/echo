@@ -70,7 +70,7 @@ network_access = true
   [[settings.fields]]
   key = "show_variants"
   type = "boolean"
-  name = "Show variants"
+  name = "Show variants selector"
   description = "You can hide variant selector if you want to display only product"
 
   [[settings.fields]]

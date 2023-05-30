@@ -72,7 +72,7 @@ export function ProductList({ product }) {
 
             <View inlineAlignment="start">
                 <Text size="base" emphasis="bold"> {product.title} </Text>
-                { showVariants &&
+                { showVariants  && product?.variants?.edges?.length > 1 &&
                     <Select label="Select variant"
                         value={activeVariant.node.id}
                         onChange={(value) => {

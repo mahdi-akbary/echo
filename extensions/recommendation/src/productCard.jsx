@@ -78,7 +78,7 @@ export function ProductCard({ product }) {
                     <Text size={button_size} appearance="subdued"> {firstVariantPrice(product)} </Text>
                 }
                 <BlockSpacer spacing="extraTight" />
-                { showVariants &&
+                { showVariants && product?.variants?.edges?.length > 1 && 
                     <Select
                         label="Select variant"
                         labelHidden

@@ -43,15 +43,15 @@ function App() {
   }
 
   // Set default values for trust badges 1 
-  if (!trust_title2) {
-    trust_title2 = "Free shipping on all orders";
-  }
-  if (!trust_description2) {
-    trust_description2 = "Free shipping on all orders over $50";
-  }
-  if (!trust_icon2) {
-    trust_icon2 = "https://cdn.shopify.com/s/files/1/0725/8836/2008/files/trust-badge.png";
-  }
+  // if (!trust_title2) {
+  //   trust_title2 = "Free shipping on all orders";
+  // }
+  // if (!trust_description2) {
+  //   trust_description2 = "Free shipping on all orders over $50";
+  // }
+  // if (!trust_icon2) {
+  //   trust_icon2 = "https://cdn.shopify.com/s/files/1/0725/8836/2008/files/trust-badge.png";
+  // }
   
 
   return (

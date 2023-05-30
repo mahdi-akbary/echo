@@ -1,13 +1,8 @@
 import {
   render,
-  InlineLayout,
   useSettings,
-  TextBlock,
-  View,
-  BlockSpacer,
-  Text,
-  Image,
   Grid,
+  BlockLayout,
 } from "@shopify/checkout-ui-extensions-react";
 
 import { TrustCard } from "./trustCard.jsx";
@@ -47,11 +42,22 @@ function App() {
     trust_icon1 = "https://cdn.shopify.com/s/files/1/0725/8836/2008/files/trust-badge.png";
   }
 
+  // Set default values for trust badges 1 
+  if (!trust_title2) {
+    trust_title2 = "Free shipping on all orders";
+  }
+  if (!trust_description2) {
+    trust_description2 = "Free shipping on all orders over $50";
+  }
+  if (!trust_icon2) {
+    trust_icon2 = "https://cdn.shopify.com/s/files/1/0725/8836/2008/files/trust-badge.png";
+  }
+  
 
   return (
     <>
       { recommendationLayout === 'rows' ? (
-        <>
+        <BlockLayout spacing={"base"}>
           { trust_title1  && (
             <TrustCard
               title={trust_title1}
@@ -76,7 +82,7 @@ function App() {
               imageWidth={imageWidth}
             />
           )}
-        </>
+        </BlockLayout>
 
       ) : (
         <Grid spacing="tight" columns={gridLayout}>

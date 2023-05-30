@@ -4,8 +4,6 @@ import {
     Image,
     Text,
     View,
-    InlineLayout,
-    TextBlock,
     BlockSpacer,
     useApplyCartLinesChange,
     useExtensionApi,
@@ -14,7 +12,6 @@ import {
     useSettings,
     BlockLayout,
     InlineStack,
-    Grid,
 } from "@shopify/checkout-ui-extensions-react";
 import { useState } from "react";
 
@@ -93,7 +90,7 @@ export function ProductList({ product }) {
             </View>
             <View>
                 { !includePrice &&
-                    <Text size="base" emphasis=""> {firstVariantPrice(product)} </Text>
+                    <Text size={button_size} appearance="subdued"> {firstVariantPrice(product)} </Text>
                 }
                 <BlockSpacer spacing="tight" />
                 <Button 
@@ -110,9 +107,9 @@ export function ProductList({ product }) {
                         { includePrice &&
                             <>
                                 <View> &#x2022; </View>
-                                <View>
+                                <Text>
                                     {firstVariantPrice(product)}
-                                </View>
+                                </Text>
                             </>
                         }
                     </InlineStack>

@@ -22,7 +22,7 @@ function App() {
   const { query } = useExtensionApi();
   const [ data, setData ] = useState();
   const { currencyCode } = useTotalAmount();
-  const { title, recommendation_source, recommendation_algorithm, limit, layout } = useSettings();
+  const { title, recommendation_source, recommendation_algorithm, limit, layout, grids } = useSettings();
 
   // If title is not set, use default title
   const bannerTitle = title || 'You may also like ';
@@ -31,6 +31,7 @@ function App() {
   const recommendationAlgorithm = recommendation_algorithm == 'Related' ? 'RELATED' : 'RELATED';
   const recommendationLimit = limit ? limit : 2;
   const recommendationLayout = layout == 'Grids' ? 'grids' : 'rows';
+  const gridLayout = grids == '1 column' ? ['fill'] : grids == '2 columns' ? ['fill', 'fill'] : grids == '3' ? ['fill', 'fill', 'fill'] : ['fill', 'fill', 'fill'];
 
   // Get the merchandise id from the first line item
   const cartLines = useCartLines();
@@ -141,7 +142,7 @@ function App() {
           <Heading>{ bannerTitle }</Heading>
           <BlockSpacer />
           { recommendationLayout == 'grids' ? 
-            <Grid spacing="tight" columns={['fill', 'fill', 'fill']}>
+            <Grid spacing="tight" columns={gridLayout}>
               { productList?.map((product) => {
                 return (
                     <ProductList 

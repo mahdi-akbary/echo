@@ -54,6 +54,14 @@ network_access = true
   value = '["Grids","Rows"]'
 
   [[settings.fields]]
+  key = "grids"
+  type = "single_line_text_field"
+  name = "Grids"
+  [[settings.fields.validations]]
+  name = "choices"
+  value = '["1 column","2 columns", "3 columns"]'
+
+  [[settings.fields]]
   key = "limit"
   type = "single_line_text_field"
   name = "Products limit"

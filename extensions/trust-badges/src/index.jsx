@@ -33,7 +33,7 @@ function App() {
   
   const imageWidth = image_width === "small" ? "16%" : image_width === "medium" ? "20%" : image_width === "large" ? "32%" : image_width === "extraLarge" ? "48%" : "16%";
 
-  const recommendationLayout = layout == 'Grids' ? 'grids' : 'grids';
+  const recommendationLayout = layout == 'Grids' ? 'grids' : 'rows';
   const gridLayout = grids == '1 column' ? ['fill'] : grids == '2 columns' ? ['fill', 'fill'] : grids == '3' ? ['fill', 'fill', 'fill']: grids == '4' ? ['fill', 'fill', 'fill', 'fill'] : ['fill', 'fill', 'fill'];
 
   // Set default values for trust badges 1 

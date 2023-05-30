@@ -10,17 +10,11 @@ import {
     InlineStack,
     TextBlock, 
 } from "@shopify/checkout-ui-extensions-react";
-import { useState } from "react";
 
 export function TrustList({ title, description, icon, width }) {
 
     let { border, padding, alignment } = useSettings();
-
-    alignment = alignment ?? "center";
-
     const borderStyle = border ? 'base' : 'none';
-    const imageWidth = width === "small" ? "16%" : width === "medium" ? "20%" : width === "large" ? "32%" : width === "extraLarge" ? "48%" : "16%";
-
     
     return (
         <BlockLayout
@@ -29,10 +23,10 @@ export function TrustList({ title, description, icon, width }) {
             border={borderStyle}
             rows={['auto', 'fill', 'auto']}
             padding={padding}>
-                
+
             <InlineStack spacing="tight">
                 <View border={border}>
-                    <Image source={icon ?? "https://cdn.shopify.com/s/files/1/0725/8836/2008/files/trust-badge.png"} />
+                    <Image accessibilityDescription={description} source={icon ?? "https://cdn.shopify.com/s/files/1/0725/8836/2008/files/trust-badge.png"} />
                 </View>
                 <View>
                     <TextBlock emphasis="bold" inlineAlignment={alignment}>{ title }</TextBlock>

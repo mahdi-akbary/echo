@@ -9,13 +9,11 @@ import {
     BlockSpacer,
     useSettings,
 } from "@shopify/checkout-ui-extensions-react";
-import { useState } from "react";
+
 
 export function TrustCard({ title, description, icon, width }) {
 
     let { border, padding, alignment } = useSettings();
-
-    alignment = 'center';
 
     const borderStyle = border ? 'base' : 'none';
     const imageWidth = width === "small" ? "16%" : width === "medium" ? "20%" : width === "large" ? "32%" : width === "extraLarge" ? "48%" : "16%";
@@ -23,7 +21,7 @@ export function TrustCard({ title, description, icon, width }) {
     return (
         <InlineLayout columns={[imageWidth, "fill"]}>
             <View border={border} padding="tight">
-                <Image source={ icon ?? "https://cdn.shopify.com/s/files/1/0725/8836/2008/files/trust-badge.png"} />
+                <Image accessibilityDescription={description} source={ icon ?? "https://cdn.shopify.com/s/files/1/0725/8836/2008/files/trust-badge.png"} />
             </View>
     
             <View border={border} padding="tight">

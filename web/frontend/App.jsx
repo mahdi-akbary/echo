@@ -6,7 +6,10 @@ import {
   AppBridgeProvider,
   QueryProvider,
   PolarisProvider,
+  NavigationTabs,
 } from "./components";
+
+import { navStructure } from "./services/data";
 
 export default function App() {
   // Any .tsx or .jsx files in /pages will become a route
@@ -14,26 +17,18 @@ export default function App() {
   const pages = import.meta.globEager("./pages/**/!(*.test.[jt]sx)*.([jt]sx)");
 
   return (
-    <PolarisProvider>
-      <BrowserRouter>
-        <AppBridgeProvider>
-          <QueryProvider>
-            <NavigationMenu
-              navigationLinks={[
-                {
-                  label: "Dashboard",
-                  destination: "/",
-                },
-                {
-                  label: "Pricing",
-                  destination: "/pricing",
-                },
-              ]}
-            />
-            <Routes pages={pages} />
-          </QueryProvider>
-        </AppBridgeProvider>
-      </BrowserRouter>
-    </PolarisProvider>
+      <PolarisProvider>
+        <BrowserRouter>
+          <AppBridgeProvider>
+            <QueryProvider>
+              <NavigationTabs />
+              <NavigationMenu
+                navigationLinks={navStructure}
+              />
+              <Routes pages={pages} />
+            </QueryProvider>
+          </AppBridgeProvider>
+        </BrowserRouter>
+      </PolarisProvider>
   );
 }

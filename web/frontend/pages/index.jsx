@@ -79,7 +79,9 @@ export default function HomePage() {
             <Text variant="headingLg" as="h2">
               Dashboard & Analytics
             </Text>
-            <Text as="span" color="subdued">No supplier listed</Text>
+            <Text as="span" color="subdued">
+               Here’s what’s happening with your store in the past 7 days.
+            </Text>
             <Divider borderWidth="0" />
 
           </VerticalStack>

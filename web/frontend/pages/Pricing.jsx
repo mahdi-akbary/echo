@@ -19,7 +19,7 @@ const PricingData = [
   {
     title: "Free plan",
     price: "0",
-    description: "All features included",
+    description: "For small businesses",
     features: [
       "Up to 200 orders per month",
       "Basic support",
@@ -28,7 +28,7 @@ const PricingData = [
   {
     title: "Basic",
     price: "$29.99",
-    description: "Basic plan",
+    description: "For growing businesses",
     features: [
       "Up to 2000 orders per month",
       "Fast email support"
@@ -38,7 +38,7 @@ const PricingData = [
     title: "Premium",
     subheader: "Most popular",
     price: "$59.99",
-    description: "Premium plan",
+    description: "For large businesses",
     features: [
       "Unlimited orders",
       "Priority email support",
@@ -55,11 +55,17 @@ export default function Pricing() {
             { PricingData.map((pricing) => (
               <Grid.Cell columnSpan={{ xs: 12, md: 4, lg: 4, xl: 4 }}>
                 <Card sectioned>
-                    <Text variant="heading2xl" as="h2">{pricing.title}</Text>
-                    <Text>{ pricing.price == '0' ? 'Free' : pricing.price }</Text>
-                    <Text>{pricing.description}</Text>
-                    <Text>{pricing.buttonText}</Text>
-                    <Text>{pricing.buttonVariant}</Text>
+                    <VerticalStack gap='2'>
+                      <Text variant="heading2xl" as="h2">{pricing.title}</Text>
+                      <Text color="success" fontWeight="bold" variant="bodyLg">
+                        { pricing.price == '0' ? 'Free' : pricing.price } 
+                        <Text as="span" color="subdued" fontWeight="medium" variant="bodyMd">
+                          / month
+                        </Text>
+                      </Text>
+                      <Text>{pricing.description}</Text>
+                    </VerticalStack>
+                    <div style={{margin: '1rem' }}></div>
                     <VerticalStack gap="3">
                       <Divider />
                       { pricing.features.map((feature, index) => (
@@ -73,6 +79,10 @@ export default function Pricing() {
                         </HorizontalStack>
                       ))}
                     </VerticalStack>
+                    <div style={{margin: '1rem' }}></div>
+
+                    <Button primary fullWidth>Select plan</Button>
+
                 </Card>
               </Grid.Cell>
             ))

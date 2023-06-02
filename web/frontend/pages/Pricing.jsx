@@ -22,6 +22,10 @@ const PricingData = [
     description: "For small businesses",
     features: [
       "Up to 200 orders per month",
+      "Countdown timer",
+      "Product recommendations",
+      "Trust badges",
+      "Custom image banner",
       "Basic support",
     ],
   },
@@ -31,6 +35,10 @@ const PricingData = [
     description: "For growing businesses",
     features: [
       "Up to 2000 orders per month",
+      "Countdown timer",
+      "Product recommendations",
+      "Trust badges",
+      "Custom image banner",
       "Fast email support"
     ],
   },
@@ -41,6 +49,10 @@ const PricingData = [
     description: "For large businesses",
     features: [
       "Unlimited orders",
+      "Countdown timer",
+      "Product recommendations",
+      "Trust badges",
+      "Custom image banner",
       "Priority email support",
     ],
   },

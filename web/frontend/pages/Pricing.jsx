@@ -15,7 +15,6 @@ import {
 } from "@shopify/polaris";
 import { useNavigate, TitleBar, useAuthenticatedFetch} from "@shopify/app-bridge-react";
 import { CircleTickMajor } from '@shopify/polaris-icons';
-import { GraphqlQueryError, BillingInterval } from "@shopify/shopify-api";
 import { BILLING_PLANS } from "../../billing";
 import { useState } from "react";
 

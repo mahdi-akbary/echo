@@ -63,12 +63,12 @@ export default function Pricing() {
         <Layout.Section>
         <Grid>
             { BILLING_PLANS?.map((plan, index) => (
-              <Grid.Cell key={index} columnSpan={{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }}>
+              <Grid.Cell key={index} columnSpan={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 4 }}>
                 <Card sectioned>
                     <VerticalStack gap='2'>
                       <Text variant="heading2xl" as="h2">{plan.name}</Text>
                       <Text color="success" fontWeight="bold" variant="bodyLg">
-                        { plan.amount == '0' ? 'Free' : plan.amount } 
+                        { plan.amount == '0' ? 'Free' : '$' + plan.amount } 
                         <Text as="span" color="subdued" fontWeight="medium" variant="bodyMd">
                           / month
                         </Text>

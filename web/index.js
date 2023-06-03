@@ -39,6 +39,23 @@ app.use("/api/*", shopify.validateAuthenticatedSession());
 
 app.use(express.json());
 
+// Billing API
+
+app.post("/api/billings", async (req, res, next) => {
+  try {
+      const session = res.locals.shopify.session
+      const url = await shopify.api.billing.request({
+          session,
+          plan: req.body.name,
+          isTest:true,
+      });
+      res.status(200).send({ url: url });
+  } catch (e) {
+      console.log(`Failed to process products/create: ${e.message}`)
+      res.status(500).send(e.message)
+  }
+});
+
 app.get("/api/products/count", async (_req, res) => {
   const countData = await shopify.api.rest.Product.count({
     session: res.locals.shopify.session,

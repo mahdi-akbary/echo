@@ -32,29 +32,14 @@ app.post(
   shopify.processWebhooks({ webhookHandlers: GDPRWebhookHandlers })
 );
 
+app.get('/api/privacy', (_req, res) => {
+  res.send('Privacy Policy');
+});
+
 // If you are adding routes outside of the /api path, remember to
 // also add a proxy rule for them in web/frontend/vite.config.js
-
 app.use("/api/*", shopify.validateAuthenticatedSession());
-
 app.use(express.json());
-
-// Billing API
-
-app.post("/api/billings", async (req, res, next) => {
-  try {
-      const session = res.locals.shopify.session
-      const url = await shopify.api.billing.request({
-          session,
-          plan: req.body.name,
-          isTest:true,
-      });
-      res.status(200).send({ url: url });
-  } catch (e) {
-      console.log(`Failed to process products/create: ${e.message}`)
-      res.status(500).send(e.message)
-  }
-});
 
 app.get("/api/products/count", async (_req, res) => {
   const countData = await shopify.api.rest.Product.count({
@@ -77,6 +62,23 @@ app.get("/api/products/create", async (_req, res) => {
   res.status(status).send({ success: status === 200, error });
 });
 
+// Billing API
+app.post("/api/billings", async (req, res, next) => {
+  console.log('billing api');
+  try {
+      const session = res.locals.shopify.session
+      const url = await shopify.api.billing.request({
+          session,
+          plan: req.body.name,
+          isTest:true,
+      });
+      res.status(200).send({ url: url });
+  } catch (e) {
+      console.log(`Failed to process api ${e.message}`)
+      res.status(500).send(e.message)
+  }
+});
+
 app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));
 
@@ -86,5 +88,6 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
     .set("Content-Type", "text/html")
     .send(readFileSync(join(STATIC_PATH, "index.html")));
 });
+
 
 app.listen(PORT);

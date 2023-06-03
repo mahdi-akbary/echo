@@ -12,13 +12,33 @@ import {
   Button,
   CalloutCard,
 } from "@shopify/polaris";
-import { TitleBar } from "@shopify/app-bridge-react";
+import { TitleBar, useAuthenticatedFetch} from "@shopify/app-bridge-react";
 import { CircleTickMajor } from '@shopify/polaris-icons';
 import { GraphqlQueryError, BillingInterval } from "@shopify/shopify-api";
-import { BILLING_PLANS } from "../services/billing";
+import { BILLING_PLANS } from "../../billing";
+import { useState } from "react";
 
 
 export default function Pricing() {
+  const [loading, setLoading] = useState(false);
+  const fetch = useAuthenticatedFetch();
+
+  const onSubmit = async (data) => {
+    setLoading(true)
+    const url = '/api/billings';
+    const method = 'POST';
+    const response = await fetch(url, {
+      method,
+      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' },
+    });
+    if (response.ok) {
+      const { url } = await response.json()
+      navigate(url)
+      setLoading(false)
+    }
+  };
+
   return (
     <Page fullWidth>
       <Layout>
@@ -38,23 +58,23 @@ export default function Pricing() {
         </Layout.Section>
         <Layout.Section>
         <Grid>
-            { BILLING_PLANS?.map((pricing) => (
-              <Grid.Cell columnSpan={{ xs: 12, md: 4, lg: 4, xl: 4 }}>
+            { BILLING_PLANS?.map((plan, index) => (
+              <Grid.Cell key={index} columnSpan={{ xs: 12, md: 4, lg: 4, xl: 4 }}>
                 <Card sectioned>
                     <VerticalStack gap='2'>
-                      <Text variant="heading2xl" as="h2">{pricing.name}</Text>
+                      <Text variant="heading2xl" as="h2">{plan.name}</Text>
                       <Text color="success" fontWeight="bold" variant="bodyLg">
-                        { pricing.amount == '0' ? 'Free' : pricing.amount } 
+                        { plan.amount == '0' ? 'Free' : plan.amount } 
                         <Text as="span" color="subdued" fontWeight="medium" variant="bodyMd">
                           / month
                         </Text>
                       </Text>
-                      <Text>{pricing.description}</Text>
+                      <Text>{plan.description}</Text>
                     </VerticalStack>
                     <div style={{margin: '1rem' }}></div>
                     <VerticalStack gap="3">
                       <Divider />
-                      { pricing.features.map((feature, index) => (
+                      { plan.features.map((feature, index) => (
                         <HorizontalStack key={index} blockAlign='center' gap='3' wrap={false}>
                           <Box as="span" width="15px">
                             <Icon source={ CircleTickMajor } color='success' />
@@ -67,7 +87,7 @@ export default function Pricing() {
                     </VerticalStack>
                     <div style={{margin: '1rem' }}></div>
 
-                    <Button primary fullWidth>Select plan</Button>
+                    <Button primary fullWidth loading={loading} onClick={async () => (await onSubmit({ name: plan.name }))}> Select plan</Button>
 
                 </Card>
               </Grid.Cell>

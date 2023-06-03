@@ -10,6 +10,7 @@ import {
   Icon,
   HorizontalStack,
   Button,
+  CalloutCard,
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { CircleTickMajor } from '@shopify/polaris-icons';
@@ -62,6 +63,20 @@ export default function Pricing() {
   return (
     <Page fullWidth>
       <Layout>
+        <Layout.Section>
+          <CalloutCard
+            title="Please select a plan that suits your business"
+            illustration="https://cdn.shopify.com/s/files/1/0725/8836/2008/files/bill.png?v=1685711340"
+            primaryAction={{
+              content: 'Select plan',
+              url: '#',
+            }}>
+              <Text>
+                Select a plan that suits your business. You can upgrade or downgrade at any time. <br /> Based on the number of orders you receive per month, and the features you need.
+              </Text>
+
+          </CalloutCard>
+        </Layout.Section>
         <Layout.Section>
         <Grid>
             { PricingData.map((pricing) => (

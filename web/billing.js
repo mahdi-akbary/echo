@@ -2,8 +2,9 @@ import { GraphqlQueryError, BillingInterval } from "@shopify/shopify-api";
 
 export const BILLING_PLANS = [
     {
-        name: "Free plan",
-        amount: "0",
+        name: "Free",
+        id: "free",
+        amount: 0,
         currencyCode: "USD",
         interval: BillingInterval.Every30Days,
         description: "For small businesses",
@@ -18,7 +19,8 @@ export const BILLING_PLANS = [
     },
     {
         name: "Basic",
-        amount: "$29.99",
+        id: "basic",
+        amount: 29.99,
         currencyCode: "USD",
         interval: BillingInterval.Every30Days,
         description: "For growing businesses",
@@ -33,8 +35,9 @@ export const BILLING_PLANS = [
     },
     {
         name: "Premium",
+        id: "premium",
         subheader: "Most popular",
-        amount: "$59.99",
+        amount: 59.99,
         currencyCode: "USD",
         interval: BillingInterval.Every30Days,
         description: "For large businesses",

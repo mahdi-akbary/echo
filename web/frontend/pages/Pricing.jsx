@@ -11,8 +11,9 @@ import {
   HorizontalStack,
   Button,
   CalloutCard,
+
 } from "@shopify/polaris";
-import { TitleBar, useAuthenticatedFetch} from "@shopify/app-bridge-react";
+import { useNavigate, TitleBar, useAuthenticatedFetch} from "@shopify/app-bridge-react";
 import { CircleTickMajor } from '@shopify/polaris-icons';
 import { GraphqlQueryError, BillingInterval } from "@shopify/shopify-api";
 import { BILLING_PLANS } from "../../billing";
@@ -22,6 +23,7 @@ import { useState } from "react";
 export default function Pricing() {
   const [loading, setLoading] = useState(false);
   const fetch = useAuthenticatedFetch();
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     setLoading(true)
@@ -32,8 +34,10 @@ export default function Pricing() {
       body: JSON.stringify(data),
       headers: { 'Content-Type': 'application/json' },
     });
+    
     if (response.ok) {
-      const { url } = await response.json()
+      const data = await response.json();      
+      let url = data?.data.confirmationUrl;
       navigate(url)
       setLoading(false)
     }
@@ -59,7 +63,7 @@ export default function Pricing() {
         <Layout.Section>
         <Grid>
             { BILLING_PLANS?.map((plan, index) => (
-              <Grid.Cell key={index} columnSpan={{ xs: 12, md: 4, lg: 4, xl: 4 }}>
+              <Grid.Cell key={index} columnSpan={{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }}>
                 <Card sectioned>
                     <VerticalStack gap='2'>
                       <Text variant="heading2xl" as="h2">{plan.name}</Text>
@@ -87,7 +91,7 @@ export default function Pricing() {
                     </VerticalStack>
                     <div style={{margin: '1rem' }}></div>
 
-                    <Button primary fullWidth loading={loading} onClick={async () => (await onSubmit({ name: plan.name }))}> Select plan</Button>
+                    <Button primary fullWidth onClick={async () => (await onSubmit({ id: plan.id }))}> Select plan</Button>
 
                 </Card>
               </Grid.Cell>

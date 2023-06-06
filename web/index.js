@@ -3,11 +3,17 @@ import { join } from "path";
 import { readFileSync } from "fs";
 import express from "express";
 import serveStatic from "serve-static";
-
+import 'dotenv/config'
 import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import GDPRWebhookHandlers from "./gdpr.js";
 import { BILLING_PLANS } from "./billing.js";
+
+import { createClient } from "@supabase/supabase-js";
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_KEY,
+);
 
 const PORT = parseInt(
   process.env.BACKEND_PORT || process.env.PORT || "3000",
@@ -33,9 +39,31 @@ app.post(
   shopify.processWebhooks({ webhookHandlers: GDPRWebhookHandlers })
 );
 
-app.get('/api/privacy', (_req, res) => {
-  res.send('Privacy Policy');
+// Supabase API
+app.get("/billings", async (_req, res) => {
+
+  // const { data, error } = await supabase
+  //   .from('plans')
+  //   .insert([
+  //     { 
+  //       shop_id: 'example.myshopify.com', 
+  //       plan_id: '1233',
+  //       plan_name: 'Basic Plan',
+  //     },
+  //   ])
+    
+  // if (error) {
+  //   console.log('Error', error)
+  //   res.status(402).send({ success: false });
+  // } else {
+  //   console.log('data:', data)
+  //   res.status(200).send({ success: true });
+  // }
+  
+  res.status(200).send({ success: true });
+
 });
+
 
 // If you are adding routes outside of the /api path, remember to
 // also add a proxy rule for them in web/frontend/vite.config.js
@@ -63,6 +91,7 @@ app.get("/api/products/create", async (_req, res) => {
   res.status(status).send({ success: status === 200, error });
 });
 
+
 // Billing API
 app.post("/api/billings", async (req, res, next) => {
   const session = res.locals.shopify.session;
@@ -71,12 +100,13 @@ app.post("/api/billings", async (req, res, next) => {
   const plan = BILLING_PLANS.find((plan) => plan.id === id);
   const client = new shopify.api.clients.Graphql({ session });
 
+
   // Create a new recurring application charge with graghql
   const response = await client.query({
     data: `mutation {
       appSubscriptionCreate(
         name: "${plan?.name}",
-        returnUrl: "${ process.env.HOST }/pricing",
+        returnUrl: "${ process.env.HOST }/billings?shop=${ session.shop }&host=${ session.shop }",
         test: true,
         lineItems: [
           {

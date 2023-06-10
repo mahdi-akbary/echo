@@ -7,7 +7,7 @@ import 'dotenv/config'
 import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import GDPRWebhookHandlers from "./gdpr.js";
-import { BILLING_PLANS } from "./billing.js";
+import { billingApiEndPoints, BILLING_PLANS } from "./billing.js";
 
 import { createClient } from "@supabase/supabase-js";
 const supabase = createClient(
@@ -92,52 +92,53 @@ app.get("/api/products/create", async (_req, res) => {
 });
 
 
-// Billing API
-app.post("/api/billings", async (req, res, next) => {
-  const session = res.locals.shopify.session;
-  const id = req.body.id;
-  // Find the plan that matches the id
-  const plan = BILLING_PLANS.find((plan) => plan.id === id);
-  const client = new shopify.api.clients.Graphql({ session });
+// // Billing API
+// app.post("/api/billings", async (req, res, next) => {
+//   const session = res.locals.shopify.session;
+//   const id = req.body.id;
+//   // Find the plan that matches the id
+//   const plan = BILLING_PLANS.find((plan) => plan.id === id);
+//   const client = new shopify.api.clients.Graphql({ session });
 
 
-  // Create a new recurring application charge with graghql
-  const response = await client.query({
-    data: `mutation {
-      appSubscriptionCreate(
-        name: "${plan?.name}",
-        returnUrl: "${ process.env.HOST }/billings?shop=${ session.shop }&host=${ session.shop }",
-        test: true,
-        lineItems: [
-          {
-            plan: {
-              appRecurringPricingDetails: {
-                price: { amount: ${plan?.amount}, currencyCode: USD }
-                interval: EVERY_30_DAYS
-              }
-            }
-          }
-        ]
-      ) {
-        userErrors {
-          field
-          message
-        }
-        confirmationUrl
-        appSubscription {
-          id
-        }
-      }
-    }`,
-  });
+//   // Create a new recurring application charge with graghql
+//   const response = await client.query({
+//     data: `mutation {
+//       appSubscriptionCreate(
+//         name: "${plan?.name}",
+//         returnUrl: "${ process.env.HOST }/billings?shop=${ session.shop }&host=${ session.shop }",
+//         test: true,
+//         lineItems: [
+//           {
+//             plan: {
+//               appRecurringPricingDetails: {
+//                 price: { amount: ${plan?.amount}, currencyCode: USD }
+//                 interval: EVERY_30_DAYS
+//               }
+//             }
+//           }
+//         ]
+//       ) {
+//         userErrors {
+//           field
+//           message
+//         }
+//         confirmationUrl
+//         appSubscription {
+//           id
+//         }
+//       }
+//     }`,
+//  });
 
-  return res.status(200).send({
-    data: response?.body?.data?.appSubscriptionCreate,
-    status: response?.body?.data?.appSubscriptionCreate.userErrors.length > 0 ? 'error' : 'success'
-  });
+//   return res.status(200).send({
+//     data: response?.body?.data?.appSubscriptionCreate,
+//     status: response?.body?.data?.appSubscriptionCreate.userErrors.length > 0 ? 'error' : 'success'
+//   });
 
-});
+// });
 
+billingApiEndPoints(app, shopify)
 app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));
 

@@ -10,6 +10,7 @@ import {
 } from "./components";
 
 import { navStructure } from "./services/data";
+import { Frame } from "@shopify/polaris";
 
 export default function App() {
   // Any .tsx or .jsx files in /pages will become a route
@@ -25,7 +26,9 @@ export default function App() {
               <NavigationMenu
                 navigationLinks={navStructure}
               />
+              <Frame>
               <Routes pages={pages} />
+              </Frame>
             </QueryProvider>
           </AppBridgeProvider>
         </BrowserRouter>

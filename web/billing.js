@@ -95,7 +95,37 @@ export const billingApiEndPoints = (app, shopify) => {
 
             res.status(200).send({ url: url });
         } catch (e) {
-            console.log(`Failed to process billing: ${e}`)
+            console.error(`Failed to process billing: ${e}`)
+            res.status(500).send(e)
+        }
+    })
+    app.post("/api/billings/unsubscribe", async (req, res, next) => {
+        try {
+            const session = res.locals.shopify.session
+            const client = new shopify.api.clients.Graphql({ session });
+            const result = await client.query({
+                data: {
+                    query: `mutation AppSubscriptionCancel($id: ID!) {
+                        appSubscriptionCancel(id: $id) {
+                            userErrors {
+                            field
+                            message
+                            }
+                            appSubscription {
+                            id
+                            status
+                            }
+                    }
+                    }`,
+                        variables: {
+                            id: req.body.subscriptionId
+                        },
+                    },
+            })
+            const { status } = result?.body?.data?.appSubscriptionCancel?.appSubscription;
+            res.status(200).send();
+        } catch (e) {
+            console.error(`Failed to process unsubscription: ${e}`)
             res.status(500).send(e)
         }
     })
@@ -108,9 +138,9 @@ export const requestLastBillingGraphql = async (session, shopify) => {
         const result = await client.query({
             data: QUERY_LAST_BILLING_RECORD
         })
-        const [{ node, node: { status, lineItems:[{plan}] } }] = result?.body?.data?.currentAppInstallation?.allSubscriptions.edges
-        if (status === ACTIVE_STATUS) return {...node, amount: plan?.pricingDetails?.price?.amount}
-        return null
+        const [{ node, node: { status, lineItems: [{ plan }] } }] = result?.body?.data?.currentAppInstallation?.allSubscriptions.edges
+        if (status === ACTIVE_STATUS) return { ...node, amount: plan?.pricingDetails?.price?.amount }
+        return {}
     } catch (error) {
         if (error instanceof GraphqlQueryError) {
             throw new Error(

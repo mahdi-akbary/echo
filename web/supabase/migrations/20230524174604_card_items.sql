@@ -1,10 +1,13 @@
-create table "public"."card_items" (
+create table "public"."cart_items" (
     "id" bigserial primary key,
-    "shop" character varying,
-    "product_id" character varying,
-    "title" character varying,
-    "handle" character varying,
-    "description" text,
-    "status" character varying(255),
-    "url" text,
+    "shop" CHARACTER varying,
+    "product_id" CHARACTER varying,
+    "variant_id" CHARACTER varying,
+    "variant_title" CHARACTER varying,
+    "product_title" CHARACTER varying,
+    "handle" CHARACTER varying,
+    "price" FLOAT NOT NULL,
+    "price_currency" CHARACTER varying ,
+    "image_alt" CHARACTER varying,
+    "image_url" TEXT
 );

@@ -8,7 +8,6 @@ import {
   useCartLines,
   Heading,
   BlockSpacer,
-  View,
   Grid
 } from '@shopify/checkout-ui-extensions-react';
 
@@ -17,7 +16,6 @@ import { ProductCard } from './productCard.jsx';
 import { ProductList } from './productList.jsx';
 
 render('Checkout::Dynamic::Render', () => <App />);
-
 function App() {
   const { query } = useExtensionApi();
   const [ data, setData ] = useState();

@@ -11,8 +11,8 @@ import { billingApiEndPoints, BILLING_PLANS } from "./billing.js";
 
 import { createClient } from "@supabase/supabase-js";
 const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY,
+  process.env.SUPABASE_URL || '',
+  process.env.SUPABASE_KEY || '',
 );
 
 const PORT = parseInt(
@@ -51,7 +51,7 @@ app.get("/billings", async (_req, res) => {
   //       plan_name: 'Basic Plan',
   //     },
   //   ])
-    
+
   // if (error) {
   //   console.log('Error', error)
   //   res.status(402).send({ success: false });
@@ -59,16 +59,44 @@ app.get("/billings", async (_req, res) => {
   //   console.log('data:', data)
   //   res.status(200).send({ success: true });
   // }
-  
+
   res.status(200).send({ success: true });
 
 });
-
 
 // If you are adding routes outside of the /api path, remember to
 // also add a proxy rule for them in web/frontend/vite.config.js
 app.use("/api/*", shopify.validateAuthenticatedSession());
 app.use(express.json());
+
+// api to insert to supabase database reading from req body
+app.post("/api/cart-items", async (req, res) => {
+  const body = req.body;
+  const session = res.locals.shopify.session;
+  console.log(body)
+  try {
+    const { data, error } = await supabase
+      .from('card_items')
+      .insert({
+        shop: session?.shop,
+        product_id: body?.productId,
+        variant_id: body?.id,
+        variant_title: body?.title,
+        product_title: body?.productTitle,
+        handle: body?.handle,
+        price: body?.price.amount,
+        price_currency: body?.price.currencyCode,
+        image_alt: body?.image.altText,
+        image_url: body?.image.url
+      })
+      .select()
+
+    if (error) throw new Error(error.message)
+    res.status(200).send(data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+})
 
 app.get("/api/products/count", async (_req, res) => {
   const countData = await shopify.api.rest.Product.count({

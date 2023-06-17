@@ -16,17 +16,10 @@ import {
 } from "@shopify/checkout-ui-extensions-react";
 import { useEffect, useState } from "react";
 
-const BASE_URL = 'https://agricultural-api-roulette-picks.trycloudflare.com'
+const BASE_URL = 'https://trustee-realty-saying-breakfast.trycloudflare.com'
 
 export function ProductCard ({ product }) {
     const { sessionToken } = useExtensionApi();
-    const [token, setToken] = useState();
-
-
-    useEffect(async () => {
-        const token = await sessionToken.get();
-        setToken(token);
-    })
     const { i18n } = useExtensionApi();
     const { currencyCode } = useTotalAmount();
     const [error, setError] = useState();
@@ -41,10 +34,10 @@ export function ProductCard ({ product }) {
 
     const [loading, setLoading] = useState(false);
     const applyCartLinesChange = useApplyCartLinesChange();
-    console.log(activeVariant, product)
-    
+
     const storeCartItem = async () => {
         try {
+            const token = await sessionToken.get();
             const response = await fetch(`${BASE_URL}/api/cart-items`,
                 {
                     method: 'POST',
@@ -61,9 +54,8 @@ export function ProductCard ({ product }) {
                 }
             );
             const data = await response.json();
-            console.log(data);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 

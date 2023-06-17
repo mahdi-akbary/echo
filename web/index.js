@@ -73,10 +73,9 @@ app.use(express.json());
 app.post("/api/cart-items", async (req, res) => {
   const body = req.body;
   const session = res.locals.shopify.session;
-  console.log(body)
   try {
     const { data, error } = await supabase
-      .from('card_items')
+      .from('cart_items')
       .insert({
         shop: session?.shop,
         product_id: body?.productId,
@@ -90,10 +89,10 @@ app.post("/api/cart-items", async (req, res) => {
         image_url: body?.image.url
       })
       .select()
-
     if (error) throw new Error(error.message)
-    res.status(200).send(data);
+    res.status(200).send(data[0]);
   } catch (error) {
+    console.error(error)
     res.status(500).send(error);
   }
 })

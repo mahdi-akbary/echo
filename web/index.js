@@ -7,9 +7,10 @@ import 'dotenv/config'
 import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import GDPRWebhookHandlers from "./gdpr.js";
-import { billingApiEndPoints, BILLING_PLANS } from "./billing.js";
+import { billingApiEndPoints } from "./billing.js";
 
 import { createClient } from "@supabase/supabase-js";
+import cartItemApiEndPoints from "./api/cart-item.api.js";
 const supabase = createClient(
   process.env.SUPABASE_URL || '',
   process.env.SUPABASE_KEY || '',
@@ -39,63 +40,10 @@ app.post(
   shopify.processWebhooks({ webhookHandlers: GDPRWebhookHandlers })
 );
 
-// Supabase API
-app.get("/billings", async (_req, res) => {
-
-  // const { data, error } = await supabase
-  //   .from('plans')
-  //   .insert([
-  //     { 
-  //       shop_id: 'example.myshopify.com', 
-  //       plan_id: '1233',
-  //       plan_name: 'Basic Plan',
-  //     },
-  //   ])
-
-  // if (error) {
-  //   console.log('Error', error)
-  //   res.status(402).send({ success: false });
-  // } else {
-  //   console.log('data:', data)
-  //   res.status(200).send({ success: true });
-  // }
-
-  res.status(200).send({ success: true });
-
-});
-
 // If you are adding routes outside of the /api path, remember to
 // also add a proxy rule for them in web/frontend/vite.config.js
 app.use("/api/*", shopify.validateAuthenticatedSession());
 app.use(express.json());
-
-// api to insert to supabase database reading from req body
-app.post("/api/cart-items", async (req, res) => {
-  const body = req.body;
-  const session = res.locals.shopify.session;
-  try {
-    const { data, error } = await supabase
-      .from('cart_items')
-      .insert({
-        shop: session?.shop,
-        product_id: body?.productId,
-        variant_id: body?.id,
-        variant_title: body?.title,
-        product_title: body?.productTitle,
-        handle: body?.handle,
-        price: body?.price.amount,
-        price_currency: body?.price.currencyCode,
-        image_alt: body?.image.altText,
-        image_url: body?.image.url
-      })
-      .select()
-    if (error) throw new Error(error.message)
-    res.status(200).send(data[0]);
-  } catch (error) {
-    console.error(error)
-    res.status(500).send(error);
-  }
-})
 
 app.get("/api/products/count", async (_req, res) => {
   const countData = await shopify.api.rest.Product.count({
@@ -118,53 +66,7 @@ app.get("/api/products/create", async (_req, res) => {
   res.status(status).send({ success: status === 200, error });
 });
 
-
-// // Billing API
-// app.post("/api/billings", async (req, res, next) => {
-//   const session = res.locals.shopify.session;
-//   const id = req.body.id;
-//   // Find the plan that matches the id
-//   const plan = BILLING_PLANS.find((plan) => plan.id === id);
-//   const client = new shopify.api.clients.Graphql({ session });
-
-
-//   // Create a new recurring application charge with graghql
-//   const response = await client.query({
-//     data: `mutation {
-//       appSubscriptionCreate(
-//         name: "${plan?.name}",
-//         returnUrl: "${ process.env.HOST }/billings?shop=${ session.shop }&host=${ session.shop }",
-//         test: true,
-//         lineItems: [
-//           {
-//             plan: {
-//               appRecurringPricingDetails: {
-//                 price: { amount: ${plan?.amount}, currencyCode: USD }
-//                 interval: EVERY_30_DAYS
-//               }
-//             }
-//           }
-//         ]
-//       ) {
-//         userErrors {
-//           field
-//           message
-//         }
-//         confirmationUrl
-//         appSubscription {
-//           id
-//         }
-//       }
-//     }`,
-//  });
-
-//   return res.status(200).send({
-//     data: response?.body?.data?.appSubscriptionCreate,
-//     status: response?.body?.data?.appSubscriptionCreate.userErrors.length > 0 ? 'error' : 'success'
-//   });
-
-// });
-
+cartItemApiEndPoints(app, supabase)
 billingApiEndPoints(app, shopify)
 app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));

@@ -16,9 +16,7 @@ import {
 } from "@shopify/checkout-ui-extensions-react";
 import { useEffect, useState } from "react";
 
-const BASE_URL = 'https://trustee-realty-saying-breakfast.trycloudflare.com'
-
-export function ProductCard ({ product }) {
+export function ProductCard ({ product, baseUrl }) {
     const { sessionToken } = useExtensionApi();
     const { i18n } = useExtensionApi();
     const { currencyCode } = useTotalAmount();
@@ -38,7 +36,7 @@ export function ProductCard ({ product }) {
     const storeCartItem = async () => {
         try {
             const token = await sessionToken.get();
-            const response = await fetch(`${BASE_URL}/api/cart-items`,
+            const response = await fetch(`${baseUrl}/api/cart-items`,
                 {
                     method: 'POST',
                     headers: {

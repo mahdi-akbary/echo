@@ -1,4 +1,6 @@
+export { AddedProductList } from "./addedProductList";
 export { ProductsCard } from "./ProductsCard";
 export { NavigationTabs } from "./navigationTabs";
-export { DateBasedChart } from "./dateBasedChart";
+export { CountChart } from "./countChart"
 export * from "./providers";
+

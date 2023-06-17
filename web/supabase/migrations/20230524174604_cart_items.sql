@@ -9,5 +9,6 @@ create table "public"."cart_items" (
     "price" FLOAT NOT NULL,
     "price_currency" CHARACTER varying ,
     "image_alt" CHARACTER varying,
-    "image_url" TEXT
+    "image_url" TEXT,
+    "created_at" DATE default now()
 );

@@ -6,6 +6,7 @@ import { CircleTickMajor } from '@shopify/polaris-icons';
 import { BILLING_PLANS } from "../../billing";
 import { useState } from "react";
 import { useAppQuery } from "../hooks";
+import { TitleBar, } from "@shopify/app-bridge-react";
 
 export default function Pricing () {
   const [loading, setLoading] = useState(false);
@@ -103,6 +104,7 @@ export default function Pricing () {
     }} >Unsubscribe</Button> : null
   return (
     <Page fullWidth>
+      <TitleBar title="Pricing" primaryAction={null} />
       <Layout>
         <Layout.Section>
           <AlphaCard fullWidth>

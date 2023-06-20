@@ -8,13 +8,7 @@ import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import GDPRWebhookHandlers from "./gdpr.js";
 import { billingApiEndPoints } from "./billing.js";
-
-import { createClient } from "@supabase/supabase-js";
 import cartItemApiEndPoints from "./api/cart-item.api.js";
-const supabase = createClient(
-  process.env.SUPABASE_URL || '',
-  process.env.SUPABASE_KEY || '',
-);
 
 const PORT = parseInt(
   process.env.BACKEND_PORT || process.env.PORT || "3000",
@@ -66,7 +60,7 @@ app.get("/api/products/create", async (_req, res) => {
   res.status(status).send({ success: status === 200, error });
 });
 
-cartItemApiEndPoints(app, supabase)
+cartItemApiEndPoints(app)
 billingApiEndPoints(app, shopify)
 app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));

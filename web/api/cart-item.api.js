@@ -1,4 +1,6 @@
-export default function cartItemApiEndPoints (app, supabase) {
+import { supabase } from "../supabase/service.js";
+
+export default function cartItemApiEndPoints (app) {
     app.post("/api/cart-items", async (req, res) => {
         const body = req.body;
         const { session } = res.locals.shopify;

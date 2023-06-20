@@ -1,0 +1,47 @@
+# fly.toml app configuration file generated for checkout-plus on 2023-06-20T14:38:12+04:30
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "checkout-plus"
+kill_signal = "SIGINT"
+kill_timeout = 5
+primary_region = "syd"
+processes = []
+
+[build]
+
+[env]
+  HOST = "https://checkout-plus.fly.dev"
+  PORT = "8081"
+  SHOPIFY_API_KEY = "49be3e74c8a62e808de0bbbea1c1d985"
+  SCOPES = "unauthenticated_read_product_publications,unauthenticated_read_collection_publications,unauthenticated_read_product_listings,unauthenticated_read_product_tags,unauthenticated_read_selling_plans,unauthenticated_read_collection_listings,read_reports,read_orders"
+
+[experimental]
+  auto_rollback = true
+
+[[services]]
+  http_checks = []
+  internal_port = 8081
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    force_https = true
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"

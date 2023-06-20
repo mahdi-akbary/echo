@@ -14,7 +14,7 @@ import {
 import { getCountryCode } from './getCountryCode.jsx';
 import { ProductCard } from './productCard.jsx';
 import { ProductList } from './productList.jsx';
-const BASE_URL = 'https://trustee-realty-saying-breakfast.trycloudflare.com'
+const BASE_URL = 'https://checkout-plus.fly.dev'
 render('Checkout::Dynamic::Render', () => <App />);
 function App() {
   const { query } = useExtensionApi();

@@ -6,7 +6,7 @@ import serveStatic from "serve-static";
 import 'dotenv/config'
 import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
-import GDPRWebhookHandlers from "./gdpr.js";
+import { applyGDPREndpoints, bodyParserPrewiring } from "./gdpr.js";
 import { billingApiEndPoints } from "./billing.js";
 import cartItemApiEndPoints from "./api/cart-item.api.js";
 
@@ -21,19 +21,16 @@ const STATIC_PATH =
     : `${process.cwd()}/frontend/`;
 
 const app = express();
+bodyParserPrewiring(app, express)
 
-// Set up Shopify authentication and webhook handling
 app.get(shopify.config.auth.path, shopify.auth.begin());
 app.get(
   shopify.config.auth.callbackPath,
   shopify.auth.callback(),
   shopify.redirectToShopifyOrAppRoot()
 );
-app.post(
-  shopify.config.webhooks.path,
-  shopify.processWebhooks({ webhookHandlers: GDPRWebhookHandlers })
-);
 
+applyGDPREndpoints(app, express)
 // If you are adding routes outside of the /api path, remember to
 // also add a proxy rule for them in web/frontend/vite.config.js
 app.use("/api/*", shopify.validateAuthenticatedSession());

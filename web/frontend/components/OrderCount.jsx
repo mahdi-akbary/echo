@@ -27,7 +27,6 @@ export default function OrderCount() {
         const handlePopulate = async () => {
             setIsLoading(true);
             const response = await fetch("/api/orders/count");
-            console.log('response: ', response);
 
             if (response.ok) {
                 await refetchProductCount();
@@ -40,8 +39,6 @@ export default function OrderCount() {
         handlePopulate();
     }, []); // Empty dependency array ensures that the effect runs only once on component mount
     
-    console.log('data: ', data);
-
     return (
         <Banner title="Order count">
             <p>

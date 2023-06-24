@@ -1,5 +1,6 @@
 import shopify from "./shopify.js"
 import { validateWebhookRequest } from "./validateWebhookRequest.js";
+import { DeliveryMethod } from "@shopify/shopify-api";
 
 export const bodyParserPrewiring = (server, express) => {
   // save a raw (unprocessed) version of 'body' to 'rawBody'
@@ -46,4 +47,17 @@ export function applyGDPREndpoints(app, express) {
     async (req, res) => {
       res.status(200).json({});
     })
+}
+
+
+export const registerCustomWebhooks = {
+  webhookHandlers: {
+    APP_UNINSTALLED: {
+      deliveryMethod: DeliveryMethod.Http,
+      callbackUrl: "/api/webhooks",
+      callback: async (topic, shop, body, webhookId) => {
+        console.log('APP Removed.')
+      },
+    }
+  }
 }

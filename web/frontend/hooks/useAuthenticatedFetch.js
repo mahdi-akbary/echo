@@ -40,3 +40,17 @@ function checkHeadersForReauthorization(headers, app) {
     );
   }
 }
+
+export const getAppConfig = () => {
+  const host =
+    new URLSearchParams(location.search).get("host") ||
+    window.__SHOPIFY_DEV_HOST;
+
+  window.__SHOPIFY_DEV_HOST = host;
+
+  return {
+    host,
+    apiKey: process.env.SHOPIFY_API_KEY,
+    forceRedirect: true,
+  };
+}

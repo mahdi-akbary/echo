@@ -6,7 +6,7 @@ import serveStatic from "serve-static";
 import 'dotenv/config'
 import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
-import { applyGDPREndpoints, bodyParserPrewiring } from "./gdpr.js";
+import { applyGDPREndpoints, bodyParserPrewiring, registerCustomWebhooks } from "./gdpr.js";
 import { billingApiEndPoints } from "./billing.js";
 import cartItemApiEndPoints from "./api/cart-item.api.js";
 
@@ -28,6 +28,15 @@ app.get(
   shopify.config.auth.callbackPath,
   shopify.auth.callback(),
   shopify.redirectToShopifyOrAppRoot()
+);
+
+app.post(
+  shopify.config.webhooks.path,
+  (req, res, next) => {
+    req.body = req.rawBody
+    next(); // go on to the real webhook handler
+  },
+  shopify.processWebhooks(registerCustomWebhooks)
 );
 
 applyGDPREndpoints(app, express)

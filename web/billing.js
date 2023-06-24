@@ -74,9 +74,14 @@ export const getBillingConfig = () => {
 
 export const billingApiEndPoints = (app, shopify) => {
     app.get("/api/billings", async (req, res) => {
-        const session = res.locals.shopify.session
-        const result = await requestLastBillingGraphql(session, shopify)
-        res.status(200).send(result)
+        try {
+            const session = res.locals.shopify.session
+            const result = await requestLastBillingGraphql(session, shopify)
+            res.status(200).send(result)
+        } catch (error) {
+            console.error(error)
+            res.status(500).send(error)
+        }
     })
 
     app.post('/api/billings', async (req, res) => {
@@ -92,8 +97,7 @@ export const billingApiEndPoints = (app, shopify) => {
                 plan: planName,
                 isTest: !!process.env.TESTMODE,
             });
-
-            res.status(200).send({ url: url });
+            res.status(200).send({ redirectUrl: url });
         } catch (e) {
             console.error(`Failed to process billing: ${e}`)
             res.status(500).send(e)
@@ -117,10 +121,10 @@ export const billingApiEndPoints = (app, shopify) => {
                             }
                     }
                     }`,
-                        variables: {
-                            id: req.body.subscriptionId
-                        },
+                    variables: {
+                        id: req.body.subscriptionId
                     },
+                },
             })
             const { status } = result?.body?.data?.appSubscriptionCancel?.appSubscription;
             res.status(200).send();
@@ -138,8 +142,13 @@ export const requestLastBillingGraphql = async (session, shopify) => {
         const result = await client.query({
             data: QUERY_LAST_BILLING_RECORD
         })
-        const [{ node, node: { status, lineItems: [{ plan }] } }] = result?.body?.data?.currentAppInstallation?.allSubscriptions.edges
-        if (status === ACTIVE_STATUS) return { ...node, amount: plan?.pricingDetails?.price?.amount }
+        const [node] = result?.body?.data?.currentAppInstallation?.activeSubscriptions
+
+
+        if (node) {
+            const [{ lineItems: [{ plan }] }] = result?.body?.data?.currentAppInstallation?.activeSubscriptions
+            return { ...node, amount: plan?.pricingDetails?.price?.amount }
+        }
         return {}
     } catch (error) {
         if (error instanceof GraphqlQueryError) {
@@ -155,41 +164,37 @@ export const requestLastBillingGraphql = async (session, shopify) => {
 const QUERY_LAST_BILLING_RECORD = `
 query {
   currentAppInstallation {
-    allSubscriptions(first: 1, reverse:true) {
-      edges {
-        node {
-          lineItems {
-            plan {
-              pricingDetails {
-                __typename
-                ... on AppRecurringPricing {
-                  price {
-                    amount
-                    currencyCode
-                  }
+    activeSubscriptions {
+        lineItems {
+        plan {
+            pricingDetails {
+            __typename
+            ... on AppRecurringPricing {
+                price {
+                amount
+                currencyCode
                 }
-                ... on AppUsagePricing {
-                  balanceUsed {
-                    amount
-                    currencyCode
-                  }
-                  cappedAmount {
-                    amount
-                    currencyCode
-                  }
-                }
-              }
             }
-          }
-          createdAt
-          id
-          name
-          status
-          currentPeriodEnd
-          trialDays
-          test
+            ... on AppUsagePricing {
+                balanceUsed {
+                amount
+                currencyCode
+                }
+                cappedAmount {
+                amount
+                currencyCode
+                }
+            }
+            }
         }
-      }
+        }
+        createdAt
+        id
+        name
+        status
+        currentPeriodEnd
+        trialDays
+        test
     }
   }
 }`

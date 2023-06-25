@@ -2,7 +2,6 @@ type = "checkout_ui_extension"
 name = "AI product recommendation"
 api_version = "2023-04"
 
-
 extension_points = [
   'Checkout::Dynamic::Render'
 ]

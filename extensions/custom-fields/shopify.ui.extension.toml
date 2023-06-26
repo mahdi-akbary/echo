@@ -37,3 +37,9 @@ extension_points = [
   [[settings.fields.validations]]
     name = "choices"
     value = '["Gift message","Birthday","Date picker","Aggree to terms checkbox"]'
+
+  [[settings.fields]]
+  key = "terms_url"
+  type = "single_line_text_field"
+  name = "Terms and conditions URL"
+  description = "Attention: this field is only required if you choose 'Aggree to terms checkbox' type. Eg: https://yourterms.com"

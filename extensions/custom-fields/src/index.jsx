@@ -1,75 +1,62 @@
 import React, { useState } from 'react';
-import { useExtensionApi, render, useSettings, InlineStack, Checkbox, Text, Select, DatePicker, TextField, BlockStack } from '@shopify/checkout-ui-extensions-react';
+import {
+  useExtensionApi,
+  render,
+  useSettings,
+  InlineStack,
+  Checkbox,
+  Text, Select, TextField, BlockStack, View, InlineLayout, Button, Icon, Popover, Pressable, Link, useMetafields, useApplyMetafieldsChange
+} from '@shopify/checkout-ui-extensions-react';
+import { GiftMessageField } from './giftMessage.jsx';
+import { TermsField } from './terms.jsx';
+import { DatePickerField } from './datePicker.jsx';
+import { BirthdayField } from './birthday.jsx';
 
 render('Checkout::Dynamic::Render', () => <App />);
 
-const datePickerType = { key: 'Date picker', defaultTitle: 'Select your delivery date' };
-const aggreeToTermsCheckboxType = { key: 'Aggree to terms checkbox', defaultTitle: 'I agree to the terms of service and privacy policy.' };
-const birthDayType = { key: 'Birthday', defaultTitle: 'Add your birthday for a future discount! 🎉' };
-const giftMessage = { key: 'Gift message', defaultTitle: 'Add gift message' };
 
 function App () {
   const { extensionPoint } = useExtensionApi();
-  const { title, sub_title, custom_field_type } = useSettings();
+  const { title, sub_title, custom_field_type, terms_url } = useSettings();
 
-  const htmlDecode = (input) => {
-    var e = document.createElement('div');
-    e.innerHTML = input;
-    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-  }
+  const metafields = useMetafields()
+  const applyMetafieldsChange = useApplyMetafieldsChange()
 
-  const handleToggle = () => { };
-  const handleChange = () => { };
+  const handleToggle = () => {
+    console.log(metafields)
+  };
+  const handleUpdate = async (value) => {
+    // await applyMetafieldsChange({
+    //   type: 'updateMetafield',
+    //   key: 'birth_date',
+    //   namespace: 'facts',
+    //   value: '',
+    //   valueType: 'string'
 
-  const handleGetYears = () => {
-    const now = new Date().getUTCFullYear();
-    return Array(now - (now - 20)).fill('').map((v, idx) => ({value: now - idx, label: now - idx}));
 
-  }
+    // })
 
+    const result = await applyMetafieldsChange(value)
 
-  const messageMarkup = custom_field_type === giftMessage.key || !custom_field_type ?
-    <>
-      <Checkbox id='customFieldHandle' name='customFieldHandle' onChange={handleToggle}>
-        {title || giftMessage.defaultTitle}
-      </Checkbox>
-      {sub_title ? <Text size='small'>{sub_title}</Text> : null}
-      <TextField multiline="5" label="Message..." maxLength="250" onChange={handleChange} />
-    </>
-    : null
+    if (result.type == "error") {
+      // setError(result.message);
+      // setLoading(false);
+      console.log(result)
+    }
+    if (result.type == "success") {
+      // setError(null);
+      // setLoading(false);
+      console.log(result)
+    }
+  };
 
-  const checkboxMarkup = custom_field_type === aggreeToTermsCheckboxType.key ?
-    <>
-      <Checkbox multiline="3" label="Message..." maxLength="250" onChange={handleChange} >
-        <span dangerouslySetInnerHTML={{ __html: htmlDecode(title || type.defaultTitle) }} />
-      </Checkbox>
-      {sub_title ? <Text size='small'>{sub_title}</Text> : null}
-    </>
-    : null
+  const messageMarkup = <GiftMessageField key={custom_field_type} handleUpdate={handleUpdate} title={title} sub_title={sub_title} metafields={metafields} />
 
-  const datePickerMarkup = custom_field_type === datePickerType.key ?
-    <>
-      <Checkbox id='customFieldHandle' name='customFieldHandle' onChange={handleToggle}>
-        {title || datePickerType.defaultTitle}
-      </Checkbox>
-      {sub_title ? <Text size='small'>{sub_title}</Text> : null}
-      <DatePicker selected="2021-06-01" onChange={handleChange} />
-    </>
-    : null
+  const checkboxMarkup = <TermsField key={custom_field_type} handleUpdate={handleUpdate} title={title} sub_title={sub_title} url={terms_url} metafields={metafields} />
 
-  const birthdayMarkup = custom_field_type === birthDayType.key || true ?
-    <>
-      <Checkbox id='customFieldHandle' name='customFieldHandle' onChange={handleToggle}>
-        {title || birthDayType.defaultTitle}
-      </Checkbox>
-      {sub_title ? <Text size='small'>{sub_title}</Text> : null}
-      <Select
-        label="Year"
-        options={handleGetYears()}
-      />
-    </>
-    : null
+  const datePickerMarkup = <DatePickerField key={custom_field_type} handleUpdate={handleUpdate} title={title} sub_title={sub_title} metafields={metafields} />
 
+  const birthdayMarkup = <BirthdayField key={custom_field_type} handleUpdate={handleUpdate} title={title} sub_title={sub_title} metafields={metafields} />
 
   return (
     <BlockStack spacing='base' blockAlignment='center'>

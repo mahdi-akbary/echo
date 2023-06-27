@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  useExtensionApi,
   render,
   useSettings,
-  InlineStack,
-  Checkbox,
-  Text, Select, TextField, BlockStack, View, InlineLayout, Button, Icon, Popover, Pressable, Link, useMetafields, useApplyMetafieldsChange
+  BlockStack,
+  useMetafields,
+  useApplyMetafieldsChange
 } from '@shopify/checkout-ui-extensions-react';
 import { GiftMessageField } from './giftMessage.jsx';
 import { TermsField } from './terms.jsx';
@@ -14,56 +13,39 @@ import { BirthdayField } from './birthday.jsx';
 
 render('Checkout::Dynamic::Render', () => <App />);
 
-
 function App () {
-  const { extensionPoint } = useExtensionApi();
+  const [type, setType] = useState()
   const { title, sub_title, custom_field_type, terms_url } = useSettings();
 
+  useEffect(() => {
+    setType(custom_field_type);
+  })
   const metafields = useMetafields()
   const applyMetafieldsChange = useApplyMetafieldsChange()
 
-  const handleToggle = () => {
-    console.log(metafields)
-  };
   const handleUpdate = async (value) => {
-    // await applyMetafieldsChange({
-    //   type: 'updateMetafield',
-    //   key: 'birth_date',
-    //   namespace: 'facts',
-    //   value: '',
-    //   valueType: 'string'
-
-
-    // })
-
     const result = await applyMetafieldsChange(value)
-
-    if (result.type == "error") {
-      // setError(result.message);
-      // setLoading(false);
-      console.log(result)
-    }
-    if (result.type == "success") {
-      // setError(null);
-      // setLoading(false);
-      console.log(result)
-    }
+    if (result.type == "error") console.error(error)
+    if (result.type == "success") console.info(result)
   };
 
-  const messageMarkup = <GiftMessageField key={custom_field_type} handleUpdate={handleUpdate} title={title} sub_title={sub_title} metafields={metafields} />
+  let markup = <GiftMessageField handleUpdate={handleUpdate} title={title} sub_title={sub_title} metafields={metafields} />
 
-  const checkboxMarkup = <TermsField key={custom_field_type} handleUpdate={handleUpdate} title={title} sub_title={sub_title} url={terms_url} metafields={metafields} />
-
-  const datePickerMarkup = <DatePickerField key={custom_field_type} handleUpdate={handleUpdate} title={title} sub_title={sub_title} metafields={metafields} />
-
-  const birthdayMarkup = <BirthdayField key={custom_field_type} handleUpdate={handleUpdate} title={title} sub_title={sub_title} metafields={metafields} />
+  switch (type) {
+    case 'Aggree to terms checkbox':
+      markup = <TermsField handleUpdate={handleUpdate} title={title} sub_title={sub_title} url={terms_url} metafields={metafields} />
+      break
+    case 'Date picker':
+      markup = <DatePickerField handleUpdate={handleUpdate} title={title} sub_title={sub_title} metafields={metafields} />
+      break
+    case 'Birthday':
+      markup = <BirthdayField handleUpdate={handleUpdate} title={title} sub_title={sub_title} metafields={metafields} />
+      break
+  }
 
   return (
     <BlockStack spacing='base' blockAlignment='center'>
-      {messageMarkup}
-      {checkboxMarkup}
-      {datePickerMarkup}
-      {birthdayMarkup}
+      {markup}
     </BlockStack>
   );
 }

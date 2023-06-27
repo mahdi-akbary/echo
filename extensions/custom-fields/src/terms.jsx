@@ -1,4 +1,3 @@
-// ProductCart is a component that renders a product card. It accept a product object as a prop.
 import {
     Checkbox,
     Icon,
@@ -8,9 +7,12 @@ import {
 } from "@shopify/checkout-ui-extensions-react";
 import { useState } from "react";
 
-export function TermsField ({ title, sub_title, key, handleUpdate, url, metafields }) {
+export function TermsField ({ title, sub_title, handleUpdate, url, metafields }) {
 
-    const KEY = 'Aggree to terms checkbox'
+    const key = 'terms'
+    const storedValue = metafields?.find(meta => meta?.key == key)?.value
+    
+    const [value, setValue] = useState(!!(+storedValue))
     const DEFAUTL_TITIE = 'I agree to the terms of service and privacy policy.'
 
     const handleChange = (value) => {
@@ -21,16 +23,16 @@ export function TermsField ({ title, sub_title, key, handleUpdate, url, metafiel
             value: +value,
             valueType: 'integer',
         })
+        setValue(value)
     }
 
-    return KEY == key || true ?
-        <>
-            <Checkbox onChange={handleChange} >
-                <InlineStack spacing='none'>
-                    {title || DEFAUTL_TITIE}
-                    <Link to={url} > <Icon source='arrowUpRight' /></Link>
-                </InlineStack>
-            </Checkbox>
-            {sub_title ? <Text size='small'>{sub_title}</Text> : null}
-        </> : null
+    return <>
+        <Checkbox onChange={handleChange} value={value}>
+            <InlineStack spacing='none'>
+                {title || DEFAUTL_TITIE}
+                <Link to={url} > <Icon source='arrowUpRight' /></Link>
+            </InlineStack>
+        </Checkbox>
+        {sub_title ? <Text size='small'>{sub_title}</Text> : null}
+    </>
 }

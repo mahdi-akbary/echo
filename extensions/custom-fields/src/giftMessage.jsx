@@ -1,39 +1,44 @@
-// ProductCart is a component that renders a product card. It accept a product object as a prop.
 import {
     Checkbox,
     Text,
     TextField
 } from "@shopify/checkout-ui-extensions-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export function GiftMessageField ({ title, sub_title, key, handleUpdate, metafields }) {
+export function GiftMessageField ({ title, sub_title, handleUpdate, metafields }) {
+    const key = 'gift_message'
+    const storedValue = metafields?.find(meta => meta?.key == key)?.value
 
-    const KEY = 'Gift message'
     const DEFAUTL_TITIE = 'Add gift message'
     const [isChecked, setIsChecked] = useState(false)
+    const [isToggled, setIsToggled] = useState(false)
+
     const handleToggle = () => {
-        console.log(metafields)
+        setIsToggled(true)
         setIsChecked(!isChecked)
     };
 
+    useEffect(() => {
+        if (storedValue && !isToggled) {
+            setIsChecked(true)
+        }
+    })
     const handleChange = (value) => {
-        console.log(value)
         handleUpdate({
             type: 'updateMetafield',
-            key: 'gift_message',
+            key: key,
             namespace: 'messages',
             value: value,
             valueType: 'string'
         })
     }
 
-    const messageInputMarkup = isChecked ? <TextField multiline="5" label="Message..." maxLength="250" onChange={handleChange} /> : null
-    return KEY == key || !key ?
-        <>
-            <Checkbox id='customFieldHandle' name='customFieldHandle' onChange={handleToggle}>
-                {title || DEFAUTL_TITIE}
-            </Checkbox>
-            {sub_title ? <Text size='small'>{sub_title}</Text> : null}
-            {messageInputMarkup}
-        </> : null
+    const messageInputMarkup = isChecked ? <TextField multiline="5" label="Message..." maxLength="250" value={storedValue} onChange={handleChange} /> : null
+    return <>
+        <Checkbox id='customFieldHandle' name='customFieldHandle' value={isChecked} onChange={handleToggle}>
+            {title || DEFAUTL_TITIE}
+        </Checkbox>
+        {sub_title ? <Text size='small'>{sub_title}</Text> : null}
+        {messageInputMarkup}
+    </>
 }

@@ -1,4 +1,3 @@
-// ProductCart is a component that renders a product card. It accept a product object as a prop.
 import {
     Checkbox,
     InlineLayout,
@@ -6,32 +5,49 @@ import {
     Text,
     View
 } from "@shopify/checkout-ui-extensions-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export function BirthdayField ({ title, sub_title, key, handleUpdate, metafields }) {
+export function BirthdayField ({ title, sub_title, handleUpdate, metafields }) {
+    const key = 'birth_date'
+    const storedValue = metafields?.find(meta => meta?.key == key)?.value
 
-    const KEY = 'Birthday'
     const DEFAUTL_TITIE = 'Add your birthday for a future discount! 🎉'
+    const [isToggled, setIsToggled] = useState(false)
     const [isChecked, setIsChecked] = useState(false)
 
     const handleToggle = () => {
-        console.log(metafields)
+        setIsToggled(true)
         setIsChecked(!isChecked)
     };
+
+    useEffect(() => {
+        if (storedValue && !isToggled) {
+            setIsChecked(true)
+        }
+    })
 
     const handleChange = (date) => {
         handleUpdate({
             type: 'updateMetafield',
-            key: 'birth_date',
+            key: key,
             namespace: 'facts',
             value: date,
             valueType: 'string'
         })
     }
+    let storedValueArray = [null, null, null]
+    const tempArray = storedValue?.split('-')
+    if (tempArray?.length == 3) {
+        storedValueArray = [+tempArray[0], +tempArray[1] - 1, +tempArray[2]];
+        useEffect(()=>{
+            handleSetDays(storedValueArray[1])
+        }, [])
+    }
+    
 
-    const [year, setYear] = useState(null)
-    const [month, setMonth] = useState(null)
-    const [day, setDay] = useState(null)
+    const [year, setYear] = useState(storedValueArray[0])
+    const [month, setMonth] = useState(storedValueArray[1])
+    const [day, setDay] = useState(storedValueArray[2])
     const [days, setDays] = useState([])
     const handleGetYears = () => {
         const now = new Date().getUTCFullYear();
@@ -98,12 +114,11 @@ export function BirthdayField ({ title, sub_title, key, handleUpdate, metafields
             </View>
         </InlineLayout> : null
 
-    return KEY == key || true ?
-        <>
-            <Checkbox id='birthDaycheckboxHandle' name='birthDaycheckboxHandle' onChange={handleToggle}>
-                {title || DEFAUTL_TITIE}
-            </Checkbox>
-            {sub_title ? <Text size='small'>{sub_title}</Text> : null}
-            {datePickerMarkup}
-        </> : null
+    return <>
+        <Checkbox id='birthDaycheckboxHandle' name='birthDaycheckboxHandle' value={isChecked} onChange={handleToggle}>
+            {title || DEFAUTL_TITIE}
+        </Checkbox>
+        {sub_title ? <Text size='small'>{sub_title}</Text> : null}
+        {datePickerMarkup}
+    </>
 }

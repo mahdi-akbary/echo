@@ -15,39 +15,35 @@ import {
   SkeletonBodyText,
   SkeletonDisplayText,
 } from "@shopify/polaris";
-import { useAuthenticatedFetch, TitleBar } from "@shopify/app-bridge-react";
+import { useAuthenticatedFetch, TitleBar, useAppBridge } from "@shopify/app-bridge-react";
 import { CircleTickMajor } from "@shopify/polaris-icons";
 import { BILLING_PLANS } from "../../billing";
-import { useState } from "react";
-import { useAppQuery } from "../hooks";
-
-import createApp from "@shopify/app-bridge";
+import { useEffect, useState } from "react";
 import { Redirect } from "@shopify/app-bridge/actions";
-import { getAppConfig } from "../hooks/useAuthenticatedFetch";
 
-export default function Pricing() {
+export default function Pricing () {
   const [currentBilling, setCurrentBilling] = useState(null);
   const [loadingUnsubscription, setLoadingUnsubscription] = useState(false);
   const [loadingSubscription, setLoadingSubscription] = useState(null);
   const fetch = useAuthenticatedFetch();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [config] = useState(getAppConfig);
-
-  const app = createApp(config);
+  const app = useAppBridge();
   const redirect = Redirect.create(app);
+  useEffect(() => getBillings(), [])
 
-  const {
-    isRefetching: isRefetching,
-    isLoading: isLoading,
-    refetch,
-  } = useAppQuery({
-    url: "/api/billings",
-    reactQueryOptions: {
-      onSuccess: (data) => {
-        setCurrentBilling(data);
-      },
-    },
-  });
+  const getBillings = async () => {
+    setIsLoading(true)
+    const response = await fetch("/api/billings", {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    if (response.ok) {
+      const data = await response.json()
+      setCurrentBilling(data);
+    }
+    setIsLoading(false)
+  };
 
   const loadingMarkup = (
     <>
@@ -112,7 +108,7 @@ export default function Pricing() {
     if (response.ok) {
       setLoadingUnsubscription(false);
       setCurrentBilling(null);
-      refetch();
+      await getBillings();
     }
   };
 
@@ -156,88 +152,88 @@ export default function Pricing() {
         </Layout.Section>
         <Layout.Section>
           <Grid>
-            {isLoading || isRefetching
+            {isLoading
               ? loadingMarkup
               : BILLING_PLANS?.map((plan, index) => (
-                  <Grid.Cell
-                    key={index}
-                    columnSpan={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 4 }}
-                  >
-                    <AlphaCard
-                      background={
-                        currentBilling?.name === plan.name ||
+                <Grid.Cell
+                  key={index}
+                  columnSpan={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 4 }}
+                >
+                  <AlphaCard
+                    background={
+                      currentBilling?.name === plan.name ||
                         (!currentBilling?.name && plan.amount === 0)
-                          ? "bg-success-subdued"
-                          : "bg"
-                      }
-                    >
-                      <VerticalStack gap="2">
-                        <Text variant="heading2xl" as="h2">
-                          {plan.name}
-                        </Text>
+                        ? "bg-success-subdued"
+                        : "bg"
+                    }
+                  >
+                    <VerticalStack gap="2">
+                      <Text variant="heading2xl" as="h2">
+                        {plan.name}
+                      </Text>
+                      <Text
+                        color="success"
+                        fontWeight="bold"
+                        variant="bodyLg"
+                      >
+                        {plan.amount == "0" ? "Free" : "$" + plan.amount}
                         <Text
-                          color="success"
-                          fontWeight="bold"
-                          variant="bodyLg"
+                          as="span"
+                          color="subdued"
+                          fontWeight="medium"
+                          variant="bodyMd"
                         >
-                          {plan.amount == "0" ? "Free" : "$" + plan.amount}
-                          <Text
-                            as="span"
-                            color="subdued"
-                            fontWeight="medium"
-                            variant="bodyMd"
-                          >
-                            / month
-                          </Text>
+                          / month
                         </Text>
-                        <Text>{plan.description}</Text>
-                      </VerticalStack>
-                      <div style={{ margin: "1rem" }}></div>
-                      <VerticalStack gap="3">
-                        <Divider />
-                        {plan.features.map((feature, index) => (
-                          <HorizontalStack
-                            key={index}
-                            blockAlign="center"
-                            gap="3"
-                            wrap={false}
-                          >
-                            <Box as="span" width="15px">
-                              <Icon source={CircleTickMajor} color="success" />
-                            </Box>
-                            <Box as="span" width="100%">
-                              <Text>{feature}</Text>
-                            </Box>
-                          </HorizontalStack>
-                        ))}
-                      </VerticalStack>
-                      <div style={{ margin: "1rem" }}></div>
-                      {currentBilling?.name === plan.name ||
-                      (!currentBilling?.name && plan.amount === 0) ? (
-                        <Button primary fullWidth disabled>
-                          Your current plan
-                        </Button>
-                      ) : (
-                        <Button
-                          primary
-                          fullWidth
-                          loading={loadingSubscription == plan.id}
-                          disabled={loadingUnsubscription}
-                          onClick={async () => {
-                            setLoadingSubscription(plan.id);
-                            if (plan.amount > 0)
-                              await onSubmit({ id: plan.id });
-                            else await handleUnsubscribe();
-                          }}
+                      </Text>
+                      <Text>{plan.description}</Text>
+                    </VerticalStack>
+                    <div style={{ margin: "1rem" }}></div>
+                    <VerticalStack gap="3">
+                      <Divider />
+                      {plan.features.map((feature, index) => (
+                        <HorizontalStack
+                          key={index}
+                          blockAlign="center"
+                          gap="3"
+                          wrap={false}
                         >
-                          {currentBilling?.amount > plan.amount
-                            ? "Downgrade plan"
-                            : "Upgrade plan"}
-                        </Button>
-                      )}
-                    </AlphaCard>
-                  </Grid.Cell>
-                ))}
+                          <Box as="span" width="15px">
+                            <Icon source={CircleTickMajor} color="success" />
+                          </Box>
+                          <Box as="span" width="100%">
+                            <Text>{feature}</Text>
+                          </Box>
+                        </HorizontalStack>
+                      ))}
+                    </VerticalStack>
+                    <div style={{ margin: "1rem" }}></div>
+                    {currentBilling?.name === plan.name ||
+                      (!currentBilling?.name && plan.amount === 0) ? (
+                      <Button primary fullWidth disabled>
+                        Your current plan
+                      </Button>
+                    ) : (
+                      <Button
+                        primary
+                        fullWidth
+                        loading={loadingSubscription == plan.id}
+                        disabled={loadingUnsubscription}
+                        onClick={async () => {
+                          setLoadingSubscription(plan.id);
+                          if (plan.amount > 0)
+                            await onSubmit({ id: plan.id });
+                          else await handleUnsubscribe();
+                        }}
+                      >
+                        {currentBilling?.amount > plan.amount
+                          ? "Downgrade plan"
+                          : "Upgrade plan"}
+                      </Button>
+                    )}
+                  </AlphaCard>
+                </Grid.Cell>
+              ))}
           </Grid>
         </Layout.Section>
       </Layout>

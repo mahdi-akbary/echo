@@ -6,5 +6,9 @@ export const navStructure = [
     {
         label: "Pricing",
         destination: "/pricing",
+    },
+    {
+        label: "How to use",
+        destination: "/how-to-use",
     }
 ];

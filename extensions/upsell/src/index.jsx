@@ -83,7 +83,7 @@ function App() {
   }, [query]);
 
   let  title = data?.node?.product.title;
-  let  image  = data?.node.image ? data?.node.image : data?.node?.product?.featuredImage;
+  let  image  = data?.node?.image ? data?.node?.image : data?.node?.product?.featuredImage;
   let  price  = data?.node?.price?.amount;
   let  variant_id = data?.node?.id.split('/').pop();
   let  merchandiseId = data?.node?.id;

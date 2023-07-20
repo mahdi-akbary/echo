@@ -8,6 +8,10 @@ export const navStructure = [
         destination: "/pricing",
     },
     {
+        label: "Settings",
+        destination: "/settings",
+    },
+    {
         label: "How to use",
         destination: "/how-to-use",
     }

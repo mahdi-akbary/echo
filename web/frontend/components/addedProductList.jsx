@@ -1,6 +1,5 @@
 import { useAppQuery } from "../hooks";
 import '@shopify/polaris-viz/build/esm/styles.css';
-import { LineChart } from "@shopify/polaris-viz";
 import { AlphaCard, VerticalStack, Box, HorizontalStack, Loading, SkeletonBodyText, SkeletonDisplayText, Stack, Text, Bleed } from "@shopify/polaris";
 export function AddedProductList () {
     const { data: data, isRefetching: isRefetching, isLoading: isLoading, refetch: fetch } = useAppQuery({

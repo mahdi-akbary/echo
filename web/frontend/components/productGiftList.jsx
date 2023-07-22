@@ -1,21 +1,16 @@
-import { AlphaCard, Button, DataTable, Loading, SkeletonBodyText } from "@shopify/polaris";
+import {
+  AlphaCard,
+  Button,
+  DataTable,
+  Loading,
+  SkeletonBodyText,
+} from "@shopify/polaris";
 export function ProductGiftList({
-  //   rows = [],
+  rows = [],
   isSelectable = false,
   isLoading = false,
 }) {
-  const rows = [
-    ["Emerald Silk Gown", "$875.00", 124689, 140, <Button>HI</Button>],
-    ["Mauve Cashmere Scarf", "$230.00", 124533, 83, <Button>HI</Button>],
-    [
-      "Navy Merino Wool Blazer with khaki chinos and yellow belt",
-      "$445.00",
-      124518,
-      32,
-      <Button>HI</Button>,
-    ],
-  ];
-
+  
   const loadingMarkup = (
     <AlphaCard>
       <Loading />
@@ -29,8 +24,8 @@ export function ProductGiftList({
         loadingMarkup
       ) : (
         <DataTable
-          columnContentTypes={["text", "numeric", "numeric", "numeric", "text"]}
-          headings={["Product", "Price", "SKU Number", "Net quantity", ""]}
+          columnContentTypes={["text", "numeric", "numeric", "text"]}
+          headings={["Product", "Price", "Quantity", ""]}
           rows={rows}
         />
       )}

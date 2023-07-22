@@ -9,6 +9,7 @@ import productCreator from "./product-creator.js";
 import { applyGDPREndpoints, bodyParserPrewiring, registerCustomWebhooks } from "./gdpr.js";
 import { billingApiEndPoints } from "./billing.js";
 import cartItemApiEndPoints from "./api/cart-item.api.js";
+import productApiEndPoints from "./api/product.api.js";
 
 const PORT = parseInt(
   process.env.BACKEND_PORT || process.env.PORT || "3000",
@@ -67,6 +68,7 @@ app.get("/api/products/create", async (_req, res) => {
 });
 
 cartItemApiEndPoints(app)
+productApiEndPoints(app, shopify)
 billingApiEndPoints(app, shopify)
 app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));

@@ -21,8 +21,6 @@ export default function OrderCount() {
         },
     });
 
-
-
     useEffect(() => {
         const handlePopulate = async () => {
             setIsLoading(true);
@@ -34,7 +32,6 @@ export default function OrderCount() {
                 setIsLoading(false);
             }
         };
-
 
         handlePopulate();
     }, []); // Empty dependency array ensures that the effect runs only once on component mount

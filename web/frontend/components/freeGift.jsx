@@ -9,8 +9,37 @@ import {
 } from "@shopify/polaris";
 import { ProductGiftList } from "./productGiftList";
 import { SearchGiftProductModal } from "./searchGiftProductModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppQuery } from "../hooks";
 export function FreeGift() {
+  const [list, setList] = useState([]);
+
+  const {
+    isRefetching: isRefetching,
+    isLoading: isLoading,
+    refetch: fetch,
+  } = useAppQuery({
+    url: "/api/products",
+    reactQueryOptions: {
+      onSuccess: (data) => {
+        console.log(data);
+        setList(
+          data?.map((item) => [
+            item?.display_name,
+            item?.price,
+            item?.inventory_quantity,
+            <Button
+              plain
+              destructive
+              onClick={async () => await handleProductSelect(item?.node)}>
+              Delete
+            </Button>,
+          ])
+        );
+      },
+    },
+  });
+
   const [searchModalToggle, setSearchModalToggle] = useState(false);
 
   return (
@@ -49,15 +78,15 @@ export function FreeGift() {
                   <Button>Edit Threshold</Button>
                 </HorizontalStack>
                 <Box>
-                  <Text as="h2" variant="headingXl">
+                  <Text as="h2" variant="headingLg">
                     Threshold
                   </Text>
-                  <Text as="p" variant="bodyLg" color="success">
+                  <Text as="p" variant="bodyMd" color="success">
                     0.00
                   </Text>
                 </Box>
               </HorizontalStack>
-              <ProductGiftList />
+              <ProductGiftList rows={list} />
             </VerticalStack>
           </AlphaCard>
         </Box>

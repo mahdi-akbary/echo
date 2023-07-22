@@ -23,7 +23,10 @@ export function SearchGiftProductModal({ isOpen, handleClose }) {
           item?.node?.displayName,
           item?.node?.price,
           item?.node?.inventoryQuantity,
-          <Button plain onClick={() => handleProductSelect(item?.node)}>
+          <Button
+            plain
+            onClick={async () => await handleProductSelect(item?.node)}
+          >
             select
           </Button>,
         ])
@@ -33,8 +36,17 @@ export function SearchGiftProductModal({ isOpen, handleClose }) {
     }
   };
 
-  const handleProductSelect = (product) => {
+  const handleProductSelect = async (product) => {
     console.log(product);
+    const response = await fetch("/api/products", {
+      method: "POST",
+      body: JSON.stringify(product),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+    } else {
+    }
   };
 
   const handleKeyPress = async (event) => {

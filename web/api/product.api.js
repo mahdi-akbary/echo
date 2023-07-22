@@ -2,6 +2,20 @@ import { supabase } from "../supabase/service.js";
 
 export default function productApiEndPoints(app, shopify) {
     app.get("/api/products", async (req, res) => {
+        const { session } = res.locals.shopify;
+        try {
+            const { data, error } = await supabase
+                .from('gift_products')
+                .select()
+                .eq('shop', session?.shop)
+            if (error) throw new Error(error.message)
+            res.status(200).send(data);
+        } catch (error) {
+            console.error(error)
+            res.status(500).send(error);
+        }
+    })
+    app.post("/api/products", async (req, res) => {
         const body = req.body;
         const { session } = res.locals.shopify;
         try {
@@ -9,15 +23,11 @@ export default function productApiEndPoints(app, shopify) {
                 .from('gift_products')
                 .insert({
                     shop: session?.shop,
-                    product_id: body?.productId,
                     variant_id: body?.id,
-                    variant_title: body?.title,
-                    product_title: body?.productTitle,
-                    handle: body?.handle,
-                    price: body?.price.amount,
-                    price_currency: body?.price.currencyCode,
-                    image_alt: body?.image.altText,
-                    image_url: body?.image.url
+                    title: body?.title,
+                    display_name: body?.displayName,
+                    inventory_quantity: body?.inventoryQuantity,
+                    price: body?.price
                 })
                 .select()
             if (error) throw new Error(error.message)

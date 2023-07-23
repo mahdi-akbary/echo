@@ -1,5 +1,11 @@
 query Input {
   cart {
+    cost {
+      totalAmount {
+        currencyCode
+        amount
+      }
+    }
     lines {
       quantity
       merchandise {

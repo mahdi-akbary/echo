@@ -1,6 +1,7 @@
 // @ts-check
 import { DiscountApplicationStrategy } from "../generated/api";
 
+// Use JSDoc annotations for type safety
 /**
 * @typedef {import("../generated/api").InputQuery} InputQuery
 * @typedef {import("../generated/api").FunctionResult} FunctionResult
@@ -16,51 +17,49 @@ const EMPTY_DISCOUNT = {
   discounts: [],
 };
 
+// The @shopify/shopify_function package will use the default export as your function entrypoint
 export default /**
 * @param {InputQuery} input
 * @returns {FunctionResult}
 */
   (input) => {
-    // Define a type for your configuration, and parse it from the metafield
-    /**
-    * @type {{
-    *  quantity: number
-    *  percentage: number
-    * }}
-    */
-    const configuration = JSON.parse(
-      input?.discountNode?.metafield?.value ?? "{}"
-    );
-    if (!configuration.quantity || !configuration.percentage) {
+    const total = input.cart.cost.totalAmount.amount
+
+    if (total < 800) {
       return EMPTY_DISCOUNT;
     }
 
-    const targets = input.cart.lines
-      // Use the configured quantity instead of a hardcoded value
-      .filter(line => line.quantity >= configuration.quantity &&
+    let quantity = 1
+    const filteredList = input.cart.lines
+      .filter(line => line.merchandise.id == 'gid://shopify/ProductVariant/45509861671192' &&
         line.merchandise.__typename == "ProductVariant")
-      .map(line => {
-        const variant = /** @type {ProductVariant} */ (line.merchandise);
-        return /** @type {Target} */ ({
-          productVariant: {
-            id: variant.id
-          }
-        });
-      });
 
-    if (!targets.length) {
-      console.error("No cart lines qualify for volume discount.");
+
+    if (filteredList.length == 0) {
       return EMPTY_DISCOUNT;
     }
+
+
+    quantity = filteredList[0].quantity
+
+    const variant = /** @type {ProductVariant} */ (filteredList[0].merchandise);
+    const target = [ /** @type {Target} */ ({
+      productVariant: {
+        id: variant.id
+      }
+    })];
+
+
+    const percentage = (100 / quantity)
+    console.log('>>>', quantity, percentage)
 
     return {
       discounts: [
         {
-          targets,
+          targets: target,
           value: {
             percentage: {
-              // Use the configured percentage instead of a hardcoded value
-              value: configuration.percentage.toString()
+              value: `${percentage}`
             }
           }
         }

@@ -113,7 +113,7 @@ export default function HowToUse() {
                 >
                   <iframe
                     src={video.link}
-                    frameborder="0"
+                    frameBorder="0"
                     allowFullScreen
                     style={{ width: "100%", height: "100%" }}
                   ></iframe>

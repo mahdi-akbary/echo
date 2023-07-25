@@ -23,15 +23,18 @@ export default /**
 * @returns {FunctionResult}
 */
   (input) => {
+    const configuration = JSON.parse(
+      input?.discountNode?.metafield?.value ?? "{}"
+    );
     const total = input.cart.cost.totalAmount.amount
 
-    if (total < 800) {
+    if (total < configuration?.threshold || configuration?.giftsId == undefined || configuration?.giftsId?.length == 0) {
       return EMPTY_DISCOUNT;
     }
 
     let quantity = 1
     const filteredList = input.cart.lines
-      .filter(line => line.merchandise.id == 'gid://shopify/ProductVariant/45509861671192' &&
+      .filter(line => configuration?.giftsId?.includes(line.merchandise?.id) &&
         line.merchandise.__typename == "ProductVariant")
 
 

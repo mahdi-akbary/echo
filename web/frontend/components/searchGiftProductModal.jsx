@@ -1,15 +1,19 @@
-import { Button, Modal, TextField } from "@shopify/polaris";
+import { Box, Button, HorizontalStack, Modal, Spinner, TextField, Toast } from "@shopify/polaris";
 import { ProductGiftList } from "./productGiftList";
 import { useState } from "react";
 import { useAuthenticatedFetch } from "../hooks";
 
-export function SearchGiftProductModal({ isOpen, handleClose, discount }) {
+export function SearchGiftProductModal ({ isOpen, handleClose, discount, refetch }) {
   const fetch = useAuthenticatedFetch();
   const [searchFieldValue, setSearchFieldValue] = useState();
   const [list, setList] = useState([]);
 
+  const [loading, setLoading] = useState(false);
+  const [selectLoading, setSelectLoading] = useState(false);
+
   const handleSearch = async (query) => {
     if (query.length < 3) return;
+    setLoading(true)
     const response = await fetch("/api/products/search", {
       method: "POST",
       body: JSON.stringify({ query }),
@@ -17,6 +21,7 @@ export function SearchGiftProductModal({ isOpen, handleClose, discount }) {
     });
 
     if (response.ok) {
+      setLoading(false)
       const data = await response.json();
       setList(
         data.map((item) => [
@@ -32,12 +37,18 @@ export function SearchGiftProductModal({ isOpen, handleClose, discount }) {
         ])
       );
     } else {
-      // setIsLoading(false);
+      setLoading(false);
     }
   };
 
+  const [toastContent, setToastContent] = useState({ content: null });
+
+  const toastMarkup = toastContent.content && (
+    <Toast {...toastContent} onDismiss={() => setToastContent({ content: null })} />
+  );
+
   const handleProductSelect = async (product) => {
-    console.log(product);
+    setSelectLoading(true)
     const response = await fetch("/api/products", {
       method: "POST",
       body: JSON.stringify({
@@ -49,7 +60,15 @@ export function SearchGiftProductModal({ isOpen, handleClose, discount }) {
     });
 
     if (response.ok) {
+      setSelectLoading(false)
+      setToastContent({ content: 'Saved!' })
+      refetch()
+      handleClose(false)
     } else {
+      const data = await response.json();
+      console.log(data)
+      setToastContent({ content: data.message })
+      setSelectLoading(false)
     }
   };
 
@@ -62,7 +81,8 @@ export function SearchGiftProductModal({ isOpen, handleClose, discount }) {
     }
   };
 
-  return (
+  return (<>
+    {toastMarkup}
     <Modal
       open={isOpen}
       onClose={() => handleClose(false)}
@@ -83,11 +103,21 @@ export function SearchGiftProductModal({ isOpen, handleClose, discount }) {
             onChange={(value) => setSearchFieldValue(value)}
             prefix="Search"
             autoComplete="off"
+            connectedRight={<Button loading={loading} onClick={async () => await handleSearch(searchFieldValue)}>Submit</Button>}
           />
         </div>
-
-        <ProductGiftList rows={list} />
+        <Box position="relative">
+          {selectLoading ?
+            <Box position="absolute" paddingBlockStart="12" insetBlockEnd="0" insetBlockStart="0" width="100%" minHeight="100%" zIndex="20" opacity="0.7" background="bg-app-hover">
+              <HorizontalStack align="center" blockAlign="center">
+                <Spinner size="small" />
+              </HorizontalStack>
+            </Box>
+            : null}
+          <ProductGiftList rows={list} />
+        </Box>
       </Modal.Section>
     </Modal>
+  </>
   );
 }

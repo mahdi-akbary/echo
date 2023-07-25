@@ -1,6 +1,6 @@
 import { supabase } from "../supabase/service.js";
 
-export default function productApiEndPoints(app, shopify) {
+export default function productApiEndPoints (app, shopify) {
     app.get("/api/products", async (req, res) => {
         const { session } = res.locals.shopify;
         try {
@@ -20,6 +20,14 @@ export default function productApiEndPoints(app, shopify) {
         const { session } = res.locals.shopify;
         const client = new shopify.api.clients.Graphql({ session });
         try {
+            const { data: exists, error: existsError } = await supabase
+                .from('gift_products')
+                .select()
+                .eq('shop', session?.shop)
+                .eq('variant_id', body?.id)
+            if (existsError) throw new Error(existsError.message)
+            if (exists?.length > 0) throw new Error('Already exists!')
+
             const { data, error } = await supabase
                 .from('gift_products')
                 .insert({
@@ -35,6 +43,19 @@ export default function productApiEndPoints(app, shopify) {
 
             await setMetaFields(client, body?.discountId, session?.shop, body?.discountAmount)
             res.status(200).send(data[0]);
+        } catch (error) {
+            console.error(error)
+            res.status(500).send({message: error.message});
+        }
+    })
+    app.delete("/api/products/:id", async (req, res) => {
+        try {
+            const { data, error } = await supabase
+                .from('gift_products')
+                .delete()
+                .eq('id', req.params.id)
+            if (error) throw new Error(error.message)
+            res.status(200).send(data);
         } catch (error) {
             console.error(error)
             res.status(500).send(error);
@@ -133,7 +154,7 @@ export default function productApiEndPoints(app, shopify) {
         }
     })
 
-    async function createDiscount(client) {
+    async function createDiscount (client) {
         return await client.query({
             data: {
                 query: `mutation {
@@ -154,7 +175,7 @@ export default function productApiEndPoints(app, shopify) {
             },
         })
     }
-    async function setMetaFields(client, discountId, shop, amount = null) {
+    async function setMetaFields (client, discountId, shop, amount = null) {
 
         const { data, error } = await supabase
             .from('gift_products')

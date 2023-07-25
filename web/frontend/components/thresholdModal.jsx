@@ -15,7 +15,7 @@ export function ThresholdModal({ isOpen, handleClose, discount, refetch }) {
 
     const response = await fetch(url, {
       method: discount?.id ? "PUT" : "POST",
-      body: JSON.stringify({ amount: threshold }),
+      body: JSON.stringify({ amount: threshold, discountId: discount?.discount_id }),
       headers: { "Content-Type": "application/json" },
     });
 

@@ -18,6 +18,7 @@ export default function productApiEndPoints(app, shopify) {
     app.post("/api/products", async (req, res) => {
         const body = req.body;
         const { session } = res.locals.shopify;
+        const client = new shopify.api.clients.Graphql({ session });
         try {
             const { data, error } = await supabase
                 .from('gift_products')
@@ -31,6 +32,8 @@ export default function productApiEndPoints(app, shopify) {
                 })
                 .select()
             if (error) throw new Error(error.message)
+
+            await setMetaFields(client, body?.discountId, session?.shop, body?.discountAmount)
             res.status(200).send(data[0]);
         } catch (error) {
             console.error(error)
@@ -63,76 +66,6 @@ export default function productApiEndPoints(app, shopify) {
             res.status(500).send(error);
         }
     })
-
-    async function createDiscount(client) {
-        return await client.query({
-            data: {
-                query: `mutation {
-                    discountAutomaticAppCreate(automaticAppDiscount: {
-                        title: "Gift discount",
-                        functionId: "${process.env.SHOPIFY_PRODUCT_DISCOUNT_ID}",
-                        startsAt: "2022-06-22T00:00:00"
-                    }) {
-                        automaticAppDiscount {
-                            discountId
-                        }
-                        userErrors {
-                            field
-                            message
-                        }
-                    }
-                }`,
-            },
-        })
-    }
-
-    app.post("/api/products/update-metafield", async (req, res) => {
-        const { query } = req.body;
-        const { session } = res.locals.shopify;
-        try {
-            const client = new shopify.api.clients.Graphql({ session });
-            const result = await client.query({
-                data: {
-                    "query": `mutation MetafieldsSet($metafields: [MetafieldsSetInput!]!) {
-                                metafieldsSet(metafields: $metafields) {
-                                    metafields {
-                                        key
-                                        namespace
-                                        value
-                                        createdAt
-                                        updatedAt
-                                    }
-                                    userErrors {
-                                        field
-                                        message
-                                        code
-                                    }
-                                }
-                            }`,
-                    "variables": {
-                        "metafields": [
-                            {
-                                "key": "function-configuration",
-                                "namespace": "volume-discount",
-                                "ownerId": "gid://shopify/DiscountAutomaticNode/1396167246104",
-                                "value": `{ \"threshold\": 8000, \"giftsId\": [
-                                        \"gid://shopify/ProductVariant/45509861671192\",
-                                        \"gid://shopify/ProductVariant/45509861671192\",
-                                        \"gid://shopify/ProductVariant/45509861671192\"
-                                ] }`,
-                                "type": "json"
-                            }
-                        ]
-                    },
-                },
-            });
-            res.status(200).send(result);
-        } catch (error) {
-            console.error(error)
-            res.status(500).send(error);
-        }
-    })
-
 
     app.get("/api/products/discounts", async (req, res) => {
         const { session } = res.locals.shopify;
@@ -168,7 +101,10 @@ export default function productApiEndPoints(app, shopify) {
                 })
                 .select()
             if (error) throw new Error(error.message)
-            res.status(200).send(data[0]);
+
+            const giftDiscount = data[0]
+            await setMetaFields(client, automaticAppDiscount.discountId, session?.shop, giftDiscount.amount)
+            res.status(200).send(giftDiscount);
         } catch (error) {
             console.error(error)
             res.status(500).send(error);
@@ -179,21 +115,87 @@ export default function productApiEndPoints(app, shopify) {
         const body = req.body;
         console.log(body, req.params.id)
         const { session } = res.locals.shopify;
-
+        const client = new shopify.api.clients.Graphql({ session });
         try {
-
             const { data, error } = await supabase
                 .from('gift_discounts')
                 .update({ amount: +body?.amount })
                 .eq('id', req.params.id)
                 .select()
-            console.log(error)
             if (error) throw new Error(error.message)
-            res.status(200).send(data[0]);
+            const giftDiscount = data[0]
+
+            await setMetaFields(client, body?.discountId, session?.shop, giftDiscount.amount)
+            res.status(200).send(giftDiscount);
         } catch (error) {
             console.error(error)
             res.status(500).send(error);
         }
     })
 
+    async function createDiscount(client) {
+        return await client.query({
+            data: {
+                query: `mutation {
+                    discountAutomaticAppCreate(automaticAppDiscount: {
+                        title: "Gift discount",
+                        functionId: "${process.env.SHOPIFY_PRODUCT_DISCOUNT_ID}",
+                        startsAt: "2022-06-22T00:00:00"
+                    }) {
+                        automaticAppDiscount {
+                            discountId
+                        }
+                        userErrors {
+                            field
+                            message
+                        }
+                    }
+                }`,
+            },
+        })
+    }
+    async function setMetaFields(client, discountId, shop, amount = null) {
+
+        const { data, error } = await supabase
+            .from('gift_products')
+            .select()
+            .eq('shop', shop)
+        if (error) throw new Error(error.message)
+
+        const value = {
+            threshold: amount,
+            giftsId: data?.map(item => item?.variant_id)
+        }
+        return await client.query({
+            data: {
+                query: `mutation MetafieldsSet($metafields: [MetafieldsSetInput!]!) {
+                    metafieldsSet(metafields: $metafields) {
+                        metafields {
+                            key
+                            namespace
+                            value
+                            createdAt
+                            updatedAt
+                        }
+                        userErrors {
+                            field
+                            message
+                            code
+                        }
+                    }
+                }`,
+                variables: {
+                    metafields: [
+                        {
+                            key: "gift-function-configuration",
+                            namespace: "gift-discount",
+                            ownerId: discountId,
+                            value: JSON.stringify(value),
+                            type: "json"
+                        }
+                    ]
+                },
+            },
+        });
+    }
 }

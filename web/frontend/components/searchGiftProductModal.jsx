@@ -3,7 +3,7 @@ import { ProductGiftList } from "./productGiftList";
 import { useState } from "react";
 import { useAuthenticatedFetch } from "../hooks";
 
-export function SearchGiftProductModal({ isOpen, handleClose }) {
+export function SearchGiftProductModal({ isOpen, handleClose, discount }) {
   const fetch = useAuthenticatedFetch();
   const [searchFieldValue, setSearchFieldValue] = useState();
   const [list, setList] = useState([]);
@@ -40,7 +40,11 @@ export function SearchGiftProductModal({ isOpen, handleClose }) {
     console.log(product);
     const response = await fetch("/api/products", {
       method: "POST",
-      body: JSON.stringify(product),
+      body: JSON.stringify({
+        ...product,
+        discountId: discount?.discount_id,
+        discountAmount: discount?.amount,
+      }),
       headers: { "Content-Type": "application/json" },
     });
 

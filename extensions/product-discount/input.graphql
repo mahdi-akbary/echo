@@ -17,7 +17,7 @@ query Input {
     }
   }
   discountNode {
-    metafield(namespace: "volume-discount", key: "function-configuration"){
+    metafield(namespace: "gift-discount", key: "gift-function-configuration"){
       value
     }
   }

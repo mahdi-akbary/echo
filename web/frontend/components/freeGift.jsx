@@ -88,7 +88,12 @@ export function FreeGift() {
                   <Text as="h2" variant="headingLg">
                     Threshold
                   </Text>
-                  <Text as="p" variant="bodyMd" color="success" fontWeight="bold">
+                  <Text
+                    as="p"
+                    variant="bodyMd"
+                    color="success"
+                    fontWeight="bold"
+                  >
                     {discount?.amount ? discount?.amount : "Not set"}
                   </Text>
                 </Box>
@@ -116,6 +121,7 @@ export function FreeGift() {
       <SearchGiftProductModal
         isOpen={searchModalToggle}
         handleClose={setSearchModalToggle}
+        discount={discount}
       />
       <ThresholdModal
         isOpen={thresholdModalToggle}

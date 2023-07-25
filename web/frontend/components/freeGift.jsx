@@ -11,8 +11,10 @@ import { ProductGiftList } from "./productGiftList";
 import { SearchGiftProductModal } from "./searchGiftProductModal";
 import { useEffect, useState } from "react";
 import { useAppQuery } from "../hooks";
+import { ThresholdModal } from "./thresholdModal";
 export function FreeGift() {
   const [list, setList] = useState([]);
+  const [discount, setDiscount] = useState(null);
 
   const {
     isRefetching: isRefetching,
@@ -22,7 +24,6 @@ export function FreeGift() {
     url: "/api/products",
     reactQueryOptions: {
       onSuccess: (data) => {
-        console.log(data);
         setList(
           data?.map((item) => [
             item?.display_name,
@@ -31,7 +32,8 @@ export function FreeGift() {
             <Button
               plain
               destructive
-              onClick={async () => await handleProductSelect(item?.node)}>
+              onClick={async () => await handleProductSelect(item?.node)}
+            >
               Delete
             </Button>,
           ])
@@ -39,8 +41,19 @@ export function FreeGift() {
       },
     },
   });
+  const { refetch: refetchDiscount } = useAppQuery({
+    url: "/api/products/discounts",
+    reactQueryOptions: {
+      onSuccess: (data) => {
+        console.log(data, "<<");
+        setDiscount(data);
+      },
+    },
+  });
 
   const [searchModalToggle, setSearchModalToggle] = useState(false);
+
+  const [thresholdModalToggle, setThresholdModalToggle] = useState(false);
 
   return (
     <VerticalStack gap={{ xs: "8", sm: "4" }}>
@@ -69,24 +82,31 @@ export function FreeGift() {
           paddingInlineEnd={{ xs: 4, sm: 0 }}
         >
           <AlphaCard>
-            <VerticalStack gap="5">
-              <HorizontalStack align="space-between">
-                <HorizontalStack align="start" gap="2">
-                  <Button onClick={() => setSearchModalToggle(true)}>
-                    Add Product
-                  </Button>
-                  <Button>Edit Threshold</Button>
-                </HorizontalStack>
+            <VerticalStack gap="6">
+              <HorizontalStack align="space-between" blockAlign="center">
                 <Box>
                   <Text as="h2" variant="headingLg">
                     Threshold
                   </Text>
-                  <Text as="p" variant="bodyMd" color="success">
-                    0.00
+                  <Text as="p" variant="bodyMd" color="success" fontWeight="bold">
+                    {discount?.amount ? discount?.amount : "Not set"}
                   </Text>
                 </Box>
+                <Button primary onClick={() => setThresholdModalToggle(true)}>
+                  Set Threshold
+                </Button>
               </HorizontalStack>
-              <ProductGiftList rows={list} />
+              {discount ? (
+                <VerticalStack>
+                  <Button
+                    size="slim"
+                    onClick={() => setSearchModalToggle(true)}
+                  >
+                    Add Product
+                  </Button>
+                  <ProductGiftList rows={list} />
+                </VerticalStack>
+              ) : null}
             </VerticalStack>
           </AlphaCard>
         </Box>
@@ -96,6 +116,12 @@ export function FreeGift() {
       <SearchGiftProductModal
         isOpen={searchModalToggle}
         handleClose={setSearchModalToggle}
+      />
+      <ThresholdModal
+        isOpen={thresholdModalToggle}
+        handleClose={setThresholdModalToggle}
+        discount={discount}
+        refetch={refetchDiscount}
       />
     </VerticalStack>
   );

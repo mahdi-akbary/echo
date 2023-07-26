@@ -32,7 +32,7 @@ function App () {
   let markup = <GiftMessageField handleUpdate={handleUpdate} title={title} sub_title={sub_title} metafields={metafields} />
 
   switch (type) {
-    case 'Aggree to terms checkbox':
+    case 'Agree to terms checkbox':
       markup = <TermsField handleUpdate={handleUpdate} title={title} sub_title={sub_title} url={terms_url} metafields={metafields} />
       break
     case 'Date picker':

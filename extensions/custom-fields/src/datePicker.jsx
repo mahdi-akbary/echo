@@ -13,7 +13,7 @@ export function DatePickerField ({ title, sub_title, handleUpdate, metafields })
     const storedValue = metafields?.find(meta => meta?.key == key)?.value
 
     const DEFAUTL_TITIE = 'Select your delivery date'
-    const DEFAUTL_SUBTITIE = 'Note: Normally on the shipping step but moved here for demo purposes. 😉'
+    const DEFAUTL_SUBTITIE = ''
     const [date, setDate] = useState(storedValue)
 
     const [isPicker, setIsPicked] = useState(false)

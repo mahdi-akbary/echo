@@ -5,5 +5,6 @@ create table "public"."gift_products" (
     "title" CHARACTER varying,
     "display_name" CHARACTER varying,
     "price" FLOAT NOT NULL,
-    "inventory_quantity" INT NOT NULL
+    "inventory_quantity" INT NOT NULL,
+    "image_url" TEXT NOT NULL
 );

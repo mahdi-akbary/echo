@@ -36,7 +36,8 @@ export default function productApiEndPoints (app, shopify) {
                     title: body?.title,
                     display_name: body?.displayName,
                     inventory_quantity: body?.inventoryQuantity,
-                    price: body?.price
+                    price: body?.price,
+                    image_url: body?.image?.url
                 })
                 .select()
             if (error) throw new Error(error.message)
@@ -76,6 +77,9 @@ export default function productApiEndPoints (app, shopify) {
                                 displayName
                                 price
                                 inventoryQuantity
+                                image {
+                                    url
+                                }
                             }
                         }
                     }

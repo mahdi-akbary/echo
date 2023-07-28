@@ -3,29 +3,29 @@ import {
   Layout,
   CalloutCard,
   VerticalStack,
-  Card,
   HorizontalGrid,
   Box,
   Text,
-  TextField,
   Divider,
   useBreakpoints,
   Modal,
   TextContainer
 } from "@shopify/polaris";
-import { TitleBar, } from "@shopify/app-bridge-react";
+import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
 import { useState } from "react";
 import { CountChart, AddedProductList } from "../components";
+import { Redirect } from "@shopify/app-bridge/actions";
 
 export default function HomePage () {
   const { smUp } = useBreakpoints();
-
   const [displayVideoGuide, setDisplayVideoGuide] = useState();
+
+  const app = useAppBridge();
+  const redirect = Redirect.create(app);
 
   const handleVideoGuideClick = () => {
     setDisplayVideoGuide(!displayVideoGuide);
   }
-
   return (
     <Page>
       <TitleBar title="Dashboard" primaryAction={null} />
@@ -62,7 +62,7 @@ export default function HomePage () {
             illustration="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg"
             primaryAction={{
               content: 'Customize checkout',
-              url: '#',
+              onAction: () => redirect.dispatch(Redirect.Action.ADMIN_PATH, '/settings/checkout/editor'),
             }}
             secondaryAction={{
               content: 'Video guide',
@@ -106,7 +106,7 @@ export default function HomePage () {
               <Box></Box>
               <AddedProductList />
             </HorizontalGrid>
-          <Box padding="4"></Box>
+            <Box padding="4"></Box>
           </VerticalStack>
         </Layout.Section>
 

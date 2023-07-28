@@ -6,11 +6,12 @@ import {
   Box,
   Text,
   Divider,
+  Spinner,
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useEffect, useState } from "react";
 
-export default function HowToUse() {
+export default function HowToUse () {
   const [width, setWidth] = useState(window.innerWidth);
   const updateDimensions = () => {
     setWidth(window.innerWidth);
@@ -107,15 +108,20 @@ export default function HowToUse() {
                     </Text>
                   </VerticalStack>
                 </Box>
+
                 <Box
+                  position="relative"
                   width={width < 780 ? "100%" : `${(width * 50) / 100}px`}
                   minHeight={`${(width * 33) / 100}px`}
                 >
+                  <div style={{ width: "100%", height: "100%", zIndex: 1, position: "absolute", display: 'flex', justifyContent: 'center', alignItems: "center", border: '1px solid #ccc', borderRadius: '5px' }}>
+                    <Spinner size="large" />
+                  </div>
                   <iframe
                     src={video.link}
                     frameBorder="0"
                     allowFullScreen
-                    style={{ width: "100%", height: "100%" }}
+                    style={{ width: "100%", height: "100%", zIndex: 2, position: "relative" }}
                   ></iframe>
                 </Box>
               </HorizontalGrid>

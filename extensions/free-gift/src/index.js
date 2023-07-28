@@ -21,7 +21,7 @@ import { getCountryCode } from './getCountryCode.jsx';
 import { BlockLayout, BlockStack, InlineStack, Style } from '@shopify/checkout-ui-extensions';
 
 render('Checkout::Dynamic::Render', () => <App />);
-const BASE_URL = 'https://implications-calculated-swaziland-apparatus.trycloudflare.com'
+const BASE_URL = 'https://result-tournaments-montana-talking.trycloudflare.com'
 function App() {
   const { i18n, sessionToken } = useExtensionApi();
   const cartLines = useCartLines();

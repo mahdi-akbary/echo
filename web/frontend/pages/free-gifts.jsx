@@ -9,12 +9,14 @@ import {
   TextField,
 } from "@shopify/polaris";
 import { FreeGift } from "../components";
+import { TitleBar } from "@shopify/app-bridge-react";
 
 export default function Settings() {
   return (
     <Page>
+    <TitleBar title="Free gifts" primaryAction={null} />
       <Layout>
-        <Layout.Section>
+        {/* <Layout.Section>
           <Box paddingBlockStart="5">
             <VerticalStack gap={"2"}>
               <Text variant="headingLg" as="h2">
@@ -28,7 +30,7 @@ export default function Settings() {
               <Divider borderWidth="1" />
             </VerticalStack>
           </Box>
-        </Layout.Section>
+        </Layout.Section> */}
         <Layout.Section>
           <FreeGift />
         </Layout.Section>

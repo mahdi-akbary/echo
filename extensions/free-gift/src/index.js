@@ -6,7 +6,6 @@ import {
   View,
   Banner,
   useExtensionApi,
-  useSettings,
   TextBlock,
   Button,
   Image,
@@ -17,11 +16,10 @@ import {
   useApplyCartLinesChange
 } from '@shopify/checkout-ui-extensions-react';
 
-import { getCountryCode } from './getCountryCode.jsx';
-import { BlockLayout, BlockStack, InlineStack, Style } from '@shopify/checkout-ui-extensions';
+import { BlockStack } from '@shopify/checkout-ui-extensions';
 
 render('Checkout::Dynamic::Render', () => <App />);
-const BASE_URL = 'https://result-tournaments-montana-talking.trycloudflare.com'
+const BASE_URL = 'https://checkout-plus.fly.dev'
 function App() {
   const { i18n, sessionToken } = useExtensionApi();
   const cartLines = useCartLines();
@@ -74,7 +72,6 @@ function App() {
     if (result.type == 'success') {
       setError(null);
       setData([])
-      // Submit report: future work
       setLoading(null);
     }
   }

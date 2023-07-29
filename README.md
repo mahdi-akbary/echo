@@ -33,3 +33,9 @@ To run the application in development environment please follow these steps:
 - `flyctl secrets set SHOPIFY_API_SECRET=<API_SECRET>`
 - run `yarn deploy-fly` from project root to deploy latest changes.
 
+##  for deploying extensions:
+- if only there is new changes for extensions
+- set the BASE_URL for extesions ./recommendation/src/index.jsx  and ./free-gift/src/index.jsx 
+- run `yarn deploy --reset` and select the correct store and app
+
+

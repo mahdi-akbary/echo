@@ -27,7 +27,6 @@ export default function productApiEndPoints (app, shopify) {
                 .eq('variant_id', body?.id)
             if (existsError) throw new Error(existsError.message)
             if (exists?.length > 0) throw new Error('Already exists!')
-
             const { data, error } = await supabase
                 .from('gift_products')
                 .insert({
@@ -37,7 +36,7 @@ export default function productApiEndPoints (app, shopify) {
                     display_name: body?.displayName,
                     inventory_quantity: body?.inventoryQuantity,
                     price: body?.price,
-                    image_url: body?.image?.url
+                    image_url: body?.image?.url || body?.product?.featuredImage?.url
                 })
                 .select()
             if (error) throw new Error(error.message)
@@ -79,6 +78,13 @@ export default function productApiEndPoints (app, shopify) {
                                 inventoryQuantity
                                 image {
                                     url
+                                }
+                                product {
+                                    id
+                                    status
+                                    featuredImage {
+                                        url
+                                    }
                                 }
                             }
                         }

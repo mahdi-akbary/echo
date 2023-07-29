@@ -24,7 +24,8 @@ export function SearchGiftProductModal ({ isOpen, handleClose, discount, refetch
       setLoading(false)
       const data = await response.json();
       setList(
-        data.map((item) => [
+        data.filter(item => item?.node?.product?.status == 'ACTIVE')
+        .map((item) => [
           item?.node?.displayName,
           item?.node?.price,
           item?.node?.inventoryQuantity,

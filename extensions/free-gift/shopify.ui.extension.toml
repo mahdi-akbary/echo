@@ -1,34 +1,11 @@
 type = "checkout_ui_extension"
 name = "free-gift"
+api_version = "2023-04"
 
 extension_points = [
   'Checkout::Dynamic::Render'
 ]
+
 [capabilities]
 api_access = true
 network_access = true
-
-# [[metafields]]
-# namespace = "my-namespace"
-# key = "my-key"
-
-# [[metafields]]
-# namespace = "my-namespace"
-# key = "my-key-2"
-
-# Read more on extension settings at https://shopify.dev/api/checkout-extensions/checkout/configuration
- [settings]
-   [[settings.fields]]
-   key = "first_gift"
-   type = "variant_reference"
-   name = "First free gift"
-
-   [[settings.fields]]
-   key = "second_gift"
-   type = "variant_reference"
-   name = "Second free gift"
-
-   [[settings.fields]]
-   key = "third_gift"
-   type = "variant_reference"
-   name = "Third free gift"

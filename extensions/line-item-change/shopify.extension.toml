@@ -7,19 +7,5 @@ handle = "line-item-change"
 
 [[extensions.targeting]]
 module =  "./src/index.jsx"
-target = "purchase.checkout.block.render"
-# [[metafields]]
-# namespace = "my-namespace"
-# key = "my-key"
+target = "purchase.checkout.cart-line-item.render-after"
 
-# [[metafields]]
-# namespace = "my-namespace"
-# key = "my-key-2"
-
-# Read more on extension settings at https://shopify.dev/api/checkout-extensions/checkout/configuration
-# [settings]
-#   [[settings.fields]]
-#   key = "banner_title"
-#   type = "single_line_text_field"
-#   name = "Banner title"
-#   description = "Enter a title for the banner"

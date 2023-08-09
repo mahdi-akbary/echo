@@ -9,116 +9,111 @@ handle = "trust-badges"
 module =  "./src/index.jsx"
 target = "purchase.checkout.block.render"
 
-# [[metafields]]
-# namespace = "my-namespace"
-# key = "my-key"
+[extensions.settings]
 
-# [[metafields]]
-# namespace = "my-namespace"
-# key = "my-key-2"
+[[extensions.settings.fields]]
+key = "title"
+type = "single_line_text_field"
+name = "Title"
+description = "Why choose us?"
 
-# Read more on extension settings at https://shopify.dev/api/checkout-extensions/checkout/configuration
- [settings]
+[[extensions.settings.fields]]
+key = "layout"
+type = "single_line_text_field"
+name = "Layout"
+[[extensions.settings.fields.validations]]
+name = "choices"
+value = '["Grids","Rows"]'
 
-    [[settings.fields]]
-    key = "title"
-    type = "single_line_text_field"
-    name = "Title"
-    description = "Why choose us?"
+[[extensions.settings.fields]]
+key = "grids"
+type = "single_line_text_field"
+name = "Grids"
+[[extensions.settings.fields.validations]]
+name = "choices"
+value = '["1 column","2 columns", "3 columns", "4 columns"]'
 
-    [[settings.fields]]
-    key = "layout"
-    type = "single_line_text_field"
-    name = "Layout"
-    [[settings.fields.validations]]
-    name = "choices"
-    value = '["Grids","Rows"]'
+[[extensions.settings.fields]]
+key = "border"
+type = "single_line_text_field"
+name = "Border"
+[[extensions.settings.fields.validations]]
+name = "choices"
+value = '["none", "base", "dotted"]'
 
-    [[settings.fields]]
-    key = "grids"
-    type = "single_line_text_field"
-    name = "Grids"
-    [[settings.fields.validations]]
-    name = "choices"
-    value = '["1 column","2 columns", "3 columns", "4 columns"]'
+[[extensions.settings.fields]]
+key = "image_width"
+type = "single_line_text_field"
+name = "Image width"
+description = "Please specify percentage for image width"
+[[extensions.settings.fields.validations]]
+name = "choices"
+value = '["small","medium","large","extraLarge"]'
 
+[[extensions.settings.fields]]
+key = "padding"
+type = "single_line_text_field"
+name = "Padding"
+[[extensions.settings.fields.validations]]
+name = "choices"
+value = '["none","base", "tight", "extraTight", "loose", "extraLoose"]'
 
-    [[settings.fields]]
-    key = "border"
-    type = "single_line_text_field"
-    name = "Border"
-    [[settings.fields.validations]]
-      name = "choices"
-      value = '["none", "base", "dotted"]'
+[[extensions.settings.fields]]
+key = "alignment"
+type = "single_line_text_field"
+name = "Text alignment"
+description = "Only works for classic style"
+[[extensions.settings.fields.validations]]
+name = "choices"
+value = '["start","center","end"]'
 
-    [[settings.fields]]
-    key = "image_width"
-    type = "single_line_text_field"
-    name = "Image width"
-    description = "Please specify percentage for image width"
-      [[settings.fields.validations]]
-      name = "choices"
-      value = '["small","medium","large","extraLarge"]'
+[[extensions.settings.fields]]
+key = "trust_title1"
+type = "single_line_text_field"
+name = "Title 1"
 
-    [[settings.fields]]
-    key = "padding"
-    type = "single_line_text_field"
-    name = "Padding"
-    [[settings.fields.validations]]
-      name = "choices"
-      value = '["none","base", "tight", "extraTight", "loose", "extraLoose"]'
+[[extensions.settings.fields]]
+key = "trust_description1"
+type = "multi_line_text_field"
+name = "Description 1"
 
-    [[settings.fields]]
-    key = "alignment"
-    type = "single_line_text_field"
-    name = "Text alignment"
-    description = "Only works for classic style"
-      [[settings.fields.validations]]
-        name = "choices"
-        value = '["start","center","end"]'
+[[extensions.settings.fields]]
+key = "trust_icon1"
+type = "single_line_text_field"
+name = "Image url 1"
+description = "Please paste the image url here. You can upload your icons/images in shopify files"
 
-   [[settings.fields]]
-   key = "trust_title1"
-   type = "single_line_text_field"
-   name = "Title 1"
-   [[settings.fields]]
-   key = "trust_description1"
-   type = "multi_line_text_field"
-   name = "Description 1"
-   [[settings.fields]]
-   key = "trust_icon1"
-   type = "single_line_text_field"
-   name = "Image url 1"
-   description = "Please paste the image url here. You can upload your icons/images in shopify files"
+[[extensions.settings.fields]]
+key = "trust_title2"
+type = "single_line_text_field"
+name = "Title 2"
 
+[[extensions.settings.fields]]
+key = "trust_description2"
+type = "multi_line_text_field"
+name = "Description 2"
 
-  [[settings.fields]]
-  key = "trust_title2"
-  type = "single_line_text_field"
-  name = "Title 2"
-  [[settings.fields]]
-  key = "trust_description2"
-  type = "multi_line_text_field"
-  name = "Description 2"
-  [[settings.fields]]
-  key = "trust_icon2"
-  type = "single_line_text_field"
-  name = "Image url 2"
-  description = "Please paste the image url here. You can upload your icons/images in shopify files"
+[[extensions.settings.fields]]
+key = "trust_icon2"
+type = "single_line_text_field"
+name = "Image url 2"
+description = "Please paste the image url here. You can upload your icons/images in shopify files"
 
 
-  [[settings.fields]]
-  key = "trust_title3"
-  type = "single_line_text_field"
-  name = "Title 3"
-  [[settings.fields]]
-  key = "trust_description3"
-  type = "multi_line_text_field"
-  name = "Description 3"
-  [[settings.fields]]
-  key = "trust_icon3"
-  type = "single_line_text_field"
-  name = "Image url 3"
-  description = "Please paste the image url here. You can upload your icons/images in shopify files"
+[[extensions.settings.fields]]
+key = "trust_title3"
+type = "single_line_text_field"
+name = "Title 3"
+
+[[extensions.settings.fields]]
+key = "trust_description3"
+type = "multi_line_text_field"
+name = "Description 3"
+
+[[extensions.settings.fields]]
+key = "trust_icon3"
+type = "single_line_text_field"
+name = "Image url 3"
+description = "Please paste the image url here. You can upload your icons/images in shopify files"
 
 

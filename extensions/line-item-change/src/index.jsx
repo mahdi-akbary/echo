@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  render,
+  reactExtension,
   Button,
   Link,
   View,
@@ -12,9 +12,9 @@ import {
   Text,
   Spinner,
   BlockSpacer,
-} from "@shopify/checkout-ui-extensions-react";
+} from "@shopify/ui-extensions-react/checkout";
 
-render("Checkout::CartLineDetails::RenderAfter", () => <App />);
+export default reactExtension("purchase.checkout.cart-line-item.render-after", () => <App />);
 
 function App() {
   const applyCartLinesChange = useApplyCartLinesChange();

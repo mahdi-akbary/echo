@@ -9,47 +9,38 @@ handle = "image-banner"
 module =  "./src/index.jsx"
 target = "purchase.checkout.block.render"
 
-# [[metafields]]
-# namespace = "my-namespace"
-# key = "my-key"
+[extensions.settings]
+[[extensions.settings.fields]]
+key = "image_url"
+type = "single_line_text_field"
+name = "Image url"
+description = "Please paste the image url here. You can upload your icons/images in shopify files"
 
-# [[metafields]]
-# namespace = "my-namespace"
-# key = "my-key-2"
+[[extensions.settings.fields]]
+key = "accessibility_description"
+type = "single_line_text_field"
+name = "Accessibility Description"
 
-# Read more on extension settings at https://shopify.dev/api/checkout-extensions/checkout/configuration
- [settings]
-   [[settings.fields]]
-   key = "image_url"
-   type = "single_line_text_field"
-   name = "Image url"
-   description = "Please paste the image url here. You can upload your icons/images in shopify files"
+[[extensions.settings.fields]]
+key = "lazyloading"
+type = "boolean"
+name = "Lazyloading"
 
-   [[settings.fields]]
-   key = "accessibility_description"
-   type = "single_line_text_field"
-   name = "Accessibility Description"
+[[extensions.settings.fields]]
+key = "fit"
+type = "boolean"
+name = "Fit"
+description = "Indicates how the image fits in its frame. Use if the image is not displayed at its intrinsic size to maintain the aspect ratio."
 
-   [[settings.fields]]
-   key = "lazyloading"
-   type = "boolean"
-   name = "Lazyloading"
+[[extensions.settings.fields]]
+key = "border"
+type = "boolean"
+name = "Border"
 
-   [[settings.fields]]
-   key = "fit"
-   type = "boolean"
-   name = "Fit"
-   description = "Indicates how the image fits in its frame. Use if the image is not displayed at its intrinsic size to maintain the aspect ratio."
-
-   [[settings.fields]]
-   key = "border"
-   type = "boolean"
-   name = "Border"
-
-   [[settings.fields]]
-   key = "corner_radius"
-   type = "single_line_text_field"
-   name = "Corner Radius"
-    [[settings.fields.validations]]
-      name = "choices"
-      value = '["small","base","large","fullyRounded", "none"]'
+[[extensions.settings.fields]]
+key = "corner_radius"
+type = "single_line_text_field"
+name = "Corner Radius"
+[[extensions.settings.fields.validations]]
+name = "choices"
+value = '["small","base","large","fullyRounded", "none"]'

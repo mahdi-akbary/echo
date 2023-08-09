@@ -1,16 +1,15 @@
 import {
-  render,
+  reactExtension,
   useSettings,
   Grid,
   BlockLayout,
   Heading,
   BlockSpacer,
-} from "@shopify/checkout-ui-extensions-react";
-
+} from "@shopify/ui-extensions-react/checkout";
 import { TrustCard } from "./trustCard.jsx";
 import { TrustList } from "./trustList.jsx";
 
-render("Checkout::Dynamic::Render", () => <App />);
+export default reactExtension("purchase.checkout.block.render", () => <App />);
 
 function App() {
   let {

@@ -8,7 +8,7 @@ import {
     TextBlock,
     BlockSpacer,
     useSettings,
-} from "@shopify/checkout-ui-extensions-react";
+} from "@shopify/ui-extensions-react/checkout";
 
 
 export function TrustCard({ title, description, icon, width }) {

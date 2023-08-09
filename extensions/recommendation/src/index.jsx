@@ -1,23 +1,25 @@
 import {useEffect, useState} from 'react';
 import {
-  useExtensionApi,
-  render,
   useSettings,
   BlockLayout,
   useTotalAmount,
   useCartLines,
   Heading,
   BlockSpacer,
-  Grid
-} from '@shopify/checkout-ui-extensions-react';
+  Grid,
+  useApi,
+  reactExtension
+} from "@shopify/ui-extensions-react/checkout";
 
 import { getCountryCode } from './getCountryCode.jsx';
 import { ProductCard } from './productCard.jsx';
 import { ProductList } from './productList.jsx';
 const BASE_URL = 'https://checkout-plus.fly.dev'
-render('Checkout::Dynamic::Render', () => <App />);
+
+export default reactExtension("purchase.checkout.block.render", () => <App />);
+
 function App() {
-  const { query } = useExtensionApi();
+  const { query } = useApi();
   const [ data, setData ] = useState();
   const { currencyCode } = useTotalAmount();
   const { title, recommendation_source, recommendation_algorithm, limit, layout, grids } = useSettings();

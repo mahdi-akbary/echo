@@ -1,10 +1,12 @@
 import {
-  render,
+  reactExtension,
   Image,
   useSettings,
   SkeletonImage,
-} from "@shopify/checkout-ui-extensions-react";
-render("Checkout::Dynamic::Render", () => <App />);
+} from "@shopify/ui-extensions-react/checkout";
+
+export default reactExtension("purchase.checkout.block.render", () => <App />);
+
 function App() {
   const {
     image_url,
@@ -15,7 +17,6 @@ function App() {
     corner_radius,
   } = useSettings();
 
-
   return (
     <>
       {image_url ? (
@@ -23,8 +24,8 @@ function App() {
           source={image_url}
           accessibilityDescription={accessibility_description}
           loading={lazyloading ? "lazy" : "eager"}
-          fit={ fit ? 'cover' : "contain"}
-          border={ border ? "base" : "none"}
+          fit={fit ? "cover" : "contain"}
+          border={border ? "base" : "none"}
           cornerRadius={corner_radius}
         />
       ) : (

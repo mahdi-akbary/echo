@@ -8,21 +8,14 @@ handle = "checkout-upsell"
 [[extensions.targeting]]
 module =  "./src/index.jsx"
 target = "purchase.checkout.block.render"
-[capabilities]
-api_access = true
+
+[extensions.capabilities]
 network_access = true
+block_progress = true
+api_access = true
 
-# [[metafields]]
-# namespace = "my-namespace"
-# key = "my-key"
-
-# [[metafields]]
-# namespace = "my-namespace"
-# key = "my-key-2"
-
-# Read more on extension settings at https://shopify.dev/api/checkout-extensions/checkout/configuration
- [settings]
-   [[settings.fields]]
-   key = "upsell_product"
-   type = "variant_reference"
-   name = "Upsell product"
+[extensions.settings]
+[[extensions.settings.fields]]
+key = "upsell_product"
+type = "variant_reference"
+name = "Upsell product"

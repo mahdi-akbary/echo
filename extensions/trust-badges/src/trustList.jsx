@@ -9,7 +9,7 @@ import {
     BlockLayout,
     InlineStack,
     TextBlock, 
-} from "@shopify/checkout-ui-extensions-react";
+} from "@shopify/ui-extensions-react/checkout";
 
 export function TrustList({ title, description, icon, width }) {
 

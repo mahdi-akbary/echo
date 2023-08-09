@@ -9,84 +9,75 @@ handle = "count-down-timer"
 module =  "./src/index.jsx"
 target = "purchase.checkout.block.render"
 
-# [[metafields]]
-# namespace = "my-namespace"
-# key = "my-key"
-
-# [[metafields]]
-# namespace = "my-namespace"
-# key = "my-key-2"
-
-# Read more on extension settings at https://shopify.dev/api/checkout-extensions/checkout/configuration
-[settings]
-[[settings.fields]]
+[extensions.settings]
+[[extensions.settings.fields]]
 key = "title"
 type = "single_line_text_field"
 name = "Title"
 
-[[settings.fields]]
+[[extensions.settings.fields]]
 key = "time_start_at"
 type = "single_line_text_field"
 name = "Countdown start at"
 description = "Enter a number for the minutes countdown starts at: Eg: 10"
 
-[[settings.fields]]
+[[extensions.settings.fields]]
 key = "reset_delay"
 type = "single_line_text_field"
 name = "Reset countdown delay"
 description = "After countdown times out, wait this minutes before restarting"
 
-[[settings.fields]]
+[[extensions.settings.fields]]
 key = "countdown_message"
 type = "multi_line_text_field"
 name = "Countdown message"
 description = "Enter a short message for countdown or leave empty for default. Use $timer variable in the middle of your text to show the timer"
 
-[[settings.fields]]
+[[extensions.settings.fields]]
 key = "countdown_message_after"
 type = "single_line_text_field"
 name = "Countdown message after timer"
 description = "Enter a short message for countdown or leave empty for default. Use $timer variable in the middle of your text to show the timer"
 
-[[settings.fields]]
+[[extensions.settings.fields]]
 key = "classic"
 type = "boolean"
 name = "Classic"
 description = "The classic style will change the design of countdown"
 
-[[settings.fields]]
+[[extensions.settings.fields]]
 key = "status"
 type = "single_line_text_field"
 name = "Status"
 
-[[settings.fields.validations]]
+[[extensions.settings.fields.validations]]
 name = "choices"
 value = '["accent","subdued","info","success","warning","critical"]'
 
-[[settings.fields]]
+[[extensions.settings.fields]]
 key = "alignment"
 type = "single_line_text_field"
 name = "Text alignment"
 description = "Only works for classic style"
 
-[[settings.fields.validations]]
+[[extensions.settings.fields.validations]]
 name = "choices"
 value = '["start","center","end"]'
 
-[[settings.fields]]
+[[extensions.settings.fields]]
 key = "fontsize"
 type = "single_line_text_field"
 name = "Text size"
 
-[[settings.fields.validations]]
+[[extensions.settings.fields.validations]]
 name = "choices"
 value = '["extraSmall","small","base", "medium", "large", "extraLarge"]'
 
-[[settings.fields]]
+[[extensions.settings.fields]]
 key = "emphasis"
 type = "single_line_text_field"
 name = "Emphasis"
 
-[[settings.fields.validations]]
+[[extensions.settings.fields.validations]]
 name = "choices"
 value = '["italic","bold", "base"]'

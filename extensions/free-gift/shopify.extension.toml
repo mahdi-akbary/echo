@@ -9,6 +9,7 @@ handle = "free-gift"
 module =  "./src/index.js"
 target = "purchase.checkout.block.render"
 
-[capabilities]
-api_access = true
+[extensions.capabilities]
 network_access = true
+block_progress = true
+api_access = true

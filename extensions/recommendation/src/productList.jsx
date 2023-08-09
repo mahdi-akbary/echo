@@ -12,7 +12,7 @@ import {
     useSettings,
     BlockLayout,
     InlineStack,
-} from "@shopify/checkout-ui-extensions-react";
+} from "@shopify/ui-extensions-react/checkout";
 import { useState } from "react";
 
 export function ProductList({ product }) {

@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 
 import {
-  render,
+  reactExtension,
   InlineLayout,
   View,
   Banner,
-  useExtensionApi,
+  useApi,
   useSettings,
   SkeletonImage,
   TextBlock,
@@ -17,15 +17,15 @@ import {
   useTotalAmount,
   BlockSpacer,
   useApplyCartLinesChange,
-} from '@shopify/checkout-ui-extensions-react';
+} from "@shopify/ui-extensions-react/checkout";
 
 import { getCountryCode } from './getCountryCode.jsx';
 
-render('Checkout::Dynamic::Render', () => <App />);
+export default reactExtension("purchase.checkout.block.render", () => <App />);
 
 function App() {
 
-  const { i18n, query, localization } = useExtensionApi();
+  const { i18n, query } = useApi();
   const [ data, setData ] = useState();
   const [ error, setError ] = useState();
   const [ loading, setLoading ] = useState(false);

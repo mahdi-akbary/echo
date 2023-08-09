@@ -6,7 +6,7 @@ name = "Free gift"
 handle = "free-gift"
 
 [[extensions.targeting]]
-module =  "./src/index.jsx"
+module =  "./src/index.js"
 target = "purchase.checkout.block.render"
 
 [capabilities]

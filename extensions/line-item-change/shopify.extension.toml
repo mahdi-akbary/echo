@@ -1,11 +1,13 @@
+api_version = "2023-07"
+
+[[extensions]]
 type = "ui_extension"
-name = "Line-item-change"
-api_version = "2023-04"
+name = "Line item-change"
+handle = "line-item-change"
 
-extension_points = [
-  'Checkout::CartLineDetails::RenderAfter'
-]
-
+[[extensions.targeting]]
+module =  "./src/index.jsx"
+target = "purchase.checkout.block.render"
 # [[metafields]]
 # namespace = "my-namespace"
 # key = "my-key"

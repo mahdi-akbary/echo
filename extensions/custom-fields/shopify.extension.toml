@@ -1,0 +1,47 @@
+api_version = "2023-07"
+
+[[extensions]]
+type = "ui_extension"
+name = "Custom fields"
+handle = "custom-fields"
+
+[[extensions.targeting]]
+module =  "./src/index.jsx"
+target = "purchase.checkout.block.render"
+
+# [[metafields]]
+# namespace = "my-namespace"
+# key = "my-key"
+
+# [[metafields]]
+# namespace = "my-namespace"
+# key = "my-key-2"
+
+# Read more on extension settings at https://shopify.dev/api/checkout-extensions/checkout/configuration
+[settings]
+[[settings.fields]]
+key = "title"
+type = "single_line_text_field"
+name = "Title"
+description = "Eg: Add a gift message | Add your birthday for a future discount! 🎉"
+
+[[settings.fields]]
+key = "sub_title"
+type = "single_line_text_field"
+name = "Sub-title"
+description = "If left empty it will not be shown, Eg: This gift message will be send to your address"
+
+[[settings.fields]]
+key = "custom_field_type"
+type = "single_line_text_field"
+name = "Custom Field Type"
+description = "Type of custom field to be displayed.  Default is gift message."
+[[settings.fields.validations]]
+name = "choices"
+value = '["Gift message","Birthday","Date picker","Agree to terms checkbox"]'
+
+[[settings.fields]]
+key = "terms_url"
+type = "single_line_text_field"
+name = "Terms and conditions URL"
+description = "Attention: this field is only required if you choose 'Agree to terms checkbox' type. Eg: https://yourterms.com"

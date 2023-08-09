@@ -4,7 +4,7 @@ import {
     Select,
     Text,
     View
-} from "@shopify/checkout-ui-extensions-react";
+} from "@shopify/ui-extensions-react/checkout";
 import { useEffect, useState } from "react";
 
 export function BirthdayField ({ title, sub_title, handleUpdate, metafields }) {

@@ -2,7 +2,7 @@ import {
     Checkbox,
     Text,
     TextField
-} from "@shopify/checkout-ui-extensions-react";
+} from "@shopify/ui-extensions-react/checkout";
 import { useEffect, useState } from "react";
 
 export function GiftMessageField ({ title, sub_title, handleUpdate, metafields }) {

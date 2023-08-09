@@ -4,7 +4,7 @@ import {
     InlineStack,
     Link,
     Text
-} from "@shopify/checkout-ui-extensions-react";
+} from "@shopify/ui-extensions-react/checkout";
 import { useState } from "react";
 
 export function TermsField ({ title, sub_title, handleUpdate, url, metafields }) {

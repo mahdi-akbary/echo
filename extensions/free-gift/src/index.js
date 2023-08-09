@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from 'react';
 
 import {
-  render,
   InlineLayout,
   View,
   Banner,
-  useExtensionApi,
   TextBlock,
   Button,
   Image,
   Text,
-  useTotalAmount,
   BlockSpacer,
   useCartLines,
-  useApplyCartLinesChange
-} from '@shopify/checkout-ui-extensions-react';
+  useApplyCartLinesChange,
+  useApi,
+  BlockStack,
+  useTotalAmount
+} from '@shopify/ui-extensions-react/checkout';
 
-import { BlockStack } from '@shopify/checkout-ui-extensions';
-
-render('Checkout::Dynamic::Render', () => <App />);
+export default reactExtension("purchase.checkout.block.render", () => <App />);
 const BASE_URL = 'https://checkout-plus.fly.dev'
 function App() {
-  const { i18n, sessionToken } = useExtensionApi();
+  const { i18n, sessionToken } = useApi();
   const cartLines = useCartLines();
   const [data, setData] = useState([]);
   const [error, setError] = useState();

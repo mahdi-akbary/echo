@@ -1,0 +1,14 @@
+api_version = "2023-07"
+
+[[extensions]]
+type = "ui_extension"
+name = "Free gift"
+handle = "free-gift"
+
+[[extensions.targeting]]
+module =  "./src/index.jsx"
+target = "purchase.checkout.block.render"
+
+[capabilities]
+api_access = true
+network_access = true

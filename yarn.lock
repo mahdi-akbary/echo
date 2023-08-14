@@ -1504,10 +1504,10 @@
     "@react-spring/shared" "~9.7.3"
     "@react-spring/types" "~9.7.3"
 
-"@remix-run/router@1.7.2":
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.7.2.tgz#cba1cf0a04bc04cb66027c51fa600e9cbc388bc8"
-  integrity sha512-7Lcn7IqGMV+vizMPoEl5F0XDshcdDYtMI6uJLQdQz5CfZAwy3vvGKYSUk789qndt5dEC4HfSjviSYlSoHGL2+A==
+"@remix-run/router@1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.8.0.tgz#e848d2f669f601544df15ce2a313955e4bf0bafc"
+  integrity sha512-mrfKqIHnSZRyIzBcanNJmVQELTnX+qagEDlcKO90RgRBVOZGSGvZKeDihTRfWcqoDn5N/NkUcwWTccnpN18Tfg==
 
 "@remote-ui/async-subscription@^2.1.12", "@remote-ui/async-subscription@^2.1.14":
   version "2.1.14"
@@ -1736,10 +1736,10 @@
   resolved "https://registry.yarnpkg.com/@shopify/polaris-tokens/-/polaris-tokens-6.14.0.tgz#c942fcfca069a301a38c61aa05a85d5f744ef9d1"
   integrity sha512-eMa9X0QzOB3o/4O1ATcPKpc4NPqm57lpaqiRkRu8XRkKzwH+kL9J6vI8YNnDbePfndMNAA9MRp0HR1XqaPxCMg==
 
-"@shopify/polaris-viz-core@^9.10.1":
-  version "9.10.1"
-  resolved "https://registry.yarnpkg.com/@shopify/polaris-viz-core/-/polaris-viz-core-9.10.1.tgz#7d62371d7657f886bd62566f413cb1b8ccbf44de"
-  integrity sha512-JDibKusfVN76/LRp29T5STqAEVhfBdYAS//df7RAJshHNcxD2x/kDXZisPvf821KrSxfHenyYOIGYVce41u3vA==
+"@shopify/polaris-viz-core@^9.10.4":
+  version "9.10.4"
+  resolved "https://registry.yarnpkg.com/@shopify/polaris-viz-core/-/polaris-viz-core-9.10.4.tgz#2d4f605c872e6843ef2fe9b7babdd3e41ebcc3f2"
+  integrity sha512-SvX6ayHEBWUU5fq7g17/ljLAuSduhHTIhGazzoXmxpCp89gtVaeEFtwkor4l1SHGk22cdOZZR9omcygIngBI2g==
   dependencies:
     "@react-spring/animated" "^9.4.5"
     "@react-spring/core" "^9.4.5"
@@ -1750,13 +1750,13 @@
     d3-shape "^3.1.0"
 
 "@shopify/polaris-viz@^9.3.4":
-  version "9.10.1"
-  resolved "https://registry.yarnpkg.com/@shopify/polaris-viz/-/polaris-viz-9.10.1.tgz#2972303a0a520bc699a9d103a5dc5d2355f2680a"
-  integrity sha512-WMNu3RJc//gOL7KfpUXaGT3z2+VDncA1i+miHDaxNnX9ixV33BhBkf6XDt2AmFijR4sqaZLEa5pD3YFOcsPUAA==
+  version "9.10.4"
+  resolved "https://registry.yarnpkg.com/@shopify/polaris-viz/-/polaris-viz-9.10.4.tgz#f026c8d07b25133abbc43d5d20aa5ac2e7853953"
+  integrity sha512-enWfAPoXs7/RN0gF386PYtrguURV70x2TVCKlbqCsge3LqhdDNyDFD8k7bbpUyri0HF6sJmGGS7uqsI8OiVULA==
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
     "@react-spring/web" "^9.4.5"
-    "@shopify/polaris-viz-core" "^9.10.1"
+    "@shopify/polaris-viz-core" "^9.10.4"
     d3-array "^3.2.0"
     d3-color "^3.1.0"
     d3-path "^3.0.1"
@@ -1778,7 +1778,7 @@
     react-fast-compare "^3.2.0"
     react-transition-group "^4.4.2"
 
-"@shopify/shopify-api@^7.5.0":
+"@shopify/shopify-api@^7.5.1":
   version "7.5.1"
   resolved "https://registry.yarnpkg.com/@shopify/shopify-api/-/shopify-api-7.5.1.tgz#d3c69c0b68082885bcb3ffe4a5d9cbdfb3687e46"
   integrity sha512-zydzwkDPIyXiDcfFCW/R14m36mQkpAP4GthenrEHdx0B/yyfmfCnB6sB4KjWwtd+Y+gojx+PE/lTPCPdPCd2Kg==
@@ -1792,37 +1792,37 @@
     uuid "^9.0.0"
 
 "@shopify/shopify-app-express@^2.1.1":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@shopify/shopify-app-express/-/shopify-app-express-2.2.0.tgz#214fb01036a4fb4a91e20ca923ff2c5ab0806ff2"
-  integrity sha512-2grfwIkJZp0EBw1YnaW4mItkA2PXjFcSp4UeaZwOFJqud0hoEs25l9MZB3DE10AvhFZvMtal4smriNjsLZXNnw==
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@shopify/shopify-app-express/-/shopify-app-express-2.2.1.tgz#29a85456e56194c7cc092b23c362d4907b946550"
+  integrity sha512-JShxxEKfWxmNaJpdc1bZn9t4XYToER9LtIudFJgW8z+zbYd5Rds+W0HckYM5H3qSFgsyEpqvEP7pzCQQkBXSww==
   dependencies:
-    "@shopify/shopify-api" "^7.5.0"
-    "@shopify/shopify-app-session-storage" "^1.1.6"
-    "@shopify/shopify-app-session-storage-memory" "^1.0.9"
+    "@shopify/shopify-api" "^7.5.1"
+    "@shopify/shopify-app-session-storage" "^1.1.7"
+    "@shopify/shopify-app-session-storage-memory" "^1.0.10"
     cookie-parser "^1.4.6"
     express "^4.18.1"
     semver "^7.5.1"
     tslib "^2.4.0"
 
-"@shopify/shopify-app-session-storage-memory@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@shopify/shopify-app-session-storage-memory/-/shopify-app-session-storage-memory-1.0.9.tgz#aa65a34a756ef1e1b05a9305a24101a206f97a89"
-  integrity sha512-MKcaat8L04aBn+tm47zffGWkzIZME327YUp4PJ4kht8e30YnnIVy0UHcaKD7W1foZJeAG2kXwP9JRR+i4eUtbA==
+"@shopify/shopify-app-session-storage-memory@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@shopify/shopify-app-session-storage-memory/-/shopify-app-session-storage-memory-1.0.10.tgz#f87ce03f925d3176f3df1b0c166423091aa61de3"
+  integrity sha512-hdABAQTkrY11JJc+P0QsVmTyBZxxRGmBb7hyqZofFjbkvWrlNiAuoByCrJ6g48Vfn+07SxPZ75cWcPgFEGfg+Q==
   dependencies:
     tslib "^2.4.0"
 
 "@shopify/shopify-app-session-storage-sqlite@^1.2.2":
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/@shopify/shopify-app-session-storage-sqlite/-/shopify-app-session-storage-sqlite-1.2.5.tgz#b7b17daee76b87db0699ae6132f8cfb233c1ebad"
-  integrity sha512-FvYAuVnmHqurmHca5OQ3DK6aNSDKM4GCXkE8yzvxe+Uv/qEg+1gKPCMp+bp0q39LHY5otLo0JHaEhJ7d2CWtHQ==
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@shopify/shopify-app-session-storage-sqlite/-/shopify-app-session-storage-sqlite-1.2.6.tgz#4afbb94fe8f6cb198f4be76f271beed7780a55b9"
+  integrity sha512-TgcR+ul8A+SRB2xJ/Dzp7NELJRbTjVAhPjMe2SMqgVy/8xAABDmNk4sUyMa7xVrKz/nQ5p5PcO/Pfy5LpkRNww==
   dependencies:
     sqlite3 "^5.1.6"
     tslib "^2.4.0"
 
-"@shopify/shopify-app-session-storage@^1.1.6":
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/@shopify/shopify-app-session-storage/-/shopify-app-session-storage-1.1.6.tgz#6edf897160218f10cec4d075ff861be0699eb7c9"
-  integrity sha512-/NQdGjXvn8MgXvkf4eWBUjUleIDYlp3NH6wbKYvSgzQFt26A7WSFwfjJU+rsR+/qd3hhKCitRexBrb3e/xer4A==
+"@shopify/shopify-app-session-storage@^1.1.7":
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@shopify/shopify-app-session-storage/-/shopify-app-session-storage-1.1.7.tgz#dd5b7d608c20d4644a21d6766442a3eb983f4e28"
+  integrity sha512-5YT5y2p8bhrKIvKhlM1DaQ8IqRRmjYrgZLvHMU0Jc40B62o9ekWBlaX6xKjH0+SK77Qf92CN5hp5WBC+mnP/iQ==
   dependencies:
     tslib "^2.4.0"
 
@@ -1877,9 +1877,9 @@
     cross-fetch "^3.1.5"
 
 "@supabase/gotrue-js@^2.46.1":
-  version "2.46.1"
-  resolved "https://registry.yarnpkg.com/@supabase/gotrue-js/-/gotrue-js-2.46.1.tgz#c4ac5056a02498db6d9edccab4e4d6db4fe7e3e1"
-  integrity sha512-tebFX3XvPqEJKHOVgkXTN20g9iUhLx6tebIYQvTggYTrqOT2af8oTpSBdgYzbwJ291G6P6CSpR6KY0cT9ade5A==
+  version "2.46.2"
+  resolved "https://registry.yarnpkg.com/@supabase/gotrue-js/-/gotrue-js-2.46.2.tgz#c834c53e83877e380d3c6375c16b8a51f5c1135a"
+  integrity sha512-tLyZZNEb3St6Dxe671seLCzYWZ2DftSWWjPEfqAwW6kNOAr+Aw2uEIW0H3gEJxSIST+E+ly9lUBm/rGlfDWKPA==
   dependencies:
     cross-fetch "^3.1.5"
 
@@ -2002,9 +2002,9 @@
   integrity sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==
 
 "@types/node@*":
-  version "20.4.9"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.4.9.tgz#c7164e0f8d3f12dfae336af0b1f7fdec8c6b204f"
-  integrity sha512-8e2HYcg7ohnTUbHk8focoklEQYvemQmu9M/f43DZVx43kHn0tE3BY/6gSDxS7k0SprtS0NHvj+L80cGLnoOUcQ==
+  version "20.5.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.5.0.tgz#7fc8636d5f1aaa3b21e6245e97d56b7f56702313"
+  integrity sha512-Mgq7eCtoTjT89FqNoTzzXg2XvCi5VMhRV6+I2aYanc6kQCBImeNaAYRs/DyoVqk1YEUJK5gN9VO7HRIdz4Wo3Q==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -2043,18 +2043,18 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^18.0.15":
-  version "18.2.19"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.19.tgz#f77cb2c8307368e624d464a25b9675fa35f95a8b"
-  integrity sha512-e2S8wmY1ePfM517PqCG80CcE48Xs5k0pwJzuDZsfE8IZRRBfOMCF+XqnFxu6mWtyivum1MQm4aco+WIt6Coimw==
+  version "18.2.20"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.20.tgz#1605557a83df5c8a2cc4eeb743b3dfc0eb6aaeb2"
+  integrity sha512-WKNtmsLWJM/3D5mG4U84cysVY31ivmyw85dE84fOCk5Hx78wezB/XEjVPWl2JTZ5FkEeaTJf+VgUAUn3PE7Isw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
 "@types/react@>=17.0.0 <18.0.0", "@types/react@^17.0.0":
-  version "17.0.63"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.63.tgz#78ca41a34b1e4fd5ba9398d33bc78a81bfd5c180"
-  integrity sha512-T+aaG8RlIkgJ4VzWLJYbMW9QX7sIAV8CcuyV6FU6Hm7yu3Bee1YBZQRu2vYEm/dU8kre+/mzl2aGYh5MFgVLaQ==
+  version "17.0.64"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.64.tgz#468162c66c33ddb4548eb1a0e36682028d9e9a62"
+  integrity sha512-IlgbX/vglDTwrCRgad6fTCzOT+D/5C0xwuvrzfuqfhg9gJrkFqAGADpUFlEtqbrP1IEo9QLSbo41MaFfoIu9Aw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -2799,9 +2799,9 @@ camelcase@^5.0.0:
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
 
 caniuse-lite@^1.0.30001517:
-  version "1.0.30001519"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001519.tgz#3e7b8b8a7077e78b0eb054d69e6edf5c7df35601"
-  integrity sha512-0QHgqR+Jv4bxHMp8kZ1Kn8CH55OikjKJ6JmKkZYP1F3D7w+lnFXF70nG5eNfsZS89jadi5Ywy5UCSKLAglIRkg==
+  version "1.0.30001520"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001520.tgz#62e2b7a1c7b35269594cf296a80bdf8cb9565006"
+  integrity sha512-tahF5O9EiiTzwTUqAeFjIZbn4Dnqxzz7ktrgGlMYNLH43Ul26IgTMH/zvL3DG0lZxBYnlT04axvInszUsZULdA==
 
 capital-case@^1.0.4:
   version "1.0.4"
@@ -3659,9 +3659,9 @@ ejs@^3.1.8:
     jake "^10.8.5"
 
 electron-to-chromium@^1.4.477:
-  version "1.4.488"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.488.tgz#442b1855f8c84fb1ed79f518985c65db94f64cc9"
-  integrity sha512-Dv4sTjiW7t/UWGL+H8ZkgIjtUAVZDgb/PwGWvMsCT7jipzUV/u5skbLXPFKb6iV0tiddVi/bcS2/kUrczeWgIQ==
+  version "1.4.490"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.490.tgz#d99286f6e915667fa18ea4554def1aa60eb4d5f1"
+  integrity sha512-6s7NVJz+sATdYnIwhdshx/N/9O6rvMxmhVoDSDFdj6iA45gHR8EQje70+RYsF4GeB+k0IeNSBnP7yG9ZXJFr7A==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -6581,19 +6581,19 @@ react-refresh@^0.11.0:
   integrity sha512-F27qZr8uUqwhWZboondsPx8tnC3Ct3SxZA3V5WyEvujRyyNv0VYPhoBg1gZ8/MV5tubQp76Trw8lTv9hzRBa+A==
 
 react-router-dom@^6.3.0:
-  version "6.14.2"
-  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.14.2.tgz#88f520118b91aa60233bd08dbd3fdcaea3a68488"
-  integrity sha512-5pWX0jdKR48XFZBuJqHosX3AAHjRAzygouMTyimnBPOLdY3WjzUSKhus2FVMihUFWzeLebDgr4r8UeQFAct7Bg==
+  version "6.15.0"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.15.0.tgz#6da7db61e56797266fbbef0d5e324d6ac443ee40"
+  integrity sha512-aR42t0fs7brintwBGAv2+mGlCtgtFQeOzK0BM1/OiqEzRejOZtpMZepvgkscpMUnKb8YO84G7s3LsHnnDNonbQ==
   dependencies:
-    "@remix-run/router" "1.7.2"
-    react-router "6.14.2"
+    "@remix-run/router" "1.8.0"
+    react-router "6.15.0"
 
-react-router@6.14.2:
-  version "6.14.2"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.14.2.tgz#1f60994d8c369de7b8ba7a78d8f7ec23df76b300"
-  integrity sha512-09Zss2dE2z+T1D03IheqAFtK4UzQyX8nFPWx6jkwdYzGLXd5ie06A6ezS2fO6zJfEb/SpG6UocN2O1hfD+2urQ==
+react-router@6.15.0:
+  version "6.15.0"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.15.0.tgz#bf2cb5a4a7ed57f074d4ea88db0d95033f39cac8"
+  integrity sha512-NIytlzvzLwJkCQj2HLefmeakxxWHWAP+02EGqWEZy+DgfHHKQMUoBBjUQLOtFInBMhWtb3hiUy6MfFgwLjXhqg==
   dependencies:
-    "@remix-run/router" "1.7.2"
+    "@remix-run/router" "1.8.0"
 
 react-transition-group@^4.4.2:
   version "4.4.5"

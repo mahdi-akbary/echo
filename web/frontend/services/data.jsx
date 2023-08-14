@@ -8,6 +8,10 @@ export const navStructure = [
         destination: "/pricing",
     },
     {
+        label: "Branding",
+        destination: "/branding",
+    },
+    {
         label: "Free gifts",
         destination: "/free-gifts",
     },

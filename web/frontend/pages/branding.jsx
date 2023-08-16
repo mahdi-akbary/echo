@@ -14,12 +14,24 @@ import {
   Loading,
   SkeletonBodyText,
   SkeletonDisplayText,
+  HorizontalGrid,
+  Popover,
+  ColorPicker,
+  TextField,
+  rgbString,
+  hsbToRgb,
+  rgbToHex,
 } from "@shopify/polaris";
-import { useAuthenticatedFetch, TitleBar, useAppBridge } from "@shopify/app-bridge-react";
-import { useState } from "react";
+import {
+  useAuthenticatedFetch,
+  TitleBar,
+  useAppBridge,
+} from "@shopify/app-bridge-react";
+import { useCallback, useState } from "react";
 import { useAppQuery } from "../hooks";
+import { ColorPickerInput } from "../components";
 
-export default function Branding () {
+export default function Branding() {
   const fetch = useAuthenticatedFetch();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -39,16 +51,16 @@ export default function Branding () {
   console.log(data);
 
   const getBillings = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     const response = await fetch("/api/billings", {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
     });
     if (response.ok) {
-      const data = await response.json()
+      const data = await response.json();
       setCurrentBilling(data);
     }
-    setIsLoading(false)
+    setIsLoading(false);
   };
 
   const loadingMarkup = (
@@ -74,10 +86,9 @@ export default function Branding () {
 
     if (response.ok) {
       const res = await response.json();
-      console.log(res, '<<<<<<')
+      console.log(res, "<<<<<<");
     }
   };
-
 
   return (
     <Page fullWidth>
@@ -96,9 +107,43 @@ export default function Branding () {
                   you receive per month, and the features you need.
                 </Text>
               </VerticalStack>
-              <Box><Button primary size="large" onClick={updateBrand}> activate </Button></Box>
+              <Box>
+                <Button primary size="large" onClick={updateBrand}>
+                  {" "}
+                  activate{" "}
+                </Button>
+              </Box>
             </HorizontalStack>
           </AlphaCard>
+        </Layout.Section>
+        <Layout.Section>
+          <HorizontalGrid columns={{ xs: "2fr", md: "3fr 6fr" }} gap="4">
+            <Box
+              paddingBlockStart="5"
+              as="section"
+              paddingInlineStart={{ xs: 4, sm: 0 }}
+              paddingInlineEnd={{ xs: 4, sm: 0 }}
+            >
+              <VerticalStack gap="3">
+                <Text as="h3" variant="headingMd">
+                  Coloring
+                </Text>
+                <Text as="p" variant="bodyMd">
+                  Here you can update the colors.
+                </Text>
+              </VerticalStack>
+            </Box>
+            <Box
+              paddingBlockStart="5"
+              as="section"
+              paddingInlineStart="5"
+              paddingInlineEnd={{ xs: 4, sm: 0 }}
+            >
+              <AlphaCard>
+                <ColorPickerInput />
+              </AlphaCard>
+            </Box>
+          </HorizontalGrid>
         </Layout.Section>
       </Layout>
     </Page>

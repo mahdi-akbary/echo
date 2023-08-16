@@ -161,11 +161,11 @@ export default function brandingApiEndPoints(app, shopify) {
               "colorPalette": {
                 "canvas": {
                   "background": "#FFE926",
-                  "foreground": "#D10088"
+                  "foreground": "#ff0000"
                 },
                 "color1": {
                   "background": "#FFFAFD",
-                  "foreground": "#2E001E"
+                  "foreground": "#ff0000"
                 },
                 "color2": {
                   "background": "#FFF5FB",

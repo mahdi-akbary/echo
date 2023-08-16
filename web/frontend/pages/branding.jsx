@@ -131,6 +131,14 @@ export default function Branding() {
                 <Text as="p" variant="bodyMd">
                   Here you can update the colors.
                 </Text>
+                <Text>
+                  Foreground: A color used for components that sit on
+                  backgrounds like text and form controls.
+                </Text>
+                <Text>
+                  Accent: A color used for visual accents such as spinners or
+                  checkbox.
+                </Text>
               </VerticalStack>
             </Box>
             <Box
@@ -140,7 +148,30 @@ export default function Branding() {
               paddingInlineEnd={{ xs: 4, sm: 0 }}
             >
               <AlphaCard>
-                <ColorPickerInput />
+                <VerticalStack gap="2">
+                  <HorizontalStack align="space-between">
+                    <Text fontWeight="semibold">Checkout Form</Text>
+                    <ColorPickerInput label="background" />
+                    <ColorPickerInput label="foreground" />
+                  </HorizontalStack>
+                  <HorizontalStack align="space-between">
+                    <Text fontWeight="semibold">Order summary</Text>
+                    <ColorPickerInput label="background" />
+                    <ColorPickerInput label="foreground" />
+                  </HorizontalStack>
+                  <HorizontalStack >
+                    <Text fontWeight="semibold"></Text>
+                    <ColorPickerInput label="Accent color" />
+                  </HorizontalStack>
+                  <HorizontalStack align="space-between">
+                    <Text fontWeight="semibold"></Text>
+                    <ColorPickerInput label="Buttons color" />
+                  </HorizontalStack>
+                  <HorizontalStack align="space-between">
+                    <Text fontWeight="semibold"></Text>
+                    <ColorPickerInput label="Error color" />
+                  </HorizontalStack>
+                </VerticalStack>
               </AlphaCard>
             </Box>
           </HorizontalGrid>

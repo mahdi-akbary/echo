@@ -36,7 +36,7 @@ export function ColorPickerInput({ inputColor = "#fff", label }) {
         }}
       ></div>
       <Box>
-        <Text>Background</Text>
+        <Text>{label}</Text>
         <Text Variant="bodySm">{buttonColor}</Text>
       </Box>
     </HorizontalStack>

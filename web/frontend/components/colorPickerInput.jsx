@@ -13,7 +13,7 @@ import {
 } from "@shopify/polaris";
 import { useCallback, useState } from "react";
 
-export function ColorPickerInput({ inputColor = "#fff", label }) {
+export function ColorPickerInput ({ inputColor = "#fff", label, onChange }) {
   const [popoverActive, setPopoverActive] = useState(false);
 
   const togglePopoverActive = useCallback(
@@ -26,8 +26,8 @@ export function ColorPickerInput({ inputColor = "#fff", label }) {
       <div
         onClick={togglePopoverActive}
         style={{
-          width: "45px",
-          height: "45px",
+          width: "40px",
+          height: "40px",
           borderRadius: "20%",
           background: buttonColor,
           cursor: "pointer",
@@ -48,24 +48,28 @@ export function ColorPickerInput({ inputColor = "#fff", label }) {
   });
 
   return (
-    <Popover
-      active={popoverActive}
-      activator={activator}
-      autofocusTarget="first-node"
-      onClose={togglePopoverActive}
-    >
-      <VerticalStack align="center" inlineAlign="center">
-        <ColorPicker
-          onChange={(value) => {
-            setColor(value);
-            setButtonColor(rgbToHex(hsbToRgb(value)));
-          }}
-          color={color}
-        />
-        <Box width="90%" padding={1}>
-          <TextField value={buttonColor} focused={false} readOnly />
-        </Box>
-      </VerticalStack>
-    </Popover>
+    <VerticalStack align="end">
+      <Popover
+        active={popoverActive}
+        activator={activator}
+        autofocusTarget="first-node"
+        onClose={togglePopoverActive}
+      >
+        <VerticalStack align="center" inlineAlign="center">
+          <ColorPicker
+            onChange={(value) => {
+              setColor(value);
+              const hexColor = rgbToHex(hsbToRgb(value))
+              setButtonColor(hexColor);
+              onChange(hexColor)
+            }}
+            color={color}
+          />
+          <Box width="90%" padding={1}>
+            <TextField value={buttonColor} focused={false} readOnly />
+          </Box>
+        </VerticalStack>
+      </Popover>
+    </VerticalStack>
   );
 }

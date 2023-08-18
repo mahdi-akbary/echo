@@ -2,19 +2,19 @@ import { useAppQuery } from "../hooks";
 import '@shopify/polaris-viz/build/esm/styles.css';
 import { BarChart } from "@shopify/polaris-viz";
 import { AlphaCard, VerticalStack, Box, Loading, SkeletonBodyText, SkeletonDisplayText, Stack, Text } from "@shopify/polaris";
-export function SurveyCountChart () {
+export function FeedbackCountChart () {
     const { data: data, isRefetching: isRefetching, isLoading: isLoading, refetch: fetch } = useAppQuery({
-        url: "/api/surveys/chart/count"
+        url: "/api/feedbacks/chart/count"
     });
     const dateBaseChart = (!isLoading && !isRefetching) ?
         <BarChart showLegend={true} data={[
             {
-                name: 'Survey count',
+                name: 'Feedback count',
                 data: data
             }
         ]} isAnimated={true} xAxisOptions={{
             labelFormatter: (value) => {
-                return value?.option_name
+                return value
             }
         }} /> : null;
 
@@ -31,7 +31,7 @@ export function SurveyCountChart () {
         <AlphaCard >
             <VerticalStack gap='1'>
                 <Box padding='2'>
-                    <Text as='h2' variant='headingLg'>Total Survey</Text>
+                    <Text as='h2' variant='headingLg'>Total Feedbacks</Text>
                 </Box>
                 <Box padding='2'>
                     <Text as='h2' variant='headingXl'>{

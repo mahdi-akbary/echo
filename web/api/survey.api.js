@@ -24,16 +24,13 @@ export default function surveyApiEndPoints (app) {
     app.get("/api/surveys/chart/count", async (req, res) => {
         try {
             const { session } = res.locals.shopify;
-            const now = new Date()
-            const sevenDaysAgo = new Date((new Date).setDate(now.getDate() - 7))
-            const tomorrow = new Date((new Date).setDate(now.getDate() + 1))
             const { data, error } = await supabase
                 .from('survey_count_view')
                 .select()
-                // .eq('shop', session?.shop)
-            
+                .eq('shop', session?.shop)
+
             if (error) throw new Error(error.message)
-            res.status(200).send([...data, {key: tomorrow.toISOString(), value: null}]);
+            res.status(200).send([...data, { key: '', value: null }]);
         } catch (error) {
             console.error(error);
             res.status(500).send(error);
@@ -48,7 +45,7 @@ export default function surveyApiEndPoints (app) {
                 .select()
                 .eq('shop', session?.shop)
                 .limit(10)
-            
+
             if (error) throw new Error(error.message)
             res.status(200).send(data);
         } catch (error) {

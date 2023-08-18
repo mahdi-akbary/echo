@@ -29,12 +29,17 @@ export default function feedbackApiEndPoints (app) {
             const tomorrow = new Date((new Date).setDate(now.getDate() + 1))
             const { data, error } = await supabase
                 .from('feedback_count_view')
-                .select('key, value')
-                .gt('key', sevenDaysAgo.toISOString())
+                .select()
                 .eq('shop', session?.shop)
             
             if (error) throw new Error(error.message)
-            res.status(200).send([...data, {key: tomorrow.toISOString(), value: null}]);
+            data?.map(item => {
+                let temp = item.key
+                item.key = item.option_name
+                item.option_name = temp
+            })
+            console.log(data)
+            res.status(200).send([...data, {key: '', value: null}]);
         } catch (error) {
             console.error(error);
             res.status(500).send(error);

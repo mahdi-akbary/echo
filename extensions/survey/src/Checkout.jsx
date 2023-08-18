@@ -19,7 +19,7 @@ export { thankYouBlock };
 const orderDetailsBlock = reactExtension("customer-account.order-status.block.render", () => <ProductReview />);
 export { orderDetailsBlock };
 
-const baseUrl = "https://attorney-king-shore-translate.trycloudflare.com"
+const baseUrl = "https://laugh-wells-questionnaire-hormone.trycloudflare.com"
 function Attribution () {
   const { sessionToken } = useApi();
   const [attribution, setAttribution] = useState('');
@@ -31,7 +31,7 @@ function Attribution () {
     { option: '3', option_name: survey_option3 || 'From a friend or family member' },
     { option: '4', option_name: survey_option4 || 'Tiktok' },
   ]
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);  
   // Store into local storage if the attribution survey was completed by the customer.
   const [attributionSubmitted, setAttributionSubmitted] = useStorageState('attribution-submitted')
 
@@ -40,7 +40,6 @@ function Attribution () {
     setLoading(true);
     try {
       const token = await sessionToken.get();
-      console.log(token)
       const selectedOption = options.find(option => option.option == attribution)
       const response = await fetch(`${baseUrl}/api/surveys`, {
         method: "POST",
@@ -51,7 +50,6 @@ function Attribution () {
         body: JSON.stringify(selectedOption),
       });
       const data = await response.json();
-      console.log('Submitted:', attribution);
       setLoading(false);
       setAttributionSubmitted(true)
     } catch (error) {
@@ -108,7 +106,6 @@ function ProductReview () {
         body: JSON.stringify(selectedOption),
       });
       const data = await response.json();
-      console.log('Submitted:', productReview);
       setLoading(false);
       setProductReviewed(true);
     } catch (error) {

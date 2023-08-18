@@ -7,5 +7,6 @@ export { FreeGift } from "./freeGift"
 export { SearchGiftProductModal } from "./searchGiftProductModal"
 export { ColorPickerInput } from "./colorPickerInput"
 export { SurveyCountChart } from "./surveyCountChart"
+export { FeedbackCountChart } from "./feedbackCountChart"
 export * from "./providers";
 

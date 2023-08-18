@@ -13,7 +13,7 @@ import {
 } from "@shopify/polaris";
 import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
 import { useState } from "react";
-import { CountChart, AddedProductList, SurveyCountChart } from "../components";
+import { CountChart, AddedProductList, SurveyCountChart, FeedbackCountChart } from "../components";
 import { Redirect } from "@shopify/app-bridge/actions";
 
 export default function HomePage () {
@@ -119,15 +119,16 @@ export default function HomePage () {
                 paddingInlineEnd={{ xs: 4, sm: 0 }}>
                 <VerticalStack gap="4">
                   <Text as="h3" variant="headingMd">
-                    Survey
+                    Survey & Feedbacks
                   </Text>
                   <Text as="p" variant="bodyMd">
-                    Here you customer suvery at a glance.
+                    Here you can have customer's responses at a glance.
                   </Text>
                 </VerticalStack>
               </Box>
               <SurveyCountChart />
-              
+              <Box></Box>
+              <FeedbackCountChart />
             </HorizontalGrid>
             <Box padding="4"></Box>
           </VerticalStack>

@@ -1,10 +1,12 @@
 CREATE VIEW "public"."survey_count_view" AS
 SELECT
-  "option" AS "key",
+  "option",
+  option_name AS "key",
   COUNT(*) AS "value",
-  option_name
+  shop
 FROM
-  feedbacks
+  surveys
 GROUP BY
   "option",
-  option_name;
+  option_name,
+  shop;

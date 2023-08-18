@@ -19,11 +19,18 @@ export { thankYouBlock };
 const orderDetailsBlock = reactExtension("customer-account.order-status.block.render", () => <ProductReview />);
 export { orderDetailsBlock };
 
-const baseUrl = ""
+const baseUrl = "https://attorney-king-shore-translate.trycloudflare.com"
 function Attribution () {
   const { sessionToken } = useApi();
   const [attribution, setAttribution] = useState('');
   const { survey_question, survey_option1, survey_option2, survey_option3, survey_option4 } = useSettings();
+
+  const options = [
+    { option: '1', option_name: survey_option1 || 'Facebook' },
+    { option: '2', option_name: survey_option2 || 'Twitter' },
+    { option: '3', option_name: survey_option3 || 'From a friend or family member' },
+    { option: '4', option_name: survey_option4 || 'Tiktok' },
+  ]
   const [loading, setLoading] = useState(false);
   // Store into local storage if the attribution survey was completed by the customer.
   const [attributionSubmitted, setAttributionSubmitted] = useStorageState('attribution-submitted')
@@ -33,15 +40,15 @@ function Attribution () {
     setLoading(true);
     try {
       const token = await sessionToken.get();
-      const response = await fetch(`${baseUrl}/api/survey`, {
+      console.log(token)
+      const selectedOption = options.find(option => option.option == attribution)
+      const response = await fetch(`${baseUrl}/api/surveys`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          id: attribution,
-        }),
+        body: JSON.stringify(selectedOption),
       });
       const data = await response.json();
       console.log('Submitted:', attribution);
@@ -65,10 +72,7 @@ function Attribution () {
         onChange={setAttribution}
       >
         <BlockStack>
-          <Choice id="1">{survey_option1 || 'Facebook'}</Choice>
-          <Choice id="2">{survey_option2 || 'Twitter'}</Choice>
-          <Choice id="3">{survey_option3 || 'From a friend or family member'}</Choice>
-          <Choice id="4">{survey_option4 || 'Tiktok'}</Choice>
+          {options.map(option => <Choice key={option.option} id={option.option}>{option.option_name}</Choice>)}
         </BlockStack>
       </ChoiceList>
     </Survey>
@@ -76,9 +80,16 @@ function Attribution () {
 }
 
 function ProductReview () {
+  const { sessionToken } = useApi();
   const [productReview, setProductReview] = useState('');
   const [loading, setLoading] = useState(false);
   const { feedback_question, feedback_question_description, feedback_option1, feedback_option2, feedback_option3, feedback_option4 } = useSettings();
+  const options = [
+    { option: '5', option_name: feedback_option1 || 'Amazing! Very happy with it.' },
+    { option: '4', option_name: feedback_option2 || "It's okay, I expected more." },
+    { option: '3', option_name: feedback_option3 || "Eh. There are better options out there." },
+    { option: '2', option_name: feedback_option4 || 'I regret the purchase.' },
+  ]
   // Store into local storage if the product was reviewed by the customer.
   const [productReviewed, setProductReviewed] = useStorageState('product-reviewed')
 
@@ -87,20 +98,19 @@ function ProductReview () {
     setLoading(true);
     try {
       const token = await sessionToken.get();
-      const response = await fetch(`${baseUrl}/api/feedback`, {
+      const selectedOption = options.find(option => option.option == productReview)
+      const response = await fetch(`${baseUrl}/api/feedbacks`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          id: productReview,
-        }),
+        body: JSON.stringify(selectedOption),
       });
       const data = await response.json();
       console.log('Submitted:', productReview);
       setLoading(false);
-        setProductReviewed(true);
+      setProductReviewed(true);
     } catch (error) {
       console.error(error);
     }
@@ -124,10 +134,7 @@ function ProductReview () {
         onChange={setProductReview}
       >
         <BlockStack>
-          <Choice id="5">{feedback_option1 || 'Amazing! Very happy with it.'}</Choice>
-          <Choice id="4">{feedback_option2 || "It's okay, I expected more."}</Choice>
-          <Choice id="3">{feedback_option3 || "Eh. There are better options out there."}</Choice>
-          <Choice id="2">{feedback_option4 || 'I regret the purchase.'}</Choice>
+          {options.map(option => <Choice key={option.option} id={option.option}>{option.option_name}</Choice>)}
         </BlockStack>
       </ChoiceList>
     </Survey>

@@ -8,17 +8,17 @@ import {
   TextBlock,
   BlockSpacer,
   useApplyCartLinesChange,
-  useExtensionApi,
   useTotalAmount,
   Select,
   useSettings,
   InlineStack,
+  useApi,
 } from "@shopify/ui-extensions-react/checkout";
 import { useEffect, useState } from "react";
 
 export function ProductCard({ product, baseUrl }) {
-  const { sessionToken } = useExtensionApi();
-  const { i18n } = useExtensionApi();
+  const { sessionToken } = useApi();
+  const { i18n } = useApi();
   const { currencyCode } = useTotalAmount();
   const [error, setError] = useState();
   let {

@@ -1,0 +1,90 @@
+
+api_version = "2023-07"
+
+[[extensions]]
+type = "ui_extension"
+name = "survey"
+handle = "survey"
+
+[extensions.capabilities]
+network_access = true
+block_progress = true
+api_access = true
+
+[[extensions.targeting]]
+target = "purchase.thank-you.block.render"
+module = "./src/Checkout.jsx"
+export = "thankYouBlock"
+
+[[extensions.targeting]]
+target = "customer-account.order-status.block.render"
+module = "./src/Checkout.jsx"
+export = "orderDetailsBlock"
+
+
+[extensions.settings]
+[[extensions.settings.fields]]
+key = "survey_question"
+type = "single_line_text_field"
+name = "Immediate post purchase question"
+description = "This question will appear right after customer place the order."
+
+[[extensions.settings.fields]]
+key = "survey_option1"
+type = "single_line_text_field"
+name = "Option 1"
+description = "The option for the question select option."
+
+[[extensions.settings.fields]]
+key = "survey_option2"
+type = "single_line_text_field"
+name = "Option 2"
+description = "The option for the question select option."
+
+[[extensions.settings.fields]]
+key = "survey_option3"
+type = "single_line_text_field"
+name = "Option 3"
+description = "The option for the question select option."
+
+[[extensions.settings.fields]]
+key = "survey_option4"
+type = "single_line_text_field"
+name = "Option 4"
+description = "The option for the question select option."
+
+[[extensions.settings.fields]]
+key = "feedback_question"
+type = "single_line_text_field"
+name = "Customer feedback question"
+description = "This will appear later on customer order status page."
+
+[[extensions.settings.fields]]
+key = "feedback_question_description"
+type = "single_line_text_field"
+name = "Customer feedback question description"
+description = "The descrption to why we ask the question."
+
+[[extensions.settings.fields]]
+key = "feedback_option1"
+type = "single_line_text_field"
+name = "Option 1"
+description = "The option for the feedback select option."
+
+[[extensions.settings.fields]]
+key = "feedback_option2"
+type = "single_line_text_field"
+name = "Option 2"
+description = "The option for the feedback select option."
+
+[[extensions.settings.fields]]
+key = "feedback_option3"
+type = "single_line_text_field"
+name = "Option 3"
+description = "The option for the feedback select option."
+
+[[extensions.settings.fields]]
+key = "feedback_option4"
+type = "single_line_text_field"
+name = "Option 4"
+description = "The option for the feedback select option."

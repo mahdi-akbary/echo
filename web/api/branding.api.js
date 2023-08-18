@@ -18,7 +18,9 @@ export default function brandingApiEndPoints(app, shopify) {
                     }`
       });
       const publishedProfile = edges.find(edge => edge.node.isPublished == true)
-      res.status(200).send(publishedProfile.node);
+      const {body: {data: {checkoutBranding: currentProfileData}}} = await getCurrent(client, publishedProfile.node.id)
+      console.log(currentProfileData);
+      res.status(200).send({...publishedProfile.node, ...currentProfileData});
     } catch (error) {
       console.error(error)
       res.status(500).send(error);
@@ -26,10 +28,11 @@ export default function brandingApiEndPoints(app, shopify) {
   })
   app.post("/api/branding", async (req, res) => {
     const body = req.body;
+    console.log(body)
     const { session } = res.locals.shopify;
     const client = new shopify.api.clients.Graphql({ session });
     try {
-      const response = await upsert(client, body.id)
+      const response = await upsert(client, body)
       res.status(200).send(response);
     } catch (error) {
       console.error(error?.response)
@@ -37,8 +40,8 @@ export default function brandingApiEndPoints(app, shopify) {
     }
   })
 
-  async function upsert(client, profileId) {
-    console.log(profileId, '<<<<<')
+  async function upsert(client, data) {
+    console.log(data?.id, '<<<<<')
     return await client.query({
       data: {
         "query": `mutation checkoutBrandingUpsert($checkoutBrandingInput: CheckoutBrandingInput!, $checkoutProfileId: ID!) {
@@ -151,70 +154,21 @@ export default function brandingApiEndPoints(app, shopify) {
                     }
                   }`,
         "variables": {
-          "checkoutProfileId": profileId,
+          "checkoutProfileId": data?.id,
           "checkoutBrandingInput": {
             "designSystem": {
               "cornerRadius": {
                 "large": 30,
                 "base": 25
               },
-              "colorPalette": {
-                "canvas": {
-                  "background": "#FFE926",
-                  "foreground": "#ff0000"
-                },
-                "color1": {
-                  "background": "#FFFAFD",
-                  "foreground": "#ff0000"
-                },
-                "color2": {
-                  "background": "#FFF5FB",
-                  "foreground": "#2E001E"
-                },
-                "primary": {
-                  "accent": "#1773B0",
-                  "background": "#FF9CDD",
-                  "foreground": "#2E001E"
-                },
-                "interactive": {
-                  "accent": "#D10088",
-                  "foreground": "#D10088",
-                  "background": null
-                }
-              },
-              "typography": {
-                "size": {
-                  "base": 16,
-                  "ratio": 1.4
-                },
-                "primary": {
-                  "shopifyFontGroup": {
-                    "name": "Sans-serif"
-                  }
-                },
-                "secondary": {
-                  "shopifyFontGroup": {
-                    "name": "Oswald"
-                  }
-                }
-              }
+              ...data?.designSystem
             },
             "customizations": {
-              "global": {
-                "cornerRadius": "NONE",
-                "typography": {
-                  "letterCase": "NONE"
-                }
-              },
-              "header": {
-                "alignment": "CENTER",
-                "position": "START"
-              },
               "headingLevel1": {
                 "typography": {
                   "weight": "BOLD",
                   "font": "SECONDARY",
-                  "letterCase": "UPPER",
+                  "letterCase": "LOWER",
                   "size": "LARGE"
                 }
               },
@@ -235,7 +189,8 @@ export default function brandingApiEndPoints(app, shopify) {
                 },
                 "blockPadding": "TIGHT",
                 "inlinePadding": "BASE"
-              }
+              },
+              ...data?.customizations
             }
           }
         },
@@ -294,16 +249,10 @@ export default function brandingApiEndPoints(app, shopify) {
                               ratio
                             }
                             primary {
-                              base {
-                                sources
-                                weight
-                              }
+                                name
                             }
                             secondary {
-                              base {
-                                sources
-                                weight
-                              }
+                                name
                             }
                           }
                   }

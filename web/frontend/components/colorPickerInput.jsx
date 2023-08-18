@@ -42,9 +42,9 @@ export function ColorPickerInput ({ inputColor = "#fff", label, onChange }) {
     </HorizontalStack>
   );
   const [color, setColor] = useState({
-    hue: rgbToHsb(hexToRgb(inputColor)).hue,
-    brightness: rgbToHsb(hexToRgb(inputColor)).brightness,
-    saturation: rgbToHsb(hexToRgb(inputColor)).saturation,
+    hue: rgbToHsb(hexToRgb('inputColor')).hue,
+    brightness: rgbToHsb(hexToRgb('inputColor')).brightness,
+    saturation: rgbToHsb(hexToRgb('inputColor')).saturation,
   });
 
   return (

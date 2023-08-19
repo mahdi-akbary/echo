@@ -67,7 +67,6 @@ export function SearchGiftProductModal ({ isOpen, handleClose, discount, refetch
       handleClose(false)
     } else {
       const data = await response.json();
-      console.log(data)
       setToastContent({ content: data.message })
       setSelectLoading(false)
     }
@@ -77,7 +76,6 @@ export function SearchGiftProductModal ({ isOpen, handleClose, discount, refetch
     const enterKeyPressed = event.keyCode === 13;
     if (enterKeyPressed) {
       event.preventDefault();
-      console.log(searchFieldValue);
       await handleSearch(searchFieldValue);
     }
   };

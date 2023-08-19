@@ -35,7 +35,7 @@ export default function cartItemApiEndPoints (app) {
         try {
             const { session } = res.locals.shopify;
         } catch (e) {
-            console.log(e);
+            console.error(e);
             status = 500;
             error = e.message;
         }
@@ -53,9 +53,9 @@ export default function cartItemApiEndPoints (app) {
                 .select('key, value')
                 .gt('key', sevenDaysAgo.toISOString())
                 .eq('shop', session?.shop)
-            
+
             if (error) throw new Error(error.message)
-            res.status(200).send([...data, {key: tomorrow.toISOString(), value: null}]);
+            res.status(200).send([...data, { key: tomorrow.toISOString(), value: null }]);
         } catch (error) {
             console.error(error);
             res.status(500).send(error);
@@ -70,7 +70,7 @@ export default function cartItemApiEndPoints (app) {
                 .select()
                 .eq('shop', session?.shop)
                 .limit(10)
-            
+
             if (error) throw new Error(error.message)
             res.status(200).send(data);
         } catch (error) {

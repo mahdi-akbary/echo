@@ -78,7 +78,6 @@ export function FreeGift () {
       refetch();
     }
   }
-  console.log(isLoadingDiscount, '<<<<<')
   const [searchModalToggle, setSearchModalToggle] = useState(false);
 
   const [thresholdModalToggle, setThresholdModalToggle] = useState(false);

@@ -5,14 +5,11 @@ import {
   VerticalStack,
   Box,
   HorizontalStack,
-  Button,
   AlphaCard,
   Loading,
   SkeletonBodyText,
-  SkeletonDisplayText,
   Select,
   TextField,
-  Frame,
 } from "@shopify/polaris";
 import {
   useAuthenticatedFetch,
@@ -28,7 +25,6 @@ export default function Branding () {
   const fetch = useAuthenticatedFetch();
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
   const [hasChange, setHasChange] = useState(false);
 
   const handleDataChange = (value) => {
@@ -57,7 +53,6 @@ export default function Branding () {
     },
   });
 
-
   const loadingMarkup = (
     <>
       <Loading />
@@ -66,7 +61,8 @@ export default function Branding () {
           <SkeletonBodyText />
           <SkeletonBodyText />
           <SkeletonBodyText />
-          <SkeletonDisplayText size="medium" />
+          <SkeletonBodyText />
+          <SkeletonBodyText />
         </VerticalStack>
       </AlphaCard>
     </>
@@ -327,15 +323,12 @@ export default function Branding () {
                     </HorizontalStack>
                   </VerticalStack>
 
-
                 </VerticalStack>
               </AlphaCard>
             }
           </Layout.Section>
         </Layout>
-
       </Page>
     </>
-
   );
 }

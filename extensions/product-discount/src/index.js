@@ -54,7 +54,6 @@ export default /**
 
 
     const percentage = (100 / quantity)
-    console.log('>>>', quantity, percentage)
 
     return {
       discounts: [

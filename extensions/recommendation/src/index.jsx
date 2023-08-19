@@ -115,7 +115,7 @@ function App() {
         setData(data);
       })
       .catch((error) => {
-        console.log('error: ', error);
+        console.error('error: ', error);
       });
   }, [query]);
      

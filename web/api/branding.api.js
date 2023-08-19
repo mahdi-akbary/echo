@@ -1,6 +1,6 @@
 import { supabase } from "../supabase/service.js";
 
-export default function brandingApiEndPoints(app, shopify) {
+export default function brandingApiEndPoints (app, shopify) {
   app.get("/api/branding", async (req, res) => {
     const { session } = res.locals.shopify;
     const client = new shopify.api.clients.Graphql({ session });
@@ -18,9 +18,8 @@ export default function brandingApiEndPoints(app, shopify) {
                     }`
       });
       const publishedProfile = edges.find(edge => edge.node.isPublished == true)
-      const {body: {data: {checkoutBranding: currentProfileData}}} = await getCurrent(client, publishedProfile.node.id)
-      console.log(currentProfileData);
-      res.status(200).send({...publishedProfile.node, ...currentProfileData});
+      const { body: { data: { checkoutBranding: currentProfileData } } } = await getCurrent(client, publishedProfile.node.id)
+      res.status(200).send({ ...publishedProfile.node, ...currentProfileData });
     } catch (error) {
       console.error(error)
       res.status(500).send(error);
@@ -28,7 +27,6 @@ export default function brandingApiEndPoints(app, shopify) {
   })
   app.post("/api/branding", async (req, res) => {
     const body = req.body;
-    console.log(body)
     const { session } = res.locals.shopify;
     const client = new shopify.api.clients.Graphql({ session });
     try {
@@ -40,8 +38,7 @@ export default function brandingApiEndPoints(app, shopify) {
     }
   })
 
-  async function upsert(client, data) {
-    console.log(data?.id, '<<<<<')
+  async function upsert (client, data) {
     return await client.query({
       data: {
         "query": `mutation checkoutBrandingUpsert($checkoutBrandingInput: CheckoutBrandingInput!, $checkoutProfileId: ID!) {
@@ -169,14 +166,15 @@ export default function brandingApiEndPoints(app, shopify) {
                   "weight": "BOLD",
                   "font": "SECONDARY",
                   "letterCase": "LOWER",
-                  "size": "LARGE"
+                  "size": "EXTRA_LARGE"
                 }
               },
               "headingLevel2": {
                 "typography": {
-                  "size": "EXTRA_LARGE",
+                  "size": "EXTRA_SMALL",
                   "kerning": "LOOSE",
-                  "letterCase": "UPPER"
+                  "letterCase": "UPPER",
+                  "font": "PRIMARY"
                 }
               },
               "primaryButton": {
@@ -198,10 +196,7 @@ export default function brandingApiEndPoints(app, shopify) {
     })
   }
 
-
-
-  async function getCurrent(client, profileId) {
-    console.log(profileId, '<<<<<')
+  async function getCurrent (client, profileId) {
     return await client.query({
       data: `
           query {

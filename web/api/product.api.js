@@ -144,7 +144,6 @@ export default function productApiEndPoints (app, shopify) {
 
     app.put("/api/products/discounts/:id", async (req, res) => {
         const body = req.body;
-        console.log(body, req.params.id)
         const { session } = res.locals.shopify;
         const client = new shopify.api.clients.Graphql({ session });
         try {

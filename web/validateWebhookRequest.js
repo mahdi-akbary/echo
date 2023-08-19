@@ -21,13 +21,13 @@ export const validateWebhookRequest = async (req, res, next) =>  {
 			  .digest("base64");
 
         if (generatedHash !== hmac) {
-            console.log('hmac validation failed')
+            console.error('hmac validation failed')
             res.status(401).send({})
             return
         }
         next()
     } catch (error) {
-        console.log(error)
+        console.error(error)
         res.status(403).send({})
     }
 }

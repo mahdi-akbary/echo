@@ -38,7 +38,6 @@ export default function feedbackApiEndPoints (app) {
                 item.key = item.option_name
                 item.option_name = temp
             })
-            console.log(data)
             res.status(200).send([...data, {key: '', value: null}]);
         } catch (error) {
             console.error(error);

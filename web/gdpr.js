@@ -56,7 +56,7 @@ export const registerCustomWebhooks = {
       deliveryMethod: DeliveryMethod.Http,
       callbackUrl: "/api/webhooks",
       callback: async (topic, shop, body, webhookId) => {
-        console.log('APP Removed.')
+        console.info('APP Removed.')
       },
     }
   }

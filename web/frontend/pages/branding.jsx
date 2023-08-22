@@ -10,8 +10,9 @@ import {
   SkeletonBodyText,
   Select,
   TextField,
-  CalloutCard,
   Modal,
+  Button,
+  Image,
 } from "@shopify/polaris";
 import {
   useAuthenticatedFetch,
@@ -105,6 +106,485 @@ export default function Branding() {
     setDisplayVideoGuide(!displayVideoGuide);
   };
 
+  const contentMarkup = (
+    <>
+      <TitleBar title="Branding" primaryAction={null} />
+      <Layout>
+        <Modal
+          open={displayVideoGuide}
+          onClose={handleVideoGuideClick}
+          title="Reach more shoppers with Instagram product tags"
+          primaryAction={{
+            content: "Add Instagram",
+            onAction: handleVideoGuideClick,
+          }}
+          secondaryActions={[
+            {
+              content: "Learn more",
+              onAction: handleVideoGuideClick,
+            },
+          ]}
+        >
+          <Modal.Section>
+            <Text>
+              Use Instagram posts to share your products with millions of
+              people. Let shoppers buy from your store without leaving
+              Instagram.
+            </Text>
+          </Modal.Section>
+        </Modal>
+
+        <Layout.Section>
+          <AlphaCard>
+            <HorizontalStack>
+              <Box width="89%">
+                <VerticalStack gap="2">
+                  <Text variant="headingLg">Branding your the checkout</Text>
+                  <Text variant="bodyMd">
+                    An Advance setting for fully customization of the checkout
+                    appearance & branding.
+                  </Text>
+                  <HorizontalStack gap="3">
+                    <Button>Create new checkout</Button>
+                    <Button
+                      plain
+                      onClick={() =>
+                        redirect.dispatch(
+                          Redirect.Action.ADMIN_PATH,
+                          "/settings/checkout/editor"
+                        )
+                      }
+                    >
+                      Preview
+                    </Button>
+                  </HorizontalStack>
+                </VerticalStack>
+              </Box>
+              <Box width="11%">
+                <Image
+                  src="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg"
+                  alt="paint"
+                  width="100"
+                />
+              </Box>
+            </HorizontalStack>
+          </AlphaCard>
+        </Layout.Section>
+
+        <Layout.Section>
+          {isLoadingProfile || isRefetchingProfile ? (
+            loadingMarkup
+          ) : (
+            <HorizontalStack align="space-between">
+              <Box width="32%">
+                <VerticalStack gap="4">
+                  <AlphaCard>
+                    <VerticalStack gap="3">
+                      <Text variant="headingMd">Header Section</Text>
+                      <Select
+                        label="Alignment"
+                        options={[
+                          { label: "Start", value: "START" },
+                          { label: "Center", value: "CENTER" },
+                          { label: "End", value: "END" },
+                        ]}
+                        onChange={(value) => {
+                          const temp = data;
+                          temp.customizations = {
+                            ...temp?.customizations,
+                            header: {
+                              ...temp?.customizations?.header,
+                              alignment: value,
+                            },
+                          };
+                          handleDataChange(temp);
+                        }}
+                        value={data?.customizations?.header?.alignment}
+                      />
+                      <Select
+                        label="Position"
+                        options={[
+                          { label: "Full width", value: "START" },
+                          {
+                            label: "Order summary",
+                            value: "INLINE_SECONDARY",
+                          },
+                          { label: "Checkout form", value: "INLINE" },
+                        ]}
+                        onChange={(value) => {
+                          const temp = data;
+                          temp.customizations = {
+                            ...temp?.customizations,
+                            header: {
+                              ...temp?.customizations?.header,
+                              position: value,
+                            },
+                          };
+                          handleDataChange(temp);
+                        }}
+                        value={data?.customizations?.header?.position}
+                      />
+                    </VerticalStack>
+                  </AlphaCard>
+
+                  <AlphaCard>
+                    <VerticalStack gap="3">
+                      <Text variant="headingMd">Typography</Text>
+                      <Select
+                        label="Headings font"
+                        options={FONTS}
+                        onChange={(value) => {
+                          const temp = data;
+                          temp.designSystem = {
+                            ...temp?.designSystem,
+                            typography: {
+                              ...temp?.designSystem?.typography,
+                              ...{
+                                secondary: {
+                                  shopifyFontGroup: { name: value },
+                                },
+                              },
+                            },
+                          };
+                          handleDataChange(temp);
+                        }}
+                        value={
+                          data?.designSystem?.typography?.secondary
+                            ?.shopifyFontGroup?.name ||
+                          data?.designSystem?.typography?.secondary?.name
+                        }
+                      />
+                      <Select
+                        label="Body font"
+                        options={FONTS}
+                        onChange={(value) => {
+                          const temp = data;
+                          temp.designSystem = {
+                            ...temp?.designSystem,
+                            typography: {
+                              ...temp?.designSystem?.typography,
+                              ...{
+                                primary: {
+                                  shopifyFontGroup: { name: value },
+                                },
+                              },
+                            },
+                          };
+                          handleDataChange(temp);
+                        }}
+                        value={
+                          data?.designSystem?.typography?.primary
+                            ?.shopifyFontGroup?.name ||
+                          data?.designSystem?.typography?.primary?.name
+                        }
+                      />
+                      <TextField
+                        label="Bast font size"
+                        type="number"
+                        min="12"
+                        max="18"
+                        onChange={(value) => {
+                          const temp = data;
+                          temp.designSystem = {
+                            ...temp?.designSystem,
+                            typography: {
+                              ...temp?.designSystem?.typography,
+                              size: {
+                                ...temp?.designSystem?.typography?.size,
+                                ...{ base: +value },
+                              },
+                            },
+                          };
+                          handleDataChange(temp);
+                        }}
+                        value={data?.designSystem?.typography?.size?.base}
+                        autoComplete="off"
+                      />
+                      <Select
+                        label="Font size ratio"
+                        options={[
+                          { label: "1.0", value: 1.0 },
+                          { label: "1.1", value: 1.1 },
+                          { label: "1.2", value: 1.2 },
+                          { label: "1.3", value: 1.3 },
+                          { label: "1.4", value: 1.4 },
+                        ]}
+                        onChange={(value) => {
+                          const temp = data;
+                          temp.designSystem = {
+                            ...temp?.designSystem,
+                            typography: {
+                              ...temp?.designSystem?.typography,
+                              size: {
+                                ...temp?.designSystem?.typography?.size,
+                                ...{ ratio: +value },
+                              },
+                            },
+                          };
+                          handleDataChange(temp);
+                        }}
+                        value={data?.designSystem?.typography?.size?.ratio}
+                      />
+                    </VerticalStack>
+                  </AlphaCard>
+                </VerticalStack>
+              </Box>
+
+              <Box width="32%">
+                <VerticalStack gap="4">
+                  <AlphaCard>
+                    <VerticalStack gap="3">
+                      <Text variant="headingMd">Checkout Form Section</Text>
+                      <ColorPickerInput
+                        onChange={(value) => {
+                          const temp = data;
+                          temp.designSystem = {
+                            ...temp?.designSystem,
+                            colorPalette: {
+                              ...temp?.designSystem?.colorPalette,
+                              color1: {
+                                ...temp?.designSystem?.colorPalette?.color1,
+                                background: value,
+                              },
+                            },
+                          };
+                          handleDataChange(temp);
+                        }}
+                        inputColor={
+                          data?.designSystem?.colorPalette?.color1?.background
+                        }
+                        label="Background color"
+                      />
+                      <ColorPickerInput
+                        onChange={(value) => {
+                          const temp = data;
+                          temp.designSystem = {
+                            ...temp?.designSystem,
+                            colorPalette: {
+                              ...temp?.designSystem?.colorPalette,
+                              color1: {
+                                ...temp?.designSystem?.colorPalette?.color1,
+                                foreground: value,
+                              },
+                            },
+                          };
+                          handleDataChange(temp);
+                        }}
+                        inputColor={
+                          data?.designSystem?.colorPalette?.color1?.foreground
+                        }
+                        label="Foreground color"
+                      />
+                    </VerticalStack>
+                  </AlphaCard>
+
+                  <AlphaCard>
+                    <VerticalStack gap="3">
+                      <Text variant="headingMd">Order Summary Section</Text>
+                      <ColorPickerInput
+                        onChange={(value) => {
+                          const temp = data;
+                          temp.designSystem = {
+                            ...temp?.designSystem,
+                            colorPalette: {
+                              ...temp?.designSystem?.colorPalette,
+                              color2: {
+                                ...temp?.designSystem?.colorPalette?.color2,
+                                background: value,
+                              },
+                            },
+                          };
+                          handleDataChange(temp);
+                        }}
+                        inputColor={
+                          data?.designSystem?.colorPalette?.color2?.background
+                        }
+                        label="Background color"
+                      />
+                      <ColorPickerInput
+                        onChange={(value) => {
+                          const temp = data;
+                          temp.designSystem = {
+                            ...temp?.designSystem,
+                            colorPalette: {
+                              ...temp?.designSystem?.colorPalette,
+                              color2: {
+                                ...temp?.designSystem?.colorPalette?.color2,
+                                foreground: value,
+                              },
+                            },
+                          };
+                          handleDataChange(temp);
+                        }}
+                        inputColor={
+                          data?.designSystem?.colorPalette?.color2?.foreground
+                        }
+                        label="Foreground color"
+                      />
+                    </VerticalStack>
+                  </AlphaCard>
+                </VerticalStack>
+              </Box>
+
+              <Box width="32%">
+                <AlphaCard>
+                  <VerticalStack gap="3">
+                    <Text variant="headingMd">General</Text>
+                    <Select
+                      label="Form fields background"
+                      options={[
+                        { label: "White", value: "" },
+                        { label: "Transparent", value: "TRANSPARENT" },
+                      ]}
+                      onChange={(value) => {
+                        const temp = data;
+                        temp.customizations = {
+                          ...temp?.customizations,
+                          control: {
+                            ...temp?.customizations?.control,
+                            color: value,
+                          },
+                        };
+                        handleDataChange(temp);
+                      }}
+                      value={data?.customizations?.control?.color}
+                    />
+                    <ColorPickerInput
+                      onChange={(value) => {
+                        const temp = data;
+                        temp.designSystem = {
+                          ...temp?.designSystem,
+                          colorPalette: {
+                            ...temp?.designSystem?.colorPalette,
+                            interactive: {
+                              ...temp?.designSystem?.colorPalette?.interactive,
+                              background: value,
+                            },
+                          },
+                        };
+                        handleDataChange(temp);
+                      }}
+                      inputColor={
+                        data?.designSystem?.colorPalette?.interactive
+                          ?.background || "#fff"
+                      }
+                      label="Accent background color"
+                    />
+                    <ColorPickerInput
+                      onChange={(value) => {
+                        const temp = data;
+                        temp.designSystem = {
+                          ...temp?.designSystem,
+                          colorPalette: {
+                            ...temp?.designSystem?.colorPalette,
+                            interactive: {
+                              ...temp?.designSystem?.colorPalette?.interactive,
+                              foreground: value,
+                            },
+                          },
+                        };
+                        handleDataChange(temp);
+                      }}
+                      inputColor={
+                        data?.designSystem?.colorPalette?.interactive
+                          ?.foreground || "#fff"
+                      }
+                      label="Accent foreground color"
+                    />
+                    <ColorPickerInput
+                      onChange={(value) => {
+                        const temp = data;
+                        temp.designSystem = {
+                          ...temp?.designSystem,
+                          colorPalette: {
+                            ...temp?.designSystem?.colorPalette,
+                            primary: {
+                              ...temp?.designSystem?.colorPalette?.primary,
+                              background: value,
+                            },
+                          },
+                        };
+                        handleDataChange(temp);
+                      }}
+                      inputColor={
+                        data?.designSystem?.colorPalette?.primary?.background ||
+                        "#fff"
+                      }
+                      label="Buttons background color"
+                    />
+                    <ColorPickerInput
+                      onChange={(value) => {
+                        const temp = data;
+                        temp.designSystem = {
+                          ...temp?.designSystem,
+                          colorPalette: {
+                            ...temp?.designSystem?.colorPalette,
+                            primary: {
+                              ...temp?.designSystem?.colorPalette?.primary,
+                              foreground: value,
+                            },
+                          },
+                        };
+                        handleDataChange(temp);
+                      }}
+                      inputColor={
+                        data?.designSystem?.colorPalette?.primary?.foreground ||
+                        "#fff"
+                      }
+                      label="Buttons foreground color"
+                    />
+                    <ColorPickerInput
+                      onChange={(value) => {
+                        const temp = data;
+                        temp.designSystem = {
+                          ...temp?.designSystem,
+                          colorPalette: {
+                            ...temp?.designSystem?.colorPalette,
+                            critical: {
+                              ...temp?.designSystem?.colorPalette?.critical,
+                              background: value,
+                            },
+                          },
+                        };
+                        handleDataChange(temp);
+                      }}
+                      inputColor={
+                        data?.designSystem?.colorPalette?.critical
+                          ?.background || "#fff"
+                      }
+                      label="Error background color"
+                    />
+                    <ColorPickerInput
+                      onChange={(value) => {
+                        const temp = data;
+                        temp.designSystem = {
+                          ...temp?.designSystem,
+                          colorPalette: {
+                            ...temp?.designSystem?.colorPalette,
+                            critical: {
+                              ...temp?.designSystem?.colorPalette?.critical,
+                              foreground: value,
+                            },
+                          },
+                        };
+                        handleDataChange(temp);
+                      }}
+                      inputColor={
+                        data?.designSystem?.colorPalette?.critical
+                          ?.foreground || "#fff"
+                      }
+                      label="Error foreground color"
+                    />
+                  </VerticalStack>
+                </AlphaCard>
+              </Box>
+            </HorizontalStack>
+          )}
+        </Layout.Section>
+      </Layout>
+    </>
+  );
+
   return (
     <>
       <ContextualSaveBar
@@ -119,498 +599,17 @@ export default function Branding() {
           onAction: () => setHasChange(false),
         }}
       />
-
-      <Page>
-        <TitleBar title="Branding" primaryAction={null} />
-        <Layout>
-          <Modal
-            open={displayVideoGuide}
-            onClose={handleVideoGuideClick}
-            title="Reach more shoppers with Instagram product tags"
-            primaryAction={{
-              content: "Add Instagram",
-              onAction: handleVideoGuideClick,
-            }}
-            secondaryActions={[
-              {
-                content: "Learn more",
-                onAction: handleVideoGuideClick,
-              },
-            ]}
-          >
-            <Modal.Section>
-              <Text>
-                Use Instagram posts to share your products with millions of
-                people. Let shoppers buy from your store without leaving
-                Instagram.
-              </Text>
-            </Modal.Section>
-          </Modal>
-
-          <Layout.Section>
-            <CalloutCard
-              title="Branding your the checkout"
-              illustration="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg"
-              primaryAction={{
-                content: "Customize checkout",
-                onAction: () =>
-                  redirect.dispatch(
-                    Redirect.Action.ADMIN_PATH,
-                    "/settings/checkout/editor"
-                  ),
-              }}
-              secondaryAction={{
-                content: "Video guide",
-                onAction: handleVideoGuideClick,
-              }}
-            >
-              <Text>
-                An Advance setting for fully customization of the checkout
-                appearance & branding.
-              </Text>
-            </CalloutCard>
-          </Layout.Section>
-
-          <Layout.Section>
-            {isLoadingProfile || isRefetchingProfile ? (
-              loadingMarkup
-            ) : (
-              <AlphaCard>
-                <VerticalStack gap="10">
-                  <VerticalStack gap="3">
-                    <Text variant="headingMd">Header Section</Text>
-                    <HorizontalStack gap="5" blockAlign="end">
-                      <Box width="30%">
-                        <Select
-                          label="Alignment"
-                          options={[
-                            { label: "Start", value: "START" },
-                            { label: "Center", value: "CENTER" },
-                            { label: "End", value: "END" },
-                          ]}
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.customizations = {
-                              ...temp?.customizations,
-                              header: {
-                                ...temp?.customizations?.header,
-                                alignment: value,
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          value={data?.customizations?.header?.alignment}
-                        />
-                      </Box>
-                      <Box width="30%">
-                        <Select
-                          label="Position"
-                          options={[
-                            { label: "Full width", value: "START" },
-                            {
-                              label: "Order summary",
-                              value: "INLINE_SECONDARY",
-                            },
-                            { label: "Checkout form", value: "INLINE" },
-                          ]}
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.customizations = {
-                              ...temp?.customizations,
-                              header: {
-                                ...temp?.customizations?.header,
-                                position: value,
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          value={data?.customizations?.header?.position}
-                        />
-                      </Box>
-                    </HorizontalStack>
-                  </VerticalStack>
-
-                  <VerticalStack gap="3">
-                    <Text variant="headingMd">Checkout Form Section</Text>
-                    <HorizontalStack gap="5" blockAlign="end">
-                      <Box width="30%">
-                        <ColorPickerInput
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.designSystem = {
-                              ...temp?.designSystem,
-                              colorPalette: {
-                                ...temp?.designSystem?.colorPalette,
-                                color1: {
-                                  ...temp?.designSystem?.colorPalette?.color1,
-                                  background: value,
-                                },
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          inputColor={
-                            data?.designSystem?.colorPalette?.color1?.background
-                          }
-                          label="Background color"
-                        />
-                      </Box>
-                      <Box width="30%">
-                        <ColorPickerInput
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.designSystem = {
-                              ...temp?.designSystem,
-                              colorPalette: {
-                                ...temp?.designSystem?.colorPalette,
-                                color1: {
-                                  ...temp?.designSystem?.colorPalette?.color1,
-                                  foreground: value,
-                                },
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          inputColor={
-                            data?.designSystem?.colorPalette?.color1?.foreground
-                          }
-                          label="Foreground color"
-                        />
-                      </Box>
-                    </HorizontalStack>
-                  </VerticalStack>
-
-                  <VerticalStack gap="3">
-                    <Text variant="headingMd">Order Summary Section</Text>
-                    <HorizontalStack gap="5" blockAlign="end">
-                      <Box width="30%">
-                        <ColorPickerInput
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.designSystem = {
-                              ...temp?.designSystem,
-                              colorPalette: {
-                                ...temp?.designSystem?.colorPalette,
-                                color2: {
-                                  ...temp?.designSystem?.colorPalette?.color2,
-                                  background: value,
-                                },
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          inputColor={
-                            data?.designSystem?.colorPalette?.color2?.background
-                          }
-                          label="Background color"
-                        />
-                      </Box>
-                      <Box width="30%">
-                        <ColorPickerInput
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.designSystem = {
-                              ...temp?.designSystem,
-                              colorPalette: {
-                                ...temp?.designSystem?.colorPalette,
-                                color2: {
-                                  ...temp?.designSystem?.colorPalette?.color2,
-                                  foreground: value,
-                                },
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          inputColor={
-                            data?.designSystem?.colorPalette?.color2?.foreground
-                          }
-                          label="Foreground color"
-                        />
-                      </Box>
-                    </HorizontalStack>
-                  </VerticalStack>
-
-                  <VerticalStack gap="3">
-                    <Text variant="headingMd">Typography</Text>
-                    <HorizontalStack gap="5" blockAlign="end">
-                      <Box width="30%">
-                        <Select
-                          label="Headings font"
-                          options={FONTS}
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.designSystem = {
-                              ...temp?.designSystem,
-                              typography: {
-                                ...temp?.designSystem?.typography,
-                                ...{
-                                  secondary: {
-                                    shopifyFontGroup: { name: value },
-                                  },
-                                },
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          value={
-                            data?.designSystem?.typography?.secondary
-                              ?.shopifyFontGroup?.name ||
-                            data?.designSystem?.typography?.secondary?.name
-                          }
-                        />
-                      </Box>
-                      <Box width="30%">
-                        <Select
-                          label="Body font"
-                          options={FONTS}
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.designSystem = {
-                              ...temp?.designSystem,
-                              typography: {
-                                ...temp?.designSystem?.typography,
-                                ...{
-                                  primary: {
-                                    shopifyFontGroup: { name: value },
-                                  },
-                                },
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          value={
-                            data?.designSystem?.typography?.primary
-                              ?.shopifyFontGroup?.name ||
-                            data?.designSystem?.typography?.primary?.name
-                          }
-                        />
-                      </Box>
-                      <Box width="30%">
-                        <TextField
-                          label="Bast font size"
-                          type="number"
-                          min="12"
-                          max="18"
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.designSystem = {
-                              ...temp?.designSystem,
-                              typography: {
-                                ...temp?.designSystem?.typography,
-                                size: {
-                                  ...temp?.designSystem?.typography?.size,
-                                  ...{ base: +value },
-                                },
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          value={data?.designSystem?.typography?.size?.base}
-                          autoComplete="off"
-                        />
-                      </Box>
-                      <Box width="30%">
-                        <Select
-                          label="Font size ratio"
-                          options={[
-                            { label: "1.0", value: 1.0 },
-                            { label: "1.1", value: 1.1 },
-                            { label: "1.2", value: 1.2 },
-                            { label: "1.3", value: 1.3 },
-                            { label: "1.4", value: 1.4 },
-                          ]}
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.designSystem = {
-                              ...temp?.designSystem,
-                              typography: {
-                                ...temp?.designSystem?.typography,
-                                size: {
-                                  ...temp?.designSystem?.typography?.size,
-                                  ...{ ratio: +value },
-                                },
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          value={data?.designSystem?.typography?.size?.ratio}
-                        />
-                      </Box>
-                    </HorizontalStack>
-                  </VerticalStack>
-
-                  <VerticalStack gap="3">
-                    <Text variant="headingMd">General</Text>
-                    <HorizontalStack gap="5" blockAlign="end">
-                      <Box width="60%">
-                        <Select
-                          label="Form fields background"
-                          options={[
-                            { label: "White", value: "" },
-                            { label: "Transparent", value: "TRANSPARENT" },
-                          ]}
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.customizations = {
-                              ...temp?.customizations,
-                              control: {
-                                ...temp?.customizations?.control,
-                                color: value,
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          value={data?.customizations?.control?.color}
-                        />
-                      </Box>
-                      <Box width="40%">
-                        <ColorPickerInput
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.designSystem = {
-                              ...temp?.designSystem,
-                              colorPalette: {
-                                ...temp?.designSystem?.colorPalette,
-                                interactive: {
-                                  ...temp?.designSystem?.colorPalette
-                                    ?.interactive,
-                                  background: value,
-                                },
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          inputColor={
-                            data?.designSystem?.colorPalette?.interactive
-                              ?.background || "#fff"
-                          }
-                          label="Accent background color"
-                        />
-                      </Box>
-                      <Box width="40%">
-                        <ColorPickerInput
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.designSystem = {
-                              ...temp?.designSystem,
-                              colorPalette: {
-                                ...temp?.designSystem?.colorPalette,
-                                interactive: {
-                                  ...temp?.designSystem?.colorPalette
-                                    ?.interactive,
-                                  foreground: value,
-                                },
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          inputColor={
-                            data?.designSystem?.colorPalette?.interactive
-                              ?.foreground || "#fff"
-                          }
-                          label="Accent foreground color"
-                        />
-                      </Box>
-                      <Box width="40%">
-                        <ColorPickerInput
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.designSystem = {
-                              ...temp?.designSystem,
-                              colorPalette: {
-                                ...temp?.designSystem?.colorPalette,
-                                primary: {
-                                  ...temp?.designSystem?.colorPalette?.primary,
-                                  background: value,
-                                },
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          inputColor={
-                            data?.designSystem?.colorPalette?.primary
-                              ?.background || "#fff"
-                          }
-                          label="Buttons background color"
-                        />
-                      </Box>
-                      <Box width="40%">
-                        <ColorPickerInput
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.designSystem = {
-                              ...temp?.designSystem,
-                              colorPalette: {
-                                ...temp?.designSystem?.colorPalette,
-                                primary: {
-                                  ...temp?.designSystem?.colorPalette?.primary,
-                                  foreground: value,
-                                },
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          inputColor={
-                            data?.designSystem?.colorPalette?.primary
-                              ?.foreground || "#fff"
-                          }
-                          label="Buttons foreground color"
-                        />
-                      </Box>
-                      <Box width="40%">
-                        <ColorPickerInput
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.designSystem = {
-                              ...temp?.designSystem,
-                              colorPalette: {
-                                ...temp?.designSystem?.colorPalette,
-                                critical: {
-                                  ...temp?.designSystem?.colorPalette?.critical,
-                                  background: value,
-                                },
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          inputColor={
-                            data?.designSystem?.colorPalette?.critical
-                              ?.background || "#fff"
-                          }
-                          label="Error background color"
-                        />
-                      </Box>
-                      <Box width="40%">
-                        <ColorPickerInput
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.designSystem = {
-                              ...temp?.designSystem,
-                              colorPalette: {
-                                ...temp?.designSystem?.colorPalette,
-                                critical: {
-                                  ...temp?.designSystem?.colorPalette?.critical,
-                                  foreground: value,
-                                },
-                              },
-                            };
-                            handleDataChange(temp);
-                          }}
-                          inputColor={
-                            data?.designSystem?.colorPalette?.critical
-                              ?.foreground || "#fff"
-                          }
-                          label="Error foreground color"
-                        />
-                      </Box>
-                    </HorizontalStack>
-                  </VerticalStack>
-                </VerticalStack>
-              </AlphaCard>
-            )}
-          </Layout.Section>
-        </Layout>
-      </Page>
+      {false ? (
+        <Page
+          primaryAction={{
+            content: "Publish",
+          }}
+        >
+          {contentMarkup}
+        </Page>
+      ) : (
+        <Page>{contentMarkup}</Page>
+      )}
     </>
   );
 }

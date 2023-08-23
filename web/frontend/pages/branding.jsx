@@ -13,6 +13,8 @@ import {
   Modal,
   Button,
   Image,
+  ChoiceList,
+  Badge,
 } from "@shopify/polaris";
 import {
   useAuthenticatedFetch,
@@ -20,7 +22,7 @@ import {
   ContextualSaveBar,
   useAppBridge,
 } from "@shopify/app-bridge-react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Redirect } from "@shopify/app-bridge/actions";
 
 import { useAppQuery } from "../hooks";
@@ -33,6 +35,13 @@ export default function Branding () {
   const [isLoading, setIsLoading] = useState(false);
   const [hasChange, setHasChange] = useState(false);
 
+  const [selected, setSelected] = useState(undefined);
+
+  const handleChange = useCallback((value) => {
+    setSelected(value)
+    refetchProductProfile()
+  }, []);
+
   const handleDataChange = (value) => {
     setHasChange(true);
     setData({ ...data, ...value });
@@ -44,7 +53,7 @@ export default function Branding () {
     isLoading: isLoadingProfile,
     isRefetching: isRefetchingProfile,
   } = useAppQuery({
-    url: "/api/branding",
+    url: selected ? `/api/branding?id=${selected}` : "/api/branding",
     reactQueryOptions: {
       onSuccess: (res) => {
         if (!hasChange) {
@@ -60,6 +69,7 @@ export default function Branding () {
               },
             };
           }
+          setSelected(res?.id)
           setData(res);
         }
         setIsLoading(false);
@@ -70,20 +80,32 @@ export default function Branding () {
   const loadingMarkup = (
     <>
       <Loading />
-      <AlphaCard>
-        <VerticalStack gap="4">
-          <SkeletonBodyText />
-          <SkeletonBodyText />
-          <SkeletonBodyText />
-          <SkeletonBodyText />
-          <SkeletonBodyText />
-        </VerticalStack>
-      </AlphaCard>
+      <HorizontalStack align="space-between">
+        {[1, 2, 3].map((id) => <Box key={id} width="32%">
+          <AlphaCard>
+            <VerticalStack gap="4">
+              <SkeletonBodyText />
+              <SkeletonBodyText />
+              <SkeletonBodyText />
+              <SkeletonBodyText />
+              <SkeletonBodyText />
+            </VerticalStack>
+          </AlphaCard>
+        </Box>)}
+      </HorizontalStack>
     </>
   );
 
   const handleSubmit = async () => {
+    if (data?.isPublished) {
+      handleActiveCheckoutWarning()
+    } else {
+      await submit()
+    }
+  };
+  const submit = async () => {
     setIsLoading(true);
+
     const response = await fetch("/api/branding", {
       method: "POST",
       body: JSON.stringify({ ...activeProfile, ...data }),
@@ -97,13 +119,13 @@ export default function Branding () {
     }
   };
 
-  const [displayVideoGuide, setDisplayVideoGuide] = useState();
+  const [activeCheckoutWarning, setActiveCheckoutWarning] = useState();
 
   const app = useAppBridge();
   const redirect = Redirect.create(app);
 
-  const handleVideoGuideClick = () => {
-    setDisplayVideoGuide(!displayVideoGuide);
+  const handleActiveCheckoutWarning = () => {
+    setActiveCheckoutWarning(!activeCheckoutWarning);
   };
 
   const contentMarkup = (
@@ -111,26 +133,27 @@ export default function Branding () {
       <TitleBar title="Branding" primaryAction={null} />
       <Layout>
         <Modal
-          open={displayVideoGuide}
-          onClose={handleVideoGuideClick}
-          title="Reach more shoppers with Instagram product tags"
+          open={activeCheckoutWarning}
+          onClose={handleActiveCheckoutWarning}
+          title="Are you sure?"
           primaryAction={{
-            content: "Add Instagram",
-            onAction: handleVideoGuideClick,
+            content: "Yes",
+            onAction: async () => { handleActiveCheckoutWarning(); await submit() },
           }}
           secondaryActions={[
             {
-              content: "Learn more",
-              onAction: handleVideoGuideClick,
+              content: "Dismiss",
+              onAction: handleActiveCheckoutWarning,
             },
           ]}
         >
           <Modal.Section>
-            <Text>
-              Use Instagram posts to share your products with millions of
-              people. Let shoppers buy from your store without leaving
-              Instagram.
-            </Text>
+            <Box background="bg-warning" padding="1">
+              <Text variant="headingMd">
+                It's your Active checkout, the changes will take effect immediately.
+              </Text>
+            </Box>
+            <Text color="subdued">We recommend bringing changes to the duplicate checkout first, then publish it when you are 100% sure.</Text>
           </Modal.Section>
         </Modal>
 
@@ -138,26 +161,46 @@ export default function Branding () {
           <AlphaCard>
             <HorizontalStack>
               <Box width="89%">
-                <VerticalStack gap="2">
-                  <Text variant="headingLg">Branding your the checkout</Text>
-                  <Text variant="bodyMd">
-                    An Advance setting for fully customization of the checkout
-                    appearance & branding.
-                  </Text>
-                  <HorizontalStack gap="3">
-                    <Button>Create new checkout</Button>
+                <VerticalStack gap="4">
+                  <Box>
+                    <VerticalStack gap="2">
+                      <Text variant="headingLg">Checkout Branding</Text>
+                      <Text variant="bodyMd">
+                        An Advance setting for fully customization of the checkout
+                        appearance & branding.
+                      </Text>
+                    </VerticalStack>
+                  </Box>
+                  <ChoiceList
+                    title=<Text fontWeight="semibold">Below is your checkout profiles.</Text>
+                    choices={
+                      (data.profiles || []).map(profile => ({
+                        label: <>{profile.name} {profile.isPublished ? <Badge status="success">Active</Badge> : null}</>,
+                        value: profile.id,
+                      }))}
+                    selected={selected || ['hidden']}
+                    onChange={handleChange}
+                  />
+                  {isLoadingProfile || isRefetchingProfile ? null : <HorizontalStack gap="3">
+                    <Button plain monochrome onClick={() =>
+                      redirect.dispatch(
+                        Redirect.Action.ADMIN_PATH,
+                        "/settings/checkout"
+                      )
+                    }>You can always create, duplicate or publish your checkout profiles here</Button>
                     <Button
                       plain
+                      monochrome
                       onClick={() =>
                         redirect.dispatch(
                           Redirect.Action.ADMIN_PATH,
-                          "/settings/checkout/editor"
+                          { path: `/settings/checkout/preview/profiles/${selected?.split('/')[4]}`, newContext: true }
                         )
                       }
                     >
                       Preview
                     </Button>
-                  </HorizontalStack>
+                  </HorizontalStack>}
                 </VerticalStack>
               </Box>
               <Box width="11%">
@@ -229,9 +272,9 @@ export default function Branding () {
 
                   <AlphaCard>
                     <VerticalStack gap="3">
-                      <Text variant="headingMd">Typography</Text>
+                      <Text variant="headingMd">Headings Typography</Text>
                       <Select
-                        label="Headings font"
+                        label="Font"
                         options={FONTS}
                         onChange={(value) => {
                           const temp = data;
@@ -255,7 +298,7 @@ export default function Branding () {
                         }
                       />
                       <Select
-                        label="Headings font weight"
+                        label="Font weight"
                         options={[
                           { label: 'Base', value: 'BASE' },
                           { label: 'Bold', value: 'BOLD' }
@@ -268,7 +311,7 @@ export default function Branding () {
                         value={data?.customizations?.headingLevel1?.typography?.weight}
                       />
                       <Select
-                        label="Headings font size"
+                        label="Font size"
                         options={[
                           { label: 'Base', value: 'BASE' },
                           { label: 'Extra small', value: 'EXTRA_SMALL' },
@@ -286,7 +329,7 @@ export default function Branding () {
                         value={data?.customizations?.headingLevel1?.typography?.size}
                       />
                       <Select
-                        label="Headings letter case "
+                        label="Letter case "
                         options={[
                           { label: 'Lower', value: 'LOWER' },
                           { label: 'None', value: 'NONE' },
@@ -300,8 +343,18 @@ export default function Branding () {
                         }}
                         value={data?.customizations?.headingLevel1?.typography?.letterCase}
                       />
+                    </VerticalStack>
+                  </AlphaCard>
+                </VerticalStack>
+              </Box>
+
+              <Box width="32%">
+                <VerticalStack gap="4">
+                  <AlphaCard>
+                    <VerticalStack gap="3">
+                      <Text variant="headingMd">Body Typography</Text>
                       <Select
-                        label="Body font"
+                        label="Font"
                         options={FONTS}
                         onChange={(value) => {
                           const temp = data;
@@ -325,7 +378,7 @@ export default function Branding () {
                         }
                       />
                       <Select
-                        label="Body font weight"
+                        label="Font weight"
                         options={[
                           { label: 'Base', value: 'BASE' },
                           { label: 'Bold', value: 'BOLD' }
@@ -338,7 +391,7 @@ export default function Branding () {
                         value={data?.customizations?.headingLevel2?.typography?.weight}
                       />
                       <Select
-                        label="Body font size"
+                        label="Font size"
                         options={[
                           { label: 'Base', value: 'BASE' },
                           { label: 'Extra small', value: 'EXTRA_SMALL' },
@@ -356,7 +409,7 @@ export default function Branding () {
                         value={data?.customizations?.headingLevel2?.typography?.size}
                       />
                       <Select
-                        label="Body letter case "
+                        label="Letter case "
                         options={[
                           { label: 'Lower', value: 'LOWER' },
                           { label: 'None', value: 'NONE' },
@@ -370,60 +423,8 @@ export default function Branding () {
                         }}
                         value={data?.customizations?.headingLevel2?.typography?.letterCase}
                       />
-                      <TextField
-                        label="General font size"
-                        type="number"
-                        min="12"
-                        max="18"
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.designSystem = {
-                            ...temp?.designSystem,
-                            typography: {
-                              ...temp?.designSystem?.typography,
-                              size: {
-                                ...temp?.designSystem?.typography?.size,
-                                ...{ base: +value },
-                              },
-                            },
-                          };
-                          handleDataChange(temp);
-                        }}
-                        value={data?.designSystem?.typography?.size?.base}
-                        autoComplete="off"
-                      />
-                      <Select
-                        label="General font size ratio"
-                        options={[
-                          { label: "1.0", value: 1.0 },
-                          { label: "1.1", value: 1.1 },
-                          { label: "1.2", value: 1.2 },
-                          { label: "1.3", value: 1.3 },
-                          { label: "1.4", value: 1.4 },
-                        ]}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.designSystem = {
-                            ...temp?.designSystem,
-                            typography: {
-                              ...temp?.designSystem?.typography,
-                              size: {
-                                ...temp?.designSystem?.typography?.size,
-                                ...{ ratio: +value },
-                              },
-                            },
-                          };
-                          handleDataChange(temp);
-                        }}
-                        value={data?.designSystem?.typography?.size?.ratio}
-                      />
                     </VerticalStack>
                   </AlphaCard>
-                </VerticalStack>
-              </Box>
-
-              <Box width="32%">
-                <VerticalStack gap="4">
                   <AlphaCard>
                     <VerticalStack gap="3">
                       <Text variant="headingMd">Checkout Form Section</Text>
@@ -522,6 +523,53 @@ export default function Branding () {
                 <AlphaCard>
                   <VerticalStack gap="3">
                     <Text variant="headingMd">General</Text>
+                    <TextField
+                      label="Font size"
+                      type="number"
+                      min="12"
+                      max="18"
+                      onChange={(value) => {
+                        const temp = data;
+                        temp.designSystem = {
+                          ...temp?.designSystem,
+                          typography: {
+                            ...temp?.designSystem?.typography,
+                            size: {
+                              ...temp?.designSystem?.typography?.size,
+                              ...{ base: +value },
+                            },
+                          },
+                        };
+                        handleDataChange(temp);
+                      }}
+                      value={data?.designSystem?.typography?.size?.base}
+                      autoComplete="off"
+                    />
+                    <Select
+                      label="Font size ratio"
+                      options={[
+                        { label: "1.0", value: 1.0 },
+                        { label: "1.1", value: 1.1 },
+                        { label: "1.2", value: 1.2 },
+                        { label: "1.3", value: 1.3 },
+                        { label: "1.4", value: 1.4 },
+                      ]}
+                      onChange={(value) => {
+                        const temp = data;
+                        temp.designSystem = {
+                          ...temp?.designSystem,
+                          typography: {
+                            ...temp?.designSystem?.typography,
+                            size: {
+                              ...temp?.designSystem?.typography?.size,
+                              ...{ ratio: +value },
+                            },
+                          },
+                        };
+                        handleDataChange(temp);
+                      }}
+                      value={data?.designSystem?.typography?.size?.ratio}
+                    />
                     <Select
                       label="Form fields background"
                       options={[
@@ -557,20 +605,20 @@ export default function Branding () {
                       value={data?.customizations?.control?.cornerRadius}
                     />
                     <Select
-                          label="Button border radius"
-                          options={[
-                            { label: 'None', value: 'NONE' },
-                            { label: 'Base', value: 'BASE' },
-                            { label: 'Small', value: 'SMALL' },
-                            { label: 'Large', value: 'LARGE' },
-                          ]}
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.customizations = { ...temp?.customizations, primaryButton: { ...temp?.customizations?.primaryButton, cornerRadius: value } }
-                            handleDataChange(temp)
-                          }}
-                          value={data?.customizations?.primaryButton?.cornerRadius}
-                        />
+                      label="Button border radius"
+                      options={[
+                        { label: 'None', value: 'NONE' },
+                        { label: 'Base', value: 'BASE' },
+                        { label: 'Small', value: 'SMALL' },
+                        { label: 'Large', value: 'LARGE' },
+                      ]}
+                      onChange={(value) => {
+                        const temp = data;
+                        temp.customizations = { ...temp?.customizations, primaryButton: { ...temp?.customizations?.primaryButton, cornerRadius: value } }
+                        handleDataChange(temp)
+                      }}
+                      value={data?.customizations?.primaryButton?.cornerRadius}
+                    />
                     <ColorPickerInput
                       onChange={(value) => {
                         const temp = data;

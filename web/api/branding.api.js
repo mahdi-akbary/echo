@@ -8,6 +8,7 @@ export default function brandingApiEndPoints (app, shopify) {
                         checkoutProfiles(first: 10) {
                             edges {
                                 node {
+                                    name
                                     id
                                     isPublished
                                 }
@@ -15,9 +16,10 @@ export default function brandingApiEndPoints (app, shopify) {
                         }
                     }`
       });
-      const publishedProfile = edges.find(edge => edge.node.isPublished == true)
-      const { body: { data: { checkoutBranding: currentProfileData } } } = await getCurrent(client, publishedProfile.node.id)
-      res.status(200).send({ ...publishedProfile.node, ...currentProfileData });
+      const selectedProfile = edges.find(edge => (req.query.id ? edge.node.id == req.query.id : edge.node.isPublished == true))
+      const profiles = edges.map(edge => edge.node)
+      const { body: { data: { checkoutBranding: currentProfileData } } } = await getCurrent(client, selectedProfile.node.id)
+      res.status(200).send({ ...selectedProfile.node, ...currentProfileData, profiles });
     } catch (error) {
       console.error(error)
       res.status(500).send(error);

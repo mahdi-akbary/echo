@@ -22,7 +22,7 @@ export function ColorPickerInput ({ inputColor = "#fff", label, onChange }) {
   );
   const [buttonColor, setButtonColor] = useState(inputColor);
   const activator = (
-    <HorizontalStack gap={5}>
+    <HorizontalStack align="start" gap="4">
       <div
         onClick={togglePopoverActive}
         style={{
@@ -32,7 +32,6 @@ export function ColorPickerInput ({ inputColor = "#fff", label, onChange }) {
           background: buttonColor,
           cursor: "pointer",
           border: "1px solid #bbb",
-          marginRight: "10px",
         }}
       ></div>
       <Box>
@@ -55,17 +54,23 @@ export function ColorPickerInput ({ inputColor = "#fff", label, onChange }) {
         autofocusTarget="first-node"
         onClose={togglePopoverActive}
       >
-        <VerticalStack align="center" inlineAlign="center">
+        <VerticalStack >
           <ColorPicker
             onChange={(value) => {
-              setColor(value);
-              const hexColor = rgbToHex(hsbToRgb(value))
+              let color = {
+                alpha: value.alpha,
+                hue: value.hue,
+                saturation: value.saturation || null, 
+                brightness: value.brightness || null
+              }
+              setColor(color);
+              const hexColor = rgbToHex(hsbToRgb(color))
               setButtonColor(hexColor);
               onChange(hexColor)
             }}
             color={color}
           />
-          <Box width="90%" padding={1}>
+          <Box width="90%" padding="1">
             <TextField value={buttonColor} focused={false} readOnly />
           </Box>
         </VerticalStack>

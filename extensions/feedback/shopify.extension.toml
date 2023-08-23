@@ -3,24 +3,31 @@ api_version = "2023-07"
 
 [[extensions]]
 type = "ui_extension"
-name = "Survey"
-handle = "survey"
+name = "Feedback"
+handle = "feeback"
 
 [extensions.capabilities]
 network_access = true
 api_access = true
 
 [[extensions.targeting]]
-target = "purchase.thank-you.block.render"
+target = "customer-account.order-status.block.render"
 module = "./src/Checkout.jsx"
-export = "thankYouBlock"
+export = "orderDetailsBlock"
+
 
 [extensions.settings]
 [[extensions.settings.fields]]
 key = "question"
 type = "single_line_text_field"
 name = "Question text"
-description = "This question will appear right after customer place the order."
+description = "This question will later on the order status page."
+
+[[extensions.settings.fields]]
+key = "question_description"
+type = "single_line_text_field"
+name = "Question description text"
+description = "This we appear under the question to provide more information."
 
 [[extensions.settings.fields]]
 key = "option1"

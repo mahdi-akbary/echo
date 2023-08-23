@@ -12,18 +12,21 @@ import {
   useApi,
 } from "@shopify/ui-extensions-react/checkout";
 import { useCallback, useEffect, useState } from "react";
-// Allow the attribution survey to display on the thank you page.
-const thankYouBlock = reactExtension("purchase.thank-you.block.render", () => (
-  <Attribution />
-));
-export { thankYouBlock };
+
+const orderDetailsBlock = reactExtension(
+  "customer-account.order-status.block.render",
+  () => <ProductReview />
+);
+export { orderDetailsBlock };
 
 const baseUrl = "https://laugh-wells-questionnaire-hormone.trycloudflare.com";
-function Attribution() {
+function ProductReview() {
   const { sessionToken } = useApi();
-  const [attribution, setAttribution] = useState("");
+  const [productReview, setProductReview] = useState("");
+  const [loading, setLoading] = useState(false);
   const {
     question,
+    question_description,
     option1,
     option2,
     option3,
@@ -41,30 +44,39 @@ function Attribution() {
     { key: "8", option_name: option8 },
     { key: "7", option_name: option7 },
     { key: "6", option_name: option6 },
-    { key: "5", option_name: question ? option5 : "Youtube" },
-    { key: "4", option_name: question ? option4 : "Tiktok" },
+    {
+      key: "5",
+      option_name: question ? option5 : "Perfect! Can't wait to tell others.",
+    },
+    {
+      key: "4",
+      option_name: question ? option4 : "Amazing! Very happy with it.",
+    },
     {
       key: "3",
-      option_name: question ? option3 : "From a friend or family member",
+      option_name: question ? option3 : "It's okay, I expected more.",
     },
-    { key: "2", option_name: question ? option2 : "Twitter" },
-    { key: "1", option_name: question ? option1 : "Facebook" },
+    {
+      key: "2",
+      option_name: question
+        ? option2
+        : "Eh. There are better options out there.",
+    },
+    { key: "1", option_name: question ? option1 : "I regret the purchase." },
   ];
-  const [loading, setLoading] = useState(false);
-  // Store into local storage if the attribution survey was completed by the customer.
-  const [attributionSubmitted, setAttributionSubmitted] = useStorageState(
-    "attribution-submitted"
-  );
+  // Store into local storage if the product was reviewed by the customer.
+  const [productReviewed, setProductReviewed] =
+    useStorageState("product-reviewed");
 
   async function handleSubmit() {
-    // Simulate a server request
+    // Simulate a server requests
     setLoading(true);
     try {
       const token = await sessionToken.get();
       const selectedOption = options.find(
-        (option) => option.key == attribution
+        (option) => option.key == productReview
       );
-      const response = await fetch(`${baseUrl}/api/surveys`, {
+      const response = await fetch(`${baseUrl}/api/feedbacks`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -74,27 +86,31 @@ function Attribution() {
       });
       const data = await response.json();
       setLoading(false);
-      setAttributionSubmitted(true);
+      setProductReviewed(true);
     } catch (error) {
       console.error(error);
     }
   }
 
-  // Hides the survey if the attribution has already been submitted
-  if (attributionSubmitted.loading || attributionSubmitted.data === true) {
+  // Hides the survey if the product has already been reviewed
+  if (productReviewed.loading || productReviewed.data) {
     return null;
   }
 
   return (
     <Survey
-      title={question || "How did you hear about us ?"}
+      title={question || "How do you like your purchase?"}
+      description={
+        question_description ||
+        "We would like to learn if you are enjoying your purchase."
+      }
       onSubmit={handleSubmit}
       loading={loading}
     >
       <ChoiceList
-        name="sale-attribution"
-        value={attribution}
-        onChange={setAttribution}
+        name="product-review"
+        value={productReview}
+        onChange={setProductReview}
       >
         <BlockStack>
           {options.map((option) =>
@@ -143,6 +159,10 @@ function Survey({ title, description, onSubmit, children, loading }) {
   );
 }
 
+/**
+ * Returns a piece of state that is persisted in local storage, and a function to update it.
+ * The state returned contains a `data` property with the value, and a `loading` property that is true while the value is being fetched from storage.
+ */
 function useStorageState(key) {
   const storage = useStorage();
   const [data, setData] = useState();

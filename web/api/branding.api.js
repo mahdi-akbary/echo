@@ -1,5 +1,3 @@
-import { supabase } from "../supabase/service.js";
-
 export default function brandingApiEndPoints (app, shopify) {
   app.get("/api/branding", async (req, res) => {
     const { session } = res.locals.shopify;
@@ -128,6 +126,7 @@ export default function brandingApiEndPoints (app, shopify) {
                               weight
                               font
                               letterCase
+                              size
                             }
                           }
                           # This property group applies to the look and feel of the primary checkout call-to-action
@@ -155,12 +154,19 @@ export default function brandingApiEndPoints (app, shopify) {
           "checkoutBrandingInput": {
             "designSystem": {
               "cornerRadius": {
-                "large": 30,
-                "base": 25
+                "small": 3,
+                "base": 5,
+                "large": 30
               },
               ...data?.designSystem
             },
             "customizations": {
+              "global": {
+                "cornerRadius": "NONE",
+                "typography": {
+                  "letterCase": "NONE"
+                }
+              },
               "headingLevel1": {
                 "typography": {
                   "weight": "BOLD",
@@ -178,7 +184,7 @@ export default function brandingApiEndPoints (app, shopify) {
                 }
               },
               "primaryButton": {
-                "cornerRadius": "BASE",
+                "cornerRadius": "NONE",
                 "typography": {
                   "letterCase": "UPPER",
                   "weight": "BASE",
@@ -278,6 +284,7 @@ export default function brandingApiEndPoints (app, shopify) {
                         weight
                         font
                         letterCase
+                        size
                       }
                     }
                     # This property group applies to the look and feel of the primary checkout call-to-action
@@ -291,6 +298,10 @@ export default function brandingApiEndPoints (app, shopify) {
                       }
                       blockPadding
                       inlinePadding
+                    }
+                    control{
+                      cornerRadius
+                      color
                     }
                   }
               }

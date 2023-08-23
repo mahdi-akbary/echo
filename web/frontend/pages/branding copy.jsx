@@ -27,7 +27,7 @@ import { useAppQuery } from "../hooks";
 import { ColorPickerInput } from "../components";
 import { FONTS } from "../components/fonts";
 
-export default function Branding () {
+export default function Branding() {
   const fetch = useAuthenticatedFetch();
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -255,52 +255,6 @@ export default function Branding () {
                         }
                       />
                       <Select
-                        label="Headings font weight"
-                        options={[
-                          { label: 'Base', value: 'BASE' },
-                          { label: 'Bold', value: 'BOLD' }
-                        ]}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.customizations = { ...temp?.customizations, headingLevel1: { typography: { ...temp?.customizations?.headingLevel1?.typography, ...{ weight: value } } } }
-                          handleDataChange(temp)
-                        }}
-                        value={data?.customizations?.headingLevel1?.typography?.weight}
-                      />
-                      <Select
-                        label="Headings font size"
-                        options={[
-                          { label: 'Base', value: 'BASE' },
-                          { label: 'Extra small', value: 'EXTRA_SMALL' },
-                          { label: 'Small', value: 'SMALL' },
-                          { label: 'Medium', value: 'MEDIUM' },
-                          { label: 'Large', value: 'LARGE' },
-                          { label: 'X large', value: 'EXTRA_LARGE' },
-                          { label: '2X large', value: 'EXTRA_EXTRA_LARGE' },
-                        ]}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.customizations = { ...temp?.customizations, headingLevel1: { typography: { ...temp?.customizations?.headingLevel1?.typography, ...{ size: value } } } }
-                          handleDataChange(temp)
-                        }}
-                        value={data?.customizations?.headingLevel1?.typography?.size}
-                      />
-                      <Select
-                        label="Headings letter case "
-                        options={[
-                          { label: 'Lower', value: 'LOWER' },
-                          { label: 'None', value: 'NONE' },
-                          { label: 'Title', value: 'TITLE' },
-                          { label: 'Upper', value: 'UPPER' },
-                        ]}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.customizations = { ...temp?.customizations, headingLevel1: { typography: { ...temp?.customizations?.headingLevel1?.typography, ...{ letterCase: value } } } }
-                          handleDataChange(temp)
-                        }}
-                        value={data?.customizations?.headingLevel1?.typography?.letterCase}
-                      />
-                      <Select
                         label="Body font"
                         options={FONTS}
                         onChange={(value) => {
@@ -324,54 +278,8 @@ export default function Branding () {
                           data?.designSystem?.typography?.primary?.name
                         }
                       />
-                      <Select
-                        label="Body font weight"
-                        options={[
-                          { label: 'Base', value: 'BASE' },
-                          { label: 'Bold', value: 'BOLD' }
-                        ]}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.customizations = { ...temp?.customizations, headingLevel2: { typography: { ...temp?.customizations?.headingLevel2?.typography, ...{ weight: value } } } }
-                          handleDataChange(temp)
-                        }}
-                        value={data?.customizations?.headingLevel2?.typography?.weight}
-                      />
-                      <Select
-                        label="Body font size"
-                        options={[
-                          { label: 'Base', value: 'BASE' },
-                          { label: 'Extra small', value: 'EXTRA_SMALL' },
-                          { label: 'Small', value: 'SMALL' },
-                          { label: 'Medium', value: 'MEDIUM' },
-                          { label: 'Large', value: 'LARGE' },
-                          { label: 'X large', value: 'EXTRA_LARGE' },
-                          { label: '2X large', value: 'EXTRA_EXTRA_LARGE' },
-                        ]}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.customizations = { ...temp?.customizations, headingLevel2: { typography: { ...temp?.customizations?.headingLevel2?.typography, ...{ size: value } } } }
-                          handleDataChange(temp)
-                        }}
-                        value={data?.customizations?.headingLevel2?.typography?.size}
-                      />
-                      <Select
-                        label="Body letter case "
-                        options={[
-                          { label: 'Lower', value: 'LOWER' },
-                          { label: 'None', value: 'NONE' },
-                          { label: 'Title', value: 'TITLE' },
-                          { label: 'Upper', value: 'UPPER' },
-                        ]}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.customizations = { ...temp?.customizations, headingLevel2: { typography: { ...temp?.customizations?.headingLevel2?.typography, ...{ letterCase: value } } } }
-                          handleDataChange(temp)
-                        }}
-                        value={data?.customizations?.headingLevel2?.typography?.letterCase}
-                      />
                       <TextField
-                        label="General font size"
+                        label="Bast font size"
                         type="number"
                         min="12"
                         max="18"
@@ -393,7 +301,7 @@ export default function Branding () {
                         autoComplete="off"
                       />
                       <Select
-                        label="General font size ratio"
+                        label="Font size ratio"
                         options={[
                           { label: "1.0", value: 1.0 },
                           { label: "1.1", value: 1.1 },
@@ -541,36 +449,6 @@ export default function Branding () {
                       }}
                       value={data?.customizations?.control?.color}
                     />
-                    <Select
-                      label="Form fields border radius"
-                      options={[
-                        { label: 'None', value: 'NONE' },
-                        { label: 'Base', value: 'BASE' },
-                        { label: 'Small', value: 'SMALL' },
-                        { label: 'Large', value: 'LARGE' },
-                      ]}
-                      onChange={(value) => {
-                        const temp = data;
-                        temp.customizations = { ...temp?.customizations, control: { ...temp?.customizations?.control, cornerRadius: value } }
-                        handleDataChange(temp)
-                      }}
-                      value={data?.customizations?.control?.cornerRadius}
-                    />
-                    <Select
-                          label="Button border radius"
-                          options={[
-                            { label: 'None', value: 'NONE' },
-                            { label: 'Base', value: 'BASE' },
-                            { label: 'Small', value: 'SMALL' },
-                            { label: 'Large', value: 'LARGE' },
-                          ]}
-                          onChange={(value) => {
-                            const temp = data;
-                            temp.customizations = { ...temp?.customizations, primaryButton: { ...temp?.customizations?.primaryButton, cornerRadius: value } }
-                            handleDataChange(temp)
-                          }}
-                          value={data?.customizations?.primaryButton?.cornerRadius}
-                        />
                     <ColorPickerInput
                       onChange={(value) => {
                         const temp = data;

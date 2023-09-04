@@ -771,6 +771,7 @@ export default function Branding () {
       />
       {false ? (
         <Page
+          fullWidth
           primaryAction={{
             content: "Publish",
           }}
@@ -778,7 +779,7 @@ export default function Branding () {
           {contentMarkup}
         </Page>
       ) : (
-        <Page>{contentMarkup}</Page>
+        <Page fullWidth>{contentMarkup}</Page>
       )}
     </>
   );

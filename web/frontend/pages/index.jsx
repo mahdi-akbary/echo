@@ -10,9 +10,10 @@ import {
   useBreakpoints,
   Modal,
   TextContainer,
+  Spinner,
 } from "@shopify/polaris";
 import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CountChart,
   AddedProductList,
@@ -21,8 +22,16 @@ import {
 } from "../components";
 import { Redirect } from "@shopify/app-bridge/actions";
 
-export default function HomePage() {
-  const { smUp } = useBreakpoints();
+export default function HomePage () {
+  const [width, setWidth] = useState(window.innerWidth);
+  const updateDimensions = () => {
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
   const [displayVideoGuide, setDisplayVideoGuide] = useState();
 
   const app = useAppBridge();
@@ -32,30 +41,60 @@ export default function HomePage() {
     setDisplayVideoGuide(!displayVideoGuide);
   };
   return (
-    <Page>
+    <Page fullWidth>
       <TitleBar title="Dashboard" primaryAction={null} />
       <Layout>
         <Modal
+        large
           open={displayVideoGuide}
           onClose={handleVideoGuideClick}
-          title="Reach more shoppers with Instagram product tags"
-          primaryAction={{
-            content: "Add Instagram",
-            onAction: handleVideoGuideClick,
-          }}
+          title="An Overview"
           secondaryActions={[
             {
               content: "Learn more",
-              onAction: handleVideoGuideClick,
+              onAction: () => {
+                redirect.dispatch(
+                  Redirect.Action.APP,
+                  "/how-to-use"
+                )
+                handleVideoGuideClick()
+              }
             },
           ]}
         >
           <Modal.Section>
-            <Text>
-              Use Instagram posts to share your products with millions of
-              people. Let shoppers buy from your store without leaving
-              Instagram.
-            </Text>
+            <Box
+              position="relative"
+              width= "100%"
+              minHeight={`500px`}
+            >
+              <div
+                style={{
+                  width: "100%",
+                  height: "500px",
+                  zIndex: 1,
+                  position: "absolute",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  border: "1px solid #ccc",
+                  borderRadius: "5px",
+                }}
+              >
+                <Spinner size="large" />
+              </div>
+              <iframe
+                src="https://www.loom.com/embed/9cb4a7db8f9f49bb83c9d51340ae4a73?sid=28aa6657-f859-48e3-b429-b7424eae1eae?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true"
+                frameBorder="0"
+                allowFullScreen
+                style={{
+                  width: "100%",
+                  height: "500px",
+                  zIndex: 2,
+                  position: "relative",
+                }}
+              ></iframe>
+            </Box>
           </Modal.Section>
         </Modal>
 

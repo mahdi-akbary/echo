@@ -45,7 +45,7 @@ export default function productApiEndPoints (app, shopify) {
             res.status(200).send(data[0]);
         } catch (error) {
             console.error(error)
-            res.status(500).send({message: error.message});
+            res.status(500).send({ message: error.message });
         }
     })
     app.delete("/api/products/:id", async (req, res) => {
@@ -106,7 +106,8 @@ export default function productApiEndPoints (app, shopify) {
                 .select()
                 .eq('shop', session?.shop)
             if (error) throw new Error(error.message)
-            res.status(200).send(data[0]);
+            console.log(data[0] || {}, '<<<<<<');
+            res.status(200).send(data[0] || {});
         } catch (error) {
             console.error(error)
             res.status(500).send(error);

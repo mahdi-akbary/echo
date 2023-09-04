@@ -26,32 +26,32 @@ export default function HowToUse() {
     {
       title: "AI Product Recommendation",
       subTitle: `Personalize the shopping experience and maximize sales with AI-driven suggestions tailored to each customer's preferences.`,
-      link: "https://www.loom.com/embed/799f5eb9613c41b9a092664f0151d6e0?sid=5820c294-15fb-4628-83cb-b6da0ba8afa1?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
+      link: "https://www.loom.com/embed/38115e2140da450ca2cc9098ced024f4?sid=2cb3421d-7171-4733-8905-b6ad9d474d39?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
     },
     {
       title: "Count Down Timer",
       subTitle: `Drive urgency and increase conversions by creating a time-sensitive atmosphere that compels customers to act quickly.`,
-      link: "https://www.loom.com/embed/799f5eb9613c41b9a092664f0151d6e0?sid=5820c294-15fb-4628-83cb-b6da0ba8afa1?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
+      link: "https://www.loom.com/embed/5bf6cdb4c91b41e08b0325a4b8f3d251?sid=319ff6bb-d44b-420b-8c40-3cb8391ab0ac?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
     },
     {
       title: "Custom Image Banners",
       subTitle: `Captivate shoppers with visually enticing banners showcasing promotions and special offers, enhancing engagement and product visibility.`,
-      link: "https://www.loom.com/embed/799f5eb9613c41b9a092664f0151d6e0?sid=5820c294-15fb-4628-83cb-b6da0ba8afa1?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
+      link: "https://www.loom.com/embed/3d7e2ae3546e4211985ace90a5365b0e?sid=bba0df32-cabf-40c9-a35e-f217b9641a25?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
     },
     {
       title: "Trust Badges",
       subTitle: `Instill confidence in customers by displaying trust badges, assuring them of a secure and trustworthy transaction process.`,
-      link: "https://www.loom.com/embed/799f5eb9613c41b9a092664f0151d6e0?sid=5820c294-15fb-4628-83cb-b6da0ba8afa1?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
+      link: "https://www.loom.com/embed/5c9d74b66a4e4ab1851f68ee09833c0d?sid=23289cb6-2ec6-4f64-b71c-97585ec163a7?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
     },
     {
       title: "Custom Fields in Checkout",
       subTitle: `Gather valuable customer data with customizable fields, enabling targeted marketing and a deeper understanding of your audience.`,
-      link: "https://www.loom.com/embed/799f5eb9613c41b9a092664f0151d6e0?sid=5820c294-15fb-4628-83cb-b6da0ba8afa1?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
+      link: "https://www.loom.com/embed/9887a26747f242d4831dd01e8b0c4790?sid=631a5f3f-16e6-4d05-85e1-36d660c50753?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true"
     },
     {
       title: "Quantity Modifier",
       subTitle: `Empower shoppers to easily adjust product quantities, streamlining the checkout process and improving overall satisfaction.`,
-      link: "https://www.loom.com/embed/799f5eb9613c41b9a092664f0151d6e0?sid=5820c294-15fb-4628-83cb-b6da0ba8afa1?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
+      link: "https://www.loom.com/embed/7e542bd15d4c44f4a7f824d1d7eb6e0a?sid=1b01ac17-f728-4cbf-a87d-f2a2f50f0448?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
     },
     {
       title: "Checkout Free Gifts",
@@ -61,7 +61,7 @@ export default function HowToUse() {
   ];
 
   return (
-    <Page>
+    <Page fullWidth>
       <TitleBar title="How to use" primaryAction={null} />
       <Layout>
         <Layout.Section>

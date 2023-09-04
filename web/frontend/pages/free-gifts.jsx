@@ -13,7 +13,7 @@ import { TitleBar } from "@shopify/app-bridge-react";
 
 export default function Settings() {
   return (
-    <Page>
+    <Page fullWidth>
     <TitleBar title="Free gifts" primaryAction={null} />
       <Layout>
         {/* <Layout.Section>

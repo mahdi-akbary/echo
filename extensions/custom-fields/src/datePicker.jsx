@@ -13,7 +13,6 @@ export function DatePickerField ({ title, sub_title, handleUpdate, metafields })
     const storedValue = metafields?.find(meta => meta?.key == key)?.value
 
     const DEFAUTL_TITIE = 'Select your delivery date'
-    const DEFAUTL_SUBTITIE = ''
     const [date, setDate] = useState(storedValue)
 
     const [isPicker, setIsPicked] = useState(false)
@@ -35,7 +34,7 @@ export function DatePickerField ({ title, sub_title, handleUpdate, metafields })
         <Text size="large">
             {title || DEFAUTL_TITIE}
         </Text>
-        <Text size='small'>{sub_title || DEFAUTL_SUBTITIE}</Text>
+        {sub_title ? <Text size='small'>{sub_title}</Text> : null}
         <Pressable border="base" cornerRadius="base"
             overlay={
                 isPicker ? null :

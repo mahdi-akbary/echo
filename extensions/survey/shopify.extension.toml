@@ -23,6 +23,12 @@ name = "Question text"
 description = "This question will appear right after customer place the order."
 
 [[extensions.settings.fields]]
+key = "submitText"
+type = "single_line_text_field"
+name = "Submit button text"
+description = "The text for submit button."
+
+[[extensions.settings.fields]]
 key = "option1"
 type = "single_line_text_field"
 name = "Option 1"

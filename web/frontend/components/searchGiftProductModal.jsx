@@ -61,8 +61,10 @@ export function SearchGiftProductModal ({ isOpen, handleClose, discount, refetch
     });
 
     if (response.ok) {
+      setList([])
+      setSearchFieldValue('')
       setSelectLoading(false)
-      setToastContent({ content: 'Saved!' })
+      setToastContent({ content: 'Saved!!!' })
       refetch()
       handleClose(false)
     } else {

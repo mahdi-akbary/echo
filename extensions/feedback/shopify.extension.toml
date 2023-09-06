@@ -30,6 +30,12 @@ name = "Question description text"
 description = "This we appear under the question to provide more information."
 
 [[extensions.settings.fields]]
+key = "submitText"
+type = "single_line_text_field"
+name = "Submit button text"
+description = "The text for submit button."
+
+[[extensions.settings.fields]]
 key = "option1"
 type = "single_line_text_field"
 name = "Option 1"

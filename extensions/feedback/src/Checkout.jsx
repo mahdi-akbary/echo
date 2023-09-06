@@ -27,6 +27,7 @@ function ProductReview() {
   const {
     question,
     question_description,
+    submitText,
     option1,
     option2,
     option3,
@@ -39,30 +40,16 @@ function ProductReview() {
     option10,
   } = useSettings();
   const options = [
-    { key: "10", option_name: option10 },
-    { key: "9", option_name: option9 },
-    { key: "8", option_name: option8 },
-    { key: "7", option_name: option7 },
+    { key: "1", option_name: option1 },
+    { key: "2", option_name: option2 },
+    { key: "3", option_name: option3 },
+    { key: "4", option_name: option4 },
+    { key: "5", option_name: option5 },
     { key: "6", option_name: option6 },
-    {
-      key: "5",
-      option_name: question ? option5 : "Perfect! Can't wait to tell others.",
-    },
-    {
-      key: "4",
-      option_name: question ? option4 : "Amazing! Very happy with it.",
-    },
-    {
-      key: "3",
-      option_name: question ? option3 : "It's okay, I expected more.",
-    },
-    {
-      key: "2",
-      option_name: question
-        ? option2
-        : "Eh. There are better options out there.",
-    },
-    { key: "1", option_name: question ? option1 : "I regret the purchase." },
+    { key: "7", option_name: option7 },
+    { key: "8", option_name: option8 },
+    { key: "9", option_name: option9 },
+    { key: "10", option_name: option10 },
   ];
   // Store into local storage if the product was reviewed by the customer.
   const [productReviewed, setProductReviewed] =
@@ -106,6 +93,7 @@ function ProductReview() {
       }
       onSubmit={handleSubmit}
       loading={loading}
+      submitText={submitText}
     >
       <ChoiceList
         name="product-review"
@@ -126,7 +114,7 @@ function ProductReview() {
   );
 }
 
-function Survey({ title, description, onSubmit, children, loading }) {
+function Survey({ title, description, onSubmit, children, loading, submitText }) {
   const [submitted, setSubmitted] = useState(false);
 
   async function handleSubmit() {
@@ -152,7 +140,7 @@ function Survey({ title, description, onSubmit, children, loading }) {
         <Text>{description}</Text>
         {children}
         <Button kind="secondary" onPress={handleSubmit} loading={loading}>
-          Submit feedback
+          {submitText ?? 'Submit feedback'}
         </Button>
       </BlockStack>
     </View>

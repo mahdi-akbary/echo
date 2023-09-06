@@ -24,6 +24,7 @@ function Attribution() {
   const [attribution, setAttribution] = useState("");
   const {
     question,
+    submitText,
     option1,
     option2,
     option3,
@@ -36,19 +37,16 @@ function Attribution() {
     option10,
   } = useSettings();
   const options = [
-    { key: "10", option_name: option10 },
-    { key: "9", option_name: option9 },
-    { key: "8", option_name: option8 },
-    { key: "7", option_name: option7 },
+    { key: "1", option_name: option1 },
+    { key: "2", option_name: option2 },
+    { key: "3", option_name: option3 },
+    { key: "4", option_name: option4 },
+    { key: "5", option_name: option5 },
     { key: "6", option_name: option6 },
-    { key: "5", option_name: question ? option5 : "Youtube" },
-    { key: "4", option_name: question ? option4 : "Tiktok" },
-    {
-      key: "3",
-      option_name: question ? option3 : "From a friend or family member",
-    },
-    { key: "2", option_name: question ? option2 : "Twitter" },
-    { key: "1", option_name: question ? option1 : "Facebook" },
+    { key: "7", option_name: option7 },
+    { key: "8", option_name: option8 },
+    { key: "9", option_name: option9 },
+    { key: "10", option_name: option10 },
   ];
   const [loading, setLoading] = useState(false);
   // Store into local storage if the attribution survey was completed by the customer.
@@ -90,6 +88,7 @@ function Attribution() {
       title={question || "How did you hear about us ?"}
       onSubmit={handleSubmit}
       loading={loading}
+      submitText={submitText}
     >
       <ChoiceList
         name="sale-attribution"
@@ -110,7 +109,14 @@ function Attribution() {
   );
 }
 
-function Survey({ title, description, onSubmit, children, loading }) {
+function Survey({
+  title,
+  description,
+  onSubmit,
+  children,
+  loading,
+  submitText,
+}) {
   const [submitted, setSubmitted] = useState(false);
 
   async function handleSubmit() {
@@ -136,7 +142,7 @@ function Survey({ title, description, onSubmit, children, loading }) {
         <Text>{description}</Text>
         {children}
         <Button kind="secondary" onPress={handleSubmit} loading={loading}>
-          Submit feedback
+          {submitText ?? "Submit Survey"}
         </Button>
       </BlockStack>
     </View>

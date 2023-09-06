@@ -4,7 +4,7 @@ import { useAuthenticatedFetch } from "../hooks";
 
 export function ThresholdModal({ isOpen, handleClose, discount, refetch }) {
   const fetch = useAuthenticatedFetch();
-  const [threshold, setThreshold] = useState();
+  const [threshold, setThreshold] = useState(discount?.amount ?? '');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
@@ -36,7 +36,8 @@ export function ThresholdModal({ isOpen, handleClose, discount, refetch }) {
       primaryAction={{
         content: "Save",
         onAction: handleSubmit,
-        loading: loading
+        loading: loading,
+        disabled: threshold < 0 || threshold == ''
       }}
       secondaryActions={[
         {

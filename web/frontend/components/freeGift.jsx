@@ -25,7 +25,7 @@ export function FreeGift () {
     url: "/api/products/discounts",
     reactQueryOptions: {
       onSuccess: (data) => {
-        if (discount?.amount >= 0)
+        if(data?.amount)
           setDiscount(data);
       },
     },

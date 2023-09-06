@@ -1,8 +1,8 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-name = "checkout-plus"
-client_id = "731d3f057b3dcdc6ec4edf58149401de"
-application_url = "https://checkout-plus.fly.dev"
+name = "Checkout Extension & Upsells  "
+client_id = "49be3e74c8a62e808de0bbbea1c1d985"
+application_url = "https://desirable-logan-clan-giants.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -12,17 +12,22 @@ use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
-  "https://checkout-plus.fly.dev/auth/callback",
-  "https://checkout-plus.fly.dev/auth/shopify/callback",
-  "https://checkout-plus.fly.dev/api/auth/callback"
+  "https://desirable-logan-clan-giants.trycloudflare.com/auth/callback",
+  "https://desirable-logan-clan-giants.trycloudflare.com/auth/shopify/callback",
+  "https://desirable-logan-clan-giants.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
 api_version = "2023-04"
+
+  [webhooks.privacy_compliance]
+  customer_deletion_url = "https://checkout-plus.fly.dev/api/webhooks/customers/data_request"
+  customer_data_request_url = "https://checkout-plus.fly.dev/api/webhooks/customers/data_request"
+  shop_deletion_url = "https://checkout-plus.fly.dev/api/webhooks/customers/data_request"
 
 [pos]
 embedded = false
 
 [build]
 automatically_update_urls_on_dev = true
-dev_store_url = "recommendation-check.myshopify.com"
+dev_store_url = "seamless-checkout-extension.myshopify.com"

@@ -172,7 +172,7 @@ export default function Branding () {
                     </VerticalStack>
                   </Box>
                   <ChoiceList
-                    title=<Text fontWeight="semibold">Below is your checkout profiles.</Text>
+                    title={<Text fontWeight="semibold">Below is your checkout profiles.</Text>}
                     choices={
                       (data.profiles || []).map(profile => ({
                         label: <>{profile.name} {profile.isPublished ? <Badge status="success">Active</Badge> : null}</>,

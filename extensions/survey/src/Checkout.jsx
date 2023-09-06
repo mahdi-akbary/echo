@@ -18,7 +18,7 @@ const thankYouBlock = reactExtension("purchase.thank-you.block.render", () => (
 ));
 export { thankYouBlock };
 
-const baseUrl = "https://laugh-wells-questionnaire-hormone.trycloudflare.com";
+const baseUrl = "https://checkout-plus.fly.dev";
 function Attribution() {
   const { sessionToken } = useApi();
   const [attribution, setAttribution] = useState("");

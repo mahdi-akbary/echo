@@ -19,7 +19,7 @@ const orderDetailsBlock = reactExtension(
 );
 export { orderDetailsBlock };
 
-const baseUrl = "https://laugh-wells-questionnaire-hormone.trycloudflare.com";
+const baseUrl = "https://checkout-plus.fly.dev";
 function ProductReview() {
   const { sessionToken } = useApi();
   const [productReview, setProductReview] = useState("");

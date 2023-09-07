@@ -19,7 +19,7 @@ To run the application in development environment please follow these steps:
 - `yarn supabase login` 
 - Set the `SUPAbASE_PROJECT_REF` and `SUPAbASE_PROJECT_DB_PASSWORD` from your supabase account
 - `yarn supabase:link` 
-- `db:reset`
+- `yarn db:reset`
 
 ### for running migration and creating migration please use below commands in ./web
 - `yarn make:migration`

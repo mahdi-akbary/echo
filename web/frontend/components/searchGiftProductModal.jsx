@@ -104,7 +104,7 @@ export function SearchGiftProductModal ({ isOpen, handleClose, discount, refetch
             onChange={(value) => setSearchFieldValue(value)}
             prefix="Search"
             autoComplete="off"
-            connectedRight={<Button loading={loading} onClick={async () => await handleSearch(searchFieldValue)}>Submit</Button>}
+            connectedRight={<Button loading={loading} onClick={async () => await handleSearch(searchFieldValue)}>Search</Button>}
           />
         </div>
         <Box position="relative">

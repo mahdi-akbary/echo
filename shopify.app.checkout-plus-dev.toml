@@ -2,7 +2,7 @@
 
 name = "Checkout plus dev"
 client_id = "e4989bb8f01e4138aa83ddcb0a58beef"
-application_url = "https://kb-dealtime-auditor-cemetery.trycloudflare.com"
+application_url = "https://realized-coated-events-unlike.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -12,9 +12,9 @@ use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
-  "https://kb-dealtime-auditor-cemetery.trycloudflare.com/auth/callback",
-  "https://kb-dealtime-auditor-cemetery.trycloudflare.com/auth/shopify/callback",
-  "https://kb-dealtime-auditor-cemetery.trycloudflare.com/api/auth/callback"
+  "https://realized-coated-events-unlike.trycloudflare.com/auth/callback",
+  "https://realized-coated-events-unlike.trycloudflare.com/auth/shopify/callback",
+  "https://realized-coated-events-unlike.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

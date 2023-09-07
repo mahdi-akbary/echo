@@ -45,6 +45,19 @@ export default function Pricing () {
     setIsLoading(false)
   };
 
+  const appFeatures = [
+    "AI Product Recommendation",
+    "Count Down Timer",
+    "Custom Image Banners",
+    "Trust Badges",
+    "Custom Fields in Checkout",
+    "Quantity Modifier",
+    "Free Gift with Purchase",
+    "Customer Survey in Checkout",
+    "Customer Feedback on Thank You Page"
+  ]
+
+
   const loadingMarkup = (
     <>
       <Loading />
@@ -131,7 +144,7 @@ export default function Pricing () {
         <Layout.Section>
           <AlphaCard fullWidth>
             <HorizontalStack align="space-between">
-              <VerticalStack gap="4">
+              <VerticalStack gap="2">
                 <Text variant="headingMd" fontWeight="semibold">
                   Please select a plan that suits your business
                 </Text>
@@ -140,6 +153,27 @@ export default function Pricing () {
                   downgrade at any time. <br /> Based on the number of orders
                   you receive per month, and the features you need.
                 </Text>
+                <Text>
+                  All plans come with a 7-day free trial and includes the following features:
+                </Text>
+
+                {appFeatures.map((feature, index) => (
+                  <HorizontalStack
+                    key={index}
+                    blockAlign="center"
+                    gap="3"
+                    wrap={false}>
+
+                    <Box as="span" width="15px">
+                      <Icon source={CircleTickMajor} color="success" />
+                    </Box>
+                    <Box as="span" width="100%">
+                      <Text>{feature}</Text>
+                    </Box>
+                  </HorizontalStack>
+                ))}
+                
+                
                 <HorizontalStack>{unsubscribeMarkup}</HorizontalStack>
               </VerticalStack>
               <Image

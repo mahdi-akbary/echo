@@ -114,9 +114,7 @@ export function FreeGift () {
               Checkout Free Gifts
             </Text>
             <Text as="p" variant="bodyMd">
-              Giving free gifts to customers if their purchase price reaches a
-              certain threshold is so cool, here you'r able to select the free
-              gifts and set the threshold.
+              Free gifts with purchase provide added value, motivating customers to buy and boosting conversion rates.
             </Text>
           </VerticalStack>
         </Box>

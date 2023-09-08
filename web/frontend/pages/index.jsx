@@ -84,7 +84,7 @@ export default function HomePage () {
                 <Spinner size="large" />
               </div>
               <iframe
-                src="https://www.loom.com/embed/9cb4a7db8f9f49bb83c9d51340ae4a73?sid=28aa6657-f859-48e3-b429-b7424eae1eae?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true"
+                src="https://www.loom.com/embed/6b259d6d5363409fb50f02cc9e628968?sid=e53f57c6-3386-48bf-82f9-2da4d710abcf?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true"
                 frameBorder="0"
                 allowFullScreen
                 style={{

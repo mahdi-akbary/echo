@@ -58,6 +58,11 @@ export default function HowToUse() {
       subTitle: `Delight customers with surprise rewards! Encourage higher spending and nurture loyalty by offering enticing free gifts upon reaching a spending threshold.`,
       link: "https://www.loom.com/embed/799f5eb9613c41b9a092664f0151d6e0?sid=5820c294-15fb-4628-83cb-b6da0ba8afa1?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
     },
+    {
+      title: "Checkout Survey & Feedback",
+      subTitle: `Customer surveys and feedback are essential for understanding customer needs, improving products and services, and enhancing satisfaction. They also help identify trends and maintain a competitive edge.`,
+      link: "https://www.loom.com/embed/8d248e35bd7e4848bb50f916f41df1be?sid=519acbbb-98a4-4da8-89de-67ef19a10280&hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
+    },
   ];
 
   return (

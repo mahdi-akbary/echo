@@ -18,7 +18,7 @@ import {
 } from '@shopify/ui-extensions-react/checkout';
 
 export default reactExtension("purchase.checkout.block.render", () => <App />);
-const BASE_URL = 'https://coins-lunch-holds-zoning.trycloudflare.com'
+const BASE_URL = 'https://checkout-plus.fly.dev'
 function App() {
   const { i18n, sessionToken } = useApi();
   const cartLines = useCartLines();

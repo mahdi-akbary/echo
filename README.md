@@ -29,7 +29,8 @@ To run the application in development environment please follow these steps:
 ## Production deployment
 - For Supabase please refer to above section 
 - The fly is already setup and can be modified in fly.toml
-- please get the shopify secret kye from your acount and run following command
+- please get the shopify secret key from your acount and run following command
+- `yarn shopify app env show` to display shopify api secret
 - `flyctl secrets set SHOPIFY_API_SECRET=<API_SECRET>`
 - run `yarn deploy-fly` from project root to deploy latest changes.
 

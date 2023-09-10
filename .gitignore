@@ -1,5 +1,8 @@
 # Environment Configuration
 .env
+./.env.*
+shopify.app.*
+!shopify.app.toml
 
 # Dependency directory
 node_modules

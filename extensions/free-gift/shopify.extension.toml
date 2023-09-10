@@ -19,7 +19,7 @@ api_access = true
 key = "title"
 type = "single_line_text_field"
 name = "Title"
-description = "Eg: You might also like"
+description = "Eg: Special Offer: Free Gift Included"
 
 [[extensions.settings.fields]]
 key = "add_to_cart_label"

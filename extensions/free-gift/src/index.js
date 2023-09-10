@@ -29,8 +29,9 @@ function App() {
   const [loading, setLoading] = useState(null);
   const { currencyCode } = useTotalAmount();
 
-  const { title } = useSettings();
+  const { title, add_to_cart_label } = useSettings();
   const bannerTitle = title || "Exclusive Gift with Purchase";
+  const addToCartLabel = add_to_cart_label ? add_to_cart_label : "Add to cart";
 
 
   useEffect(async () => {
@@ -98,11 +99,12 @@ function App() {
           <Text size="small" appearance="critical"> (Free gift)</Text>
           <BlockSpacer spacing="extraTight" />
           <Text size="base" accessibilityRole="deletion" appearance="subdued">{i18n.formatCurrency(v?.price, { currencyCode: currencyCode })}</Text>
-          <BlockSpacer spacing="extraTight" />
-          <Text size="base" emphasis="bold">Free</Text>
+
         </TextBlock>
         <View inlineAlignment='end' maxBlockSize={10}>
-          <Button kind='primary' loading={loading == v.variant_id} disabled={error} onPress={async () => await handleAddToCart(v.variant_id)} inlineAlignment="center" fullWidth={true} > Add to cart</Button>
+          <Button kind='primary' loading={loading == v.variant_id} disabled={error} onPress={async () => await handleAddToCart(v.variant_id)} inlineAlignment="center" fullWidth={true} >
+            { addToCartLabel }
+          </Button>
         </View>
       </InlineLayout>)
     }

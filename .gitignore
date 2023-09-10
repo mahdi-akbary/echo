@@ -1,6 +1,6 @@
 # Environment Configuration
 .env
-./.env.*
+.env.*
 shopify.app.*
 !shopify.app.toml
 

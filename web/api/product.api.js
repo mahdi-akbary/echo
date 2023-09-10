@@ -44,7 +44,11 @@ export default function productApiEndPoints(app, shopify) {
                 .select()
             if (error) throw new Error(error.message)
 
-            await setMetaFields(client, body?.discountId, session?.shop, body?.discountAmount)
+            await setMetaFields(client, {
+                shop: session?.shop,
+                amount: body?.discountAmount,
+                discountId: body?.discountId
+            })
             res.status(200).send(data[0]);
         } catch (error) {
             console.error(error)
@@ -205,7 +209,11 @@ export default function productApiEndPoints(app, shopify) {
             if (error) throw new Error(error.message)
             const giftDiscount = data[0]
 
-            await setMetaFields(client, body?.discountId, session?.shop, giftDiscount.amount)
+            await setMetaFields(client, {
+                shop: session?.shop,
+                amount: giftDiscount.amount,
+                discountId: body?.discountId
+            })
             res.status(200).send(giftDiscount);
         } catch (error) {
             console.error(error)

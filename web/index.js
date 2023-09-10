@@ -13,11 +13,13 @@ import productApiEndPoints from "./api/product.api.js";
 import brandingApiEndPoints from "./api/branding.api.js";
 import surveyApiEndPoints from "./api/survey.api.js";
 import feedbackApiEndPoints from "./api/feedback.api.js";
+import cors from 'cors'
 
 const PORT = parseInt(
   process.env.BACKEND_PORT || process.env.PORT || "3000",
   10
 );
+
 
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
@@ -25,6 +27,7 @@ const STATIC_PATH =
     : `${process.cwd()}/frontend/`;
 
 const app = express();
+app.use(cors())
 bodyParserPrewiring(app, express)
 
 app.get(shopify.config.auth.path, shopify.auth.begin());

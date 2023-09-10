@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import {
+  useSettings,
   InlineLayout,
   View,
   Banner,
@@ -14,7 +15,8 @@ import {
   useApi,
   BlockStack,
   useTotalAmount,
-  reactExtension
+  reactExtension,
+  Heading,
 } from '@shopify/ui-extensions-react/checkout';
 
 export default reactExtension("purchase.checkout.block.render", () => <App />);
@@ -26,6 +28,11 @@ function App() {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(null);
   const { currencyCode } = useTotalAmount();
+
+  const { title, add_to_cart_label } = useSettings();
+  const bannerTitle = title || "Exclusive Gift with Purchase";
+  const addToCartLabel = add_to_cart_label ? add_to_cart_label : "Add to cart";
+
 
   useEffect(async () => {
     const token = await sessionToken.get();
@@ -75,7 +82,11 @@ function App() {
     }
   }
 
-  return <BlockStack columns={'10%'}>
+  return <>
+  { variants.length > 0 && <Heading>{ bannerTitle }</Heading> }
+  <BlockSpacer />
+
+  <BlockStack columns={'10%'}>
     {
       variants.map(v => <InlineLayout blockAlignment="center" spacing="base" padding="base" cornerRadius="base" border="dotted" columns={['15%', 'fill', '30%']} key={v.id}>
         <View
@@ -88,14 +99,16 @@ function App() {
           <Text size="small" appearance="critical"> (Free gift)</Text>
           <BlockSpacer spacing="extraTight" />
           <Text size="base" accessibilityRole="deletion" appearance="subdued">{i18n.formatCurrency(v?.price, { currencyCode: currencyCode })}</Text>
-          <BlockSpacer spacing="extraTight" />
-          <Text size="base" emphasis="bold">Free</Text>
+
         </TextBlock>
         <View inlineAlignment='end' maxBlockSize={10}>
-          <Button kind='primary' loading={loading == v.variant_id} disabled={error} onPress={async () => await handleAddToCart(v.variant_id)} inlineAlignment="center" fullWidth={true} > Add to cart</Button>
+          <Button kind='primary' loading={loading == v.variant_id} disabled={error} onPress={async () => await handleAddToCart(v.variant_id)} inlineAlignment="center" fullWidth={true} >
+            { addToCartLabel }
+          </Button>
         </View>
       </InlineLayout>)
     }
+
     {error &&
       <View>
         <BlockSpacer spacing="extraTight" />
@@ -103,5 +116,6 @@ function App() {
       </View>
     }
   </BlockStack>
+  </>
 
 }

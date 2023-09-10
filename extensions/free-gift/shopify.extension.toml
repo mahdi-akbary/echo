@@ -11,5 +11,17 @@ target = "purchase.checkout.block.render"
 
 [extensions.capabilities]
 network_access = true
-block_progress = false
+block_progress = true
 api_access = true
+
+[extensions.settings]
+[[extensions.settings.fields]]
+key = "title"
+type = "single_line_text_field"
+name = "Title"
+description = "Eg: Special Offer: Free Gift Included"
+
+[[extensions.settings.fields]]
+key = "add_to_cart_label"
+type = "single_line_text_field"
+name = "Add to cart label"

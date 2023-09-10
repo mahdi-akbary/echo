@@ -56,7 +56,7 @@ export default function HowToUse() {
     {
       title: "Checkout Free Gifts",
       subTitle: `Delight customers with surprise rewards! Encourage higher spending and nurture loyalty by offering enticing free gifts upon reaching a spending threshold.`,
-      link: "https://www.loom.com/embed/799f5eb9613c41b9a092664f0151d6e0?sid=5820c294-15fb-4628-83cb-b6da0ba8afa1?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
+      link: "https://www.loom.com/embed/778673f56e9c4331bbf372d61b33d5e9?sid=f41c6cc7-480e-48a9-b432-2c3650a1b1fd&hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
     },
     {
       title: "Checkout Survey & Feedback",

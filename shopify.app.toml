@@ -2,7 +2,7 @@
 
 name = "Checkout Extension & Upsells  "
 client_id = "49be3e74c8a62e808de0bbbea1c1d985"
-application_url = "https://chad-invitations-rest-tp.trycloudflare.com"
+application_url = "https://checkout-plus.fly.dev"
 embedded = true
 
 [access_scopes]
@@ -12,9 +12,9 @@ use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
-  "https://chad-invitations-rest-tp.trycloudflare.com/auth/callback",
-  "https://chad-invitations-rest-tp.trycloudflare.com/auth/shopify/callback",
-  "https://chad-invitations-rest-tp.trycloudflare.com/api/auth/callback"
+  "https://checkout-plus.fly.dev/auth/callback",
+  "https://checkout-plus.fly.dev/auth/shopify/callback",
+  "https://checkout-plus.fly.dev/api/auth/callback"
 ]
 
 [webhooks]

@@ -1,6 +1,7 @@
 import shopify from "./shopify.js"
 import { validateWebhookRequest } from "./validateWebhookRequest.js";
 import { DeliveryMethod } from "@shopify/shopify-api";
+import { supabase } from "./supabase/service.js";
 
 export const bodyParserPrewiring = (server, express) => {
   // save a raw (unprocessed) version of 'body' to 'rawBody'
@@ -56,7 +57,11 @@ export const registerCustomWebhooks = {
       deliveryMethod: DeliveryMethod.Http,
       callbackUrl: "/api/webhooks",
       callback: async (topic, shop, body, webhookId) => {
-        console.info('APP Removed.')
+        await supabase
+          .from('gift_discounts')
+          .delete()
+          .eq('shop', shop)
+        console.info('APP Removed**************************************')
       },
     }
   }

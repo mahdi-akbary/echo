@@ -1,6 +1,9 @@
 import { supabase } from "../supabase/service.js";
 
-export default function productApiEndPoints (app, shopify) {
+const DISCOUNT_NAME = "Checkout_Automatic_Gift_Discount"
+const DISCOUNT_TYPE = "DiscountAutomaticApp"
+
+export default function productApiEndPoints(app, shopify) {
     app.get("/api/products", async (req, res) => {
         const { session } = res.locals.shopify;
         try {
@@ -106,7 +109,6 @@ export default function productApiEndPoints (app, shopify) {
                 .select()
                 .eq('shop', session?.shop)
             if (error) throw new Error(error.message)
-            console.log(data[0] || {}, '<<<<<<');
             res.status(200).send(data[0] || {});
         } catch (error) {
             console.error(error)
@@ -118,30 +120,77 @@ export default function productApiEndPoints (app, shopify) {
         const { session } = res.locals.shopify;
 
         try {
-
             const client = new shopify.api.clients.Graphql({ session });
-            const { body: { data: { discountAutomaticAppCreate: { automaticAppDiscount } } } } = await createDiscount(client)
-            if (automaticAppDiscount == null) {
-                throw new Error(`Can't create discount on shopify!`);
-            }
-            const { data, error } = await supabase
-                .from('gift_discounts')
-                .insert({
-                    shop: session?.shop,
-                    amount: body?.amount,
-                    discount_id: automaticAppDiscount.discountId
-                })
-                .select()
-            if (error) throw new Error(error.message)
+            const { body: { data: { discountNodes: { edges } } } } =
+                await queryAutomaticDiscountAppGraphql(client)
 
+            let isAutomaticDiscountExistsOnShopify = false
+            let existingAutomaticDiscountId = null
+            edges.forEach(edge => {
+                const { node: { discount: { status, title, __typename: type }, id } } = edge
+                if (title === DISCOUNT_NAME) {
+                    isAutomaticDiscountExistsOnShopify = true
+                    existingAutomaticDiscountId = id
+                }
+            });
+
+            let discountData = {
+                shop: session.shop,
+                amount: body?.amount,
+                discountId: existingAutomaticDiscountId
+            }
+
+            if (!isAutomaticDiscountExistsOnShopify && existingAutomaticDiscountId == null) {
+                const { body: { data: { discountAutomaticAppCreate: { automaticAppDiscount, userErrors } } } } =
+                    await createDiscountGraphQl(client)
+
+                if (automaticAppDiscount == null) {
+                    throw new Error(`Can't create discount on shopify! ` + userErrors.message);
+                }
+                discountData.discountId = automaticAppDiscount.discountId
+            }
+
+            const { data, error } = await dbInsertDiscount(discountData)
+            if (error) throw new Error(error.message)
             const giftDiscount = data[0]
-            await setMetaFields(client, automaticAppDiscount.discountId, session?.shop, giftDiscount.amount)
+            await setMetaFields(client, discountData)
             res.status(200).send(giftDiscount);
         } catch (error) {
             console.error(error)
             res.status(500).send(error);
         }
     })
+
+    async function queryAutomaticDiscountAppGraphql(client) {
+        return await client.query({
+            data: ` {
+                discountNodes (first: 10) {
+                    edges {
+                      node {
+                            id
+                            discount {
+                                __typename
+                                ... on DiscountAutomaticApp {
+                                    status
+                                    title
+                                }
+                            }
+                        }
+                    }
+                }
+            }`,
+        });
+    }
+    async function dbInsertDiscount({ shop, amount, discountId }) {
+        return await supabase
+            .from('gift_discounts')
+            .insert({
+                shop: shop,
+                amount: amount,
+                discount_id: discountId
+            })
+            .select()
+    }
 
     app.put("/api/products/discounts/:id", async (req, res) => {
         const body = req.body;
@@ -164,14 +213,14 @@ export default function productApiEndPoints (app, shopify) {
         }
     })
 
-    async function createDiscount (client) {
+    async function createDiscountGraphQl(client) {
         return await client.query({
             data: {
                 query: `mutation {
                     discountAutomaticAppCreate(automaticAppDiscount: {
-                        title: "Gift discount",
+                        title: "${DISCOUNT_NAME}",
                         functionId: "${process.env.SHOPIFY_PRODUCT_DISCOUNT_ID}",
-                        startsAt: "2022-06-22T00:00:00"
+                        startsAt: "${new Date().toISOString()}"
                     }) {
                         automaticAppDiscount {
                             discountId
@@ -185,7 +234,8 @@ export default function productApiEndPoints (app, shopify) {
             },
         })
     }
-    async function setMetaFields (client, discountId, shop, amount = null) {
+
+    async function setMetaFields(client, { shop, amount, discountId }) {
 
         const { data, error } = await supabase
             .from('gift_products')

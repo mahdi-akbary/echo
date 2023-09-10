@@ -83,7 +83,7 @@ function App() {
   }
 
   return <>
-  <Heading>{ bannerTitle }</Heading>
+  { variants.length > 0 && <Heading>{ bannerTitle }</Heading> }
   <BlockSpacer />
 
   <BlockStack columns={'10%'}>

@@ -13,3 +13,10 @@ target = "purchase.checkout.block.render"
 network_access = true
 block_progress = true
 api_access = true
+
+[extensions.settings]
+[[extensions.settings.fields]]
+key = "title"
+type = "single_line_text_field"
+name = "Title"
+description = "Eg: You might also like"

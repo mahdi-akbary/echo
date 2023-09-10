@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import {
+  useSettings,
   InlineLayout,
   View,
   Banner,
@@ -14,7 +15,8 @@ import {
   useApi,
   BlockStack,
   useTotalAmount,
-  reactExtension
+  reactExtension,
+  Heading,
 } from '@shopify/ui-extensions-react/checkout';
 
 export default reactExtension("purchase.checkout.block.render", () => <App />);
@@ -26,6 +28,10 @@ function App() {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(null);
   const { currencyCode } = useTotalAmount();
+
+  const { title } = useSettings();
+  const bannerTitle = title || "Exclusive Gift with Purchase";
+
 
   useEffect(async () => {
     const token = await sessionToken.get();
@@ -75,7 +81,11 @@ function App() {
     }
   }
 
-  return <BlockStack columns={'10%'}>
+  return <>
+  <Heading>{ bannerTitle }</Heading>
+  <BlockSpacer />
+
+  <BlockStack columns={'10%'}>
     {
       variants.map(v => <InlineLayout blockAlignment="center" spacing="base" padding="base" cornerRadius="base" border="dotted" columns={['15%', 'fill', '30%']} key={v.id}>
         <View
@@ -96,6 +106,7 @@ function App() {
         </View>
       </InlineLayout>)
     }
+
     {error &&
       <View>
         <BlockSpacer spacing="extraTight" />
@@ -103,5 +114,6 @@ function App() {
       </View>
     }
   </BlockStack>
+  </>
 
 }

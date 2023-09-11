@@ -37,7 +37,7 @@ export const BILLING_PLANS = [
         name: "Premium",
         id: "premium",
         subheader: "Most popular",
-        amount: 59,
+        amount: 99,
         currencyCode: "USD",
         interval: BillingInterval.Every30Days,
         description: "For large businesses",

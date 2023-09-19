@@ -1,6 +1,6 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-name = "Checkout Extension & Upsells  "
+name = "Echo: Checkout Personalisation"
 client_id = "49be3e74c8a62e808de0bbbea1c1d985"
 application_url = "https://checkout-plus.fly.dev"
 embedded = true
@@ -27,7 +27,3 @@ api_version = "2023-04"
 
 [pos]
 embedded = false
-
-[build]
-automatically_update_urls_on_dev = true
-dev_store_url = "seamless-checkout-extension.myshopify.com"

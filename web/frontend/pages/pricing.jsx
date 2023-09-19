@@ -47,7 +47,6 @@ export default function Pricing () {
 
   const appFeatures = [
     "AI Product Recommendation",
-    "Count Down Timer",
     "Custom Image Banners",
     "Trust Badges",
     "Custom Fields in Checkout",

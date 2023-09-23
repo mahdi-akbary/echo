@@ -40,16 +40,16 @@ function ProductReview() {
     option10,
   } = useSettings();
   const options = [
-    { key: "1", option_name: option1 },
-    { key: "2", option_name: option2 },
-    { key: "3", option_name: option3 },
-    { key: "4", option_name: option4 },
-    { key: "5", option_name: option5 },
-    { key: "6", option_name: option6 },
-    { key: "7", option_name: option7 },
-    { key: "8", option_name: option8 },
-    { key: "9", option_name: option9 },
-    { key: "10", option_name: option10 },
+    { option: "1", option_name: option1 },
+    { option: "2", option_name: option2 },
+    { option: "3", option_name: option3 },
+    { option: "4", option_name: option4 },
+    { option: "5", option_name: option5 },
+    { option: "6", option_name: option6 },
+    { option: "7", option_name: option7 },
+    { option: "8", option_name: option8 },
+    { option: "9", option_name: option9 },
+    { option: "10", option_name: option10 },
   ];
   // Store into local storage if the product was reviewed by the customer.
   const [productReviewed, setProductReviewed] =
@@ -61,7 +61,7 @@ function ProductReview() {
     try {
       const token = await sessionToken.get();
       const selectedOption = options.find(
-        (option) => option.key == productReview
+        (option) => option.option == productReview
       );
       const response = await fetch(`${baseUrl}/api/feedbacks`, {
         method: "POST",
@@ -80,13 +80,13 @@ function ProductReview() {
   }
 
   // Hides the survey if the product has already been reviewed
-  if (productReviewed.loading || productReviewed.data) {
+  if (productReviewed.loading) {
     return null;
   }
 
   return (
     <Survey
-      title={question || "How do you like your purchase?"}
+      title={question || "How do you like your purchase"}
       description={
         question_description ||
         "We would like to learn if you are enjoying your purchase."
@@ -94,6 +94,7 @@ function ProductReview() {
       onSubmit={handleSubmit}
       loading={loading}
       submitText={submitText}
+      isSubmitted={productReviewed.data}
     >
       <ChoiceList
         name="product-review"
@@ -103,7 +104,7 @@ function ProductReview() {
         <BlockStack>
           {options.map((option) =>
             option.option_name ? (
-              <Choice key={option.key} id={option.key}>
+              <Choice key={option.option} id={option.option}>
                 {option.option_name}
               </Choice>
             ) : null
@@ -114,7 +115,7 @@ function ProductReview() {
   );
 }
 
-function Survey({ title, description, onSubmit, children, loading, submitText }) {
+function Survey({ title, description, onSubmit, children, loading, submitText, isSubmitted }) {
   const [submitted, setSubmitted] = useState(false);
 
   async function handleSubmit() {
@@ -122,7 +123,7 @@ function Survey({ title, description, onSubmit, children, loading, submitText })
     setSubmitted(true);
   }
 
-  if (submitted) {
+  if (submitted || isSubmitted) {
     return (
       <View border="base" padding="base" borderRadius="base">
         <BlockStack>

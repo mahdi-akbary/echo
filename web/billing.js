@@ -79,14 +79,12 @@ export const billingApiEndPoints = (app, shopify) => {
         try {
             const { id } = req.body
             const { name: planName, amount: planAmount } = BILLING_PLANS.find((plan) => plan.id == id);
-
             if (planAmount === 0) return res.status(200).send({ url: null })
-
             const session = res.locals.shopify.session
             const url = await shopify.api.billing.request({
                 session,
                 plan: planName,
-                isTest: !!process.env.TESTMODE,
+                isTest: process.env.TESTMODE === 'true',
             });
             res.status(200).send({ redirectUrl: url });
         } catch (e) {

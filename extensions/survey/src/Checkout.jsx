@@ -37,16 +37,16 @@ function Attribution() {
     option10,
   } = useSettings();
   const options = [
-    { key: "1", option_name: option1 },
-    { key: "2", option_name: option2 },
-    { key: "3", option_name: option3 },
-    { key: "4", option_name: option4 },
-    { key: "5", option_name: option5 },
-    { key: "6", option_name: option6 },
-    { key: "7", option_name: option7 },
-    { key: "8", option_name: option8 },
-    { key: "9", option_name: option9 },
-    { key: "10", option_name: option10 },
+    { option: "1", option_name: option1 },
+    { option: "2", option_name: option2 },
+    { option: "3", option_name: option3 },
+    { option: "4", option_name: option4 },
+    { option: "5", option_name: option5 },
+    { option: "6", option_name: option6 },
+    { option: "7", option_name: option7 },
+    { option: "8", option_name: option8 },
+    { option: "9", option_name: option9 },
+    { option: "10", option_name: option10 },
   ];
   const [loading, setLoading] = useState(false);
   // Store into local storage if the attribution survey was completed by the customer.
@@ -60,7 +60,7 @@ function Attribution() {
     try {
       const token = await sessionToken.get();
       const selectedOption = options.find(
-        (option) => option.key == attribution
+        (option) => option.option == attribution
       );
       const response = await fetch(`${baseUrl}/api/surveys`, {
         method: "POST",
@@ -79,7 +79,7 @@ function Attribution() {
   }
 
   // Hides the survey if the attribution has already been submitted
-  if (attributionSubmitted.loading || attributionSubmitted.data === true) {
+  if (attributionSubmitted.loading ) {
     return null;
   }
 
@@ -89,6 +89,7 @@ function Attribution() {
       onSubmit={handleSubmit}
       loading={loading}
       submitText={submitText}
+      isSubmitted={attributionSubmitted.data === true}
     >
       <ChoiceList
         name="sale-attribution"
@@ -98,7 +99,7 @@ function Attribution() {
         <BlockStack>
           {options.map((option) =>
             option.option_name ? (
-              <Choice key={option.key} id={option.key}>
+              <Choice key={option.option} id={option.option}>
                 {option.option_name}
               </Choice>
             ) : null
@@ -116,6 +117,7 @@ function Survey({
   children,
   loading,
   submitText,
+  isSubmitted
 }) {
   const [submitted, setSubmitted] = useState(false);
 
@@ -124,7 +126,7 @@ function Survey({
     setSubmitted(true);
   }
 
-  if (submitted) {
+  if (submitted || isSubmitted) {
     return (
       <View border="base" padding="base" borderRadius="base">
         <BlockStack>

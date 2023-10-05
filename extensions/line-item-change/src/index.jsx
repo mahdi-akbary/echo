@@ -141,7 +141,7 @@ function App() {
                 {/* Display variant selector here */}
                 { true && variants?.length > 1 && (
                   <Select
-                    label="Variants"
+                    label="Variant"
                     value={ currentCartLine.merchandise.id }
                     disabled={loading}
                     onChange={handleVariantChange}

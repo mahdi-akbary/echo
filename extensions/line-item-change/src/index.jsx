@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   reactExtension,
   Button,
@@ -14,17 +14,25 @@ import {
   BlockSpacer,
   BlockStack,
   Divider,
+  Select,
+  useApi,
 } from "@shopify/ui-extensions-react/checkout";
 import { BlockLayout } from "@shopify/ui-extensions/checkout";
 
-export default reactExtension("purchase.checkout.cart-line-item.render-after", () => <App />);
+export default reactExtension(
+  "purchase.checkout.cart-line-item.render-after",
+  () => <App />
+);
 
 function App() {
+  const { query } = useApi();
   const applyCartLinesChange = useApplyCartLinesChange();
   const currentCartLine = useTarget();
-  const [quantity_error, setQuantityError] = useState(null);
-
+  const [quantityError, setQuantityError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [variantError, setVariantError] = useState(null);
+  
+  const [variants, setVariants] = useState(currentCartLine.variants);
 
   const changeCartLine = async (data) => {
     setLoading(true);
@@ -55,13 +63,47 @@ function App() {
     });
   };
 
+  const handleVariantChange = async (value) => {
+    await changeCartLine({
+      type: "updateCartLine",
+      id: currentCartLine.id,
+      merchandiseId: value,
+      quantity: currentCartLine.quantity,
+    });
+  }
+
+  // Use the query to get the product variants based on the product id using the Shopify graphql
+  useEffect(() => {
+    async function getVariants() {
+      const result = await query(
+        `query getVariants($id: ID!) {
+          product(id: $id) {
+            variants(first: 20) {
+              edges {
+                node {
+                  id
+                  title
+                }
+              }
+            }
+          }
+        }`,
+        { 
+          variables: { id: currentCartLine.merchandise?.product?.id }, 
+        }
+      );
+      setVariants(result.data.product.variants.edges);
+    }
+    getVariants();
+  }, [query]);
+
+  
   return (
     <InlineStack spacing="base" blockAlignment="center">
       <Text size="small">Quantity: {currentCartLine.quantity}</Text>
       <Link
         overlay={
           <Popover position="blockEnd">
-            
             <BlockStack padding="base" spacing="base">
               <InlineStack>
                 <View maxInlineSize={200}>
@@ -78,16 +120,17 @@ function App() {
                     disabled={loading}
                     appearance="critical"
                     kind="secondary"
-                    onPress={handleRemoveCartLine}>
+                    onPress={handleRemoveCartLine}
+                  >
                     Remove
                   </Button>
                 </View>
               </InlineStack>
 
-              {quantity_error && (
+              {quantityError && (
                 <View padding="none">
                   <Text appearance="critical" size="small">
-                   {quantity_error}
+                    {quantityError}
                   </Text>
                 </View>
               )}
@@ -95,10 +138,23 @@ function App() {
                 <Divider />
               </View>
               <View>
-                Hello
+                {/* Display variant selector here */}
+                { true && variants?.length > 1 && (
+                  <Select
+                    label="Variants"
+                    value={ currentCartLine.merchandise.id }
+                    disabled={loading}
+                    onChange={handleVariantChange}
+                    options={variants?.map((variant) => {
+                      return {
+                        label: variant.node.title,
+                        value: variant.node.id,
+                      };
+                    })} />
+                )}
+
               </View>
-            </BlockStack>   
-            
+            </BlockStack>
           </Popover>
         }
       >

@@ -12,25 +12,29 @@ import {
   Text,
   Spinner,
   BlockSpacer,
+  BlockStack,
+  Divider,
 } from "@shopify/ui-extensions-react/checkout";
+import { BlockLayout } from "@shopify/ui-extensions/checkout";
 
 export default reactExtension("purchase.checkout.cart-line-item.render-after", () => <App />);
 
 function App() {
   const applyCartLinesChange = useApplyCartLinesChange();
   const currentCartLine = useTarget();
-  const [error, setError] = useState();
+  const [quantity_error, setQuantityError] = useState(null);
+
   const [loading, setLoading] = useState(false);
 
   const changeCartLine = async (data) => {
     setLoading(true);
     const result = await applyCartLinesChange(data);
     if (result.type == "error") {
-      setError(result.message);
+      setQuantityError(result.message);
       setLoading(false);
     }
     if (result.type == "success") {
-      setError(null);
+      setQuantityError(null);
       setLoading(false);
     }
   };
@@ -57,35 +61,44 @@ function App() {
       <Link
         overlay={
           <Popover position="blockEnd">
-            <InlineStack spacing="none">
-              <View maxInlineSize={200} padding="base">
-                <Stepper
-                  min={1}
-                  disabled={loading}
-                  label="Quantity"
-                  value={currentCartLine.quantity}
-                  onChange={handleChange}
-                />
-              </View>
-              <View maxInlineSize={200} padding="base">
-                <Button
-                  disabled={loading}
-                  appearance="critical"
-                  kind="secondary"
-                  onPress={handleRemoveCartLine}
-                >
-                  Remove
-                </Button>
-              </View>
-              {error && (
-                <View>
-                  <BlockSpacer spacing="extraTight" />
-                  <Text appearance="critical" size="small" padding="extraTight">
-                    {error}
+            
+            <BlockStack padding="base" spacing="base">
+              <InlineStack>
+                <View maxInlineSize={200}>
+                  <Stepper
+                    min={1}
+                    disabled={loading}
+                    label="Quantity"
+                    value={currentCartLine.quantity}
+                    onChange={handleChange}
+                  />
+                </View>
+                <View maxInlineSize={200}>
+                  <Button
+                    disabled={loading}
+                    appearance="critical"
+                    kind="secondary"
+                    onPress={handleRemoveCartLine}>
+                    Remove
+                  </Button>
+                </View>
+              </InlineStack>
+
+              {quantity_error && (
+                <View padding="none">
+                  <Text appearance="critical" size="small">
+                   {quantity_error}
                   </Text>
                 </View>
               )}
-            </InlineStack>
+              <View spacing="base">
+                <Divider />
+              </View>
+              <View>
+                Hello
+              </View>
+            </BlockStack>   
+            
           </Popover>
         }
       >

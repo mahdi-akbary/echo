@@ -107,7 +107,6 @@ function App() {
   }, [query]);
 
   let quanityRemoveColums = show_remove_button ? ['auto', '20%'] : ['fill'];
-  console.log('quanityRemoveColums', quanityRemoveColums)
 
   return (
     <InlineStack spacing="base" blockAlignment="center">

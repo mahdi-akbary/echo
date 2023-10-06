@@ -47,7 +47,6 @@ export default function Pricing () {
 
   const appFeatures = [
     "AI Product Recommendation",
-    "Count Down Timer",
     "Custom Image Banners",
     "Trust Badges",
     "Custom Fields in Checkout",
@@ -153,32 +152,12 @@ export default function Pricing () {
                   downgrade at any time. <br /> Based on the number of orders
                   you receive per month, and the features you need.
                 </Text>
-                <Text>
-                  All plans come with a 7-day free trial and includes the following features:
-                </Text>
 
-                {appFeatures.map((feature, index) => (
-                  <HorizontalStack
-                    key={index}
-                    blockAlign="center"
-                    gap="3"
-                    wrap={false}>
-
-                    <Box as="span" width="15px">
-                      <Icon source={CircleTickMajor} color="success" />
-                    </Box>
-                    <Box as="span" width="100%">
-                      <Text>{feature}</Text>
-                    </Box>
-                  </HorizontalStack>
-                ))}
-                
-                
                 <HorizontalStack>{unsubscribeMarkup}</HorizontalStack>
               </VerticalStack>
               <Image
                 source="https://cdn.shopify.com/s/files/1/0725/8836/2008/files/bill.png?v=1685711340"
-                alt="Form postion guide"
+                alt="Billing guide"
                 style={{ width: "90px", height: "90px" }}
               />
             </HorizontalStack>
@@ -269,6 +248,41 @@ export default function Pricing () {
                 </Grid.Cell>
               ))}
           </Grid>
+        </Layout.Section>
+
+        <Layout.Section>
+          <AlphaCard fullWidth>
+            <HorizontalStack align="space-between">
+              <VerticalStack gap="2">
+                <Text variant="headingMd" fontWeight="semibold">
+                  All plans come with a 7-day free trial and includes the following features:
+                </Text>
+
+                {appFeatures.map((feature, index) => (
+                  <HorizontalStack
+                    key={index}
+                    blockAlign="center"
+                    gap="3"
+                    wrap={false}>
+
+                    <Box as="span" width="15px">
+                      <Icon source={CircleTickMajor} color="success" />
+                    </Box>
+                    <Box as="span" width="100%">
+                      <Text>{feature}</Text>
+                    </Box>
+                  </HorizontalStack>
+                ))}
+                
+
+              </VerticalStack>
+              <Image
+                source="https://cdn.shopify.com/s/files/1/0793/1333/8655/files/team-work.png?v=1695088038"
+                alt="Features guide"
+                style={{ width: "90px", height: "90px" }}
+              />
+            </HorizontalStack>
+          </AlphaCard>
         </Layout.Section>
       </Layout>
     </Page>

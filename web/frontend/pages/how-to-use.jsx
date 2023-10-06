@@ -28,11 +28,11 @@ export default function HowToUse() {
       subTitle: `Personalize the shopping experience and maximize sales with AI-driven suggestions tailored to each customer's preferences.`,
       link: "https://www.loom.com/embed/38115e2140da450ca2cc9098ced024f4?sid=2cb3421d-7171-4733-8905-b6ad9d474d39?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
     },
-    {
-      title: "Count Down Timer",
-      subTitle: `Drive urgency and increase conversions by creating a time-sensitive atmosphere that compels customers to act quickly.`,
-      link: "https://www.loom.com/embed/5bf6cdb4c91b41e08b0325a4b8f3d251?sid=319ff6bb-d44b-420b-8c40-3cb8391ab0ac?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
-    },
+    // {
+    //   title: "Count Down Timer",
+    //   subTitle: `Drive urgency and increase conversions by creating a time-sensitive atmosphere that compels customers to act quickly.`,
+    //   link: "https://www.loom.com/embed/5bf6cdb4c91b41e08b0325a4b8f3d251?sid=319ff6bb-d44b-420b-8c40-3cb8391ab0ac?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true",
+    // },
     {
       title: "Custom Image Banners",
       subTitle: `Captivate shoppers with visually enticing banners showcasing promotions and special offers, enhancing engagement and product visibility.`,

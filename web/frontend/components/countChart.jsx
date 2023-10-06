@@ -32,7 +32,7 @@ export function CountChart () {
         <AlphaCard >
             <VerticalStack gap='1'>
                 <Box padding='2'>
-                    <Text as='h2' variant='headingLg'>Total Adds</Text>
+                    <Text as='h2' variant='headingLg'>Total Add to Cart</Text>
                 </Box>
                 <Box padding='2'>
                     <Text as='h2' variant='headingXl'>{

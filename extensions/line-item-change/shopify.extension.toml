@@ -15,3 +15,23 @@ api_access = true
 module =  "./src/index.jsx"
 target = "purchase.checkout.cart-line-item.render-after"
 
+[extensions.settings]
+
+[[extensions.settings.fields]]
+key = "show_quantity"
+type = "boolean"
+name = "Show quantity"
+description = "User can change line item quantity"
+
+[[extensions.settings.fields]]
+key = "show_remove_button"
+type = "boolean"
+name = "Show remove button"
+description = "User can remove item from the cart"
+
+[[extensions.settings.fields]]
+key = "show_variants"
+type = "boolean"
+name = "Show variants selector"
+description = "User can change line item variants"
+

@@ -16,6 +16,8 @@ import {
   Divider,
   Select,
   useApi,
+  useSettings,
+  InlineLayout,
 } from "@shopify/ui-extensions-react/checkout";
 import { BlockLayout } from "@shopify/ui-extensions/checkout";
 
@@ -26,6 +28,13 @@ export default reactExtension(
 
 function App() {
   const { query } = useApi();
+  let { show_variants, show_quantity, show_remove_button } = useSettings();
+
+  show_quantity = show_quantity === undefined ? true : show_quantity;
+  show_remove_button = show_remove_button === undefined ? true : show_remove_button;
+  show_variants = show_variants === undefined ? true : show_variants;
+
+
   const applyCartLinesChange = useApplyCartLinesChange();
   const currentCartLine = useTarget();
   const [quantityError, setQuantityError] = useState(null);
@@ -97,35 +106,71 @@ function App() {
     getVariants();
   }, [query]);
 
-  
+  let quanityRemoveColums = show_remove_button ? ['auto', '20%'] : ['fill'];
+  console.log('quanityRemoveColums', quanityRemoveColums)
+
   return (
     <InlineStack spacing="base" blockAlignment="center">
       <Text size="small">Quantity: {currentCartLine.quantity}</Text>
       <Link
         overlay={
-          <Popover position="blockEnd">
+          <Popover position="blockEnd" minInlineSize={240}>
             <BlockStack padding="base" spacing="base">
-              <InlineStack>
-                <View maxInlineSize={200}>
-                  <Stepper
-                    min={1}
-                    disabled={loading}
-                    label="Quantity"
-                    value={currentCartLine.quantity}
-                    onChange={handleChange}
-                  />
+              
+              {/* Display quantity selector here */}
+              { show_quantity && (
+                <InlineLayout columns={ quanityRemoveColums } spacing="base">
+                  <View maxInlineSize={ (show_remove_button) ? 170 : '' }>
+                    <Stepper
+                      min={1} 
+                      disabled={loading}
+                      label="Quantity"
+                      value={currentCartLine.quantity}
+                      onChange={handleChange}
+                    />
                 </View>
-                <View maxInlineSize={200}>
-                  <Button
-                    disabled={loading}
-                    appearance="critical"
-                    kind="secondary"
-                    onPress={handleRemoveCartLine}
-                  >
-                    Remove
-                  </Button>
-                </View>
-              </InlineStack>
+                { show_remove_button && (
+                  <View>
+                    <Button
+                      disabled={loading}
+                      appearance="critical"
+                      kind="secondary"
+                      onPress={handleRemoveCartLine}
+                    >
+                      Remove
+                    </Button>
+                  </View>
+                )}
+              </InlineLayout>
+              )}
+              
+              {/* Display variant selector here */}
+                { show_variants && variants?.length > 1 && (
+                  <>
+                    { show_quantity && <View spacing="base"> <Divider /> </View> }
+                      <View>
+                        <Select
+                          label="Variant"
+                          value={ currentCartLine.merchandise.id }
+                          disabled={loading}
+                          onChange={handleVariantChange}
+                          options={variants?.map((variant) => {
+                            return {
+                              label: variant.node.title,
+                              value: variant.node.id,
+                            };
+                          })} />
+                      </View>
+                  </>
+                )}
+
+              {/* Future task */}
+
+              {/* <View spacing="base">
+                <Divider />
+              </View>
+               */}
+              {/* Display subscription upgrade button */}
 
               {quantityError && (
                 <View padding="none">
@@ -134,26 +179,8 @@ function App() {
                   </Text>
                 </View>
               )}
-              <View spacing="base">
-                <Divider />
-              </View>
-              <View>
-                {/* Display variant selector here */}
-                { true && variants?.length > 1 && (
-                  <Select
-                    label="Variant"
-                    value={ currentCartLine.merchandise.id }
-                    disabled={loading}
-                    onChange={handleVariantChange}
-                    options={variants?.map((variant) => {
-                      return {
-                        label: variant.node.title,
-                        value: variant.node.id,
-                      };
-                    })} />
-                )}
 
-              </View>
+
             </BlockStack>
           </Popover>
         }

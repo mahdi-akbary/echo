@@ -25,6 +25,7 @@ export default function brandingApiEndPoints (app, shopify) {
       res.status(500).send(error);
     }
   })
+  
   app.post("/api/branding", async (req, res) => {
     const body = req.body;
     const { session } = res.locals.shopify;
@@ -215,13 +216,8 @@ export default function brandingApiEndPoints (app, shopify) {
                             base
                             large
                           }
-                          colorPalette {
-                            # This property group applies to the body background
-                            # (For example, the checkout loading page or payment processing page)
-                            canvas {
-                              background
-                              foreground
-                            }
+                          colors {
+
                             # This property group applies to the main checkout form
                             color1 {
                               background

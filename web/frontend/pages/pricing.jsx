@@ -60,7 +60,7 @@ export default function Pricing () {
   const loadingMarkup = (
     <>
       <Loading />
-      <Grid.Cell columnSpan={{ xs: 4, sm: 4, md: 2, lg: 4 }}>
+      <Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3 }}>
         <AlphaCard padding="8" background="">
           <VerticalStack gap="4">
             <SkeletonBodyText />
@@ -70,7 +70,7 @@ export default function Pricing () {
           </VerticalStack>
         </AlphaCard>
       </Grid.Cell>
-      <Grid.Cell columnSpan={{ xs: 4, sm: 4, md: 2, lg: 4 }}>
+      <Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3 }}>
         <AlphaCard padding="8" background="">
           <VerticalStack gap="4">
             <SkeletonBodyText />
@@ -80,7 +80,7 @@ export default function Pricing () {
           </VerticalStack>
         </AlphaCard>
       </Grid.Cell>
-      <Grid.Cell columnSpan={{ xs: 4, sm: 4, md: 2, lg: 4 }}>
+      <Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3 }}>
         <AlphaCard padding="8" background="">
           <VerticalStack gap="4">
             <SkeletonBodyText />
@@ -164,14 +164,12 @@ export default function Pricing () {
           </AlphaCard>
         </Layout.Section>
         <Layout.Section>
-          <Grid>
+          <Grid columns={{xs: 1, sm: 2, md: 3, lg: 3, xl: 3 }}>
             {isLoading
               ? loadingMarkup
               : BILLING_PLANS?.map((plan, index) => (
                 <Grid.Cell
-                  key={index}
-                  columnSpan={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 4 }}
-                >
+                  key={index}>
                   <AlphaCard
                     background={
                       currentBilling?.name === plan.name ||
@@ -252,7 +250,7 @@ export default function Pricing () {
 
         <Layout.Section>
           <AlphaCard fullWidth>
-            <HorizontalStack align="space-between">
+            <HorizontalStack align="space-between" gap="3">
               <VerticalStack gap="2">
                 <Text variant="headingMd" fontWeight="semibold">
                   All plans come with a 7-day free trial and includes the following features:

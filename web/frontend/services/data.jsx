@@ -18,5 +18,9 @@ export const navStructure = [
     {
         label: "How to use",
         destination: "/how-to-use",
+    },
+    {
+        label: "Contact us",
+        destination: "/contact-us",
     }
 ];

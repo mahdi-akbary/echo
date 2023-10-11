@@ -16,6 +16,7 @@ import { useState, useEffect } from "react";
 // Work in progress
 export function CheckoutCustomization() {
     const fetch = useAuthenticatedFetch();
+    
     const [isLoading, setIsLoading] = useState(true);
     
     return (

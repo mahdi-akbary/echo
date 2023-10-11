@@ -16,6 +16,7 @@ import {
   ChoiceList,
   Badge,
   Tabs,
+  Grid,
 } from "@shopify/polaris";
 import {
   useAuthenticatedFetch,
@@ -108,22 +109,13 @@ export default function Branding () {
   console.log('activeProfile', activeProfile);
 
   const loadingMarkup = (
-    <>
+    <div style={{ padding: "2rem 1rem" }}>
       <Loading />
       <HorizontalStack align="space-between">
-        {[1, 2, 3].map((id) => <Box key={id} width="32%">
-          <AlphaCard>
-            <VerticalStack gap="4">
-              <SkeletonBodyText />
-              <SkeletonBodyText />
-              <SkeletonBodyText />
-              <SkeletonBodyText />
-              <SkeletonBodyText />
-            </VerticalStack>
-          </AlphaCard>
-        </Box>)}
+        <SkeletonBodyText />
+        <SkeletonBodyText />
       </HorizontalStack>
-    </>
+    </div>
   );
 
   const handleSubmit = async () => {
@@ -249,14 +241,24 @@ export default function Branding () {
 
         <Layout.Section>
           <Tabs tabs={settingTabs} selected={selectedTab} onSelect={handleTabChange}></Tabs>
+          
+          {/* If still loading hide the settings and show placholder */}
 
-          {selectedTab === 0 ? 
-            <CheckoutCustomization></CheckoutCustomization>
-          : null }  
+          { isLoadingProfile || isRefetchingProfile ? (
+            loadingMarkup
+          ) : (
+            <>
 
-          {selectedTab === 1 ? 
-            <DesignSystem></DesignSystem>
-          : null }        
+            { selectedTab === 0 ? 
+              <CheckoutCustomization></CheckoutCustomization>
+            : null }  
+            {selectedTab === 1 ? 
+              <DesignSystem></DesignSystem>
+            : null }        
+          
+            </>
+          )}
+
           
         </Layout.Section>
 

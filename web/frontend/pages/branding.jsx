@@ -44,7 +44,6 @@ export default function Branding () {
   const [selectedTab, setSelectedTab] = useState(0);
 
   const handleChange = useCallback((value) => {
-    console.log('value', value);
     setSelected(value)
     refetchProductProfile();
 
@@ -105,8 +104,7 @@ export default function Branding () {
     [],
   );
 
-
-  console.log('activeProfile', activeProfile);
+//   console.log('activeProfile', activeProfile);
 
   const loadingMarkup = (
     <div style={{ padding: "2rem 1rem" }}>
@@ -250,7 +248,7 @@ export default function Branding () {
             <>
 
             { selectedTab === 0 ? 
-              <CheckoutCustomization></CheckoutCustomization>
+              <CheckoutCustomization activeProfile={activeProfile} handleDataChange={handleDataChange}></CheckoutCustomization>
             : null }  
             {selectedTab === 1 ? 
               <DesignSystem></DesignSystem>

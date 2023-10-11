@@ -39,7 +39,7 @@ export default function brandingApiEndPoints (app, shopify) {
     }
   })
 
-  async function upsert (client, data) {
+  async function upsert (client, profileData) {
     return await client.query({
       data: {
         "query": `mutation checkoutBrandingUpsert($checkoutBrandingInput: CheckoutBrandingInput!, $checkoutProfileId: ID!) {
@@ -52,97 +52,13 @@ export default function brandingApiEndPoints (app, shopify) {
                             base
                             large
                           }
-                          colorPalette {
-                            # This property group applies to the body background
-                            # (For example, the checkout loading page or payment processing page)
-                            canvas {
-                              background
-                              foreground
-                            }
-                            # This property group applies to the main checkout form
-                            color1 {
-                              background
-                              foreground
-                            }
-                            # This property group applies to the order summary
-                            color2 {
-                              background
-                              foreground
-                            }
-                            # This property group applies to the primary button
-                            primary {
-                              accent
-                              foreground
-                              background
-                            }
-                            # This property group applies to the color of links and interactive components
-                            interactive {
-                              accent
-                              foreground
-                              background
-                            }
-                          }
-                          # This property group applies to global typography font faces, sizes, and weights
-                          typography {
-                            size {
-                              base
-                              ratio
-                            }
-                            primary {
-                              base {
-                                sources
-                                weight
-                              }
-                            }
-                            secondary {
-                              base {
-                                sources
-                                weight
-                              }
-                            }
-                          }
                         }
+
                         customizations {
-                        # This property group applies globally to all instances of the inner properties
-                          global {
-                            cornerRadius
-                            typography {
-                              letterCase
-                            }
-                          }
                           # This property group applies to the header layout containing your brand's name and logo
                           header {
                               alignment
                               position
-                          }
-                          # headingLevel property groups apply to the full heirarchy of headings in checkout
-                          headingLevel1 {
-                            typography {
-                              weight
-                              font
-                              letterCase
-                              size
-                            }
-                          }
-                          headingLevel2 {
-                            typography {
-                              weight
-                              font
-                              letterCase
-                              size
-                            }
-                          }
-                          # This property group applies to the look and feel of the primary checkout call-to-action
-                          primaryButton {
-                            cornerRadius
-                            typography {
-                              letterCase
-                              weight
-                              font
-                              size
-                            }
-                            blockPadding
-                            inlinePadding
                           }
                         }
                       }
@@ -152,52 +68,22 @@ export default function brandingApiEndPoints (app, shopify) {
                       }
                     }
                   }`,
+                  
         "variables": {
-          "checkoutProfileId": data?.id,
+          "checkoutProfileId": profileData?.id,
           "checkoutBrandingInput": {
             "designSystem": {
               "cornerRadius": {
                 "small": 3,
                 "base": 5,
                 "large": 30
-              },
-              ...data?.designSystem
+              }
             },
             "customizations": {
-              "global": {
-                "cornerRadius": "NONE",
-                "typography": {
-                  "letterCase": "NONE"
-                }
-              },
-              "headingLevel1": {
-                "typography": {
-                  "weight": "BOLD",
-                  "font": "SECONDARY",
-                  "letterCase": "LOWER",
-                  "size": "EXTRA_LARGE"
-                }
-              },
-              "headingLevel2": {
-                "typography": {
-                  "size": "EXTRA_SMALL",
-                  "kerning": "LOOSE",
-                  "letterCase": "UPPER",
-                  "font": "PRIMARY"
-                }
-              },
-              "primaryButton": {
-                "cornerRadius": "NONE",
-                "typography": {
-                  "letterCase": "UPPER",
-                  "weight": "BASE",
-                  "font": "SECONDARY",
-                  "size": "MEDIUM"
-                },
-                "blockPadding": "TIGHT",
-                "inlinePadding": "BASE"
-              },
-              ...data?.customizations
+              "header": {
+                "alignment": profileData?.customizations.header?.alignment,
+                "position": profileData?.customizations.header?.position
+              }
             }
           }
         },
@@ -270,8 +156,8 @@ export default function brandingApiEndPoints (app, shopify) {
                   customizations {
                     header{
                       alignment
+                      position
                     }
-                    
                   }
               }
           }

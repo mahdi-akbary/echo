@@ -1,5 +1,5 @@
 import { 
-    Banner, 
+    Select, 
     Box,
     Button,
     Text,
@@ -14,9 +14,10 @@ import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 import { useState, useEffect } from "react";
 
 // Work in progress
-export function CheckoutCustomization() {
+export function CheckoutCustomization({activeProfile = null, handleDataChange}) {
     const fetch = useAuthenticatedFetch();
-    
+    console.log('inside profile: ', activeProfile);
+
     const [isLoading, setIsLoading] = useState(true);
     
     return (
@@ -30,7 +31,7 @@ export function CheckoutCustomization() {
                     <Grid.Cell gap="2" columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
                         <VerticalStack gap="2">
                             <Text as="h3" variant="headingMd">
-                                Checkout Customization
+                               Checkout header
                             </Text>
 
                             <Text as='p' variant="bodyMd">
@@ -42,10 +43,29 @@ export function CheckoutCustomization() {
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
 
                         <AlphaCard title="Orders" sectioned>
-                            <p>View a summary of your online store’s orders.</p>
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis voluptatibus nisi sit facere ratione, aliquam repellat modi, impedit sequi unde iusto. Est tempora ea veniam modi corrupti sequi deserunt rem.
-                            </p>
+                        <Select
+                            label="Alignment"
+                            options={[
+                                { label: "Default", value: null },
+                                { label: "Start", value: "START" },
+                                { label: "Center", value: "CENTER" },
+                                { label: "End", value: "END" },
+                            ]}
+                            selected={activeProfile?.customizations?.header?.alignment}
+                            onChange={(value) => {
+                                const temp = activeProfile;
+                                temp.customizations = {
+                                    ...temp?.customizations,
+                                    header: {
+                                    ...temp?.customizations?.header,
+                                    alignment: value,
+                                    },
+                                };
+                                handleDataChange(temp); 
+                            }}
+                            value={activeProfile?.customizations?.header?.alignment}
+                        />
+                           
                         </AlphaCard>
                     </Grid.Cell>
                     

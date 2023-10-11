@@ -30,6 +30,7 @@ import { useAppQuery } from "../hooks";
 import { ColorPickerInput } from "../components";
 import { FONTS } from "../components/fonts";
 import { CheckoutCustomization } from "../components/CheckoutCustomization";
+import { DesignSystem } from "../components/DesignSystem";
 
 
 export default function Branding () {
@@ -251,9 +252,12 @@ export default function Branding () {
 
           {selectedTab === 0 ? 
             <CheckoutCustomization></CheckoutCustomization>
-          : null }          
-          
+          : null }  
 
+          {selectedTab === 1 ? 
+            <DesignSystem></DesignSystem>
+          : null }        
+          
         </Layout.Section>
 
         

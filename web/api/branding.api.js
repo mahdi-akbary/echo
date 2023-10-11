@@ -211,96 +211,67 @@ export default function brandingApiEndPoints (app, shopify) {
           query {
               checkoutBranding(checkoutProfileId: "${profileId}") {
                   designSystem { 
-                        cornerRadius {
-                            small
-                            base
-                            large
-                          }
-                          colors {
+                    # This property group applies to global corner radius token values
+                    cornerRadius {
+                      small
+                      base
+                      large
+                    }
 
-                            # This property group applies to the main checkout form
-                            color1 {
-                              background
-                              foreground
-                            }
-                            # This property group applies to the order summary
-                            color2 {
-                              background
-                              foreground
-                            }
-                            # This property group applies to the primary button
-                            primary {
-                              accent
-                              foreground
-                              background
-                            }
-                            # This property group applies to the color of links and interactive components
-                            interactive {
-                              accent
-                              foreground
-                              background
-                            }
+                    colors {
+                      global {
+                        # This global accent property applies to the color of all links and interactive components
+                        accent
+                      }
+                      schemes {
+                        # This color scheme applies to the main checkout form
+                        scheme1 {
+                          base {
+                            background
+                            text
                           }
-                          # This property group applies to global typography font faces, sizes, and weights
-                          typography {
-                            size {
-                              base
-                              ratio
-                            }
-                            primary {
-                                name
-                            }
-                            secondary {
-                                name
-                            }
+                          # This color group applies to primary buttons within this color scheme
+                          primaryButton {
+                            background
+                            text
+                            accent
                           }
+                        }
+                        # This color scheme applies to the order summary
+                        scheme2 {
+                          base {
+                            background
+                            text
+                          }
+                        }
+                      }
+                    }
+
+                    # This property group applies to global typography font faces, sizes, and weights
+                    typography {
+                      size {
+                        base
+                        ratio
+                      }
+                      primary {
+                        base {
+                          sources
+                          weight
+                        }
+                      }
+                      secondary {
+                        base {
+                          sources
+                          weight
+                        }
+                      }
+                    }
                   }
-                customizations {
-                  # This property group applies globally to all instances of the inner properties
-                    global {
-                      cornerRadius
-                      typography {
-                        letterCase
-                      }
+                  customizations {
+                    header{
+                      alignment
                     }
-                    # This property group applies to the header layout containing your brand's name and logo
-                    header {
-                        alignment
-                        position
-                    }
-                    # headingLevel property groups apply to the full heirarchy of headings in checkout
-                    headingLevel1 {
-                      typography {
-                        weight
-                        font
-                        letterCase
-                        size
-                      }
-                    }
-                    headingLevel2 {
-                      typography {
-                        weight
-                        font
-                        letterCase
-                        size
-                      }
-                    }
-                    # This property group applies to the look and feel of the primary checkout call-to-action
-                    primaryButton {
-                      cornerRadius
-                      typography {
-                        letterCase
-                        weight
-                        font
-                        size
-                      }
-                      blockPadding
-                      inlinePadding
-                    }
-                    control{
-                      cornerRadius
-                      color
-                    }
+                    
                   }
               }
           }

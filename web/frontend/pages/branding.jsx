@@ -15,6 +15,7 @@ import {
   Image,
   ChoiceList,
   Badge,
+  Tabs,
 } from "@shopify/polaris";
 import {
   useAuthenticatedFetch,
@@ -28,6 +29,8 @@ import { Redirect } from "@shopify/app-bridge/actions";
 import { useAppQuery } from "../hooks";
 import { ColorPickerInput } from "../components";
 import { FONTS } from "../components/fonts";
+import { CheckoutCustomization } from "../components/CheckoutCustomization";
+
 
 export default function Branding () {
   const fetch = useAuthenticatedFetch();
@@ -36,16 +39,20 @@ export default function Branding () {
   const [hasChange, setHasChange] = useState(false);
 
   const [selected, setSelected] = useState(undefined);
+  const [selectedTab, setSelectedTab] = useState(0);
 
   const handleChange = useCallback((value) => {
+    console.log('value', value);
     setSelected(value)
-    refetchProductProfile()
+    refetchProductProfile();
+
   }, []);
 
   const handleDataChange = (value) => {
     setHasChange(true);
     setData({ ...data, ...value });
   };
+
 
   const {
     data: activeProfile,
@@ -76,6 +83,28 @@ export default function Branding () {
       },
     },
   });
+
+  const settingTabs = [
+    {
+      id: 'customization-1',
+      content: 'Customization',
+      accessibilityLabel: 'Customization',
+      panelID: 'customization-content-1',
+    },
+    {
+      id: 'Design-system-1',
+      content: 'Design system',
+      panelID: 'Design-system-content-1',
+    }
+  ];
+
+  const handleTabChange = useCallback(
+    (selectedTabIndex) => setSelectedTab(selectedTabIndex),
+    [],
+  );
+
+
+  console.log('activeProfile', activeProfile);
 
   const loadingMarkup = (
     <>
@@ -148,7 +177,7 @@ export default function Branding () {
             },
           ]}
         >
-          <Modal.Section>
+        <Modal.Section>
             <Box background="bg-warning" padding="1">
               <Text variant="headingMd">
                 It's your Active checkout, the changes will take effect immediately.
@@ -218,8 +247,16 @@ export default function Branding () {
         </Layout.Section>
 
         <Layout.Section>
+          <Tabs tabs={settingTabs} selected={selectedTab} onSelect={handleTabChange}></Tabs>
+
+          {selectedTab === 0 ? 
+            <CheckoutCustomization></CheckoutCustomization>
+          : null }          
           
+
         </Layout.Section>
+
+        
       </Layout>
     </>
   );

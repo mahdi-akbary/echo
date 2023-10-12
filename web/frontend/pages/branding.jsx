@@ -276,7 +276,10 @@ export default function Branding () {
           disabled: isLoading,
         }}
         discardAction={{
-          onAction: () => setHasChange(false),
+          onAction: () => {
+            setHasChange(false);
+            refetchProductProfile();
+          }
         }}
       />
       {false ? (

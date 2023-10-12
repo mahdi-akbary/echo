@@ -16,13 +16,9 @@ import { useState, useEffect } from "react";
 
 // Work in progress
 export function CheckoutCustomization({activeProfile = null, handleDataChange}) {
-    const fetch = useAuthenticatedFetch();
     console.log('inside profile: ', activeProfile);
-
-    const [isLoading, setIsLoading] = useState(true);
     
     return (
-        
         <div style={{
             padding: '2rem 1rem',
             }}>

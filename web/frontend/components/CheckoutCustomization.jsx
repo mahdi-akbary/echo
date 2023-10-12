@@ -99,40 +99,67 @@ export function CheckoutCustomization({activeProfile = null, handleDataChange}) 
                     <Grid.Cell gap="2" columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
                         <VerticalStack gap="2">
                             <Text as="h3" variant="headingMd">
-                               Checkout header
+                               Header
                             </Text>
 
                             <Text as='p' variant="bodyMd">
-                                A way of making the checkout page look nice and easy to use. You can change the colors, fonts, and shapes of the things on the page.
+                                Change the header alignment and position.
                             </Text>
                         </VerticalStack>
                     </Grid.Cell>
 
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
                         <AlphaCard title="Orders" sectioned>
-                        <Select
-                            label="Alignment"
-                            options={[
-                                { label: "Default", value: null },
-                                { label: "Start", value: "START" },
-                                { label: "Center", value: "CENTER" },
-                                { label: "End", value: "END" },
-                            ]}
-                            selected={activeProfile?.customizations?.header?.alignment}
-                            onChange={(value) => {
-                                const temp = activeProfile;
-                                temp.customizations = {
-                                    ...temp?.customizations,
-                                    header: {
-                                    ...temp?.customizations?.header,
-                                    alignment: value,
-                                    },
-                                };
-                                handleDataChange(temp); 
-                            }}
-                            value={activeProfile?.customizations?.header?.alignment}
-                        />
-                           
+                            <FormLayout>
+                                <Select
+                                    label="Alignment"
+                                    options={[
+                                        { label: "Default", value: null },
+                                        { label: "Start", value: "START" },
+                                        { label: "Center", value: "CENTER" },
+                                        { label: "End", value: "END" },
+                                    ]}
+                                    selected={activeProfile?.customizations?.header?.alignment}
+                                    onChange={(value) => {
+                                        const temp = activeProfile;
+                                        temp.customizations = {
+                                            ...temp?.customizations,
+                                            header: {
+                                            ...temp?.customizations?.header,
+                                            alignment: value,
+                                            },
+                                        };
+                                        handleDataChange(temp); 
+                                    }}
+                                    value={activeProfile?.customizations?.header?.alignment}
+                                />
+
+                                <Select
+                                    label="Position"
+                                    options={[
+                                        { label: "Full width", value: "START" },
+                                        {
+                                            label: "Order summary",
+                                            value: "INLINE_SECONDARY",
+                                        },
+                                        { label: "Checkout form", value: "INLINE" },
+                                    ]}
+                                    onChange={(value) => {
+                                        const temp = activeProfile;
+                                        temp.customizations = {
+                                            ...temp?.customizations,
+                                            header: {
+                                            ...temp?.customizations?.header,
+                                            position: value,
+                                            },
+                                        };
+                                        handleDataChange(temp);
+                                        }}
+                                    value={activeProfile?.customizations?.header?.position}
+                                />
+                                
+
+                            </FormLayout>
                         </AlphaCard>
                     </Grid.Cell>
                     

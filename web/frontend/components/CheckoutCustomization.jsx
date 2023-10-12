@@ -165,6 +165,74 @@ export function CheckoutCustomization({activeProfile = null, handleDataChange}) 
                     
                 </Grid>
             
+                <Grid columns={{ xs: 1, sm: 3, md: 3, lg: 3, xl: 3 }} gap={2}>
+                    
+                    <Grid.Cell gap="2" columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
+                        <VerticalStack gap="2">
+                            <Text as="h3" variant="headingMd">
+                               Forms and inputs
+                            </Text>
+
+                            <Text as='p' variant="bodyMd">
+                                Change form and input styles.
+                            </Text>
+                        </VerticalStack>
+                    </Grid.Cell>
+
+                    <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
+                        <AlphaCard title="Orders" sectioned>
+                            <FormLayout>
+                            <Select
+                                label="Checkbox corner radius"
+                                options={[
+                                    { label: "None", value: "NONE" },
+                                    { label: "Small", value: "SMALL" },
+                                    { label: "Base", value: "BASE" },
+                                    { label: "Large", value: "LARGE" },
+                                ]}
+                                onChange={(value) => {
+                                    const temp = activeProfile;
+                                    temp.customizations = {
+                                        ...temp?.customizations,
+                                        checkbox: {
+                                        ...temp?.customizations?.checkbox,
+                                            cornerRadius: value,
+                                        },
+                                    };
+                                    handleDataChange(temp);
+                                    }}
+                                value={activeProfile?.customizations?.checkbox?.cornerRadius}
+                            />
+                                
+                            <Select
+                                label="Control border"
+                                helpText="It includes all form elements, such as input, select, checkbox, radio, etc."
+                                options={[
+                                    { label: "None", value: "NONE" },
+                                    { label: "Full", value: "FULL" },
+                                ]}
+                                onChange={(value) => {
+                                    const temp = activeProfile;
+                                    temp.customizations = {
+                                        ...temp?.customizations,
+                                        control: {
+                                        ...temp?.customizations?.control,
+                                            border: value,
+                                        },
+                                    };
+                                    handleDataChange(temp);
+                                    }}
+                                value={activeProfile?.customizations?.control?.border}
+                            />
+                                
+                                
+
+                            </FormLayout>
+                        </AlphaCard>
+                    </Grid.Cell>
+                    
+                </Grid>
+            
             </Grid>
         </div>
        

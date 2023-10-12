@@ -69,7 +69,13 @@ export default function brandingApiEndPoints (app, shopify) {
                             }
                           }
                           # /global
-
+                          # checkbox
+                          checkbox {
+                            cornerRadius
+                          }
+                          control{
+                            border
+                          }
                         }
                       }
                       userErrors {
@@ -98,8 +104,14 @@ export default function brandingApiEndPoints (app, shopify) {
                 }
               },
               "header": {
-                "alignment": profileData?.customizations.header?.alignment,
-                "position": profileData?.customizations.header?.position
+                "alignment": profileData?.customizations?.header?.alignment,
+                "position": profileData?.customizations?.header?.position
+              },
+              "checkbox": {
+                "cornerRadius": profileData?.customizations?.checkbox?.cornerRadius
+              },
+              "control": {
+                "border": profileData?.customizations?.control?.border
               }
             }
           }
@@ -181,6 +193,12 @@ export default function brandingApiEndPoints (app, shopify) {
                     header{
                       alignment
                       position
+                    }
+                    checkbox{
+                      cornerRadius
+                    }
+                    control{
+                      border
                     }
                   }
               }

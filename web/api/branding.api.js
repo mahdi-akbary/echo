@@ -225,6 +225,7 @@ export default function brandingApiEndPoints (app, shopify) {
                         weight
                       }
                     }
+                    
                     checkbox{
                       cornerRadius
                     }

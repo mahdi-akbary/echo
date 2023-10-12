@@ -232,6 +232,131 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             handleDataChange(temp);
                                             }}
                                         value={activeProfile?.customizations?.checkbox?.cornerRadius || ''}/>
+
+                                        <Text variant="headingSm" as="h3">Typography</Text>
+                                        <Select
+                                            label="Font"
+                                            options={[
+                                                { label: "Primary", value: "PRIMARY" },
+                                                { label: "Secondary", value: "SECONDARY" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    textField: {
+                                                    ...temp?.customizations?.textField,
+                                                        typography: {
+                                                            ...temp?.customizations?.textField?.typography,
+                                                            font: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                                }}
+                                            value={activeProfile?.customizations?.textField?.typography?.font || ''}/>
+
+                                        <Select
+                                            label="Letter spacing (kerning)"
+                                            options={[
+                                                { label: "Base", value: "BASE" },
+                                                { label: "Loose", value: "LOOSE" },
+                                                { label: "Extra loose", value: "EXTRA_LOOSE" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    textField: {
+                                                    ...temp?.customizations?.textField,
+                                                        typography: {
+                                                            ...temp?.customizations?.textField?.typography,
+                                                            kerning: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                                }}
+                                            value={activeProfile?.customizations?.textField?.typography?.kerning || ''}/>
+
+                                        <Select
+                                            label="Font size"
+                                            options={[
+                                                { label: "Extra small", value: "EXTRA_SMALL" },
+                                                { label: "Small", value: "SMALL" },
+                                                { label: "Base", value: "BASE" },
+                                                { label: "Medium", value: "MEDIUM" },
+                                                { label: "Large", value: "LARGE" },
+                                                { label: "Extra large", value: "EXTRA_LARGE" },
+                                                { label: "2X Large", value: "EXTRA_EXTRA_LARGE" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    textField: {
+                                                    ...temp?.customizations?.textField,
+                                                        typography: {
+                                                            ...temp?.customizations?.textField?.typography,
+                                                            size: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                                }}
+                                            value={activeProfile?.customizations?.textField?.typography?.size || ''}/>
+
+                                        <Select
+                                            label="Letter case"
+                                            options={[
+                                                { label: "None", value: "NONE" },
+                                                { label: "Lowercase", value: "LOWER" },
+                                                { label: "Titlecase", value: "TITLE" },
+                                                { label: "Uppercase", value: "UPPER" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    textField: {
+                                                    ...temp?.customizations?.textField,
+                                                        typography: {
+                                                            ...temp?.customizations?.textField?.typography,
+                                                            letterCase: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                                }}
+                                            value={activeProfile?.customizations?.textField?.typography?.letterCase || ''}/>
+
+                                        <Select
+                                            label="Font weight"
+                                            options={[
+                                                { label: "Base", value: "BASE" },
+                                                { label: "Bold", value: "BOLD" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    textField: {
+                                                    ...temp?.customizations?.textField,
+                                                        typography: {
+                                                            ...temp?.customizations?.textField?.typography,
+                                                            weight: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                                }}
+                                            value={activeProfile?.customizations?.textField?.typography?.weight || ''}/>
+
                                 </FormLayout>
                             ): null }
 

@@ -60,6 +60,16 @@ export default function brandingApiEndPoints (app, shopify) {
                               alignment
                               position
                           }
+                          # global
+                          global {
+                            cornerRadius
+                            typography {
+                              letterCase
+                              kerning
+                            }
+                          }
+                          # /global
+
                         }
                       }
                       userErrors {
@@ -80,6 +90,13 @@ export default function brandingApiEndPoints (app, shopify) {
               }
             },
             "customizations": {
+              "global": {
+                "cornerRadius": profileData?.customizations.global?.cornerRadius,
+                "typography": {
+                  "letterCase": profileData?.customizations.global?.typography?.letterCase,
+                  "kerning": profileData?.customizations.global?.typography?.kerning
+                }
+              },
               "header": {
                 "alignment": profileData?.customizations.header?.alignment,
                 "position": profileData?.customizations.header?.position
@@ -154,6 +171,13 @@ export default function brandingApiEndPoints (app, shopify) {
                     }
                   }
                   customizations {
+                    global {
+                      cornerRadius
+                      typography {
+                        letterCase
+                        kerning
+                      }
+                    }
                     header{
                       alignment
                       position

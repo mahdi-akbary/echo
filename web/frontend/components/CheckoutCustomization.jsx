@@ -9,6 +9,7 @@ import {
     HorizontalStack,
     Grid,
     VerticalStack,
+    FormLayout,
 } from '@shopify/polaris';
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 import { useState, useEffect } from "react";
@@ -42,29 +43,55 @@ export function CheckoutCustomization({activeProfile = null, handleDataChange}) 
                     </Grid.Cell>
 
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2 }}>
-                        <AlphaCard title="Orders" sectioned>
-                        <Select
-                            label="Alignment"
-                            options={[
-                                { label: "Default", value: null },
-                                { label: "Start", value: "START" },
-                                { label: "Center", value: "CENTER" },
-                                { label: "End", value: "END" },
-                            ]}
-                            selected={activeProfile?.customizations?.header?.alignment}
-                            onChange={(value) => {
-                                const temp = activeProfile;
-                                temp.customizations = {
-                                    ...temp?.customizations,
-                                    header: {
-                                    ...temp?.customizations?.header,
-                                    alignment: value,
-                                    },
-                                };
-                                handleDataChange(temp); 
-                            }}
-                            value={activeProfile?.customizations?.header?.alignment}
-                        />
+                        <AlphaCard title="Global customisation">
+                            <FormLayout>
+                                <Select label="Letter case"
+                                    options={[
+                                        { label: 'None', value: 'NONE' },
+                                        { label: 'Lowercase', value: 'LOWER' },
+                                        { label: 'Titlecase', value: 'TITLE' },
+                                        { label: 'Uppercase', value: 'UPPER' }
+                                    ]}
+                                    onChange={(value) => {
+                                        const temp = activeProfile;
+                                        temp.customizations = {
+                                            ...temp?.customizations,
+                                            global: {
+                                            ...temp?.customizations?.global,
+                                                typography: {
+                                                    ...temp?.customizations?.global?.typography,
+                                                    letterCase: value,
+                                                },
+                                            },
+                                        };
+                                        handleDataChange(temp)
+                                    }}
+                                    value={activeProfile?.customizations?.global?.typography.letterCase}/>
+
+                                <Select label="Letter spacing (kerning)"
+                                    options={[
+                                        { label: 'Base', value: 'BASE' },
+                                        { label: 'Loose', value: 'LOOSE' },
+                                        { label: 'Extra loose', value: 'EXTRA_LOOSE' }
+                                    ]}
+                                    onChange={(value) => {
+                                        const temp = activeProfile;
+                                        temp.customizations = {
+                                            ...temp?.customizations,
+                                            global: {
+                                            ...temp?.customizations?.global,
+                                                typography: {
+                                                    ...temp?.customizations?.global?.typography,
+                                                    kerning: value,
+                                                },
+                                            },
+                                        };
+                                        handleDataChange(temp)
+                                    }}
+                                    value={activeProfile?.customizations?.global?.typography.kerning}
+                                />
+
+                            </FormLayout>
                            
                         </AlphaCard>
                     </Grid.Cell>

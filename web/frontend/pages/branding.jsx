@@ -17,6 +17,7 @@ import {
   Badge,
   Tabs,
   Grid,
+  Toast,
 } from "@shopify/polaris";
 import {
   useAuthenticatedFetch,
@@ -42,6 +43,13 @@ export default function Branding () {
 
   const [selected, setSelected] = useState(undefined);
   const [selectedTab, setSelectedTab] = useState(0);
+  const [toastActive, setToastActive] = useState(false);
+
+  const toggleToastActive = useCallback(
+    () => setToastActive((active) => !active),
+    [],
+  );
+
 
   const handleChange = useCallback((value) => {
     setSelected(value)
@@ -104,6 +112,12 @@ export default function Branding () {
     [],
   );
 
+  // Toaster mockup
+  const toastMarkup = toastActive ? (
+    <Toast content="Changes saved" onDismiss={toggleToastActive} />
+  ) : null;
+
+
 //   console.log('activeProfile', activeProfile);
 
   const loadingMarkup = (
@@ -137,6 +151,7 @@ export default function Branding () {
       const res = await response.json();
       setIsLoading(false);
       setHasChange(false);
+      toggleToastActive();
     }
   };
 
@@ -152,6 +167,7 @@ export default function Branding () {
   const contentMarkup = (
     <>
       <TitleBar title="Branding" primaryAction={null} />
+      {toastMarkup}
       <Layout>
         <Modal
           open={activeCheckoutWarning}

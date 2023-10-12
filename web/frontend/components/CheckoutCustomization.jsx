@@ -15,7 +15,7 @@ import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 import { useState, useEffect } from "react";
 
 // Work in progress
-export function CheckoutCustomization({activeProfile = null, handleDataChange}) {
+export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
     console.log('inside profile: ', activeProfile);
     
     return (
@@ -84,8 +84,7 @@ export function CheckoutCustomization({activeProfile = null, handleDataChange}) 
                                         };
                                         handleDataChange(temp)
                                     }}
-                                    value={activeProfile?.customizations?.global?.typography.kerning}
-                                />
+                                    value={ activeProfile?.customizations?.global?.typography.kerning || ''}/>
 
                             </FormLayout>
                            
@@ -114,7 +113,7 @@ export function CheckoutCustomization({activeProfile = null, handleDataChange}) 
                                 <Select
                                     label="Alignment"
                                     options={[
-                                        { label: "Default", value: null },
+                                        { label: "Default", value: '' },
                                         { label: "Start", value: "START" },
                                         { label: "Center", value: "CENTER" },
                                         { label: "End", value: "END" },
@@ -131,7 +130,7 @@ export function CheckoutCustomization({activeProfile = null, handleDataChange}) 
                                         };
                                         handleDataChange(temp); 
                                     }}
-                                    value={activeProfile?.customizations?.header?.alignment}
+                                    value={activeProfile?.customizations?.header?.alignment || ''}
                                 />
 
                                 <Select
@@ -155,7 +154,7 @@ export function CheckoutCustomization({activeProfile = null, handleDataChange}) 
                                         };
                                         handleDataChange(temp);
                                         }}
-                                    value={activeProfile?.customizations?.header?.position}
+                                    value={activeProfile?.customizations?.header?.position || ''}
                                 />
                                 
 
@@ -201,8 +200,7 @@ export function CheckoutCustomization({activeProfile = null, handleDataChange}) 
                                     };
                                     handleDataChange(temp);
                                     }}
-                                value={activeProfile?.customizations?.checkbox?.cornerRadius}
-                            />
+                                value={activeProfile?.customizations?.checkbox?.cornerRadius || ''}/>
                                 
                             <Select
                                 label="Control border"
@@ -222,11 +220,9 @@ export function CheckoutCustomization({activeProfile = null, handleDataChange}) 
                                     };
                                     handleDataChange(temp);
                                     }}
-                                value={activeProfile?.customizations?.control?.border}
-                            />
+                                value={activeProfile?.customizations?.control?.border || ''}/>
                                 
                                 
-
                             </FormLayout>
                         </AlphaCard>
                     </Grid.Cell>

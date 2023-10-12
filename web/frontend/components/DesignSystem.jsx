@@ -15,8 +15,6 @@ import { useState, useEffect } from "react";
 
 // Work in progress
 export function DesignSystem() {
-    const fetch = useAuthenticatedFetch();
-    const [isLoading, setIsLoading] = useState(true);
     
     return (
         

@@ -10,6 +10,7 @@ import {
     Grid,
     VerticalStack,
     FormLayout,
+    Tabs
 } from '@shopify/polaris';
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 import { useState, useEffect } from "react";
@@ -17,13 +18,41 @@ import { useState, useEffect } from "react";
 // Work in progress
 export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
     console.log('inside profile: ', activeProfile);
-    
+    const [selectedTab, setSelectedTab] = useState(0);
+
+
+    // Form elements tabs
+    const FromElementsTabs = [
+        {
+            id: 'input-1',
+            content: 'Input',
+            accessibilityLabel: 'Input',
+            panelID: 'input-content-1',
+        },
+        {
+            id: 'select-1',
+            content: 'Select',
+            accessibilityLabel: 'Select',
+            panelID: 'select-content-1',
+        },
+        {
+            id: 'checkbox-1',
+            content: 'Checkbox',
+            accessibilityLabel: 'Checkbox',
+            panelID: 'checkbox-content-1',
+        }
+    ];
+
+    const handleTabChange = (selectedTabIndex) => {
+        setSelectedTab(selectedTabIndex);
+    }
+
+
     return (
         <div style={{
             padding: '2rem 1rem',
             }}>
             <Grid columns={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1 }} gap={4}>
-
                 <Grid columns={{ xs: 1, sm: 3, md: 3, lg: 3, xl: 3 }} gap={2}>
                     
                     <Grid.Cell gap="2" columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
@@ -169,61 +198,70 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                     <Grid.Cell gap="2" columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
                         <VerticalStack gap="2">
                             <Text as="h3" variant="headingMd">
-                               Forms and inputs
+                               Form elements
                             </Text>
 
                             <Text as='p' variant="bodyMd">
-                                Change form and input styles.
+                                Change form elements desing and appearance.
                             </Text>
                         </VerticalStack>
                     </Grid.Cell>
 
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
-                        <AlphaCard title="Orders" sectioned>
-                            <FormLayout>
-                            <Select
-                                label="Checkbox corner radius"
-                                options={[
-                                    { label: "None", value: "NONE" },
-                                    { label: "Small", value: "SMALL" },
-                                    { label: "Base", value: "BASE" },
-                                    { label: "Large", value: "LARGE" },
-                                ]}
-                                onChange={(value) => {
-                                    const temp = activeProfile;
-                                    temp.customizations = {
-                                        ...temp?.customizations,
-                                        checkbox: {
-                                        ...temp?.customizations?.checkbox,
-                                            cornerRadius: value,
-                                        },
-                                    };
-                                    handleDataChange(temp);
-                                    }}
-                                value={activeProfile?.customizations?.checkbox?.cornerRadius || ''}/>
-                                
-                            <Select
-                                label="Control border"
-                                helpText="It includes all form elements, such as input, select, checkbox, radio, etc."
-                                options={[
-                                    { label: "None", value: "NONE" },
-                                    { label: "Full", value: "FULL" },
-                                ]}
-                                onChange={(value) => {
-                                    const temp = activeProfile;
-                                    temp.customizations = {
-                                        ...temp?.customizations,
-                                        control: {
-                                        ...temp?.customizations?.control,
-                                            border: value,
-                                        },
-                                    };
-                                    handleDataChange(temp);
-                                    }}
-                                value={activeProfile?.customizations?.control?.border || ''}/>
-                                
-                                
-                            </FormLayout>
+                        <Tabs tabs={FromElementsTabs} selected={selectedTab} onSelect={ handleTabChange }></Tabs>
+                        <AlphaCard title="Orders">
+                            {/* Input */}
+                            {FromElementsTabs[selectedTab].id === 'input-1' ? (
+                                <FormLayout>
+                                    <Select
+                                        label="Input border"
+                                        options={[
+                                            { label: "None", value: "NONE" },
+                                            { label: "Block End", value: "BLOCK_END" },
+                                            { label: "Full", value: "FULL" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                checkbox: {
+                                                ...temp?.customizations?.checkbox,
+                                                    cornerRadius: value,
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                            }}
+                                        value={activeProfile?.customizations?.checkbox?.cornerRadius || ''}/>
+                                </FormLayout>
+                            ): null }
+
+                            {/* Select */}
+                            {FromElementsTabs[selectedTab].id === 'select-1' ? (
+                                <FormLayout>
+                                    <Select
+                                        label="Checkbox corner radius"
+                                        options={[
+                                            { label: "None", value: "NONE" },
+                                            { label: "Small", value: "SMALL" },
+                                            { label: "Base", value: "BASE" },
+                                            { label: "Large", value: "LARGE" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                checkbox: {
+                                                ...temp?.customizations?.checkbox,
+                                                    cornerRadius: value,
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                            }}
+                                        value={activeProfile?.customizations?.checkbox?.cornerRadius || ''}/>
+                                </FormLayout>
+
+                            ): null}
+
                         </AlphaCard>
                     </Grid.Cell>
                     

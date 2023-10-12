@@ -68,7 +68,18 @@ export default function brandingApiEndPoints (app, shopify) {
                               kerning
                             }
                           }
-                          # /global
+                          # Text field
+                          textField{
+                            border
+                            typography{
+                              font
+                              kerning
+                              size
+                              letterCase
+                              weight
+                            }
+                          }
+
                           # checkbox
                           checkbox {
                             cornerRadius
@@ -106,6 +117,16 @@ export default function brandingApiEndPoints (app, shopify) {
               "header": {
                 "alignment": profileData?.customizations?.header?.alignment,
                 "position": profileData?.customizations?.header?.position
+              },
+              "textField": {
+                "border": profileData?.customizations?.textField?.border,
+                "typography": {
+                  "font": profileData?.customizations?.textField?.typography?.font,
+                  "kerning": profileData?.customizations?.textField?.typography?.kerning,
+                  "size": profileData?.customizations?.textField?.typography?.size,
+                  "letterCase": profileData?.customizations?.textField?.typography?.letterCase,
+                  "weight": profileData?.customizations?.textField?.typography?.weight
+                }
               },
               "checkbox": {
                 "cornerRadius": profileData?.customizations?.checkbox?.cornerRadius
@@ -193,6 +214,16 @@ export default function brandingApiEndPoints (app, shopify) {
                     header{
                       alignment
                       position
+                    }
+                    textField{
+                      border
+                      typography{
+                        font
+                        kerning
+                        size
+                        letterCase
+                        weight
+                      }
                     }
                     checkbox{
                       cornerRadius

@@ -29,11 +29,11 @@ export function CheckoutCustomization({activeProfile = null, handleDataChange}) 
                     <Grid.Cell gap="2" columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
                         <VerticalStack gap="2">
                             <Text as="h3" variant="headingMd">
-                               Global customization
+                               Global typography
                             </Text>
 
                             <Text as='p' variant="bodyMd">
-                                Chnage global customization for your checkout page.
+                                Chnage global customization for typography.
                             </Text>
                         </VerticalStack>
                     </Grid.Cell>

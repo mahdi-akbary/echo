@@ -201,9 +201,9 @@ export default function Branding () {
                 <VerticalStack gap="4">
                   <Box>
                     <VerticalStack gap="2">
-                      <Text variant="headingLg">Checkout Branding</Text>
+                      <Text variant="headingLg">Checkout branding</Text>
                       <Text variant="bodyMd">
-                        An Advance setting for fully customization of the checkout
+                        An advance setting for fully customization of the checkout
                         appearance & branding.
                       </Text>
                     </VerticalStack>

@@ -1,5 +1,6 @@
 import { 
     Select, 
+    Checkbox,
     Box,
     Button,
     Text,
@@ -23,6 +24,12 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
 
     // Form elements tabs
     const FromElementsTabs = [
+        {
+            id: 'general-1',
+            content: 'General',
+            accessibilityLabel: 'General',
+            panelID: 'general-content-1',
+        },
         {
             id: 'input-1',
             content: 'Input',
@@ -210,7 +217,96 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
                         <Tabs tabs={FromElementsTabs} selected={selectedTab} onSelect={ handleTabChange }></Tabs>
                         <AlphaCard title="Orders">
-                            {/* Input */}
+
+                            {/* General - controls */}
+                            {FromElementsTabs[selectedTab].id === 'general-1' ? (
+                                <FormLayout>
+                                    <Select
+                                        label="Border"
+                                        options={[
+                                            { label: "None", value: "NONE" },
+                                            { label: "Full", value: "FULL" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                control: {
+                                                ...temp?.customizations?.control,
+                                                    border: value,
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                            }
+                                        }
+                                        value={activeProfile?.customizations?.control?.border || ''}/>
+
+                                   
+                                    <Select
+                                        label="Border radius"
+                                        options={[
+                                            { label: "None", value: "NONE" },
+                                            { label: "Small", value: "SMALL" },
+                                            { label: "Base", value: "BASE" },
+                                            { label: "Large", value: "LARGE" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                control: {
+                                                ...temp?.customizations?.control,
+                                                    cornerRadius: value,
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                            }
+                                        }
+                                        value={activeProfile?.customizations?.control?.cornerRadius || ''}/>
+                                    
+                                    <Select
+                                        label="Background color"
+                                        options={[
+                                            { label: "Default", value: "default" },
+                                            { label: "Transparent", value: "TRANSPARENT" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                control: {
+                                                ...temp?.customizations?.control,
+                                                    color: (value === 'TRANSPARENT') ? 'TRANSPARENT' : null,
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                            }
+                                        }
+                                        value={activeProfile?.customizations?.control?.color || ''}/>
+
+                                    <Select
+                                        label="Label position"
+                                        options={[
+                                            { label: "Inside", value: "INSIDE" },
+                                            { label: "Outside", value: "OUTSIDE" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                control: {
+                                                ...temp?.customizations?.control,
+                                                    labelPosition: value,
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                            }
+                                        }
+                                        value={activeProfile?.customizations?.control?.labelPosition || ''}/>
+                                   
+                                </FormLayout>
+                            ): null }
+
                             {FromElementsTabs[selectedTab].id === 'input-1' ? (
                                 <FormLayout>
                                     <Select

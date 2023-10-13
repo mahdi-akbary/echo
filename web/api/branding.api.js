@@ -68,6 +68,15 @@ export default function brandingApiEndPoints (app, shopify) {
                               kerning
                             }
                           }
+                          
+                          # control
+                          control{
+                            border
+                            cornerRadius
+                            color
+                            labelPosition
+                          }
+
                           # Text field
                           textField{
                             border
@@ -118,6 +127,12 @@ export default function brandingApiEndPoints (app, shopify) {
                 "alignment": profileData?.customizations?.header?.alignment,
                 "position": profileData?.customizations?.header?.position
               },
+              "control": {
+                "border": profileData?.customizations?.control?.border,
+                "cornerRadius": profileData?.customizations?.control?.cornerRadius,
+                "color": profileData?.customizations?.control?.color,
+                "labelPosition": profileData?.customizations?.control?.labelPosition
+              },
               "textField": {
                 "border": profileData?.customizations?.textField?.border,
                 "typography": {
@@ -130,9 +145,6 @@ export default function brandingApiEndPoints (app, shopify) {
               },
               "checkbox": {
                 "cornerRadius": profileData?.customizations?.checkbox?.cornerRadius
-              },
-              "control": {
-                "border": profileData?.customizations?.control?.border
               }
             }
           }
@@ -215,6 +227,13 @@ export default function brandingApiEndPoints (app, shopify) {
                       alignment
                       position
                     }
+                    control{
+                      border
+                      cornerRadius
+                      color
+                      labelPosition
+                    }
+
                     textField{
                       border
                       typography{
@@ -225,7 +244,7 @@ export default function brandingApiEndPoints (app, shopify) {
                         weight
                       }
                     }
-                    
+
                     checkbox{
                       cornerRadius
                     }

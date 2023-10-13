@@ -460,6 +460,156 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                             {FromElementsTabs[selectedTab].id === 'select-1' ? (
                                 <FormLayout>
                                     <Select
+                                        label="Select border"
+                                        options={[
+                                            { label: "None", value: "NONE" },
+                                            { label: "Block End", value: "BLOCK_END" },
+                                            { label: "Full", value: "FULL" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                select: {
+                                                ...temp?.customizations?.select,
+                                                    border: value,
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                            }}
+                                        value={activeProfile?.customizations?.select?.border || ''}/>
+
+                                        <Text variant="headingSm" as="h3">Typography</Text>
+                                        <Select
+                                            label="Font"
+                                            options={[
+                                                { label: "Primary", value: "PRIMARY" },
+                                                { label: "Secondary", value: "SECONDARY" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    select: {
+                                                    ...temp?.customizations?.select,
+                                                        typography: {
+                                                            ...temp?.customizations?.select?.typography,
+                                                            font: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                                }}
+                                            value={activeProfile?.customizations?.select?.typography?.font || ''}/>
+
+                                        <Select
+                                            label="Letter spacing (kerning)"
+                                            options={[
+                                                { label: "Base", value: "BASE" },
+                                                { label: "Loose", value: "LOOSE" },
+                                                { label: "Extra loose", value: "EXTRA_LOOSE" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    select: {
+                                                    ...temp?.customizations?.select,
+                                                        typography: {
+                                                            ...temp?.customizations?.select?.typography,
+                                                            kerning: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                                }}
+                                            value={activeProfile?.customizations?.select?.typography?.kerning || ''}/>
+
+                                        <Select
+                                            label="Font size"
+                                            options={[
+                                                { label: "Extra small", value: "EXTRA_SMALL" },
+                                                { label: "Small", value: "SMALL" },
+                                                { label: "Base", value: "BASE" },
+                                                { label: "Medium", value: "MEDIUM" },
+                                                { label: "Large", value: "LARGE" },
+                                                { label: "Extra large", value: "EXTRA_LARGE" },
+                                                { label: "2X Large", value: "EXTRA_EXTRA_LARGE" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    select: {
+                                                    ...temp?.customizations?.select,
+                                                        typography: {
+                                                            ...temp?.customizations?.select?.typography,
+                                                            size: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                                }}
+                                            value={activeProfile?.customizations?.select?.typography?.size || ''}/>
+
+                                        <Select
+                                            label="Letter case"
+                                            options={[
+                                                { label: "None", value: "NONE" },
+                                                { label: "Lowercase", value: "LOWER" },
+                                                { label: "Titlecase", value: "TITLE" },
+                                                { label: "Uppercase", value: "UPPER" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    select: {
+                                                    ...temp?.customizations?.select,
+                                                        typography: {
+                                                            ...temp?.customizations?.select?.typography,
+                                                            letterCase: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                                }}
+                                            value={activeProfile?.customizations?.select?.typography?.letterCase || ''}/>
+
+                                        <Select
+                                            label="Font weight"
+                                            options={[
+                                                { label: "Base", value: "BASE" },
+                                                { label: "Bold", value: "BOLD" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    select: {
+                                                    ...temp?.customizations?.select,
+                                                        typography: {
+                                                            ...temp?.customizations?.select?.typography,
+                                                            weight: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                                }}
+                                            value={activeProfile?.customizations?.select?.typography?.weight || ''}/>
+                                </FormLayout>
+
+                            ): null}
+
+                            {/* Checkbox */}
+                            {FromElementsTabs[selectedTab].id === 'checkbox-1' ? (
+                                <FormLayout>
+                                    <Select
                                         label="Border radius"
                                         options={[
                                             { label: "None", value: "NONE" },
@@ -477,10 +627,11 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                                 },
                                             };
                                             handleDataChange(temp);
-                                            }}
+                                        }}
                                         value={activeProfile?.customizations?.checkbox?.cornerRadius || ''}/>
-                                </FormLayout>
 
+
+                                </FormLayout>
                             ): null}
 
                         </AlphaCard>

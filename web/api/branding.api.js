@@ -88,13 +88,20 @@ export default function brandingApiEndPoints (app, shopify) {
                               weight
                             }
                           }
-
+                          # select
+                          select{
+                            border
+                            typography{
+                              font
+                              kerning
+                              letterCase
+                              size
+                              weight
+                            }
+                          }
                           # checkbox
                           checkbox {
                             cornerRadius
-                          }
-                          control{
-                            border
                           }
                         }
                       }
@@ -141,6 +148,16 @@ export default function brandingApiEndPoints (app, shopify) {
                   "size": profileData?.customizations?.textField?.typography?.size,
                   "letterCase": profileData?.customizations?.textField?.typography?.letterCase,
                   "weight": profileData?.customizations?.textField?.typography?.weight
+                }
+              },
+              "select": {
+                "border": profileData?.customizations?.select?.border,
+                "typography": {
+                  "font": profileData?.customizations?.select?.typography?.font,
+                  "kerning": profileData?.customizations?.select?.typography?.kerning,
+                  "letterCase": profileData?.customizations?.select?.typography?.letterCase,
+                  "size": profileData?.customizations?.select?.typography?.size,
+                  "weight": profileData?.customizations?.select?.typography?.weight
                 }
               },
               "checkbox": {
@@ -244,13 +261,20 @@ export default function brandingApiEndPoints (app, shopify) {
                         weight
                       }
                     }
-
+                    select{
+                      border
+                      typography{
+                        font
+                        kerning
+                        letterCase
+                        size
+                        weight
+                      }
+                    }
                     checkbox{
                       cornerRadius
                     }
-                    control{
-                      border
-                    }
+                    
                   }
               }
           }

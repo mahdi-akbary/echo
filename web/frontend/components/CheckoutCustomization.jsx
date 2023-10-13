@@ -144,7 +144,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                     </Grid.Cell>
 
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
-                        <AlphaCard title="Orders" sectioned>
+                        <AlphaCard title="Header" sectioned>
                             <FormLayout>
                                 <Select
                                     label="Alignment"
@@ -216,7 +216,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
 
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
                         <Tabs tabs={FromElementsTabs} selected={selectedTab} onSelect={ handleTabChange }></Tabs>
-                        <AlphaCard title="Orders">
+                        <AlphaCard title="Form Elements">
 
                             {/* General - controls */}
                             {FromElementsTabs[selectedTab].id === 'general-1' ? (

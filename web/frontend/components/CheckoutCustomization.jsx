@@ -868,14 +868,233 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
 
                                                 }}
                                             value={activeProfile?.customizations?.primaryButton?.typography?.weight || ''}/>
-                                            
-
                                 </FormLayout>
                             ): null}
+
 
                             {/* Secondary button */}
                             {FromElementsTabs[selectedTab].id === 'secondary-button-1' ? (
                                 <FormLayout>
+                                    <Select
+                                        label="Background"
+                                        options={[
+                                            { label: "Solid", value: "SOLID" },
+                                            { label: "None", value: "NONE" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                secondaryButton: {
+                                                ...temp?.customizations?.secondaryButton,
+                                                    background: value,
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                        }}
+                                        value={activeProfile?.customizations?.secondaryButton?.background || ''}/>
+                                    <Select
+                                        label="Border"
+                                        options={[
+                                            { label: "None", value: "NONE" },
+                                            { label: "Full", value: "FULL" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                secondaryButton: {
+                                                ...temp?.customizations?.secondaryButton,
+                                                    border: value,
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                        }}
+                                        value={activeProfile?.customizations?.secondaryButton?.border || ''}/>
+                                    <Select
+                                        label="Border radius"
+                                        options={[
+                                            { label: "None", value: "NONE" },
+                                            { label: "Small", value: "SMALL" },
+                                            { label: "Base", value: "BASE" },
+                                            { label: "Large", value: "LARGE" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                secondaryButton: {
+                                                ...temp?.customizations?.secondaryButton,
+                                                    cornerRadius: value,
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                        }}
+                                        value={activeProfile?.customizations?.secondaryButton?.cornerRadius || ''}/>
+
+                                    <Select
+                                        label="Block padding"
+                                        options={[
+                                            { label: "None", value: "NONE" },
+                                            { label: "Extra tight", value: "EXTRA_TIGHT" },
+                                            { label: "Tight", value: "TIGHT" },
+                                            { label: "Base", value: "BASE" },
+                                            { label: "Loose", value: "LOOSE" },
+                                            { label: "Extra loose", value: "EXTRA_LOOSE" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                secondaryButton: {
+                                                ...temp?.customizations?.secondaryButton,
+                                                    blockPadding: value,
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                        }}
+                                        value={activeProfile?.customizations?.secondaryButton?.blockPadding || ''}/>
+
+                                        {/* inlinePadding */}
+                                        <Select
+                                            label="Inline padding"
+                                            options={[
+                                                { label: "None", value: "NONE" },
+                                                { label: "Extra tight", value: "EXTRA_TIGHT" },
+                                                { label: "Tight", value: "TIGHT" },
+                                                { label: "Base", value: "BASE" },
+                                                { label: "Loose", value: "LOOSE" },
+                                                { label: "Extra loose", value: "EXTRA_LOOSE" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    secondaryButton: {
+                                                    ...temp?.customizations?.secondaryButton,
+                                                        inlinePadding: value,
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+                                            }}
+                                            value={activeProfile?.customizations?.secondaryButton?.inlinePadding || ''}/>
+
+                                            <Text variant="headingSm" as="h3">Typography</Text>
+                                        <Select label="Font"
+                                            options={[
+                                                { label: "Primary", value: "PRIMARY" },
+                                                { label: "Secondary", value: "SECONDARY" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    secondaryButton: {
+                                                    ...temp?.customizations?.secondaryButton,
+                                                        typography: {
+                                                            ...temp?.customizations?.secondaryButton?.typography,
+                                                            font: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                                }}
+                                            value={activeProfile?.customizations?.secondaryButton?.typography?.font || ''}/>
+
+                                        <Select label="Letter spacing (kerning)"
+                                            options={[
+                                                { label: "Base", value: "BASE" },
+                                                { label: "Loose", value: "LOOSE" },
+                                                { label: "Extra loose", value: "EXTRA_LOOSE" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    secondaryButton: {
+                                                    ...temp?.customizations?.secondaryButton,
+                                                        typography: {
+                                                            ...temp?.customizations?.secondaryButton?.typography,
+                                                            kerning: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                                }}
+                                            value={activeProfile?.customizations?.secondaryButton?.typography?.kerning || ''}/>
+                                        <Select label="Font size"
+                                            options={[
+                                                { label: "Extra small", value: "EXTRA_SMALL" },
+                                                { label: "Small", value: "SMALL" },
+                                                { label: "Base", value: "BASE" },
+                                                { label: "Medium", value: "MEDIUM" },
+                                                { label: "Large", value: "LARGE" },
+                                                { label: "Extra large", value: "EXTRA_LARGE" },
+                                                { label: "2X Large", value: "EXTRA_EXTRA_LARGE" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    secondaryButton: {
+                                                    ...temp?.customizations?.secondaryButton,
+                                                        typography: {
+                                                            ...temp?.customizations?.secondaryButton?.typography,
+                                                            size: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                                }}
+                                            value={activeProfile?.customizations?.secondaryButton?.typography?.size || ''}/>
+                                        <Select label="Letter case"
+                                            options={[
+                                                { label: "None", value: "NONE" },
+                                                { label: "Lowercase", value: "LOWER" },
+                                                { label: "Titlecase", value: "TITLE" },
+                                                { label: "Uppercase", value: "UPPER" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    secondaryButton: {
+                                                    ...temp?.customizations?.secondaryButton,
+                                                        typography: {
+                                                            ...temp?.customizations?.secondaryButton?.typography,
+                                                            letterCase: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                                }}
+                                            value={activeProfile?.customizations?.secondaryButton?.typography?.letterCase || ''}/>
+                                        <Select label="Font weight"
+                                            options={[
+                                                { label: "Base", value: "BASE" },
+                                                { label: "Bold", value: "BOLD" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    secondaryButton: {
+                                                    ...temp?.customizations?.secondaryButton,
+                                                        typography: {
+                                                            ...temp?.customizations?.secondaryButton?.typography,
+                                                            weight: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                                }}
+                                            value={activeProfile?.customizations?.secondaryButton?.typography?.weight || ''}/>
+
 
                                 </FormLayout>
                             ): null}

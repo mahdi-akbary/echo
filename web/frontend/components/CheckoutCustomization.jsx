@@ -47,6 +47,18 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
             content: 'Checkbox',
             accessibilityLabel: 'Checkbox',
             panelID: 'checkbox-content-1',
+        },
+        {
+            id: 'primary-button-1',
+            content: 'Primary button',
+            accessibilityLabel: 'Primary button',
+            panelID: 'primary-button-content-1',
+        },
+        {
+            id: 'secondary-button-1',
+            content: 'Secondary button',
+            accessibilityLabel: 'Secondary button',
+            panelID: 'secondary-button-content-1',
         }
     ];
 
@@ -633,6 +645,124 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
 
                                 </FormLayout>
                             ): null}
+
+                            {/* Primary button */}
+                            {FromElementsTabs[selectedTab].id === 'primary-button-1' ? (
+                                <FormLayout>
+                                    <Select
+                                        label="Background"
+                                        options={[
+                                            { label: "Solid", value: "SOLID" },
+                                            { label: "None", value: "NONE" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                primaryButton: {
+                                                ...temp?.customizations?.primaryButton,
+                                                    background: value,
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                        }}
+                                        value={activeProfile?.customizations?.primaryButton?.background || ''}/>
+                                    <Select
+                                        label="Border"
+                                        options={[
+                                            { label: "None", value: "NONE" },
+                                            { label: "Full", value: "FULL" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                primaryButton: {
+                                                ...temp?.customizations?.primaryButton,
+                                                    border: value,
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                        }}
+                                        value={activeProfile?.customizations?.primaryButton?.border || ''}/>
+                                    <Select
+                                        label="Border radius"
+                                        options={[
+                                            { label: "None", value: "NONE" },
+                                            { label: "Small", value: "SMALL" },
+                                            { label: "Base", value: "BASE" },
+                                            { label: "Large", value: "LARGE" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                primaryButton: {
+                                                ...temp?.customizations?.primaryButton,
+                                                    cornerRadius: value,
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                        }}
+                                        value={activeProfile?.customizations?.primaryButton?.cornerRadius || ''}/>
+
+                                    <Select
+                                        label="Block padding"
+                                        options={[
+                                            { label: "None", value: "NONE" },
+                                            { label: "Extra tight", value: "EXTRA_TIGHT" },
+                                            { label: "Tight", value: "TIGHT" },
+                                            { label: "Base", value: "BASE" },
+                                            { label: "Loose", value: "LOOSE" },
+                                            { label: "Extra loose", value: "EXTRA_LOOSE" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                primaryButton: {
+                                                ...temp?.customizations?.primaryButton,
+                                                    blockPadding: value,
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                        }}
+                                        value={activeProfile?.customizations?.primaryButton?.blockPadding || ''}/>
+
+                                        {/* inlinePadding */}
+                                        <Select
+                                            label="Inline padding"
+                                            options={[
+                                                { label: "None", value: "NONE" },
+                                                { label: "Extra tight", value: "EXTRA_TIGHT" },
+                                                { label: "Tight", value: "TIGHT" },
+                                                { label: "Base", value: "BASE" },
+                                                { label: "Loose", value: "LOOSE" },
+                                                { label: "Extra loose", value: "EXTRA_LOOSE" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    primaryButton: {
+                                                    ...temp?.customizations?.primaryButton,
+                                                        inlinePadding: value,
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+                                            }}
+                                            value={activeProfile?.customizations?.primaryButton?.inlinePadding || ''}/>
+
+                                </FormLayout>
+                            ): null}
+
+                            {/* Secondary button */}
+                            {FromElementsTabs[selectedTab].id === 'secondary-button-1' ? (
+                                <FormLayout>
+
+                                </FormLayout>
+                            ): null}
+
 
                         </AlphaCard>
                     </Grid.Cell>

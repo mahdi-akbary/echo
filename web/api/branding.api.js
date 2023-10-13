@@ -103,6 +103,36 @@ export default function brandingApiEndPoints (app, shopify) {
                           checkbox {
                             cornerRadius
                           }
+                          
+                          primaryButton{
+                            background
+                            border
+                            cornerRadius
+                            blockPadding
+                            inlinePadding
+                            typography{
+                              font
+                              kerning
+                              letterCase
+                              size
+                              weight
+                            }
+                          }
+
+                          secondaryButton{
+                            background
+                            border
+                            cornerRadius
+                            blockPadding
+                            inlinePadding
+                            typography{
+                              font
+                              kerning
+                              letterCase
+                              size
+                              weight
+                            }
+                          }
                         }
                       }
                       userErrors {
@@ -162,7 +192,39 @@ export default function brandingApiEndPoints (app, shopify) {
               },
               "checkbox": {
                 "cornerRadius": profileData?.customizations?.checkbox?.cornerRadius
+              },
+              "primaryButton": {
+                "background": profileData?.customizations?.primaryButton?.background,
+                "border": profileData?.customizations?.primaryButton?.border,
+                "cornerRadius": profileData?.customizations?.primaryButton?.cornerRadius,
+                "blockPadding": profileData?.customizations?.primaryButton?.blockPadding,
+                "inlinePadding": profileData?.customizations?.primaryButton?.inlinePadding,
+                "typography": {
+                  "font": profileData?.customizations?.primaryButton?.typography?.font,
+                  "kerning": profileData?.customizations?.primaryButton?.typography?.kerning,
+                  "letterCase": profileData?.customizations?.primaryButton?.typography?.letterCase,
+                  "size": profileData?.customizations?.primaryButton?.typography?.size,
+                  "weight": profileData?.customizations?.primaryButton?.typography?.weight
+                }
+              },
+
+              "secondaryButton": {
+                "background": profileData?.customizations?.secondaryButton?.background,
+                "border": profileData?.customizations?.secondaryButton?.border,
+                "cornerRadius": profileData?.customizations?.secondaryButton?.cornerRadius,
+                "blockPadding": profileData?.customizations?.secondaryButton?.blockPadding,
+                "inlinePadding": profileData?.customizations?.secondaryButton?.inlinePadding,
+                "typography": {
+                  "font": profileData?.customizations?.secondaryButton?.typography?.font,
+                  "kerning": profileData?.customizations?.secondaryButton?.typography?.kerning,
+                  "letterCase": profileData?.customizations?.secondaryButton?.typography?.letterCase,
+                  "size": profileData?.customizations?.secondaryButton?.typography?.size,
+                  "weight": profileData?.customizations?.secondaryButton?.typography?.weight
+                }
               }
+
+
+
             }
           }
         },
@@ -274,7 +336,37 @@ export default function brandingApiEndPoints (app, shopify) {
                     checkbox{
                       cornerRadius
                     }
-                    
+
+                    primaryButton{
+                      background
+                      border
+                      cornerRadius
+                      blockPadding
+                      inlinePadding
+                      typography{
+                        font
+                        kerning
+                        letterCase
+                        size
+                        weight
+                      }
+                    }
+
+                    secondaryButton{
+                      background
+                      border
+                      cornerRadius
+                      blockPadding
+                      inlinePadding
+                      typography{
+                        font
+                        kerning
+                        letterCase
+                        size
+                        weight
+                      }
+                    }
+                      
                   }
               }
           }

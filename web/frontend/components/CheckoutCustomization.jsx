@@ -31,10 +31,10 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
             panelID: 'general-content-1',
         },
         {
-            id: 'input-1',
-            content: 'Input',
-            accessibilityLabel: 'Input',
-            panelID: 'input-content-1',
+            id: 'text-field-1',
+            content: 'Text field',
+            accessibilityLabel: 'Text field',
+            panelID: 'text-field-content-1',
         },
         {
             id: 'select-1',
@@ -307,7 +307,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                 </FormLayout>
                             ): null }
 
-                            {FromElementsTabs[selectedTab].id === 'input-1' ? (
+                            {FromElementsTabs[selectedTab].id === 'text-field-1' ? (
                                 <FormLayout>
                                     <Select
                                         label="Input border"
@@ -460,7 +460,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                             {FromElementsTabs[selectedTab].id === 'select-1' ? (
                                 <FormLayout>
                                     <Select
-                                        label="Checkbox corner radius"
+                                        label="Border radius"
                                         options={[
                                             { label: "None", value: "NONE" },
                                             { label: "Small", value: "SMALL" },

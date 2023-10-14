@@ -217,6 +217,98 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                     <Grid.Cell gap="2" columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
                         <VerticalStack gap="2">
                             <Text as="h3" variant="headingMd">
+                               Main
+                            </Text>
+
+                            <Text as='p' variant="bodyMd">
+                                Main section customization.
+                            </Text>
+                        </VerticalStack>
+                    </Grid.Cell>
+
+                    <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
+                        <AlphaCard title="Main section" sectioned>
+                            <FormLayout>
+                                <Select
+                                    label="Background color"
+                                    helpText="You can change the color scheme in design system tab"
+                                    options={[
+                                        { label: "Transparent", value: 'TRANSPARENT' },
+                                        { label: "Color scheme 1", value: "COLOR_SCHEME1" },
+                                        { label: "Color scheme 2", value: "COLOR_SCHEME2" },
+                                    ]}
+                                    selected={activeProfile?.customizations?.header?.alignment}
+                                    onChange={(value) => {
+                                        const temp = activeProfile;
+                                        temp.customizations = {
+                                            ...temp?.customizations,
+                                            main: {
+                                            ...temp?.customizations?.main,
+                                            colorScheme: value,
+                                            },
+                                        };
+                                        handleDataChange(temp); 
+                                    }}
+                                    value={activeProfile?.customizations?.main?.colorScheme || ''}
+                                />
+
+                            </FormLayout>
+                        </AlphaCard>
+                    </Grid.Cell>
+                    
+                </Grid>
+            
+                <Grid columns={{ xs: 1, sm: 3, md: 3, lg: 3, xl: 3 }} gap={2}>
+                    
+                    <Grid.Cell gap="2" columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
+                        <VerticalStack gap="2">
+                            <Text as="h3" variant="headingMd">
+                               Order Summary
+                            </Text>
+
+                            <Text as='p' variant="bodyMd">
+                                Order summary customization. This section is your sidebar on the right side of the checkout.
+                            </Text>
+                        </VerticalStack>
+                    </Grid.Cell>
+
+                    <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
+                        <AlphaCard title="Main section" sectioned>
+                            <FormLayout>
+                                <Select
+                                    label="Background color"
+                                    helpText="You can change the color scheme in design system tab"
+                                    options={[
+                                        { label: "Transparent", value: 'TRANSPARENT' },
+                                        { label: "Color scheme 1", value: "COLOR_SCHEME1" },
+                                        { label: "Color scheme 2", value: "COLOR_SCHEME2" },
+                                    ]}
+                                    selected={activeProfile?.customizations?.orderSummary?.alignment}
+                                    onChange={(value) => {
+                                        const temp = activeProfile;
+                                        temp.customizations = {
+                                            ...temp?.customizations,
+                                            orderSummary: {
+                                            ...temp?.customizations?.orderSummary,
+                                            colorScheme: value,
+                                            },
+                                        };
+                                        handleDataChange(temp); 
+                                    }}
+                                    value={activeProfile?.customizations?.orderSummary?.colorScheme || ''}
+                                />
+
+                            </FormLayout>
+                        </AlphaCard>
+                    </Grid.Cell>
+                    
+                </Grid>
+            
+                <Grid columns={{ xs: 1, sm: 3, md: 3, lg: 3, xl: 3 }} gap={2}>
+                    
+                    <Grid.Cell gap="2" columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
+                        <VerticalStack gap="2">
+                            <Text as="h3" variant="headingMd">
                                Form elements
                             </Text>
 

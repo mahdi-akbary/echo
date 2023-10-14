@@ -68,6 +68,14 @@ export default function brandingApiEndPoints (app, shopify) {
                               kerning
                             }
                           }
+
+                          main{
+                            colorScheme
+                          }
+
+                          orderSummary{
+                            colorScheme
+                          }
                           
                           # control
                           control{
@@ -163,6 +171,12 @@ export default function brandingApiEndPoints (app, shopify) {
               "header": {
                 "alignment": profileData?.customizations?.header?.alignment,
                 "position": profileData?.customizations?.header?.position
+              },
+              "main": {
+                "colorScheme": profileData?.customizations?.main?.colorScheme
+              },
+              "orderSummary": {
+                "colorScheme": profileData?.customizations?.orderSummary?.colorScheme
               },
               "control": {
                 "border": profileData?.customizations?.control?.border,
@@ -306,6 +320,14 @@ export default function brandingApiEndPoints (app, shopify) {
                       alignment
                       position
                     }
+                    main{
+                      colorScheme
+                    }
+
+                    orderSummary{
+                      colorScheme
+                    }
+
                     control{
                       border
                       cornerRadius

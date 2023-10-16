@@ -141,6 +141,37 @@ export default function brandingApiEndPoints (app, shopify) {
                               weight
                             }
                           }
+
+                          headingLevel1{
+                            typography{
+                              font
+                              kerning
+                              letterCase
+                              size
+                              weight
+                            }
+                          }
+
+                          headingLevel2{
+                            typography{
+                              font
+                              kerning
+                              letterCase
+                              size
+                              weight
+                            }
+                          }
+
+                          headingLevel3{
+                            typography{
+                              font
+                              kerning
+                              letterCase
+                              size
+                              weight
+                            }
+                          }
+
                         }
                       }
                       userErrors {
@@ -221,7 +252,6 @@ export default function brandingApiEndPoints (app, shopify) {
                   "weight": profileData?.customizations?.primaryButton?.typography?.weight
                 }
               },
-
               "secondaryButton": {
                 "background": profileData?.customizations?.secondaryButton?.background,
                 "border": profileData?.customizations?.secondaryButton?.border,
@@ -235,9 +265,34 @@ export default function brandingApiEndPoints (app, shopify) {
                   "size": profileData?.customizations?.secondaryButton?.typography?.size,
                   "weight": profileData?.customizations?.secondaryButton?.typography?.weight
                 }
+              },
+              "headingLevel1": {
+                "typography": {
+                  "font": profileData?.customizations?.headingLevel1?.typography?.font,
+                  "kerning": profileData?.customizations?.headingLevel1?.typography?.kerning,
+                  "letterCase": profileData?.customizations?.headingLevel1?.typography?.letterCase,
+                  "size": profileData?.customizations?.headingLevel1?.typography?.size,
+                  "weight": profileData?.customizations?.headingLevel1?.typography?.weight
+                }
+              },
+              "headingLevel2": {
+                "typography": {
+                  "font": profileData?.customizations?.headingLevel2?.typography?.font,
+                  "kerning": profileData?.customizations?.headingLevel2?.typography?.kerning,
+                  "letterCase": profileData?.customizations?.headingLevel2?.typography?.letterCase,
+                  "size": profileData?.customizations?.headingLevel2?.typography?.size,
+                  "weight": profileData?.customizations?.headingLevel2?.typography?.weight
+                }
+              },
+              "headingLevel3": {
+                "typography": {
+                  "font": profileData?.customizations?.headingLevel3?.typography?.font,
+                  "kerning": profileData?.customizations?.headingLevel3?.typography?.kerning,
+                  "letterCase": profileData?.customizations?.headingLevel3?.typography?.letterCase,
+                  "size": profileData?.customizations?.headingLevel3?.typography?.size,
+                  "weight": profileData?.customizations?.headingLevel3?.typography?.weight
+                }
               }
-
-
 
             }
           }
@@ -380,6 +435,36 @@ export default function brandingApiEndPoints (app, shopify) {
                       cornerRadius
                       blockPadding
                       inlinePadding
+                      typography{
+                        font
+                        kerning
+                        letterCase
+                        size
+                        weight
+                      }
+                    }
+
+                    headingLevel1{
+                      typography{
+                        font
+                        kerning
+                        letterCase
+                        size
+                        weight
+                      }
+                    }
+
+                    headingLevel2{
+                      typography{
+                        font
+                        kerning
+                        letterCase
+                        size
+                        weight
+                      }
+                    }
+
+                    headingLevel3{
                       typography{
                         font
                         kerning

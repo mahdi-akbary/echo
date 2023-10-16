@@ -1484,6 +1484,128 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                 </FormLayout>
                             ): null}
                          
+                            { HeadingTabs[selectedHeadingTab].id === 'heading-3' ? (
+                                <FormLayout>
+                                    <Text variant="headingSm" as="h3">Heading 3</Text>
+                                    {/* Auto complete the rest like heading 1 above */}
+                                    <Select label="Font"
+                                        options={[
+                                            { label: "Primary", value: "PRIMARY" },
+                                            { label: "Secondary", value: "SECONDARY" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                heading3: {
+                                                ...temp?.customizations?.heading3,
+                                                    typography: {
+                                                        ...temp?.customizations?.heading3?.typography,
+                                                        font: value,
+                                                    },
+                                                },
+                                            };
+                                            handleDataChange(temp);
+
+                                            }}
+                                        value={activeProfile?.customizations?.heading3?.typography?.font || ''}/>
+                                    <Select label="Letter spacing (kerning)"
+                                        options={[
+                                            { label: "Base", value: "BASE" },
+                                            { label: "Loose", value: "LOOSE" },
+                                            { label: "Extra loose", value: "EXTRA_LOOSE" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                heading3: {
+                                                ...temp?.customizations?.heading3,
+                                                    typography: {
+                                                        ...temp?.customizations?.heading3?.typography,
+                                                        kerning: value,
+                                                    },
+                                                },
+                                            };
+                                            handleDataChange(temp);
+
+                                        }}
+                                        value={activeProfile?.customizations?.heading3?.typography?.kerning || ''}/>
+
+                                    <Select label="Font size"
+                                        options={[
+                                            { label: "Extra small", value: "EXTRA_SMALL" },
+                                            { label: "Small", value: "SMALL" },
+                                            { label: "Base", value: "BASE" },
+                                            { label: "Medium", value: "MEDIUM" },
+                                            { label: "Large", value: "LARGE" },
+                                            { label: "Extra large", value: "EXTRA_LARGE" },
+                                            { label: "2X Large", value: "EXTRA_EXTRA_LARGE" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                heading3: {
+                                                ...temp?.customizations?.heading3,
+                                                    typography: {
+                                                        ...temp?.customizations?.heading3?.typography,
+                                                        size: value,
+                                                    },
+                                                },
+                                            };
+                                            handleDataChange(temp);
+
+                                        }}
+                                        value={activeProfile?.customizations?.heading3?.typography?.size || ''}/>
+                                    <Select label="Letter case"
+                                        options={[
+                                            { label: "None", value: "NONE" },
+                                            { label: "Lowercase", value: "LOWER" },
+                                            { label: "Titlecase", value: "TITLE" },
+                                            { label: "Uppercase", value: "UPPER" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                heading3: {
+                                                ...temp?.customizations?.heading3,
+                                                    typography: {
+                                                        ...temp?.customizations?.heading3?.typography,
+                                                        letterCase: value,
+                                                    },
+                                                },
+                                            };
+                                            handleDataChange(temp);
+
+                                        }}
+                                        value={activeProfile?.customizations?.heading3?.typography?.letterCase || ''}/>
+                                    <Select label="Font weight"
+                                            options={[
+                                                { label: "Base", value: "BASE" },
+                                                { label: "Bold", value: "BOLD" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    heading3: {
+                                                    ...temp?.customizations?.heading3,
+                                                        typography: {
+                                                            ...temp?.customizations?.heading3?.typography,
+                                                            weight: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                            }}
+                                            value={activeProfile?.customizations?.heading3?.typography?.weight || ''}/>
+                                    
+                                </FormLayout>
+                            ): null}
+                         
                         </AlphaCard>
 
                     </Grid.Cell>

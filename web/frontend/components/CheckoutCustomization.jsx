@@ -20,6 +20,7 @@ import { useState, useEffect } from "react";
 export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
     console.log('inside profile: ', activeProfile);
     const [selectedTab, setSelectedTab] = useState(0);
+    const [selectedHeadingTab, setSelectedHeadingTab] = useState(0);
 
 
     // Form elements tabs
@@ -65,6 +66,31 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
     const handleTabChange = (selectedTabIndex) => {
         setSelectedTab(selectedTabIndex);
     }
+
+    // Heading tabs
+
+    const HeadingTabs = [
+        {
+            id: 'heading-1',
+            content: 'Heading 1',
+            accessibilityLabel: 'Heading 1',
+            panelID: 'heading-1-content-1',
+        },
+        
+        {
+            id: 'heading-2',
+            content: 'Heading 2',
+            accessibilityLabel: 'Heading 2',
+            panelID: 'heading-2-content-2',
+        },
+        {
+            id: 'heading-3',
+            content: 'Heading 3',
+            accessibilityLabel: 'Heading 3',
+            panelID: 'heading-3-content-3',
+        },
+
+    ];
 
 
     return (
@@ -1195,6 +1221,273 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                         </AlphaCard>
                     </Grid.Cell>
                     
+                </Grid>
+
+                <Grid columns={{ xs: 1, sm: 3, md: 3, lg: 3, xl: 3 }} gap={2}>
+                    <Grid.Cell gap="2" columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
+                        <VerticalStack gap="2">
+                            <Text as="h3" variant="headingMd">
+                               Headings
+                            </Text>
+
+                            <Text as='p' variant="bodyMd">
+                                Change headings desing, typography and appearance.
+                            </Text>
+                        </VerticalStack>
+                    </Grid.Cell>
+
+                    <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
+                        <Tabs tabs={HeadingTabs} selected={selectedHeadingTab} onSelect={(value) => setSelectedHeadingTab(value)} />
+                        <AlphaCard>
+                            { HeadingTabs[selectedHeadingTab].id === 'heading-1' ? (
+                                <FormLayout>
+                                    <Text variant="headingSm" as="h3">Heading 1</Text>
+                                    <Select label="Font"
+                                        options={[
+                                            { label: "Primary", value: "PRIMARY" },
+                                            { label: "Secondary", value: "SECONDARY" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                heading1: {
+                                                ...temp?.customizations?.heading1,
+                                                    typography: {
+                                                        ...temp?.customizations?.heading1?.typography,
+                                                        font: value,
+                                                    },
+                                                },
+                                            };
+                                            handleDataChange(temp);
+
+                                            }}
+                                        value={activeProfile?.customizations?.heading1?.typography?.font || ''}/>
+
+                                    <Select label="Letter spacing (kerning)"
+                                        options={[
+                                            { label: "Base", value: "BASE" },
+                                            { label: "Loose", value: "LOOSE" },
+                                            { label: "Extra loose", value: "EXTRA_LOOSE" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                heading1: {
+                                                ...temp?.customizations?.heading1,
+                                                    typography: {
+                                                        ...temp?.customizations?.heading1?.typography,
+                                                        kerning: value,
+                                                    },
+                                                },
+                                            };
+                                            handleDataChange(temp);
+
+                                            }}
+                                        value={activeProfile?.customizations?.heading1?.typography?.kerning || ''}/>
+
+                                    <Select label="Font size"
+                                        options={[
+                                            { label: "Extra small", value: "EXTRA_SMALL" },
+                                            { label: "Small", value: "SMALL" },
+                                            { label: "Base", value: "BASE" },
+                                            { label: "Medium", value: "MEDIUM" },
+                                            { label: "Large", value: "LARGE" },
+                                            { label: "Extra large", value: "EXTRA_LARGE" },
+                                            { label: "2X Large", value: "EXTRA_EXTRA_LARGE" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                heading1: {
+                                                ...temp?.customizations?.heading1,
+                                                    typography: {
+                                                        ...temp?.customizations?.heading1?.typography,
+                                                        size: value,
+                                                    },
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                        }}
+                                        value={activeProfile?.customizations?.heading1?.typography?.size || ''}/>
+
+                                    <Select label="Letter case"
+                                        options={[
+                                            { label: "None", value: "NONE" },
+                                            { label: "Lowercase", value: "LOWER" },
+                                            { label: "Titlecase", value: "TITLE" },
+                                            { label: "Uppercase", value: "UPPER" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                heading1: {
+                                                ...temp?.customizations?.heading1,
+                                                    typography: {
+                                                        ...temp?.customizations?.heading1?.typography,
+                                                        letterCase: value,
+                                                    },
+                                                },
+                                            };
+                                            handleDataChange(temp);
+
+                                            }}
+                                        value={activeProfile?.customizations?.heading1?.typography?.letterCase || ''}/>
+
+                                    <Select label="Font weight"
+                                        options={[
+                                            { label: "Base", value: "BASE" },
+                                            { label: "Bold", value: "BOLD" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                heading1: {
+                                                ...temp?.customizations?.heading1,
+                                                    typography: {
+                                                        ...temp?.customizations?.heading1?.typography,
+                                                        weight: value,
+                                                    },
+                                                },
+                                            };
+                                            handleDataChange(temp);
+
+                                            }}
+                                        value={activeProfile?.customizations?.heading1?.typography?.weight || ''}/>
+
+                                </FormLayout>
+                            ): null}
+
+                            { HeadingTabs[selectedHeadingTab].id === 'heading-2' ? (
+                                <FormLayout>
+                                    <Text variant="headingSm" as="h3">Heading 2</Text>
+                                    {/* Auto complete the rest like heading 1 above */}
+                                    <Select label="Font"
+                                        options={[
+                                            { label: "Primary", value: "PRIMARY" },
+                                            { label: "Secondary", value: "SECONDARY" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                heading2: {
+                                                ...temp?.customizations?.heading2,
+                                                    typography: {
+                                                        ...temp?.customizations?.heading2?.typography,
+                                                        font: value,
+                                                    },
+                                                },
+                                            };
+                                            handleDataChange(temp);
+
+                                            }}
+                                        value={activeProfile?.customizations?.heading2?.typography?.font || ''}/>
+                                    <Select label="Letter spacing (kerning)"
+                                        options={[
+                                            { label: "Base", value: "BASE" },
+                                            { label: "Loose", value: "LOOSE" },
+                                            { label: "Extra loose", value: "EXTRA_LOOSE" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                heading2: {
+                                                ...temp?.customizations?.heading2,
+                                                    typography: {
+                                                        ...temp?.customizations?.heading2?.typography,
+                                                        kerning: value,
+                                                    },
+                                                },
+                                            };
+                                            handleDataChange(temp);
+
+                                        }}
+                                        value={activeProfile?.customizations?.heading2?.typography?.kerning || ''}/>
+
+                                    <Select label="Font size"
+                                        options={[
+                                            { label: "Extra small", value: "EXTRA_SMALL" },
+                                            { label: "Small", value: "SMALL" },
+                                            { label: "Base", value: "BASE" },
+                                            { label: "Medium", value: "MEDIUM" },
+                                            { label: "Large", value: "LARGE" },
+                                            { label: "Extra large", value: "EXTRA_LARGE" },
+                                            { label: "2X Large", value: "EXTRA_EXTRA_LARGE" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                heading2: {
+                                                ...temp?.customizations?.heading2,
+                                                    typography: {
+                                                        ...temp?.customizations?.heading2?.typography,
+                                                        size: value,
+                                                    },
+                                                },
+                                            };
+                                            handleDataChange(temp);
+
+                                        }}
+                                        value={activeProfile?.customizations?.heading2?.typography?.size || ''}/>
+                                    <Select label="Letter case"
+                                        options={[
+                                            { label: "None", value: "NONE" },
+                                            { label: "Lowercase", value: "LOWER" },
+                                            { label: "Titlecase", value: "TITLE" },
+                                            { label: "Uppercase", value: "UPPER" },
+                                        ]}
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.customizations = {
+                                                ...temp?.customizations,
+                                                heading2: {
+                                                ...temp?.customizations?.heading2,
+                                                    typography: {
+                                                        ...temp?.customizations?.heading2?.typography,
+                                                        letterCase: value,
+                                                    },
+                                                },
+                                            };
+                                            handleDataChange(temp);
+
+                                        }}
+                                        value={activeProfile?.customizations?.heading2?.typography?.letterCase || ''}/>
+                                    <Select label="Font weight"
+                                            options={[
+                                                { label: "Base", value: "BASE" },
+                                                { label: "Bold", value: "BOLD" },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.customizations = {
+                                                    ...temp?.customizations,
+                                                    heading2: {
+                                                    ...temp?.customizations?.heading2,
+                                                        typography: {
+                                                            ...temp?.customizations?.heading2?.typography,
+                                                            weight: value,
+                                                        },
+                                                    },
+                                                };
+                                                handleDataChange(temp);
+
+                                            }}
+                                            value={activeProfile?.customizations?.heading2?.typography?.weight || ''}/>
+                                    
+                                </FormLayout>
+                            ): null}
+                         
+                        </AlphaCard>
+
+                    </Grid.Cell>
+
                 </Grid>
             
             </Grid>

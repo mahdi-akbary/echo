@@ -1251,10 +1251,10 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             const temp = activeProfile;
                                             temp.customizations = {
                                                 ...temp?.customizations,
-                                                heading1: {
-                                                ...temp?.customizations?.heading1,
+                                                headingLevel1: {
+                                                ...temp?.customizations?.headingLevel1,
                                                     typography: {
-                                                        ...temp?.customizations?.heading1?.typography,
+                                                        ...temp?.customizations?.headingLevel1?.typography,
                                                         font: value,
                                                     },
                                                 },
@@ -1262,7 +1262,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             handleDataChange(temp);
 
                                             }}
-                                        value={activeProfile?.customizations?.heading1?.typography?.font || ''}/>
+                                        value={activeProfile?.customizations?.headingLevel1?.typography?.font || ''}/>
 
                                     <Select label="Letter spacing (kerning)"
                                         options={[
@@ -1274,10 +1274,10 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             const temp = activeProfile;
                                             temp.customizations = {
                                                 ...temp?.customizations,
-                                                heading1: {
-                                                ...temp?.customizations?.heading1,
+                                                headingLevel1: {
+                                                ...temp?.customizations?.headingLevel1,
                                                     typography: {
-                                                        ...temp?.customizations?.heading1?.typography,
+                                                        ...temp?.customizations?.headingLevel1?.typography,
                                                         kerning: value,
                                                     },
                                                 },
@@ -1285,7 +1285,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             handleDataChange(temp);
 
                                             }}
-                                        value={activeProfile?.customizations?.heading1?.typography?.kerning || ''}/>
+                                        value={activeProfile?.customizations?.headingLevel1?.typography?.kerning || ''}/>
 
                                     <Select label="Font size"
                                         options={[
@@ -1301,17 +1301,17 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             const temp = activeProfile;
                                             temp.customizations = {
                                                 ...temp?.customizations,
-                                                heading1: {
-                                                ...temp?.customizations?.heading1,
+                                                headingLevel1: {
+                                                ...temp?.customizations?.headingLevel1,
                                                     typography: {
-                                                        ...temp?.customizations?.heading1?.typography,
+                                                        ...temp?.customizations?.headingLevel1?.typography,
                                                         size: value,
                                                     },
                                                 },
                                             };
                                             handleDataChange(temp);
                                         }}
-                                        value={activeProfile?.customizations?.heading1?.typography?.size || ''}/>
+                                        value={activeProfile?.customizations?.headingLevel1?.typography?.size || ''}/>
 
                                     <Select label="Letter case"
                                         options={[
@@ -1324,10 +1324,10 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             const temp = activeProfile;
                                             temp.customizations = {
                                                 ...temp?.customizations,
-                                                heading1: {
-                                                ...temp?.customizations?.heading1,
+                                                headingLevel1: {
+                                                ...temp?.customizations?.headingLevel1,
                                                     typography: {
-                                                        ...temp?.customizations?.heading1?.typography,
+                                                        ...temp?.customizations?.headingLevel1?.typography,
                                                         letterCase: value,
                                                     },
                                                 },
@@ -1335,7 +1335,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             handleDataChange(temp);
 
                                             }}
-                                        value={activeProfile?.customizations?.heading1?.typography?.letterCase || ''}/>
+                                        value={activeProfile?.customizations?.headingLevel1?.typography?.letterCase || ''}/>
 
                                     <Select label="Font weight"
                                         options={[
@@ -1346,10 +1346,10 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             const temp = activeProfile;
                                             temp.customizations = {
                                                 ...temp?.customizations,
-                                                heading1: {
-                                                ...temp?.customizations?.heading1,
+                                                headingLevel1: {
+                                                ...temp?.customizations?.headingLevel1,
                                                     typography: {
-                                                        ...temp?.customizations?.heading1?.typography,
+                                                        ...temp?.customizations?.headingLevel1?.typography,
                                                         weight: value,
                                                     },
                                                 },
@@ -1357,7 +1357,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             handleDataChange(temp);
 
                                             }}
-                                        value={activeProfile?.customizations?.heading1?.typography?.weight || ''}/>
+                                        value={activeProfile?.customizations?.headingLevel1?.typography?.weight || ''}/>
 
                                 </FormLayout>
                             ): null}
@@ -1375,10 +1375,10 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             const temp = activeProfile;
                                             temp.customizations = {
                                                 ...temp?.customizations,
-                                                heading2: {
-                                                ...temp?.customizations?.heading2,
+                                                headingLevel2: {
+                                                ...temp?.customizations?.headingLevel2,
                                                     typography: {
-                                                        ...temp?.customizations?.heading2?.typography,
+                                                        ...temp?.customizations?.headingLevel2?.typography,
                                                         font: value,
                                                     },
                                                 },
@@ -1386,7 +1386,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             handleDataChange(temp);
 
                                             }}
-                                        value={activeProfile?.customizations?.heading2?.typography?.font || ''}/>
+                                        value={activeProfile?.customizations?.headingLevel2?.typography?.font || ''}/>
                                     <Select label="Letter spacing (kerning)"
                                         options={[
                                             { label: "Base", value: "BASE" },
@@ -1397,10 +1397,10 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             const temp = activeProfile;
                                             temp.customizations = {
                                                 ...temp?.customizations,
-                                                heading2: {
-                                                ...temp?.customizations?.heading2,
+                                                headingLevel2: {
+                                                ...temp?.customizations?.headingLevel2,
                                                     typography: {
-                                                        ...temp?.customizations?.heading2?.typography,
+                                                        ...temp?.customizations?.headingLevel2?.typography,
                                                         kerning: value,
                                                     },
                                                 },
@@ -1408,7 +1408,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             handleDataChange(temp);
 
                                         }}
-                                        value={activeProfile?.customizations?.heading2?.typography?.kerning || ''}/>
+                                        value={activeProfile?.customizations?.headingLevel2?.typography?.kerning || ''}/>
 
                                     <Select label="Font size"
                                         options={[
@@ -1424,10 +1424,10 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             const temp = activeProfile;
                                             temp.customizations = {
                                                 ...temp?.customizations,
-                                                heading2: {
-                                                ...temp?.customizations?.heading2,
+                                                headingLevel2: {
+                                                ...temp?.customizations?.headingLevel2,
                                                     typography: {
-                                                        ...temp?.customizations?.heading2?.typography,
+                                                        ...temp?.customizations?.headingLevel2?.typography,
                                                         size: value,
                                                     },
                                                 },
@@ -1435,7 +1435,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             handleDataChange(temp);
 
                                         }}
-                                        value={activeProfile?.customizations?.heading2?.typography?.size || ''}/>
+                                        value={activeProfile?.customizations?.headingLevel2?.typography?.size || ''}/>
                                     <Select label="Letter case"
                                         options={[
                                             { label: "None", value: "NONE" },
@@ -1447,10 +1447,10 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             const temp = activeProfile;
                                             temp.customizations = {
                                                 ...temp?.customizations,
-                                                heading2: {
-                                                ...temp?.customizations?.heading2,
+                                                headingLevel2: {
+                                                ...temp?.customizations?.headingLevel2,
                                                     typography: {
-                                                        ...temp?.customizations?.heading2?.typography,
+                                                        ...temp?.customizations?.headingLevel2?.typography,
                                                         letterCase: value,
                                                     },
                                                 },
@@ -1458,7 +1458,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             handleDataChange(temp);
 
                                         }}
-                                        value={activeProfile?.customizations?.heading2?.typography?.letterCase || ''}/>
+                                        value={activeProfile?.customizations?.headingLevel2?.typography?.letterCase || ''}/>
                                     <Select label="Font weight"
                                             options={[
                                                 { label: "Base", value: "BASE" },
@@ -1468,10 +1468,10 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                                 const temp = activeProfile;
                                                 temp.customizations = {
                                                     ...temp?.customizations,
-                                                    heading2: {
-                                                    ...temp?.customizations?.heading2,
+                                                    headingLevel2: {
+                                                    ...temp?.customizations?.headingLevel2,
                                                         typography: {
-                                                            ...temp?.customizations?.heading2?.typography,
+                                                            ...temp?.customizations?.headingLevel2?.typography,
                                                             weight: value,
                                                         },
                                                     },
@@ -1479,7 +1479,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                                 handleDataChange(temp);
 
                                             }}
-                                            value={activeProfile?.customizations?.heading2?.typography?.weight || ''}/>
+                                            value={activeProfile?.customizations?.headingLevel2?.typography?.weight || ''}/>
                                     
                                 </FormLayout>
                             ): null}
@@ -1497,10 +1497,10 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             const temp = activeProfile;
                                             temp.customizations = {
                                                 ...temp?.customizations,
-                                                heading3: {
-                                                ...temp?.customizations?.heading3,
+                                                headingLevel3: {
+                                                ...temp?.customizations?.headingLevel3,
                                                     typography: {
-                                                        ...temp?.customizations?.heading3?.typography,
+                                                        ...temp?.customizations?.headingLevel3?.typography,
                                                         font: value,
                                                     },
                                                 },
@@ -1508,7 +1508,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             handleDataChange(temp);
 
                                             }}
-                                        value={activeProfile?.customizations?.heading3?.typography?.font || ''}/>
+                                        value={activeProfile?.customizations?.headingLevel3?.typography?.font || ''}/>
                                     <Select label="Letter spacing (kerning)"
                                         options={[
                                             { label: "Base", value: "BASE" },
@@ -1519,10 +1519,10 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             const temp = activeProfile;
                                             temp.customizations = {
                                                 ...temp?.customizations,
-                                                heading3: {
-                                                ...temp?.customizations?.heading3,
+                                                headingLevel3: {
+                                                ...temp?.customizations?.headingLevel3,
                                                     typography: {
-                                                        ...temp?.customizations?.heading3?.typography,
+                                                        ...temp?.customizations?.headingLevel3?.typography,
                                                         kerning: value,
                                                     },
                                                 },
@@ -1530,7 +1530,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             handleDataChange(temp);
 
                                         }}
-                                        value={activeProfile?.customizations?.heading3?.typography?.kerning || ''}/>
+                                        value={activeProfile?.customizations?.headingLevel3?.typography?.kerning || ''}/>
 
                                     <Select label="Font size"
                                         options={[
@@ -1546,10 +1546,10 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             const temp = activeProfile;
                                             temp.customizations = {
                                                 ...temp?.customizations,
-                                                heading3: {
-                                                ...temp?.customizations?.heading3,
+                                                headingLevel3: {
+                                                ...temp?.customizations?.headingLevel3,
                                                     typography: {
-                                                        ...temp?.customizations?.heading3?.typography,
+                                                        ...temp?.customizations?.headingLevel3?.typography,
                                                         size: value,
                                                     },
                                                 },
@@ -1557,7 +1557,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             handleDataChange(temp);
 
                                         }}
-                                        value={activeProfile?.customizations?.heading3?.typography?.size || ''}/>
+                                        value={activeProfile?.customizations?.headingLevel3?.typography?.size || ''}/>
                                     <Select label="Letter case"
                                         options={[
                                             { label: "None", value: "NONE" },
@@ -1569,10 +1569,10 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             const temp = activeProfile;
                                             temp.customizations = {
                                                 ...temp?.customizations,
-                                                heading3: {
-                                                ...temp?.customizations?.heading3,
+                                                headingLevel3: {
+                                                ...temp?.customizations?.headingLevel3,
                                                     typography: {
-                                                        ...temp?.customizations?.heading3?.typography,
+                                                        ...temp?.customizations?.headingLevel3?.typography,
                                                         letterCase: value,
                                                     },
                                                 },
@@ -1580,7 +1580,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                             handleDataChange(temp);
 
                                         }}
-                                        value={activeProfile?.customizations?.heading3?.typography?.letterCase || ''}/>
+                                        value={activeProfile?.customizations?.headingLevel3?.typography?.letterCase || ''}/>
                                     <Select label="Font weight"
                                             options={[
                                                 { label: "Base", value: "BASE" },
@@ -1590,10 +1590,10 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                                 const temp = activeProfile;
                                                 temp.customizations = {
                                                     ...temp?.customizations,
-                                                    heading3: {
-                                                    ...temp?.customizations?.heading3,
+                                                    headingLevel3: {
+                                                    ...temp?.customizations?.headingLevel3,
                                                         typography: {
-                                                            ...temp?.customizations?.heading3?.typography,
+                                                            ...temp?.customizations?.headingLevel3?.typography,
                                                             weight: value,
                                                         },
                                                     },
@@ -1601,7 +1601,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                                 handleDataChange(temp);
 
                                             }}
-                                            value={activeProfile?.customizations?.heading3?.typography?.weight || ''}/>
+                                            value={activeProfile?.customizations?.headingLevel3?.typography?.weight || ''}/>
                                     
                                 </FormLayout>
                             ): null}

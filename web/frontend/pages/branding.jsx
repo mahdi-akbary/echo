@@ -185,7 +185,7 @@ export default function Branding () {
           ]}
         >
         <Modal.Section>
-            <Box background="bg-warning" padding="1">
+            <Box>
               <Text variant="headingMd">
                 It's your Active checkout, the changes will take effect immediately.
               </Text>

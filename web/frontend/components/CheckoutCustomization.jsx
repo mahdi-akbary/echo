@@ -18,7 +18,8 @@ import { useState, useEffect } from "react";
 
 // Work in progress
 export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
-    console.log('inside profile: ', activeProfile);
+    // Debugging
+    // console.log('inside profile: ', activeProfile);
     const [selectedTab, setSelectedTab] = useState(0);
     const [selectedHeadingTab, setSelectedHeadingTab] = useState(0);
 

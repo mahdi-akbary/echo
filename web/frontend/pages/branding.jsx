@@ -267,7 +267,7 @@ export default function Branding () {
               <CheckoutCustomization activeProfile={activeProfile} handleDataChange={handleDataChange}></CheckoutCustomization>
             : null }  
             {selectedTab === 1 ? 
-              <DesignSystem></DesignSystem>
+              <DesignSystem  activeProfile={activeProfile} handleDataChange={handleDataChange}></DesignSystem>
             : null }        
           
             </>

@@ -9,13 +9,19 @@ import {
     HorizontalStack,
     Grid,
     VerticalStack,
+    FormLayout,
+    Tabs
 } from '@shopify/polaris';
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 import { useState, useEffect } from "react";
+import { ColorPickerInput } from "../components";
+
 
 // Work in progress
-export function DesignSystem() {
-    
+export function DesignSystem({ activeProfile = {}, handleDataChange }) {
+    // Debugging
+    console.log('inside profile: ', activeProfile);
+
     return (
         
         <div style={{
@@ -27,7 +33,7 @@ export function DesignSystem() {
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
                         <VerticalStack gap="2">
                             <Text as="h3" variant="headingMd">
-                                Design System
+                                Color
                             </Text>
                             <Text as='p' variant="bodyMd">
                                 A way of making the checkout page look nice and easy to use. You can change the colors, fonts, and shapes of the things on the page. 
@@ -38,10 +44,81 @@ export function DesignSystem() {
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
 
                         <AlphaCard title="Orders" sectioned>
-                            <p>View a summary of your online store’s orders.</p>
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis voluptatibus nisi sit facere ratione, aliquam repellat modi, impedit sequi unde iusto. Est tempora ea veniam modi corrupti sequi deserunt rem.
-                            </p>
+                            <FormLayout>
+                                <Text as="h4" variant="headingSm">
+                                    Global colors
+                                </Text>
+
+                                <ColorPickerInput
+                                    helpText="A color strongly associated with the merchant, currently used for elements like primary and secondary buttons."
+                                    label="Brand"
+                                    onChange={(value) => {
+                                        const temp = activeProfile;
+                                        temp.designSystem = {
+                                            ...temp?.designSystem,
+                                            colors: {
+                                            ...temp?.designSystem?.colors,
+                                            global: {
+                                                ...temp?.designSystem?.colors?.global,
+                                                brand: value,
+                                            },
+                                            },
+                                        };
+                                        handleDataChange(temp);
+                                    }}
+                                    inputColor={
+                                        activeProfile?.designSystem?.colors?.global?.brand
+                                    }
+                                />
+
+                                <ColorPickerInput
+                                    helpText="A color used for interaction, like links and focus states."
+                                    label="Accent"
+                                    onChange={(value) => {
+                                        const temp = activeProfile;
+                                        temp.designSystem = {
+                                            ...temp?.designSystem,
+                                            colors: {
+                                            ...temp?.designSystem?.colors,
+                                            global: {
+                                                ...temp?.designSystem?.colors?.global,
+                                                accent: value,
+                                            },
+                                            },
+                                        };
+                                        handleDataChange(temp);
+                                    }}
+                                    inputColor={
+                                        activeProfile?.designSystem?.colors?.global?.accent
+                                    }
+                                />
+
+                                <ColorPickerInput
+                                    helpText="A semantic color used for components that communicate successful actions."
+                                    label="Success"
+                                    onChange={(value) => {
+                                        const temp = activeProfile;
+                                        temp.designSystem = {
+                                            ...temp?.designSystem,
+                                            colors: {
+                                            ...temp?.designSystem?.colors,
+                                            global: {
+                                                ...temp?.designSystem?.colors?.global,
+                                                success: value,
+                                            },
+                                            },
+                                        };
+                                        handleDataChange(temp);
+                                    }}
+                                    inputColor={
+                                        activeProfile?.designSystem?.colors?.global?.success
+                                    }
+                                />
+
+                                
+
+                            </FormLayout>
+                         
                         </AlphaCard>
                     </Grid.Cell>
                     

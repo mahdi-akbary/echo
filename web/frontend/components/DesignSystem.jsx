@@ -115,6 +115,93 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
                                     }
                                 />
 
+                                {/* Info color */}
+                                <ColorPickerInput
+                                    helpText="A semantic color used for components that communicate informative content."
+                                    label="Info"
+                                    onChange={(value) => {
+                                        const temp = activeProfile;
+                                        temp.designSystem = {
+                                            ...temp?.designSystem,
+                                            colors: {
+                                            ...temp?.designSystem?.colors,
+                                            global: {
+                                                ...temp?.designSystem?.colors?.global,
+                                                info: value,
+                                            },
+                                            },
+                                        };
+                                        handleDataChange(temp);
+                                    }}
+                                    inputColor={activeProfile?.designSystem?.colors?.global?.info}
+                                />
+                                {/* warning */}
+                                <ColorPickerInput
+                                    helpText="A semantic color used for components that display content that requires attention."
+                                    label="Warning"
+                                    onChange={(value) => {
+                                        const temp = activeProfile;
+                                        temp.designSystem = {
+                                            ...temp?.designSystem,
+                                            colors: {
+                                            ...temp?.designSystem?.colors,
+                                            global: {
+                                                ...temp?.designSystem?.colors?.global,
+                                                warning: value,
+                                            },
+                                            },
+                                        };
+                                        handleDataChange(temp);
+                                    }}
+                                    inputColor={
+                                        activeProfile?.designSystem?.colors?.global?.warning
+                                    }
+                                />
+                                {/* critical */}
+                                <ColorPickerInput
+                                    helpText="A semantic color used for components that communicate critical content."
+                                    label="Critical"
+                                    onChange={(value) => {
+                                        const temp = activeProfile;
+                                        temp.designSystem = {
+                                            ...temp?.designSystem,
+                                            colors: {
+                                            ...temp?.designSystem?.colors,
+                                            global: {
+                                                ...temp?.designSystem?.colors?.global,
+                                                critical: value,
+                                            },
+                                            },
+                                        };
+                                        handleDataChange(temp);
+                                    }}
+                                    inputColor={
+                                        activeProfile?.designSystem?.colors?.global?.critical
+                                    }
+                                />
+                                {/* decorative */}
+                                <ColorPickerInput
+                                    helpText="A color used to highlight certain areas of the user interface."
+                                    label="Decorative"
+                                    onChange={(value) => {
+                                        const temp = activeProfile;
+                                        temp.designSystem = {
+                                            ...temp?.designSystem,
+                                            colors: {
+                                            ...temp?.designSystem?.colors,
+                                            global: {
+                                                ...temp?.designSystem?.colors?.global,
+                                                decorative: value,
+                                            },
+                                            },
+                                        };
+                                        handleDataChange(temp);
+                                    }}
+                                    inputColor={
+                                        activeProfile?.designSystem?.colors?.global?.decorative
+                                    }
+                                />
+
                                 
 
                             </FormLayout>

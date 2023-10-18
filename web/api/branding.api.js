@@ -46,12 +46,20 @@ export default function brandingApiEndPoints (app, shopify) {
                     checkoutBrandingUpsert(checkoutBrandingInput: $checkoutBrandingInput, checkoutProfileId: $checkoutProfileId) {
                       checkoutBranding {
                         designSystem {
-                          # This property group applies to global corner radius token values
-                          cornerRadius {
-                            small
-                            base
-                            large
+                          #color
+                          colors{
+                            global{
+                              accent
+                              brand
+                              success
+                              info
+                              warning
+                              critical
+                              decorative
+                            }
+
                           }
+                          
                         }
 
                         customizations {
@@ -185,11 +193,17 @@ export default function brandingApiEndPoints (app, shopify) {
           "checkoutProfileId": profileData?.id,
           "checkoutBrandingInput": {
             "designSystem": {
-              "cornerRadius": {
-                "small": 3,
-                "base": 5,
-                "large": 30
-              }
+              "colors": {
+                "global": {
+                  "brand": profileData?.designSystem?.colors?.global?.brand,
+                  "accent": profileData?.designSystem?.colors?.global?.accent,
+                  "success": profileData?.designSystem?.colors?.global?.success,
+                  "info": profileData?.designSystem?.colors?.global?.info,
+                  "warning": profileData?.designSystem?.colors?.global?.warning,
+                  "critical": profileData?.designSystem?.colors?.global?.critical,
+                  "decorative": profileData?.designSystem?.colors?.global?.decorative,
+                },
+              },
             },
             "customizations": {
               "global": {
@@ -308,17 +322,17 @@ export default function brandingApiEndPoints (app, shopify) {
               checkoutBranding(checkoutProfileId: "${profileId}") {
                   designSystem { 
                     # This property group applies to global corner radius token values
-                    cornerRadius {
-                      small
-                      base
-                      large
-                    }
-
                     colors {
-                      global {
-                        # This global accent property applies to the color of all links and interactive components
+                      global{
                         accent
+                        brand
+                        success
+                        info
+                        warning
+                        critical
+                        decorative
                       }
+
                       schemes {
                         # This color scheme applies to the main checkout form
                         scheme1 {

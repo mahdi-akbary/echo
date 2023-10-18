@@ -1239,7 +1239,9 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
 
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
                         <Tabs tabs={HeadingTabs} selected={selectedHeadingTab} onSelect={(value) => setSelectedHeadingTab(value)} />
+
                         <AlphaCard>
+                            
                             { HeadingTabs[selectedHeadingTab].id === 'heading-1' ? (
                                 <FormLayout>
                                     <Text variant="headingSm" as="h3">Heading 1</Text>

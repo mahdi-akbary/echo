@@ -239,7 +239,7 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
                             {/* If scheme-1 tab active */}
                             {colorsTabs[colorsTabsSelected].id === 'scheme-1' ? (
                                 <FormLayout>
-                                    Scheme 1
+                                    
                                 </FormLayout>
                             ): null}
 
@@ -249,6 +249,8 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
                                     Scheme 2
                                 </FormLayout>
                             ): null}
+
+
 
                         </AlphaCard>
                     </Grid.Cell>

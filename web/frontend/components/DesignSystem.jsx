@@ -679,7 +679,6 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
                                         </FormLayout>
                                     </Grid>
                                     <hr />
-
                                     {/* Primary buttons */}
                                     <Grid columns={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2 }} gap={2}>
                                         <FormLayout>
@@ -970,6 +969,304 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
                                                 }}
                                                 inputColor={
                                                     activeProfile?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.accent
+                                                }
+                                            />
+                                           
+                                        </FormLayout>
+                                    </Grid>                                                
+
+                                   
+                                    <hr />
+                                    {/* Secondary buttons */}
+                                    <Grid columns={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2 }} gap={2}>
+                                        <FormLayout>
+                                            <Text as="h4" variant="headingSm">Secondary button </Text>
+
+                                            <ColorPickerInput
+                                                label="Text color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                secondaryButton: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.secondaryButton,
+                                                                        text: value,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.text
+                                                }
+                                            />
+                                            {/* Background */}
+                                            <ColorPickerInput
+                                                label="Background color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    secondaryButton: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.secondaryButton,
+                                                                        background: value,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.background
+                                                }
+                                            />
+                                            {/* Border color */}
+                                            <ColorPickerInput
+                                                label="Border color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    secondaryButton: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.secondaryButton,
+                                                                        border: value,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.border
+                                                }
+                                            />
+                                            {/* decorative */}
+                                            <ColorPickerInput
+                                                label="Decorative color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    secondaryButton: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.secondaryButton,
+                                                                        decorative: value,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.decorative
+                                                }
+                                            />
+                                            {/* accent */}
+                                            <ColorPickerInput
+                                                label="Accent color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    secondaryButton: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.secondaryButton,
+                                                                        accent: value,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.accent
+                                                }
+                                            />
+                                        </FormLayout>
+
+                                        <FormLayout>
+                                            <Text as="h4" variant="headingSm">Secondary button hover state </Text>
+                                            <ColorPickerInput
+                                                label="Text color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    secondaryButton: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.secondaryButton,
+                                                                        hover: {
+                                                                            ...temp?.designSystem?.colors?.schemes?.scheme1.secondaryButton.hover,
+                                                                            text: value,
+                                                                        }
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.text
+                                                }
+                                            />
+                                            {/* Background */}
+                                            <ColorPickerInput
+                                                label="Background color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    secondaryButton: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.secondaryButton,
+                                                                        hover: {
+                                                                            ...temp?.designSystem?.colors?.schemes?.scheme1.secondaryButton.hover,
+                                                                            background: value,
+                                                                        }
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.background
+                                                }
+                                            />
+                                            {/* Border color */}
+                                            <ColorPickerInput
+                                                label="Border color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    secondaryButton: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.secondaryButton,
+                                                                        hover: {
+                                                                            ...temp?.designSystem?.colors?.schemes?.scheme1.secondaryButton.hover,
+                                                                            border: value,
+                                                                        },
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.border
+                                                }
+                                            />
+                                            {/* decorative */}
+                                            <ColorPickerInput
+                                                label="Decorative color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    secondaryButton: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.secondaryButton,
+                                                                        hover: {
+                                                                            ...temp?.designSystem?.colors?.schemes?.scheme1.secondaryButton.hover,
+                                                                            decorative: value,
+                                                                        },
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.decorative
+                                                }
+                                            />
+                                            {/* accent */}
+                                            <ColorPickerInput
+                                                label="Accent color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    secondaryButton: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.secondaryButton,
+                                                                        hover: {
+                                                                            ...temp?.designSystem?.colors?.schemes?.scheme1.secondaryButton.hover,
+                                                                            accent: value,
+                                                                        },
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.accent
                                                 }
                                             />
                                            

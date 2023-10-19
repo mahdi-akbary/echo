@@ -407,7 +407,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                                 ...temp?.customizations,
                                                 control: {
                                                 ...temp?.customizations?.control,
-                                                    color: (value === 'TRANSPARENT') ? 'TRANSPARENT' : null,
+                                                    color: (value === 'TRANSPARENT') ? 'TRANSPARENT' : 'Defaults',
                                                 },
                                             };
                                             handleDataChange(temp);
@@ -1241,7 +1241,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                         <Tabs tabs={HeadingTabs} selected={selectedHeadingTab} onSelect={(value) => setSelectedHeadingTab(value)} />
 
                         <AlphaCard>
-                            
+
                             { HeadingTabs[selectedHeadingTab].id === 'heading-1' ? (
                                 <FormLayout>
                                     <Text variant="headingSm" as="h3">Heading 1</Text>

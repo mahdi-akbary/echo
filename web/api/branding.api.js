@@ -578,6 +578,7 @@ export default function brandingApiEndPoints (app, shopify) {
                       }
 
                       schemes{
+                        
                         scheme1{
                           base{
                             background

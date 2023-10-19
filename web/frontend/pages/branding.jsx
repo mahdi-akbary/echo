@@ -95,22 +95,18 @@ export default function Branding () {
 
   const settingTabs = [
     {
+      id: 'design-system-1',
+      content: 'Design system',
+      panelID: 'Design-system-content-1',
+    },
+    {
       id: 'customization-1',
       content: 'Customization',
       accessibilityLabel: 'Customization',
       panelID: 'customization-content-1',
     },
-    {
-      id: 'Design-system-1',
-      content: 'Design system',
-      panelID: 'Design-system-content-1',
-    }
+   
   ];
-
-  const handleTabChange = useCallback(
-    (selectedTabIndex) => setSelectedTab(selectedTabIndex),
-    [],
-  );
 
   // Toaster mockup
   const toastMarkup = toastActive ? (
@@ -254,7 +250,7 @@ export default function Branding () {
         </Layout.Section>
 
         <Layout.Section>
-          <Tabs tabs={settingTabs} selected={selectedTab} onSelect={handleTabChange}></Tabs>
+          <Tabs tabs={settingTabs} selected={selectedTab} onSelect={(value) => setSelectedTab(value) }></Tabs>
           
           {/* If still loading hide the settings and show placholder */}
 
@@ -263,10 +259,11 @@ export default function Branding () {
           ) : (
             <>
 
-            { selectedTab === 0 ? 
+            { settingTabs[selectedTab].id === 'customization-1' ? 
               <CheckoutCustomization activeProfile={activeProfile} handleDataChange={handleDataChange}></CheckoutCustomization>
             : null }  
-            {selectedTab === 1 ? 
+
+            { settingTabs[selectedTab].id === 'design-system-1' ? 
               <DesignSystem  activeProfile={activeProfile} handleDataChange={handleDataChange}></DesignSystem>
             : null }        
           

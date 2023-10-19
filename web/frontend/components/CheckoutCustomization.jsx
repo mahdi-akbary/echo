@@ -137,7 +137,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                         };
                                         handleDataChange(temp)
                                     }}
-                                    value={activeProfile?.customizations?.global?.typography.letterCase}/>
+                                    value={activeProfile?.customizations?.global?.typography?.letterCase || '' }/>
 
                                 <Select label="Letter spacing (kerning)"
                                     options={[
@@ -159,7 +159,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                         };
                                         handleDataChange(temp)
                                     }}
-                                    value={ activeProfile?.customizations?.global?.typography.kerning || ''}/>
+                                    value={ activeProfile?.customizations?.global?.typography?.kerning || '' }/>
 
                             </FormLayout>
                            

@@ -59,7 +59,68 @@ export default function brandingApiEndPoints (app, shopify) {
                             }
                             # schemes
                             schemes{
+
                               scheme1{
+                                base{
+                                  background
+                                  border
+                                  text
+                                  icon
+                                  decorative
+                                  accent
+                                }
+                                
+                                control{
+                                  text
+                                  background
+                                  border
+                                  icon
+                                  decorative
+                                  accent
+                                  selected{
+                                    text
+                                    background
+                                    border
+                                    icon
+                                    decorative
+                                    accent
+                                  }
+                                }
+                                primaryButton{
+                                  text
+                                  background
+                                  border
+                                  decorative
+                                  icon
+                                  accent
+                                  hover{
+                                     text
+                                    background
+                                    border
+                                    decorative
+                                    icon
+                                    accent
+                                  }
+                                }
+                                secondaryButton{
+                                  text
+                                  background
+                                  border
+                                  decorative
+                                  icon
+                                  accent
+                                  hover{
+                                    text
+                                    background
+                                    border
+                                    decorative
+                                    icon
+                                    accent
+                                  }
+                                }
+                              }
+
+                              scheme2{
                                 base{
                                   background
                                   border
@@ -322,7 +383,68 @@ export default function brandingApiEndPoints (app, shopify) {
                         "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.accent,
                       }
                     },    
-                  }
+                  },
+        
+                  "scheme2": {
+                    "base": {
+                      "background": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.background,
+                      "border": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.border,
+                      "text": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.text,
+                      "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.icon,
+                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.decorative,
+                      "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.accent,
+                    },
+                    "control": {
+                      "text": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.text,
+                      "background": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.background,
+                      "border": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.border,
+                      "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.icon,
+                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.decorative,
+                      "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.accent,
+                      "selected": {
+                        "text": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.text,
+                        "background": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.background,
+                        "border": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.border,
+                        "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.icon,
+                        "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.decorative,
+                        "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.accent,
+                      }
+                    },
+                    "primaryButton": {
+                      "text": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.text,
+                      "background": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.background,
+                      "border": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.border,
+                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.decorative,
+                      "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.icon,
+                      "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.accent,
+                      "hover": {
+                        "text": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.text,
+                        "background": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.background,
+                        "border": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.border,
+                        "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.decorative,
+                        "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.icon,
+                        "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.accent,
+                      }
+                    },
+                    "secondaryButton": {
+                      "text": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.text,
+                      "background": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.background,
+                      "border": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.border,
+                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.decorative,
+                      "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.icon,
+                      "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.accent,
+                      "hover": {
+                        "text": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.text,
+                        "background": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.background,
+                        "border": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.border,
+                        "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.decorative,
+                        "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.icon,
+                        "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.accent,
+                      }
+                    },    
+                  },
+        
+
                 }
 
               },
@@ -457,6 +579,66 @@ export default function brandingApiEndPoints (app, shopify) {
 
                       schemes{
                         scheme1{
+                          base{
+                            background
+                            border
+                            text
+                            icon
+                            decorative
+                            accent
+                          }
+                          
+                          control{
+                            text
+                            background
+                            border
+                            icon
+                            decorative
+                            accent
+                            selected{
+                              text
+                              background
+                              border
+                              icon
+                              decorative
+                              accent
+                            }
+                          }
+                          primaryButton{
+                            text
+                            background
+                            border
+                            decorative
+                            icon
+                            accent
+                            hover{
+                               text
+                              background
+                              border
+                              decorative
+                              icon
+                              accent
+                            }
+                          }
+                          secondaryButton{
+                            text
+                            background
+                            border
+                            decorative
+                            icon
+                            accent
+                            hover{
+                              text
+                              background
+                              border
+                              decorative
+                              icon
+                              accent
+                            }
+                          }
+                        }
+
+                        scheme2{
                           base{
                             background
                             border

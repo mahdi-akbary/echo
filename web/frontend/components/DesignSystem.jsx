@@ -10,7 +10,8 @@ import {
     Grid,
     VerticalStack,
     FormLayout,
-    Tabs
+    Tabs,
+Form,
 } from '@shopify/polaris';
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 import { useState, useEffect } from "react";
@@ -381,7 +382,304 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
                                             activeProfile?.designSystem?.colors?.schemes?.scheme1?.base?.accent
                                         }
                                     />
+                                    <hr />
+                                    {/* Form control text color */}
+                                    <Grid columns={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2 }} gap={2}>
+                                        <FormLayout>
+                                            <Text as="h4" variant="headingSm">Form control colors </Text>
 
+                                            <ColorPickerInput
+                                                label="Text color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    control: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.control,
+                                                                        text: value,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.control?.text
+                                                }
+                                            />
+                                            {/* Background */}
+                                            <ColorPickerInput
+                                                label="Background color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    control: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.control,
+                                                                        background: value,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.control?.background
+                                                }
+                                            />
+                                            {/* Border color */}
+                                            <ColorPickerInput
+                                                label="Border color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    control: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.control,
+                                                                        border: value,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.control?.border
+                                                }
+                                            />
+                                            {/* decorative */}
+                                            <ColorPickerInput
+                                                label="Decorative color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    control: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.control,
+                                                                        decorative: value,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.control?.decorative
+                                                }
+                                            />
+                                            {/* accent */}
+                                            <ColorPickerInput
+                                                label="Accent color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    control: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.control,
+                                                                        accent: value,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.control?.accent
+                                                }
+                                            />
+                                        </FormLayout>
+
+                                        <FormLayout>
+                                            <Text as="h4" variant="headingSm">Form control selected colors </Text>
+                                            <ColorPickerInput
+                                                label="Text color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    control: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.control,
+                                                                        selected: {
+                                                                            ...temp?.designSystem?.colors?.schemes?.scheme1.control.selected,
+                                                                            text: value,
+                                                                        }
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.text
+                                                }
+                                            />
+                                            {/* Background */}
+                                            <ColorPickerInput
+                                                label="Background color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    control: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.control,
+                                                                        selected: {
+                                                                            ...temp?.designSystem?.colors?.schemes?.scheme1.control.selected,
+                                                                            background: value,
+                                                                        }
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.background
+                                                }
+                                            />
+                                            {/* Border color */}
+                                            <ColorPickerInput
+                                                label="Border color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    control: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.control,
+                                                                        selected: {
+                                                                            ...temp?.designSystem?.colors?.schemes?.scheme1.control.selected,
+                                                                            border: value,
+                                                                        },
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.border
+                                                }
+                                            />
+                                            {/* decorative */}
+                                            <ColorPickerInput
+                                                label="Decorative color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    control: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.control,
+                                                                        selected: {
+                                                                            ...temp?.designSystem?.colors?.schemes?.scheme1.control.selected,
+                                                                            decorative: value,
+                                                                        },
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.decorative
+                                                }
+                                            />
+                                            {/* accent */}
+                                            <ColorPickerInput
+                                                label="Accent color"
+                                                onChange={(value) => {
+                                                    const temp = activeProfile;
+                                                    temp.designSystem = {
+                                                        ...temp?.designSystem,
+                                                        colors: {
+                                                        ...temp?.designSystem?.colors,
+                                                            schemes: {
+                                                                ...temp?.designSystem?.colors?.schemes,
+                                                                scheme1: {
+                                                                ...temp?.designSystem?.colors?.schemes?.scheme1,
+                                                                    control: {
+                                                                    ...temp?.designSystem?.colors?.schemes?.scheme1.control,
+                                                                        selected: {
+                                                                            ...temp?.designSystem?.colors?.schemes?.scheme1.control.selected,
+                                                                            accent: value,
+                                                                        },
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    };
+                                                    handleDataChange(temp);
+                                                }}
+                                                inputColor={
+                                                    activeProfile?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.accent
+                                                }
+                                            />
+                                           
+                                        </FormLayout>
+                                    </Grid>
+
+                                   
                                     
                                 </FormLayout>
                             ): null}

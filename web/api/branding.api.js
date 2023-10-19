@@ -281,6 +281,14 @@ export default function brandingApiEndPoints (app, shopify) {
                       "icon": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.icon,
                       "decorative": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.decorative,
                       "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.accent,
+                      "selected": {
+                        "text": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.text,
+                        "background": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.background,
+                        "border": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.border,
+                        "icon": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.icon,
+                        "decorative": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.decorative,
+                        "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.accent,
+                      }
                     },
                     "primaryButton": {
                       "text": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.text,
@@ -316,7 +324,7 @@ export default function brandingApiEndPoints (app, shopify) {
                     },    
                   }
                 }
-                                
+
               },
             },
             "customizations": {

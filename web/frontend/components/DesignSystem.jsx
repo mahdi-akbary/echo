@@ -23,6 +23,7 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
     // Debugging
     console.log('inside profile: ', activeProfile);
     const [colorsTabsSelected, setColorsTabsSelected] = useState(0);
+    const [typographyTabsSelected, setTypographyTabsSelected] = useState(0);
 
     // Colors Tab
     const colorsTabs = [
@@ -44,12 +45,35 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
         },
     ];
 
+    // Typography Tab
+    const typographyTabs = [
+        {
+            id: 'primary-typography',
+            content: 'Primary',
+            accessibilityLabel: 'Primary typography',
+            panelID: 'primary-typography',
+        },
+        {
+            id: 'secondary-typography',
+            content: 'Secondary',
+            accessibilityLabel: 'Secondary typography',
+            panelID: 'secondary-typography',
+        },
+        {
+            id: 'size-typography',
+            content: 'Size',
+            accessibilityLabel: 'Size',
+            panelID: 'size-typography',
+        },
+    ];
+
     return (
         
         <div style={{
             padding: '2rem 1rem',
             }}>
             <HorizontalStack gap={{ xs: "2", sm: "4" }}>
+
                 <Grid columns={{ xs: 1, sm: 3, md: 3, lg: 3, xl: 3 }} gap={2}>
                     
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
@@ -70,7 +94,7 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
                             selected={colorsTabsSelected}
                             onSelect={(value) => setColorsTabsSelected(value)}
                         />
-                        <AlphaCard title="Orders" sectioned>
+                        <AlphaCard title="Colors" sectioned>
                            {/* If global tab active */}
                            {colorsTabs[colorsTabsSelected].id === 'global' ? (
                                 <FormLayout>
@@ -2325,6 +2349,51 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
                         </AlphaCard>
                     </Grid.Cell>
                     
+                </Grid>
+
+                <Grid columns={{ xs: 1, sm: 3, md: 3, lg: 3, xl: 3 }} gap={2}>
+                    <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
+                        <VerticalStack gap="2">
+                            <Text as="h3" variant="headingMd"> Typography </Text>
+                            <Text as='p' variant="bodyMd">
+                                Adjust the typography settings for your design system. Fonts, font sizes, line heights, and font weights can be customized.
+                            </Text>
+                        </VerticalStack>
+                    </Grid.Cell>
+
+                    <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
+                        <Tabs
+                            tabs={typographyTabs}
+                            selected={typographyTabsSelected}
+                            onSelect={(value) => setTypographyTabsSelected(value)}
+                        />
+
+                        <AlphaCard title="Typography" sectioned>
+                            {/* Primary tab */}
+                            {typographyTabs[typographyTabsSelected].id === 'primary-typography' ? (
+                                <FormLayout>
+                                    <Text as="h4" variant="headingSm">Primary font </Text>
+                                </FormLayout>
+
+                            ): null}
+
+                            {typographyTabs[typographyTabsSelected].id === 'secondary-typography' ? (
+                                <FormLayout>
+                                    <Text as="h4" variant="headingSm">Secondary font </Text>
+                                </FormLayout>
+
+                            ): null}
+
+                            {typographyTabs[typographyTabsSelected].id === 'size-typography' ? (
+                                <FormLayout>
+                                    <Text as="h4" variant="headingSm">Font size </Text>
+                                </FormLayout>
+
+                            ): null}
+
+                        </AlphaCard>
+                    </Grid.Cell>
+
                 </Grid>
             </HorizontalStack>
         </div>

@@ -4,6 +4,7 @@ import {
     Button,
     Text,
     TextField,
+    Select,
     AlphaCard,
     Divider,
     HorizontalStack,
@@ -16,6 +17,8 @@ Form,
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 import { useState, useEffect } from "react";
 import { ColorPickerInput } from "../components";
+import { FONTS } from "../components/fonts";
+
 
 
 // Work in progress
@@ -2373,6 +2376,30 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
                             {typographyTabs[typographyTabsSelected].id === 'primary-typography' ? (
                                 <FormLayout>
                                     <Text as="h4" variant="headingSm">Primary font </Text>
+                                    <Select
+                                        label="Font"
+                                        options={FONTS}
+                                        value={ activeProfile?.designSystem?.typography?.primary?.shopifyFontGroup?.name || null }
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.designSystem = {
+                                                ...temp?.designSystem,
+                                                typography: {
+                                                    ...temp?.designSystem?.typography,
+                                                    primary: {
+                                                        ...temp?.designSystem?.typography?.primary,
+                                                        shopifyFontGroup: {
+                                                            ...temp?.designSystem?.typography?.primary?.shopifyFontGroup,
+                                                            name: value,
+                                                        }
+                                                    },
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                        }}
+                                    />
+
+
                                 </FormLayout>
 
                             ): null}
@@ -2380,6 +2407,29 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
                             {typographyTabs[typographyTabsSelected].id === 'secondary-typography' ? (
                                 <FormLayout>
                                     <Text as="h4" variant="headingSm">Secondary font </Text>
+                                    <Select
+                                        label="Font"
+                                        options={FONTS}
+                                        value={ activeProfile?.designSystem?.typography?.secondary?.shopifyFontGroup?.name || null }
+                                        onChange={(value) => {
+                                            const temp = activeProfile;
+                                            temp.designSystem = {
+                                                ...temp?.designSystem,
+                                                typography: {
+                                                    ...temp?.designSystem?.typography,
+                                                    secondary: {
+                                                        ...temp?.designSystem?.typography?.secondary,
+                                                        shopifyFontGroup: {
+                                                            ...temp?.designSystem?.typography?.secondary?.shopifyFontGroup,
+                                                            name: value,
+                                                        }
+                                                    },
+                                                },
+                                            };
+                                            handleDataChange(temp);
+                                        }}
+                                    />
+
                                 </FormLayout>
 
                             ): null}

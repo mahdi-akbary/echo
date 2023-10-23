@@ -57,9 +57,9 @@ export default function brandingApiEndPoints (app, shopify) {
                               critical
                               decorative
                             }
+
                             # schemes
                             schemes{
-
                               scheme1{
                                 base{
                                   background
@@ -180,7 +180,40 @@ export default function brandingApiEndPoints (app, shopify) {
                                 }
                               }
                             }
+                          }
 
+                          # Typography
+                          typography{
+                            primary{
+                              name
+                              base{
+                                  sources
+                                  weight
+                              }
+                              bold{
+                                sources
+                                weight
+                              }
+                              loadingStrategy
+                            }
+
+                            secondary{
+                              name
+                              base{
+                                  sources
+                                  weight
+                              }
+                              bold{
+                                sources
+                                weight
+                              }
+                              loadingStrategy
+                            }
+                            
+                            size{
+                              base
+                              ratio
+                            }
                           }
                         }
 
@@ -443,11 +476,16 @@ export default function brandingApiEndPoints (app, shopify) {
                       }
                     },    
                   },
-        
-
-                }
-
+                },
               },
+              "typography": {
+                "primary": {
+                  "shopifyFontGroup": {
+                    "name": profileData?.designSystem?.typography?.primary?.shopifyFontGroup?.name,
+                  }
+                },
+              },
+
             },
             "customizations": {
               "global": {
@@ -698,30 +736,46 @@ export default function brandingApiEndPoints (app, shopify) {
                             }
                           }
                         }
+                        
                       }
-
                     }
+                    # Typography
 
-                    # This property group applies to global typography font faces, sizes, and weights
-                    typography {
-                      size {
+                    typography{
+                      primary{
+                        name
+                        base{
+                            sources
+                            weight
+                        }
+                        bold{
+                          sources
+                          weight
+                        }
+                        loadingStrategy
+                      }
+                      
+                      secondary{
+                        name
+                        base{
+                            sources
+                            weight
+                        }
+                        bold{
+                          sources
+                          weight
+                        }
+                        loadingStrategy
+                      }
+                      
+                      size{
                         base
                         ratio
                       }
-                      primary {
-                        base {
-                          sources
-                          weight
-                        }
-                      }
-                      secondary {
-                        base {
-                          sources
-                          weight
-                        }
-                      }
                     }
+
                   }
+                  
                   customizations {
                     global {
                       cornerRadius

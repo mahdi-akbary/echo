@@ -484,6 +484,12 @@ export default function brandingApiEndPoints (app, shopify) {
                     "name": profileData?.designSystem?.typography?.primary?.shopifyFontGroup?.name,
                   }
                 },
+                
+                "secondary": {
+                  "shopifyFontGroup": {
+                    "name": profileData?.designSystem?.typography?.secondary?.shopifyFontGroup?.name,
+                  }
+                },
               },
 
             },
@@ -775,7 +781,7 @@ export default function brandingApiEndPoints (app, shopify) {
                     }
 
                   }
-                  
+
                   customizations {
                     global {
                       cornerRadius

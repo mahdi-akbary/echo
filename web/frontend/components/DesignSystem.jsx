@@ -2437,6 +2437,52 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
                             {typographyTabs[typographyTabsSelected].id === 'size-typography' ? (
                                 <FormLayout>
                                     <Text as="h4" variant="headingSm">Font size </Text>
+                                    <TextField
+                                            label="Font size"
+                                            type="number"
+                                            min="12"
+                                            max="18"
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.designSystem = {
+                                                ...temp?.designSystem,
+                                                typography: {
+                                                    ...temp?.designSystem?.typography,
+                                                    size: {
+                                                    ...temp?.designSystem?.typography?.size,
+                                                    ...{ base: +value },
+                                                    },
+                                                },
+                                                };
+                                                handleDataChange(temp);
+                                            }}
+                                        value={activeProfile?.designSystem?.typography?.size?.base}
+                                        autoComplete="off"
+                                        />
+                                        <Select
+                                            label="Font size ratio"
+                                            options={[
+                                                { label: "1.0", value: 1.0 },
+                                                { label: "1.1", value: 1.1 },
+                                                { label: "1.2", value: 1.2 },
+                                                { label: "1.3", value: 1.3 },
+                                                { label: "1.4", value: 1.4 },
+                                            ]}
+                                            onChange={(value) => {
+                                                const temp = activeProfile;
+                                                temp.designSystem = {
+                                                ...temp?.designSystem,
+                                                typography: {
+                                                    ...temp?.designSystem?.typography,
+                                                    size: {
+                                                    ...temp?.designSystem?.typography?.size,
+                                                    ...{ ratio: + value },
+                                                    },
+                                                },
+                                                };
+                                                handleDataChange(temp);
+                                            }}
+                                        value={activeProfile?.designSystem?.typography?.size?.ratio}/>
                                 </FormLayout>
 
                             ): null}

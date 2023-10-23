@@ -214,6 +214,7 @@ export default function brandingApiEndPoints (app, shopify) {
                               base
                               ratio
                             }
+
                           }
                         }
 
@@ -484,11 +485,16 @@ export default function brandingApiEndPoints (app, shopify) {
                     "name": profileData?.designSystem?.typography?.primary?.shopifyFontGroup?.name,
                   }
                 },
-                
+
                 "secondary": {
                   "shopifyFontGroup": {
                     "name": profileData?.designSystem?.typography?.secondary?.shopifyFontGroup?.name,
                   }
+                },
+
+                "size": {
+                  "base": profileData?.designSystem?.typography?.size?.base,
+                  "ratio": profileData?.designSystem?.typography?.size?.ratio,
                 },
               },
 

@@ -216,13 +216,16 @@ export default function Branding () {
                     <VerticalStack gap="2">
                       <Text variant="headingLg">Checkout branding</Text>
                       <Text variant="bodyMd">
-                        An advance setting for fully customization of the checkout
-                        appearance & branding.
+                        An advance checkout branding tool that allows you to customize your checkout page, new customer accounts, thank you and order status pages.
                       </Text>
                     </VerticalStack>
                   </Box>
-                  {/* New dropdown */}
-                  <Popover
+                 
+                  {isLoadingProfile || isRefetchingProfile ? null : 
+                  
+                  <HorizontalStack gap="3">
+                   {/* New dropdown */}
+                   <Popover
                     active={active}
                     activator={profileSelector}
                     autofocusTarget="first-node"
@@ -240,17 +243,6 @@ export default function Branding () {
                       
                     />
                   </Popover>
-                    
-                  <Text>
-                    You can always create, duplicate or publish your checkout profiles
-                  </Text>
-                  {isLoadingProfile || isRefetchingProfile ? null : <HorizontalStack gap="3">
-                    <Button  onClick={() =>
-                      redirect.dispatch(
-                        Redirect.Action.ADMIN_PATH,
-                        "/settings/checkout"
-                      )
-                    }>Create new profile</Button>
 
                     <Button primary
                       onClick={() =>

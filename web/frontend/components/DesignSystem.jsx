@@ -24,7 +24,7 @@ import { FONTS } from "../components/fonts";
 // Work in progress
 export function DesignSystem({ activeProfile = {}, handleDataChange }) {
     // Debugging
-    console.log('inside profile: ', activeProfile);
+    // console.log('inside profile: ', activeProfile);
     const [colorsTabsSelected, setColorsTabsSelected] = useState(0);
     const [typographyTabsSelected, setTypographyTabsSelected] = useState(0);
 

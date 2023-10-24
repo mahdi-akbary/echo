@@ -18,6 +18,8 @@ import {
   Tabs,
   Grid,
   Toast,
+  ActionList,
+  Popover,
 } from "@shopify/polaris";
 import {
   useAuthenticatedFetch,
@@ -44,6 +46,11 @@ export default function Branding () {
   const [selected, setSelected] = useState(undefined);
   const [selectedTab, setSelectedTab] = useState(0);
   const [toastActive, setToastActive] = useState(false);
+
+  // Profile dropdown
+  const [active, setActive] = useState(false);
+  const toggleActive = useCallback(() => setActive((active) => !active), []);
+
 
   const toggleToastActive = useCallback(
     () => setToastActive((active) => !active),
@@ -160,6 +167,16 @@ export default function Branding () {
     setActiveCheckoutWarning(!activeCheckoutWarning);
   };
 
+  const profileSelector = (
+    <Button onClick={toggleActive} disclosure>
+      <div style={{display: "flex", gap: "0.4rem", alignItems: "center"}}>
+        { selected ? data.profiles.find(profile => profile.id === selected).name : 'Select profile'}
+        {/* if isPublished show live badge, otherwise show draft badge */}
+        { selected ? data.profiles.find(profile => profile.id === selected).isPublished ? <Badge status="success"> Active </Badge> : <Badge status="info"> Draft </Badge> : null}
+      </div>
+    </Button>
+  );
+
   const contentMarkup = (
     <>
       <TitleBar title="Branding" primaryAction={null} />
@@ -193,7 +210,7 @@ export default function Branding () {
         <Layout.Section>
           <AlphaCard>
             <HorizontalStack>
-              <Box width="89%">
+              <Box width="90%">
                 <VerticalStack gap="4">
                   <Box>
                     <VerticalStack gap="2">
@@ -204,6 +221,7 @@ export default function Branding () {
                       </Text>
                     </VerticalStack>
                   </Box>
+
                   <ChoiceList
                     title={<Text fontWeight="semibold">Checkout profiles.</Text>}
                     choices={
@@ -214,6 +232,28 @@ export default function Branding () {
                     selected={selected || ['hidden']}
                     onChange={handleChange}
                   />
+                  {/* New dropdown */}
+
+                  <Popover
+                    active={active}
+                    activator={profileSelector}
+                    autofocusTarget="first-node"
+                    onClose={ toggleActive }>
+                    <ActionList
+                      actionRole="menuitem"
+                      items={
+                        (data.profiles || []).map(profile => ({
+                          active: profile.id === selected,
+                          content: <>{profile.name} {profile.isPublished ? <Badge status="success">Active</Badge> : null}</>,
+                          value: profile.id,
+                          onAction: () => { handleChange(profile.id); toggleActive() },
+                        }))
+                      }
+                    />
+                  </Popover>
+
+
+                    
                   <Text>
                     You can always create, duplicate or publish your checkout profiles
                   </Text>
@@ -238,7 +278,8 @@ export default function Branding () {
                   </HorizontalStack>}
                 </VerticalStack>
               </Box>
-              <Box width="11%">
+
+              <Box width="10%">
                 <Image
                   src="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg"
                   alt="paint"
@@ -246,6 +287,7 @@ export default function Branding () {
                 />
               </Box>
             </HorizontalStack>
+            
           </AlphaCard>
         </Layout.Section>
 

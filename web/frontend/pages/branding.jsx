@@ -221,19 +221,7 @@ export default function Branding () {
                       </Text>
                     </VerticalStack>
                   </Box>
-
-                  <ChoiceList
-                    title={<Text fontWeight="semibold">Checkout profiles.</Text>}
-                    choices={
-                      (data.profiles || []).map(profile => ({
-                        label: <>{profile.name} {profile.isPublished ? <Badge status="success">Active</Badge> : null}</>,
-                        value: profile.id,
-                      }))}
-                    selected={selected || ['hidden']}
-                    onChange={handleChange}
-                  />
                   {/* New dropdown */}
-
                   <Popover
                     active={active}
                     activator={profileSelector}
@@ -249,10 +237,9 @@ export default function Branding () {
                           onAction: () => { handleChange(profile.id); toggleActive() },
                         }))
                       }
+                      
                     />
                   </Popover>
-
-
                     
                   <Text>
                     You can always create, duplicate or publish your checkout profiles

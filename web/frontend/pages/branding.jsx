@@ -222,40 +222,48 @@ export default function Branding () {
                   </Box>
                  
                   {isLoadingProfile || isRefetchingProfile ? null : 
-                  
-                  <HorizontalStack gap="3">
-                   {/* New dropdown */}
-                   <Popover
-                    active={active}
-                    activator={profileSelector}
-                    autofocusTarget="first-node"
-                    onClose={ toggleActive }>
-                    <ActionList
-                      actionRole="menuitem"
-                      items={
-                        (data.profiles || []).map(profile => ({
-                          active: profile.id === selected,
-                          content: <>{profile.name} {profile.isPublished ? <Badge status="success">Active</Badge> : null}</>,
-                          value: profile.id,
-                          onAction: () => { handleChange(profile.id); toggleActive() },
-                        }))
-                      }
-                      
-                    />
-                  </Popover>
+                    <Box style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      gap: "1rem",
+                    }}>
+                      <HorizontalStack gap="3">
+                        <Popover
+                          active={active}
+                          activator={profileSelector}
+                          autofocusTarget="first-node"
+                          onClose={ toggleActive }>
+                          <ActionList
+                            actionRole="menuitem"
+                            items={
+                              (data.profiles || []).map(profile => ({
+                                active: profile.id === selected,
+                                content: <>{profile.name} { profile.isPublished ? <Badge status="success">Active</Badge> : null}</>,
+                                value: profile.id,
+                                onAction: () => { handleChange(profile.id); toggleActive() },
+                              }))
+                            }
+                          />
+                        </Popover>
 
-                    <Button primary
-                      onClick={() =>
-                        redirect.dispatch(
-                          Redirect.Action.ADMIN_PATH,
-                          { path: `/settings/checkout/preview/profiles/${selected?.split('/')[4]}`, newContext: true }
-                        )
-                      }
-                    >
-                      Preview
-                    </Button>
-                  </HorizontalStack>}
+                        <Button primary
+                          onClick={() =>
+                            redirect.dispatch(
+                              Redirect.Action.ADMIN_PATH,
+                              { path: `/settings/checkout/preview/profiles/${selected?.split('/')[4]}`, newContext: true }
+                            )
+                          }> Preview </Button>
+                      </HorizontalStack>
+
+                      {/* <Box>
+                        <Button critical> Remove </Button>
+                      </Box> */}
+
+                    </Box>
+                  }
                 </VerticalStack>
+
               </Box>
 
               <Box width="10%">

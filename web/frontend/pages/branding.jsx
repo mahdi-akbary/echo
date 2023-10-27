@@ -20,6 +20,7 @@ import {
   Toast,
   ActionList,
   Popover,
+  Banner,
 } from "@shopify/polaris";
 import {
   useAuthenticatedFetch,
@@ -111,6 +112,12 @@ export default function Branding () {
       content: 'Customization',
       accessibilityLabel: 'Customization',
       panelID: 'customization-content-1',
+    },
+    {
+      id: 'template-1',
+      content: 'Template',
+      accessibilityLabel: 'Template',
+      panelID: 'template-content-1',
     },
    
   ];
@@ -294,7 +301,20 @@ export default function Branding () {
 
             { settingTabs[selectedTab].id === 'design-system-1' ? 
               <DesignSystem  activeProfile={activeProfile} handleDataChange={handleDataChange}></DesignSystem>
-            : null }        
+            : null }    
+
+            { settingTabs[selectedTab].id === 'template-1' ? 
+              <div style={{
+                paddingTop: "1rem",
+              }}>
+                <Banner title="Under development" status="warning">
+                  <p>
+                    This feature is under development, we will release it soon. You can still customize your checkout using the other settings.
+                  </p>
+                </Banner>
+              </div>
+
+            : null  }    
           
             </>
           )}

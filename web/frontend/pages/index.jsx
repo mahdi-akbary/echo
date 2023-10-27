@@ -11,6 +11,7 @@ import {
   Modal,
   TextContainer,
   Spinner,
+  Banner,
 } from "@shopify/polaris";
 import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
 import { useEffect, useState } from "react";
@@ -99,6 +100,16 @@ export default function HomePage () {
         </Modal>
 
         <Layout.Section>
+          <div style={{
+            paddingBottom: "1rem",
+          }}>
+            <Banner status="info">
+              <p>
+              Thank you for installing our app. Currenlty, checkout extensibility is only available for Shopify Plus merchants. Shopify has announced that checkout extensions will be available for <strong>Basic</strong>, <strong>Shopify</strong>, and <strong>Advanced</strong> plans by <strong>April 30, 2024</strong>. Until then, you can keep the app installed and we will inform you once it's available for your store. We appreciate your patience and support.
+              </p>
+            </Banner>
+          </div>
+
           <CalloutCard
             title="Customize the checkout on Customiser"
             illustration="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg"

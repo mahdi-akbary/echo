@@ -4,16 +4,16 @@ export const navStructure = [
         destination: "/",
     },
     {
-        label: "Pricing",
-        destination: "/pricing",
+        label: "Branding",
+        destination: "/branding",
     },
-    // {
-    //     label: "Branding",
-    //     destination: "/branding",
-    // },
     {
         label: "Free gifts",
         destination: "/free-gifts",
+    },
+    {
+        label: "Pricing",
+        destination: "/pricing",
     },
     {
         label: "How to use",

@@ -15,6 +15,12 @@ import {
   Image,
   ChoiceList,
   Badge,
+  Tabs,
+  Grid,
+  Toast,
+  ActionList,
+  Popover,
+  Banner,
 } from "@shopify/polaris";
 import {
   useAuthenticatedFetch,
@@ -28,6 +34,9 @@ import { Redirect } from "@shopify/app-bridge/actions";
 import { useAppQuery } from "../hooks";
 import { ColorPickerInput } from "../components";
 import { FONTS } from "../components/fonts";
+import { CheckoutCustomization } from "../components/CheckoutCustomization";
+import { DesignSystem } from "../components/DesignSystem";
+
 
 export default function Branding () {
   const fetch = useAuthenticatedFetch();
@@ -36,16 +45,31 @@ export default function Branding () {
   const [hasChange, setHasChange] = useState(false);
 
   const [selected, setSelected] = useState(undefined);
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [toastActive, setToastActive] = useState(false);
+
+  // Profile dropdown
+  const [active, setActive] = useState(false);
+  const toggleActive = useCallback(() => setActive((active) => !active), []);
+
+
+  const toggleToastActive = useCallback(
+    () => setToastActive((active) => !active),
+    [],
+  );
+
 
   const handleChange = useCallback((value) => {
     setSelected(value)
-    refetchProductProfile()
+    refetchProductProfile();
+
   }, []);
 
   const handleDataChange = (value) => {
     setHasChange(true);
     setData({ ...data, ...value });
   };
+
 
   const {
     data: activeProfile,
@@ -77,23 +101,43 @@ export default function Branding () {
     },
   });
 
+  const settingTabs = [
+    {
+      id: 'design-system-1',
+      content: 'Design system',
+      panelID: 'Design-system-content-1',
+    },
+    {
+      id: 'customization-1',
+      content: 'Customization',
+      accessibilityLabel: 'Customization',
+      panelID: 'customization-content-1',
+    },
+    {
+      id: 'template-1',
+      content: 'Template',
+      accessibilityLabel: 'Template',
+      panelID: 'template-content-1',
+    },
+   
+  ];
+
+  // Toaster mockup
+  const toastMarkup = toastActive ? (
+    <Toast content="Changes saved" onDismiss={toggleToastActive} />
+  ) : null;
+
+
+//   console.log('activeProfile', activeProfile);
+
   const loadingMarkup = (
-    <>
+    <div style={{ padding: "2rem 1rem" }}>
       <Loading />
       <HorizontalStack align="space-between">
-        {[1, 2, 3].map((id) => <Box key={id} width="32%">
-          <AlphaCard>
-            <VerticalStack gap="4">
-              <SkeletonBodyText />
-              <SkeletonBodyText />
-              <SkeletonBodyText />
-              <SkeletonBodyText />
-              <SkeletonBodyText />
-            </VerticalStack>
-          </AlphaCard>
-        </Box>)}
+        <SkeletonBodyText />
+        <SkeletonBodyText />
       </HorizontalStack>
-    </>
+    </div>
   );
 
   const handleSubmit = async () => {
@@ -103,6 +147,7 @@ export default function Branding () {
       await submit()
     }
   };
+
   const submit = async () => {
     setIsLoading(true);
 
@@ -116,6 +161,7 @@ export default function Branding () {
       const res = await response.json();
       setIsLoading(false);
       setHasChange(false);
+      toggleToastActive();
     }
   };
 
@@ -128,9 +174,20 @@ export default function Branding () {
     setActiveCheckoutWarning(!activeCheckoutWarning);
   };
 
+  const profileSelector = (
+    <Button onClick={toggleActive} disclosure>
+      <div style={{display: "flex", gap: "0.4rem", alignItems: "center"}}>
+        { selected ? data.profiles.find(profile => profile.id === selected).name : 'Select profile'}
+        {/* if isPublished show live badge, otherwise show draft badge */}
+        { selected ? data.profiles.find(profile => profile.id === selected).isPublished ? <Badge status="success"> Active </Badge> : <Badge status="info"> Draft </Badge> : null}
+      </div>
+    </Button>
+  );
+
   const contentMarkup = (
     <>
       <TitleBar title="Branding" primaryAction={null} />
+      {toastMarkup}
       <Layout>
         <Modal
           open={activeCheckoutWarning}
@@ -147,8 +204,8 @@ export default function Branding () {
             },
           ]}
         >
-          <Modal.Section>
-            <Box background="bg-warning" padding="1">
+        <Modal.Section>
+            <Box>
               <Text variant="headingMd">
                 It's your Active checkout, the changes will take effect immediately.
               </Text>
@@ -160,50 +217,63 @@ export default function Branding () {
         <Layout.Section>
           <AlphaCard>
             <HorizontalStack>
-              <Box width="89%">
+              <Box width="90%">
                 <VerticalStack gap="4">
                   <Box>
                     <VerticalStack gap="2">
-                      <Text variant="headingLg">Checkout Branding</Text>
+                      <Text variant="headingLg">Checkout branding</Text>
                       <Text variant="bodyMd">
-                        An Advance setting for fully customization of the checkout
-                        appearance & branding.
+                        An advance checkout branding tool that allows you to customize your checkout page, new customer accounts, thank you and order status pages.
                       </Text>
                     </VerticalStack>
                   </Box>
-                  <ChoiceList
-                    title={<Text fontWeight="semibold">Below is your checkout profiles.</Text>}
-                    choices={
-                      (data.profiles || []).map(profile => ({
-                        label: <>{profile.name} {profile.isPublished ? <Badge status="success">Active</Badge> : null}</>,
-                        value: profile.id,
-                      }))}
-                    selected={selected || ['hidden']}
-                    onChange={handleChange}
-                  />
-                  {isLoadingProfile || isRefetchingProfile ? null : <HorizontalStack gap="3">
-                    <Button plain monochrome onClick={() =>
-                      redirect.dispatch(
-                        Redirect.Action.ADMIN_PATH,
-                        "/settings/checkout"
-                      )
-                    }>You can always create, duplicate or publish your checkout profiles here</Button>
-                    <Button
-                      plain
-                      monochrome
-                      onClick={() =>
-                        redirect.dispatch(
-                          Redirect.Action.ADMIN_PATH,
-                          { path: `/settings/checkout/preview/profiles/${selected?.split('/')[4]}`, newContext: true }
-                        )
-                      }
-                    >
-                      Preview
-                    </Button>
-                  </HorizontalStack>}
+                 
+                  {isLoadingProfile || isRefetchingProfile ? null : 
+                    <Box style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      gap: "1rem",
+                    }}>
+                      <HorizontalStack gap="3">
+                        <Popover
+                          active={active}
+                          activator={profileSelector}
+                          autofocusTarget="first-node"
+                          onClose={ toggleActive }>
+                          <ActionList
+                            actionRole="menuitem"
+                            items={
+                              (data.profiles || []).map(profile => ({
+                                active: profile.id === selected,
+                                content: <>{profile.name} { profile.isPublished ? <Badge status="success">Active</Badge> : null}</>,
+                                value: profile.id,
+                                onAction: () => { handleChange(profile.id); toggleActive() },
+                              }))
+                            }
+                          />
+                        </Popover>
+
+                        <Button primary
+                          onClick={() =>
+                            redirect.dispatch(
+                              Redirect.Action.ADMIN_PATH,
+                              { path: `/settings/checkout/preview/profiles/${selected?.split('/')[4]}`, newContext: true }
+                            )
+                          }> Preview </Button>
+                      </HorizontalStack>
+
+                      {/* <Box>
+                        <Button critical> Remove </Button>
+                      </Box> */}
+
+                    </Box>
+                  }
                 </VerticalStack>
+
               </Box>
-              <Box width="11%">
+
+              <Box width="10%">
                 <Image
                   src="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg"
                   alt="paint"
@@ -211,546 +281,48 @@ export default function Branding () {
                 />
               </Box>
             </HorizontalStack>
+            
           </AlphaCard>
         </Layout.Section>
 
         <Layout.Section>
-          {isLoadingProfile || isRefetchingProfile ? (
+          <Tabs tabs={settingTabs} selected={selectedTab} onSelect={(value) => setSelectedTab(value) }></Tabs>
+          
+          {/* If still loading hide the settings and show placholder */}
+
+          { isLoadingProfile || isRefetchingProfile ? (
             loadingMarkup
           ) : (
-            <HorizontalStack align="space-between">
-              <Box width="32%">
-                <VerticalStack gap="4">
-                  <AlphaCard>
-                    <VerticalStack gap="3">
-                      <Text variant="headingMd">Header Section</Text>
-                      <Select
-                        label="Alignment"
-                        options={[
-                          { label: "Start", value: "START" },
-                          { label: "Center", value: "CENTER" },
-                          { label: "End", value: "END" },
-                        ]}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.customizations = {
-                            ...temp?.customizations,
-                            header: {
-                              ...temp?.customizations?.header,
-                              alignment: value,
-                            },
-                          };
-                          handleDataChange(temp);
-                        }}
-                        value={data?.customizations?.header?.alignment}
-                      />
-                      <Select
-                        label="Position"
-                        options={[
-                          { label: "Full width", value: "START" },
-                          {
-                            label: "Order summary",
-                            value: "INLINE_SECONDARY",
-                          },
-                          { label: "Checkout form", value: "INLINE" },
-                        ]}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.customizations = {
-                            ...temp?.customizations,
-                            header: {
-                              ...temp?.customizations?.header,
-                              position: value,
-                            },
-                          };
-                          handleDataChange(temp);
-                        }}
-                        value={data?.customizations?.header?.position}
-                      />
-                    </VerticalStack>
-                  </AlphaCard>
+            <>
 
-                  <AlphaCard>
-                    <VerticalStack gap="3">
-                      <Text variant="headingMd">Headings Typography</Text>
-                      <Select
-                        label="Font"
-                        options={FONTS}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.designSystem = {
-                            ...temp?.designSystem,
-                            typography: {
-                              ...temp?.designSystem?.typography,
-                              ...{
-                                secondary: {
-                                  shopifyFontGroup: { name: value },
-                                },
-                              },
-                            },
-                          };
-                          handleDataChange(temp);
-                        }}
-                        value={
-                          data?.designSystem?.typography?.secondary
-                            ?.shopifyFontGroup?.name ||
-                          data?.designSystem?.typography?.secondary?.name
-                        }
-                      />
-                      <Select
-                        label="Font weight"
-                        options={[
-                          { label: 'Base', value: 'BASE' },
-                          { label: 'Bold', value: 'BOLD' }
-                        ]}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.customizations = { ...temp?.customizations, headingLevel1: { typography: { ...temp?.customizations?.headingLevel1?.typography, ...{ weight: value } } } }
-                          handleDataChange(temp)
-                        }}
-                        value={data?.customizations?.headingLevel1?.typography?.weight}
-                      />
-                      <Select
-                        label="Font size"
-                        options={[
-                          { label: 'Base', value: 'BASE' },
-                          { label: 'Extra small', value: 'EXTRA_SMALL' },
-                          { label: 'Small', value: 'SMALL' },
-                          { label: 'Medium', value: 'MEDIUM' },
-                          { label: 'Large', value: 'LARGE' },
-                          { label: 'X large', value: 'EXTRA_LARGE' },
-                          { label: '2X large', value: 'EXTRA_EXTRA_LARGE' },
-                        ]}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.customizations = { ...temp?.customizations, headingLevel1: { typography: { ...temp?.customizations?.headingLevel1?.typography, ...{ size: value } } } }
-                          handleDataChange(temp)
-                        }}
-                        value={data?.customizations?.headingLevel1?.typography?.size}
-                      />
-                      <Select
-                        label="Letter case "
-                        options={[
-                          { label: 'Lower', value: 'LOWER' },
-                          { label: 'None', value: 'NONE' },
-                          { label: 'Title', value: 'TITLE' },
-                          { label: 'Upper', value: 'UPPER' },
-                        ]}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.customizations = { ...temp?.customizations, headingLevel1: { typography: { ...temp?.customizations?.headingLevel1?.typography, ...{ letterCase: value } } } }
-                          handleDataChange(temp)
-                        }}
-                        value={data?.customizations?.headingLevel1?.typography?.letterCase}
-                      />
-                    </VerticalStack>
-                  </AlphaCard>
-                </VerticalStack>
-              </Box>
+            { settingTabs[selectedTab].id === 'customization-1' ? 
+              <CheckoutCustomization activeProfile={activeProfile} handleDataChange={handleDataChange}></CheckoutCustomization>
+            : null }  
 
-              <Box width="32%">
-                <VerticalStack gap="4">
-                  <AlphaCard>
-                    <VerticalStack gap="3">
-                      <Text variant="headingMd">Body Typography</Text>
-                      <Select
-                        label="Font"
-                        options={FONTS}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.designSystem = {
-                            ...temp?.designSystem,
-                            typography: {
-                              ...temp?.designSystem?.typography,
-                              ...{
-                                primary: {
-                                  shopifyFontGroup: { name: value },
-                                },
-                              },
-                            },
-                          };
-                          handleDataChange(temp);
-                        }}
-                        value={
-                          data?.designSystem?.typography?.primary
-                            ?.shopifyFontGroup?.name ||
-                          data?.designSystem?.typography?.primary?.name
-                        }
-                      />
-                      <Select
-                        label="Font weight"
-                        options={[
-                          { label: 'Base', value: 'BASE' },
-                          { label: 'Bold', value: 'BOLD' }
-                        ]}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.customizations = { ...temp?.customizations, headingLevel2: { typography: { ...temp?.customizations?.headingLevel2?.typography, ...{ weight: value } } } }
-                          handleDataChange(temp)
-                        }}
-                        value={data?.customizations?.headingLevel2?.typography?.weight}
-                      />
-                      <Select
-                        label="Font size"
-                        options={[
-                          { label: 'Base', value: 'BASE' },
-                          { label: 'Extra small', value: 'EXTRA_SMALL' },
-                          { label: 'Small', value: 'SMALL' },
-                          { label: 'Medium', value: 'MEDIUM' },
-                          { label: 'Large', value: 'LARGE' },
-                          { label: 'X large', value: 'EXTRA_LARGE' },
-                          { label: '2X large', value: 'EXTRA_EXTRA_LARGE' },
-                        ]}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.customizations = { ...temp?.customizations, headingLevel2: { typography: { ...temp?.customizations?.headingLevel2?.typography, ...{ size: value } } } }
-                          handleDataChange(temp)
-                        }}
-                        value={data?.customizations?.headingLevel2?.typography?.size}
-                      />
-                      <Select
-                        label="Letter case "
-                        options={[
-                          { label: 'Lower', value: 'LOWER' },
-                          { label: 'None', value: 'NONE' },
-                          { label: 'Title', value: 'TITLE' },
-                          { label: 'Upper', value: 'UPPER' },
-                        ]}
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.customizations = { ...temp?.customizations, headingLevel2: { typography: { ...temp?.customizations?.headingLevel2?.typography, ...{ letterCase: value } } } }
-                          handleDataChange(temp)
-                        }}
-                        value={data?.customizations?.headingLevel2?.typography?.letterCase}
-                      />
-                    </VerticalStack>
-                  </AlphaCard>
-                  <AlphaCard>
-                    <VerticalStack gap="3">
-                      <Text variant="headingMd">Checkout Form Section</Text>
-                      <ColorPickerInput
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.designSystem = {
-                            ...temp?.designSystem,
-                            colorPalette: {
-                              ...temp?.designSystem?.colorPalette,
-                              color1: {
-                                ...temp?.designSystem?.colorPalette?.color1,
-                                background: value,
-                              },
-                            },
-                          };
-                          handleDataChange(temp);
-                        }}
-                        inputColor={
-                          data?.designSystem?.colorPalette?.color1?.background
-                        }
-                        label="Background color"
-                      />
-                      <ColorPickerInput
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.designSystem = {
-                            ...temp?.designSystem,
-                            colorPalette: {
-                              ...temp?.designSystem?.colorPalette,
-                              color1: {
-                                ...temp?.designSystem?.colorPalette?.color1,
-                                foreground: value,
-                              },
-                            },
-                          };
-                          handleDataChange(temp);
-                        }}
-                        inputColor={
-                          data?.designSystem?.colorPalette?.color1?.foreground
-                        }
-                        label="Foreground color"
-                      />
-                    </VerticalStack>
-                  </AlphaCard>
+            { settingTabs[selectedTab].id === 'design-system-1' ? 
+              <DesignSystem  activeProfile={activeProfile} handleDataChange={handleDataChange}></DesignSystem>
+            : null }    
 
-                  <AlphaCard>
-                    <VerticalStack gap="3">
-                      <Text variant="headingMd">Order Summary Section</Text>
-                      <ColorPickerInput
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.designSystem = {
-                            ...temp?.designSystem,
-                            colorPalette: {
-                              ...temp?.designSystem?.colorPalette,
-                              color2: {
-                                ...temp?.designSystem?.colorPalette?.color2,
-                                background: value,
-                              },
-                            },
-                          };
-                          handleDataChange(temp);
-                        }}
-                        inputColor={
-                          data?.designSystem?.colorPalette?.color2?.background
-                        }
-                        label="Background color"
-                      />
-                      <ColorPickerInput
-                        onChange={(value) => {
-                          const temp = data;
-                          temp.designSystem = {
-                            ...temp?.designSystem,
-                            colorPalette: {
-                              ...temp?.designSystem?.colorPalette,
-                              color2: {
-                                ...temp?.designSystem?.colorPalette?.color2,
-                                foreground: value,
-                              },
-                            },
-                          };
-                          handleDataChange(temp);
-                        }}
-                        inputColor={
-                          data?.designSystem?.colorPalette?.color2?.foreground
-                        }
-                        label="Foreground color"
-                      />
-                    </VerticalStack>
-                  </AlphaCard>
-                </VerticalStack>
-              </Box>
+            { settingTabs[selectedTab].id === 'template-1' ? 
+              <div style={{
+                paddingTop: "1rem",
+              }}>
+                <Banner title="Under development" status="warning">
+                  <p>
+                    This feature is under development, we will release it soon. You can still customize your checkout using the other settings.
+                  </p>
+                </Banner>
+              </div>
 
-              <Box width="32%">
-                <AlphaCard>
-                  <VerticalStack gap="3">
-                    <Text variant="headingMd">General</Text>
-                    <TextField
-                      label="Font size"
-                      type="number"
-                      min="12"
-                      max="18"
-                      onChange={(value) => {
-                        const temp = data;
-                        temp.designSystem = {
-                          ...temp?.designSystem,
-                          typography: {
-                            ...temp?.designSystem?.typography,
-                            size: {
-                              ...temp?.designSystem?.typography?.size,
-                              ...{ base: +value },
-                            },
-                          },
-                        };
-                        handleDataChange(temp);
-                      }}
-                      value={data?.designSystem?.typography?.size?.base}
-                      autoComplete="off"
-                    />
-                    <Select
-                      label="Font size ratio"
-                      options={[
-                        { label: "1.0", value: 1.0 },
-                        { label: "1.1", value: 1.1 },
-                        { label: "1.2", value: 1.2 },
-                        { label: "1.3", value: 1.3 },
-                        { label: "1.4", value: 1.4 },
-                      ]}
-                      onChange={(value) => {
-                        const temp = data;
-                        temp.designSystem = {
-                          ...temp?.designSystem,
-                          typography: {
-                            ...temp?.designSystem?.typography,
-                            size: {
-                              ...temp?.designSystem?.typography?.size,
-                              ...{ ratio: +value },
-                            },
-                          },
-                        };
-                        handleDataChange(temp);
-                      }}
-                      value={data?.designSystem?.typography?.size?.ratio}
-                    />
-                    <Select
-                      label="Form fields background"
-                      options={[
-                        { label: "White", value: "" },
-                        { label: "Transparent", value: "TRANSPARENT" },
-                      ]}
-                      onChange={(value) => {
-                        const temp = data;
-                        temp.customizations = {
-                          ...temp?.customizations,
-                          control: {
-                            ...temp?.customizations?.control,
-                            color: value,
-                          },
-                        };
-                        handleDataChange(temp);
-                      }}
-                      value={data?.customizations?.control?.color}
-                    />
-                    <Select
-                      label="Form fields border radius"
-                      options={[
-                        { label: 'None', value: 'NONE' },
-                        { label: 'Base', value: 'BASE' },
-                        { label: 'Small', value: 'SMALL' },
-                        { label: 'Large', value: 'LARGE' },
-                      ]}
-                      onChange={(value) => {
-                        const temp = data;
-                        temp.customizations = { ...temp?.customizations, control: { ...temp?.customizations?.control, cornerRadius: value } }
-                        handleDataChange(temp)
-                      }}
-                      value={data?.customizations?.control?.cornerRadius}
-                    />
-                    <Select
-                      label="Button border radius"
-                      options={[
-                        { label: 'None', value: 'NONE' },
-                        { label: 'Base', value: 'BASE' },
-                        { label: 'Small', value: 'SMALL' },
-                        { label: 'Large', value: 'LARGE' },
-                      ]}
-                      onChange={(value) => {
-                        const temp = data;
-                        temp.customizations = { ...temp?.customizations, primaryButton: { ...temp?.customizations?.primaryButton, cornerRadius: value } }
-                        handleDataChange(temp)
-                      }}
-                      value={data?.customizations?.primaryButton?.cornerRadius}
-                    />
-                    <ColorPickerInput
-                      onChange={(value) => {
-                        const temp = data;
-                        temp.designSystem = {
-                          ...temp?.designSystem,
-                          colorPalette: {
-                            ...temp?.designSystem?.colorPalette,
-                            interactive: {
-                              ...temp?.designSystem?.colorPalette?.interactive,
-                              background: value,
-                            },
-                          },
-                        };
-                        handleDataChange(temp);
-                      }}
-                      inputColor={
-                        data?.designSystem?.colorPalette?.interactive
-                          ?.background || "#fff"
-                      }
-                      label="Accent background color"
-                    />
-                    <ColorPickerInput
-                      onChange={(value) => {
-                        const temp = data;
-                        temp.designSystem = {
-                          ...temp?.designSystem,
-                          colorPalette: {
-                            ...temp?.designSystem?.colorPalette,
-                            interactive: {
-                              ...temp?.designSystem?.colorPalette?.interactive,
-                              foreground: value,
-                            },
-                          },
-                        };
-                        handleDataChange(temp);
-                      }}
-                      inputColor={
-                        data?.designSystem?.colorPalette?.interactive
-                          ?.foreground || "#fff"
-                      }
-                      label="Accent foreground color"
-                    />
-                    <ColorPickerInput
-                      onChange={(value) => {
-                        const temp = data;
-                        temp.designSystem = {
-                          ...temp?.designSystem,
-                          colorPalette: {
-                            ...temp?.designSystem?.colorPalette,
-                            primary: {
-                              ...temp?.designSystem?.colorPalette?.primary,
-                              background: value,
-                            },
-                          },
-                        };
-                        handleDataChange(temp);
-                      }}
-                      inputColor={
-                        data?.designSystem?.colorPalette?.primary?.background ||
-                        "#fff"
-                      }
-                      label="Buttons background color"
-                    />
-                    <ColorPickerInput
-                      onChange={(value) => {
-                        const temp = data;
-                        temp.designSystem = {
-                          ...temp?.designSystem,
-                          colorPalette: {
-                            ...temp?.designSystem?.colorPalette,
-                            primary: {
-                              ...temp?.designSystem?.colorPalette?.primary,
-                              foreground: value,
-                            },
-                          },
-                        };
-                        handleDataChange(temp);
-                      }}
-                      inputColor={
-                        data?.designSystem?.colorPalette?.primary?.foreground ||
-                        "#fff"
-                      }
-                      label="Buttons foreground color"
-                    />
-                    <ColorPickerInput
-                      onChange={(value) => {
-                        const temp = data;
-                        temp.designSystem = {
-                          ...temp?.designSystem,
-                          colorPalette: {
-                            ...temp?.designSystem?.colorPalette,
-                            critical: {
-                              ...temp?.designSystem?.colorPalette?.critical,
-                              background: value,
-                            },
-                          },
-                        };
-                        handleDataChange(temp);
-                      }}
-                      inputColor={
-                        data?.designSystem?.colorPalette?.critical
-                          ?.background || "#fff"
-                      }
-                      label="Error background color"
-                    />
-                    <ColorPickerInput
-                      onChange={(value) => {
-                        const temp = data;
-                        temp.designSystem = {
-                          ...temp?.designSystem,
-                          colorPalette: {
-                            ...temp?.designSystem?.colorPalette,
-                            critical: {
-                              ...temp?.designSystem?.colorPalette?.critical,
-                              foreground: value,
-                            },
-                          },
-                        };
-                        handleDataChange(temp);
-                      }}
-                      inputColor={
-                        data?.designSystem?.colorPalette?.critical
-                          ?.foreground || "#fff"
-                      }
-                      label="Error foreground color"
-                    />
-                  </VerticalStack>
-                </AlphaCard>
-              </Box>
-            </HorizontalStack>
+            : null  }    
+          
+            </>
           )}
+
+          
         </Layout.Section>
+
+        
       </Layout>
     </>
   );
@@ -766,7 +338,10 @@ export default function Branding () {
           disabled: isLoading,
         }}
         discardAction={{
-          onAction: () => setHasChange(false),
+          onAction: () => {
+            setHasChange(false);
+            refetchProductProfile();
+          }
         }}
       />
       {false ? (

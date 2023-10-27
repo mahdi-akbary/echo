@@ -13,7 +13,7 @@ import {
 } from "@shopify/polaris";
 import { useCallback, useState } from "react";
 
-export function ColorPickerInput ({ inputColor = "#fff", label, onChange }) {
+export function ColorPickerInput ({ inputColor = "#fff", label, onChange, helpText = null }) {
   const [popoverActive, setPopoverActive] = useState(false);
 
   const togglePopoverActive = useCallback(
@@ -22,23 +22,28 @@ export function ColorPickerInput ({ inputColor = "#fff", label, onChange }) {
   );
   const [buttonColor, setButtonColor] = useState(inputColor);
   const activator = (
-    <HorizontalStack align="start" gap="4">
-      <div
-        onClick={togglePopoverActive}
-        style={{
-          width: "40px",
-          height: "40px",
-          borderRadius: "20%",
-          background: buttonColor,
-          cursor: "pointer",
-          border: "1px solid #bbb",
-        }}
-      ></div>
-      <Box>
-        <Text>{label}</Text>
-        <Text Variant="bodySm">{buttonColor}</Text>
-      </Box>
-    </HorizontalStack>
+    <>
+      <HorizontalStack align="start" gap="4">
+        <div
+          onClick={togglePopoverActive}
+          style={{
+            width: "40px",
+            height: "40px",
+            borderRadius: "20%",
+            background: buttonColor,
+            cursor: "pointer",
+            border: "1px solid #bbb",
+          }}
+        ></div>
+        <Box>
+          <Text>{ label }</Text>
+          <Text Variant="bodyMd">{buttonColor}</Text>
+        </Box>
+      </HorizontalStack>
+
+      {helpText && <div style={{ paddingTop: "0.4rem"}} ><Text variant="subdued">{helpText}</Text></div>}
+
+    </>
   );
   const [color, setColor] = useState({
     hue: rgbToHsb(hexToRgb('inputColor')).hue,
@@ -52,8 +57,7 @@ export function ColorPickerInput ({ inputColor = "#fff", label, onChange }) {
         active={popoverActive}
         activator={activator}
         autofocusTarget="first-node"
-        onClose={togglePopoverActive}
-      >
+        onClose={togglePopoverActive}>
         <VerticalStack >
           <ColorPicker
             onChange={(value) => {
@@ -63,11 +67,13 @@ export function ColorPickerInput ({ inputColor = "#fff", label, onChange }) {
                 saturation: value.saturation || null, 
                 brightness: value.brightness || null
               }
+              
               setColor(color);
               const hexColor = rgbToHex(hsbToRgb(color))
               setButtonColor(hexColor);
               onChange(hexColor)
             }}
+            allowAlpha
             color={color}
           />
           <Box width="90%" padding="1">

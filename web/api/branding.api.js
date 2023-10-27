@@ -25,6 +25,7 @@ export default function brandingApiEndPoints (app, shopify) {
       res.status(500).send(error);
     }
   })
+  
   app.post("/api/branding", async (req, res) => {
     const body = req.body;
     const { session } = res.locals.shopify;
@@ -38,111 +39,303 @@ export default function brandingApiEndPoints (app, shopify) {
     }
   })
 
-  async function upsert (client, data) {
+  async function upsert (client, profileData) {
     return await client.query({
       data: {
         "query": `mutation checkoutBrandingUpsert($checkoutBrandingInput: CheckoutBrandingInput!, $checkoutProfileId: ID!) {
                     checkoutBrandingUpsert(checkoutBrandingInput: $checkoutBrandingInput, checkoutProfileId: $checkoutProfileId) {
                       checkoutBranding {
                         designSystem {
-                          # This property group applies to global corner radius token values
-                          cornerRadius {
-                            small
-                            base
-                            large
-                          }
-                          colorPalette {
-                            # This property group applies to the body background
-                            # (For example, the checkout loading page or payment processing page)
-                            canvas {
-                              background
-                              foreground
-                            }
-                            # This property group applies to the main checkout form
-                            color1 {
-                              background
-                              foreground
-                            }
-                            # This property group applies to the order summary
-                            color2 {
-                              background
-                              foreground
-                            }
-                            # This property group applies to the primary button
-                            primary {
+                          #color
+                          colors{
+                            global{
                               accent
-                              foreground
-                              background
+                              brand
+                              success
+                              info
+                              warning
+                              critical
+                              decorative
                             }
-                            # This property group applies to the color of links and interactive components
-                            interactive {
-                              accent
-                              foreground
-                              background
+
+                            # schemes
+                            schemes{
+                              scheme1{
+                                base{
+                                  background
+                                  border
+                                  text
+                                  icon
+                                  decorative
+                                  accent
+                                }
+                                
+                                control{
+                                  text
+                                  background
+                                  border
+                                  icon
+                                  decorative
+                                  accent
+                                  selected{
+                                    text
+                                    background
+                                    border
+                                    icon
+                                    decorative
+                                    accent
+                                  }
+                                }
+                                primaryButton{
+                                  text
+                                  background
+                                  border
+                                  decorative
+                                  icon
+                                  accent
+                                  hover{
+                                     text
+                                    background
+                                    border
+                                    decorative
+                                    icon
+                                    accent
+                                  }
+                                }
+                                secondaryButton{
+                                  text
+                                  background
+                                  border
+                                  decorative
+                                  icon
+                                  accent
+                                  hover{
+                                    text
+                                    background
+                                    border
+                                    decorative
+                                    icon
+                                    accent
+                                  }
+                                }
+                              }
+
+                              scheme2{
+                                base{
+                                  background
+                                  border
+                                  text
+                                  icon
+                                  decorative
+                                  accent
+                                }
+                                
+                                control{
+                                  text
+                                  background
+                                  border
+                                  icon
+                                  decorative
+                                  accent
+                                  selected{
+                                    text
+                                    background
+                                    border
+                                    icon
+                                    decorative
+                                    accent
+                                  }
+                                }
+                                primaryButton{
+                                  text
+                                  background
+                                  border
+                                  decorative
+                                  icon
+                                  accent
+                                  hover{
+                                     text
+                                    background
+                                    border
+                                    decorative
+                                    icon
+                                    accent
+                                  }
+                                }
+                                secondaryButton{
+                                  text
+                                  background
+                                  border
+                                  decorative
+                                  icon
+                                  accent
+                                  hover{
+                                    text
+                                    background
+                                    border
+                                    decorative
+                                    icon
+                                    accent
+                                  }
+                                }
+                              }
                             }
                           }
-                          # This property group applies to global typography font faces, sizes, and weights
-                          typography {
-                            size {
+
+                          # Typography
+                          typography{
+                            primary{
+                              name
+                              base{
+                                  sources
+                                  weight
+                              }
+                              bold{
+                                sources
+                                weight
+                              }
+                              loadingStrategy
+                            }
+
+                            secondary{
+                              name
+                              base{
+                                  sources
+                                  weight
+                              }
+                              bold{
+                                sources
+                                weight
+                              }
+                              loadingStrategy
+                            }
+                            
+                            size{
                               base
                               ratio
                             }
-                            primary {
-                              base {
-                                sources
-                                weight
-                              }
-                            }
-                            secondary {
-                              base {
-                                sources
-                                weight
-                              }
-                            }
+
                           }
                         }
+
                         customizations {
-                        # This property group applies globally to all instances of the inner properties
-                          global {
-                            cornerRadius
-                            typography {
-                              letterCase
-                            }
-                          }
                           # This property group applies to the header layout containing your brand's name and logo
                           header {
                               alignment
                               position
                           }
-                          # headingLevel property groups apply to the full heirarchy of headings in checkout
-                          headingLevel1 {
-                            typography {
-                              weight
-                              font
-                              letterCase
-                              size
-                            }
-                          }
-                          headingLevel2 {
-                            typography {
-                              weight
-                              font
-                              letterCase
-                              size
-                            }
-                          }
-                          # This property group applies to the look and feel of the primary checkout call-to-action
-                          primaryButton {
+                          # global
+                          global {
                             cornerRadius
                             typography {
                               letterCase
-                              weight
-                              font
-                              size
+                              kerning
                             }
+                          }
+
+                          main{
+                            colorScheme
+                          }
+
+                          orderSummary{
+                            colorScheme
+                          }
+                          
+                          # control
+                          control{
+                            border
+                            cornerRadius
+                            color
+                            labelPosition
+                          }
+
+                          # Text field
+                          textField{
+                            border
+                            typography{
+                              font
+                              kerning
+                              size
+                              letterCase
+                              weight
+                            }
+                          }
+                          # select
+                          select{
+                            border
+                            typography{
+                              font
+                              kerning
+                              letterCase
+                              size
+                              weight
+                            }
+                          }
+                          # checkbox
+                          checkbox {
+                            cornerRadius
+                          }
+                          
+                          primaryButton{
+                            background
+                            border
+                            cornerRadius
                             blockPadding
                             inlinePadding
+                            typography{
+                              font
+                              kerning
+                              letterCase
+                              size
+                              weight
+                            }
                           }
+
+                          secondaryButton{
+                            background
+                            border
+                            cornerRadius
+                            blockPadding
+                            inlinePadding
+                            typography{
+                              font
+                              kerning
+                              letterCase
+                              size
+                              weight
+                            }
+                          }
+
+                          headingLevel1{
+                            typography{
+                              font
+                              kerning
+                              letterCase
+                              size
+                              weight
+                            }
+                          }
+
+                          headingLevel2{
+                            typography{
+                              font
+                              kerning
+                              letterCase
+                              size
+                              weight
+                            }
+                          }
+
+                          headingLevel3{
+                            typography{
+                              font
+                              kerning
+                              letterCase
+                              size
+                              weight
+                            }
+                          }
+
                         }
                       }
                       userErrors {
@@ -151,52 +344,264 @@ export default function brandingApiEndPoints (app, shopify) {
                       }
                     }
                   }`,
+                  
         "variables": {
-          "checkoutProfileId": data?.id,
+          "checkoutProfileId": profileData?.id,
           "checkoutBrandingInput": {
             "designSystem": {
-              "cornerRadius": {
-                "small": 3,
-                "base": 5,
-                "large": 30
+              "colors": {
+                "global": {
+                  "brand": profileData?.designSystem?.colors?.global?.brand,
+                  "accent": profileData?.designSystem?.colors?.global?.accent,
+                  "success": profileData?.designSystem?.colors?.global?.success,
+                  "info": profileData?.designSystem?.colors?.global?.info,
+                  "warning": profileData?.designSystem?.colors?.global?.warning,
+                  "critical": profileData?.designSystem?.colors?.global?.critical,
+                  "decorative": profileData?.designSystem?.colors?.global?.decorative,
+                },
+                "schemes": {
+                  "scheme1": {
+                    "base": {
+                      "background": profileData?.designSystem?.colors?.schemes?.scheme1?.base?.background,
+                      "border": profileData?.designSystem?.colors?.schemes?.scheme1?.base?.border,
+                      "text": profileData?.designSystem?.colors?.schemes?.scheme1?.base?.text,
+                      "icon": profileData?.designSystem?.colors?.schemes?.scheme1?.base?.icon,
+                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme1?.base?.decorative,
+                      "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.base?.accent,
+                    },
+                    "control": {
+                      "text": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.text,
+                      "background": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.background,
+                      "border": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.border,
+                      "icon": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.icon,
+                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.decorative,
+                      "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.accent,
+                      "selected": {
+                        "text": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.text,
+                        "background": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.background,
+                        "border": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.border,
+                        "icon": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.icon,
+                        "decorative": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.decorative,
+                        "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.accent,
+                      }
+                    },
+                    "primaryButton": {
+                      "text": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.text,
+                      "background": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.background,
+                      "border": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.border,
+                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.decorative,
+                      "icon": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.icon,
+                      "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.accent,
+                      "hover": {
+                        "text": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.text,
+                        "background": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.background,
+                        "border": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.border,
+                        "decorative": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.decorative,
+                        "icon": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.icon,
+                        "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.accent,
+                      }
+                    },
+                    "secondaryButton": {
+                      "text": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.text,
+                      "background": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.background,
+                      "border": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.border,
+                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.decorative,
+                      "icon": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.icon,
+                      "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.accent,
+                      "hover": {
+                        "text": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.text,
+                        "background": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.background,
+                        "border": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.border,
+                        "decorative": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.decorative,
+                        "icon": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.icon,
+                        "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.accent,
+                      }
+                    },    
+                  },
+        
+                  "scheme2": {
+                    "base": {
+                      "background": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.background,
+                      "border": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.border,
+                      "text": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.text,
+                      "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.icon,
+                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.decorative,
+                      "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.accent,
+                    },
+                    "control": {
+                      "text": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.text,
+                      "background": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.background,
+                      "border": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.border,
+                      "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.icon,
+                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.decorative,
+                      "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.accent,
+                      "selected": {
+                        "text": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.text,
+                        "background": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.background,
+                        "border": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.border,
+                        "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.icon,
+                        "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.decorative,
+                        "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.accent,
+                      }
+                    },
+                    "primaryButton": {
+                      "text": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.text,
+                      "background": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.background,
+                      "border": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.border,
+                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.decorative,
+                      "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.icon,
+                      "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.accent,
+                      "hover": {
+                        "text": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.text,
+                        "background": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.background,
+                        "border": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.border,
+                        "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.decorative,
+                        "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.icon,
+                        "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.accent,
+                      }
+                    },
+                    "secondaryButton": {
+                      "text": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.text,
+                      "background": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.background,
+                      "border": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.border,
+                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.decorative,
+                      "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.icon,
+                      "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.accent,
+                      "hover": {
+                        "text": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.text,
+                        "background": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.background,
+                        "border": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.border,
+                        "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.decorative,
+                        "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.icon,
+                        "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.accent,
+                      }
+                    },    
+                  },
+                },
               },
-              ...data?.designSystem
+              "typography": {
+                "primary": {
+                  "shopifyFontGroup": {
+                    "name": profileData?.designSystem?.typography?.primary?.shopifyFontGroup?.name,
+                  }
+                },
+
+                "secondary": {
+                  "shopifyFontGroup": {
+                    "name": profileData?.designSystem?.typography?.secondary?.shopifyFontGroup?.name,
+                  }
+                },
+
+                "size": {
+                  "base": profileData?.designSystem?.typography?.size?.base,
+                  "ratio": profileData?.designSystem?.typography?.size?.ratio,
+                },
+              },
+
             },
             "customizations": {
               "global": {
-                "cornerRadius": "NONE",
+                "cornerRadius": profileData?.customizations.global?.cornerRadius,
                 "typography": {
-                  "letterCase": "NONE"
+                  "letterCase": profileData?.customizations.global?.typography?.letterCase,
+                  "kerning": profileData?.customizations.global?.typography?.kerning
+                }
+              },
+              "header": {
+                "alignment": profileData?.customizations?.header?.alignment,
+                "position": profileData?.customizations?.header?.position
+              },
+              "main": {
+                "colorScheme": profileData?.customizations?.main?.colorScheme
+              },
+              "orderSummary": {
+                "colorScheme": profileData?.customizations?.orderSummary?.colorScheme
+              },
+              "control": {
+                "border": profileData?.customizations?.control?.border,
+                "cornerRadius": profileData?.customizations?.control?.cornerRadius,
+                "color": profileData?.customizations?.control?.color,
+                "labelPosition": profileData?.customizations?.control?.labelPosition
+              },
+              "textField": {
+                "border": profileData?.customizations?.textField?.border,
+                "typography": {
+                  "font": profileData?.customizations?.textField?.typography?.font,
+                  "kerning": profileData?.customizations?.textField?.typography?.kerning,
+                  "size": profileData?.customizations?.textField?.typography?.size,
+                  "letterCase": profileData?.customizations?.textField?.typography?.letterCase,
+                  "weight": profileData?.customizations?.textField?.typography?.weight
+                }
+              },
+              "select": {
+                "border": profileData?.customizations?.select?.border,
+                "typography": {
+                  "font": profileData?.customizations?.select?.typography?.font,
+                  "kerning": profileData?.customizations?.select?.typography?.kerning,
+                  "letterCase": profileData?.customizations?.select?.typography?.letterCase,
+                  "size": profileData?.customizations?.select?.typography?.size,
+                  "weight": profileData?.customizations?.select?.typography?.weight
+                }
+              },
+              "checkbox": {
+                "cornerRadius": profileData?.customizations?.checkbox?.cornerRadius
+              },
+              "primaryButton": {
+                "background": profileData?.customizations?.primaryButton?.background,
+                "border": profileData?.customizations?.primaryButton?.border,
+                "cornerRadius": profileData?.customizations?.primaryButton?.cornerRadius,
+                "blockPadding": profileData?.customizations?.primaryButton?.blockPadding,
+                "inlinePadding": profileData?.customizations?.primaryButton?.inlinePadding,
+                "typography": {
+                  "font": profileData?.customizations?.primaryButton?.typography?.font,
+                  "kerning": profileData?.customizations?.primaryButton?.typography?.kerning,
+                  "letterCase": profileData?.customizations?.primaryButton?.typography?.letterCase,
+                  "size": profileData?.customizations?.primaryButton?.typography?.size,
+                  "weight": profileData?.customizations?.primaryButton?.typography?.weight
+                }
+              },
+              "secondaryButton": {
+                "background": profileData?.customizations?.secondaryButton?.background,
+                "border": profileData?.customizations?.secondaryButton?.border,
+                "cornerRadius": profileData?.customizations?.secondaryButton?.cornerRadius,
+                "blockPadding": profileData?.customizations?.secondaryButton?.blockPadding,
+                "inlinePadding": profileData?.customizations?.secondaryButton?.inlinePadding,
+                "typography": {
+                  "font": profileData?.customizations?.secondaryButton?.typography?.font,
+                  "kerning": profileData?.customizations?.secondaryButton?.typography?.kerning,
+                  "letterCase": profileData?.customizations?.secondaryButton?.typography?.letterCase,
+                  "size": profileData?.customizations?.secondaryButton?.typography?.size,
+                  "weight": profileData?.customizations?.secondaryButton?.typography?.weight
                 }
               },
               "headingLevel1": {
                 "typography": {
-                  "weight": "BOLD",
-                  "font": "SECONDARY",
-                  "letterCase": "LOWER",
-                  "size": "EXTRA_LARGE"
+                  "font": profileData?.customizations?.headingLevel1?.typography?.font,
+                  "kerning": profileData?.customizations?.headingLevel1?.typography?.kerning,
+                  "letterCase": profileData?.customizations?.headingLevel1?.typography?.letterCase,
+                  "size": profileData?.customizations?.headingLevel1?.typography?.size,
+                  "weight": profileData?.customizations?.headingLevel1?.typography?.weight
                 }
               },
               "headingLevel2": {
                 "typography": {
-                  "size": "EXTRA_SMALL",
-                  "kerning": "LOOSE",
-                  "letterCase": "UPPER",
-                  "font": "PRIMARY"
+                  "font": profileData?.customizations?.headingLevel2?.typography?.font,
+                  "kerning": profileData?.customizations?.headingLevel2?.typography?.kerning,
+                  "letterCase": profileData?.customizations?.headingLevel2?.typography?.letterCase,
+                  "size": profileData?.customizations?.headingLevel2?.typography?.size,
+                  "weight": profileData?.customizations?.headingLevel2?.typography?.weight
                 }
               },
-              "primaryButton": {
-                "cornerRadius": "NONE",
+              "headingLevel3": {
                 "typography": {
-                  "letterCase": "UPPER",
-                  "weight": "BASE",
-                  "font": "SECONDARY",
-                  "size": "MEDIUM"
-                },
-                "blockPadding": "TIGHT",
-                "inlinePadding": "BASE"
-              },
-              ...data?.customizations
+                  "font": profileData?.customizations?.headingLevel3?.typography?.font,
+                  "kerning": profileData?.customizations?.headingLevel3?.typography?.kerning,
+                  "letterCase": profileData?.customizations?.headingLevel3?.typography?.letterCase,
+                  "size": profileData?.customizations?.headingLevel3?.typography?.size,
+                  "weight": profileData?.customizations?.headingLevel3?.typography?.weight
+                }
+              }
+
             }
           }
         },
@@ -210,101 +615,290 @@ export default function brandingApiEndPoints (app, shopify) {
           query {
               checkoutBranding(checkoutProfileId: "${profileId}") {
                   designSystem { 
-                        cornerRadius {
-                            small
-                            base
-                            large
+                    # This property group applies to global corner radius token values
+                    colors {
+                      global{
+                        accent
+                        brand
+                        success
+                        info
+                        warning
+                        critical
+                        decorative
+                      }
+
+                      schemes{
+                        
+                        scheme1{
+                          base{
+                            background
+                            border
+                            text
+                            icon
+                            decorative
+                            accent
                           }
-                          colorPalette {
-                            # This property group applies to the body background
-                            # (For example, the checkout loading page or payment processing page)
-                            canvas {
+                          
+                          control{
+                            text
+                            background
+                            border
+                            icon
+                            decorative
+                            accent
+                            selected{
+                              text
                               background
-                              foreground
-                            }
-                            # This property group applies to the main checkout form
-                            color1 {
-                              background
-                              foreground
-                            }
-                            # This property group applies to the order summary
-                            color2 {
-                              background
-                              foreground
-                            }
-                            # This property group applies to the primary button
-                            primary {
+                              border
+                              icon
+                              decorative
                               accent
-                              foreground
-                              background
                             }
-                            # This property group applies to the color of links and interactive components
-                            interactive {
+                          }
+                          primaryButton{
+                            text
+                            background
+                            border
+                            decorative
+                            icon
+                            accent
+                            hover{
+                               text
+                              background
+                              border
+                              decorative
+                              icon
                               accent
-                              foreground
+                            }
+                          }
+                          secondaryButton{
+                            text
+                            background
+                            border
+                            decorative
+                            icon
+                            accent
+                            hover{
+                              text
                               background
+                              border
+                              decorative
+                              icon
+                              accent
                             }
                           }
-                          # This property group applies to global typography font faces, sizes, and weights
-                          typography {
-                            size {
-                              base
-                              ratio
-                            }
-                            primary {
-                                name
-                            }
-                            secondary {
-                                name
+                        }
+
+                        scheme2{
+                          base{
+                            background
+                            border
+                            text
+                            icon
+                            decorative
+                            accent
+                          }
+                          
+                          control{
+                            text
+                            background
+                            border
+                            icon
+                            decorative
+                            accent
+                            selected{
+                              text
+                              background
+                              border
+                              icon
+                              decorative
+                              accent
                             }
                           }
+                          primaryButton{
+                            text
+                            background
+                            border
+                            decorative
+                            icon
+                            accent
+                            hover{
+                               text
+                              background
+                              border
+                              decorative
+                              icon
+                              accent
+                            }
+                          }
+                          secondaryButton{
+                            text
+                            background
+                            border
+                            decorative
+                            icon
+                            accent
+                            hover{
+                              text
+                              background
+                              border
+                              decorative
+                              icon
+                              accent
+                            }
+                          }
+                        }
+                        
+                      }
+                    }
+                    # Typography
+
+                    typography{
+                      primary{
+                        name
+                        base{
+                            sources
+                            weight
+                        }
+                        bold{
+                          sources
+                          weight
+                        }
+                        loadingStrategy
+                      }
+                      
+                      secondary{
+                        name
+                        base{
+                            sources
+                            weight
+                        }
+                        bold{
+                          sources
+                          weight
+                        }
+                        loadingStrategy
+                      }
+                      
+                      size{
+                        base
+                        ratio
+                      }
+                    }
+
                   }
-                customizations {
-                  # This property group applies globally to all instances of the inner properties
+
+                  customizations {
                     global {
                       cornerRadius
                       typography {
                         letterCase
+                        kerning
                       }
                     }
-                    # This property group applies to the header layout containing your brand's name and logo
-                    header {
-                        alignment
-                        position
+                    header{
+                      alignment
+                      position
                     }
-                    # headingLevel property groups apply to the full heirarchy of headings in checkout
-                    headingLevel1 {
-                      typography {
-                        weight
-                        font
-                        letterCase
-                        size
-                      }
+                    main{
+                      colorScheme
                     }
-                    headingLevel2 {
-                      typography {
-                        weight
-                        font
-                        letterCase
-                        size
-                      }
+
+                    orderSummary{
+                      colorScheme
                     }
-                    # This property group applies to the look and feel of the primary checkout call-to-action
-                    primaryButton {
-                      cornerRadius
-                      typography {
-                        letterCase
-                        weight
-                        font
-                        size
-                      }
-                      blockPadding
-                      inlinePadding
-                    }
+
                     control{
+                      border
                       cornerRadius
                       color
+                      labelPosition
                     }
+
+                    textField{
+                      border
+                      typography{
+                        font
+                        kerning
+                        size
+                        letterCase
+                        weight
+                      }
+                    }
+                    select{
+                      border
+                      typography{
+                        font
+                        kerning
+                        letterCase
+                        size
+                        weight
+                      }
+                    }
+                    checkbox{
+                      cornerRadius
+                    }
+
+                    primaryButton{
+                      background
+                      border
+                      cornerRadius
+                      blockPadding
+                      inlinePadding
+                      typography{
+                        font
+                        kerning
+                        letterCase
+                        size
+                        weight
+                      }
+                    }
+
+                    secondaryButton{
+                      background
+                      border
+                      cornerRadius
+                      blockPadding
+                      inlinePadding
+                      typography{
+                        font
+                        kerning
+                        letterCase
+                        size
+                        weight
+                      }
+                    }
+
+                    headingLevel1{
+                      typography{
+                        font
+                        kerning
+                        letterCase
+                        size
+                        weight
+                      }
+                    }
+
+                    headingLevel2{
+                      typography{
+                        font
+                        kerning
+                        letterCase
+                        size
+                        weight
+                      }
+                    }
+
+                    headingLevel3{
+                      typography{
+                        font
+                        kerning
+                        letterCase
+                        size
+                        weight
+                      }
+                    }
+                      
                   }
               }
           }

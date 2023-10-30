@@ -16,6 +16,7 @@ coverage
 # Logs
 logs
 *.log
+yarn.lock
 
 # ngrok tunnel file
 config/tunnel.pid

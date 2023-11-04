@@ -2,10 +2,10 @@ import {
   Page,
   Layout,
   Text,
-  VerticalStack,
+  BlockStack,
   Box,
-  HorizontalStack,
-  AlphaCard,
+  InlineStack,
+  Card,
   Loading,
   SkeletonBodyText,
   Select,
@@ -80,19 +80,19 @@ export default function Branding () {
   const loadingMarkup = (
     <>
       <Loading />
-      <HorizontalStack align="space-between">
+      <InlineStack align="space-between">
         {[1, 2, 3].map((id) => <Box key={id} width="32%">
-          <AlphaCard>
-            <VerticalStack gap="4">
+          <Card>
+            <BlockStack gap="4">
               <SkeletonBodyText />
               <SkeletonBodyText />
               <SkeletonBodyText />
               <SkeletonBodyText />
               <SkeletonBodyText />
-            </VerticalStack>
-          </AlphaCard>
+            </BlockStack>
+          </Card>
         </Box>)}
-      </HorizontalStack>
+      </InlineStack>
     </>
   );
 
@@ -158,18 +158,18 @@ export default function Branding () {
         </Modal>
 
         <Layout.Section>
-          <AlphaCard>
-            <HorizontalStack>
+          <Card>
+            <InlineStack>
               <Box width="89%">
-                <VerticalStack gap="4">
+                <BlockStack gap="4">
                   <Box>
-                    <VerticalStack gap="2">
+                    <BlockStack gap="2">
                       <Text variant="headingLg">Checkout Branding</Text>
                       <Text variant="bodyMd">
                         An Advance setting for fully customization of the checkout
                         appearance & branding.
                       </Text>
-                    </VerticalStack>
+                    </BlockStack>
                   </Box>
                   <ChoiceList
                     title={<Text fontWeight="semibold">Checkout profiles.</Text>}
@@ -184,7 +184,7 @@ export default function Branding () {
                   <Text>
                     You can always create, duplicate or publish your checkout profiles
                   </Text>
-                  {isLoadingProfile || isRefetchingProfile ? null : <HorizontalStack gap="3">
+                  {isLoadingProfile || isRefetchingProfile ? null : <InlineStack gap="3">
                     <Button  onClick={() =>
                       redirect.dispatch(
                         Redirect.Action.ADMIN_PATH,
@@ -202,8 +202,8 @@ export default function Branding () {
                     >
                       Preview
                     </Button>
-                  </HorizontalStack>}
-                </VerticalStack>
+                  </InlineStack>}
+                </BlockStack>
               </Box>
               <Box width="11%">
                 <Image
@@ -212,19 +212,19 @@ export default function Branding () {
                   width="100"
                 />
               </Box>
-            </HorizontalStack>
-          </AlphaCard>
+            </InlineStack>
+          </Card>
         </Layout.Section>
 
         <Layout.Section>
           {isLoadingProfile || isRefetchingProfile ? (
             loadingMarkup
           ) : (
-            <HorizontalStack align="space-between">
+            <InlineStack align="space-between">
               <Box width="32%">
-                <VerticalStack gap="4">
-                  <AlphaCard>
-                    <VerticalStack gap="3">
+                <BlockStack gap="4">
+                  <Card>
+                    <BlockStack gap="3">
                       <Text variant="headingMd">Header Section</Text>
                       <Select
                         label="Alignment"
@@ -269,11 +269,11 @@ export default function Branding () {
                         }}
                         value={data?.customizations?.header?.position}
                       />
-                    </VerticalStack>
-                  </AlphaCard>
+                    </BlockStack>
+                  </Card>
 
-                  <AlphaCard>
-                    <VerticalStack gap="3">
+                  <Card>
+                    <BlockStack gap="3">
                       <Text variant="headingMd">Headings Typography</Text>
                       <Select
                         label="Font"
@@ -345,15 +345,15 @@ export default function Branding () {
                         }}
                         value={data?.customizations?.headingLevel1?.typography?.letterCase}
                       />
-                    </VerticalStack>
-                  </AlphaCard>
-                </VerticalStack>
+                    </BlockStack>
+                  </Card>
+                </BlockStack>
               </Box>
 
               <Box width="32%">
-                <VerticalStack gap="4">
-                  <AlphaCard>
-                    <VerticalStack gap="3">
+                <BlockStack gap="4">
+                  <Card>
+                    <BlockStack gap="3">
                       <Text variant="headingMd">Body Typography</Text>
                       <Select
                         label="Font"
@@ -425,10 +425,10 @@ export default function Branding () {
                         }}
                         value={data?.customizations?.headingLevel2?.typography?.letterCase}
                       />
-                    </VerticalStack>
-                  </AlphaCard>
-                  <AlphaCard>
-                    <VerticalStack gap="3">
+                    </BlockStack>
+                  </Card>
+                  <Card>
+                    <BlockStack gap="3">
                       <Text variant="headingMd">Checkout Form Section</Text>
                       <ColorPickerInput
                         onChange={(value) => {
@@ -470,11 +470,11 @@ export default function Branding () {
                         }
                         label="Foreground color"
                       />
-                    </VerticalStack>
-                  </AlphaCard>
+                    </BlockStack>
+                  </Card>
 
-                  <AlphaCard>
-                    <VerticalStack gap="3">
+                  <Card>
+                    <BlockStack gap="3">
                       <Text variant="headingMd">Order Summary Section</Text>
                       <ColorPickerInput
                         onChange={(value) => {
@@ -516,14 +516,14 @@ export default function Branding () {
                         }
                         label="Foreground color"
                       />
-                    </VerticalStack>
-                  </AlphaCard>
-                </VerticalStack>
+                    </BlockStack>
+                  </Card>
+                </BlockStack>
               </Box>
 
               <Box width="32%">
-                <AlphaCard>
-                  <VerticalStack gap="3">
+                <Card>
+                  <BlockStack gap="3">
                     <Text variant="headingMd">General</Text>
                     <TextField
                       label="Font size"
@@ -747,10 +747,10 @@ export default function Branding () {
                       }
                       label="Error foreground color"
                     />
-                  </VerticalStack>
-                </AlphaCard>
+                  </BlockStack>
+                </Card>
               </Box>
-            </HorizontalStack>
+            </InlineStack>
           )}
         </Layout.Section>
       </Layout>

@@ -1,12 +1,6 @@
 import {
     Page,
     Layout,
-    Text,
-    VerticalStack,
-    Box,
-    Divider,
-    Modal,
-    TextField,
     useBreakpoints,
     CalloutCard
   } from "@shopify/polaris";

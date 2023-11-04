@@ -2,10 +2,10 @@ import {
   Page,
   Layout,
   Text,
-  VerticalStack,
+  BlockStack,
   Box,
-  HorizontalStack,
-  AlphaCard,
+  InlineStack,
+  Card,
   Loading,
   SkeletonBodyText,
   Select,
@@ -133,10 +133,10 @@ export default function Branding () {
   const loadingMarkup = (
     <div style={{ padding: "2rem 1rem" }}>
       <Loading />
-      <HorizontalStack align="space-between">
+      <InlineStack align="space-between">
         <SkeletonBodyText />
         <SkeletonBodyText />
-      </HorizontalStack>
+      </InlineStack>
     </div>
   );
 
@@ -215,17 +215,17 @@ export default function Branding () {
         </Modal>
 
         <Layout.Section>
-          <AlphaCard>
-            <HorizontalStack>
+          <Card>
+            <InlineStack>
               <Box width="90%">
-                <VerticalStack gap="4">
+                <BlockStack gap="4">
                   <Box>
-                    <VerticalStack gap="2">
+                    <BlockStack gap="2">
                       <Text variant="headingLg">Checkout branding</Text>
                       <Text variant="bodyMd">
                         An advance checkout branding tool that allows you to customize your checkout page, new customer accounts, thank you and order status pages.
                       </Text>
-                    </VerticalStack>
+                    </BlockStack>
                   </Box>
                  
                   {isLoadingProfile || isRefetchingProfile ? null : 
@@ -235,7 +235,7 @@ export default function Branding () {
                       alignItems: "center",
                       gap: "1rem",
                     }}>
-                      <HorizontalStack gap="3">
+                      <InlineStack gap="3">
                         <Popover
                           active={active}
                           activator={profileSelector}
@@ -261,7 +261,7 @@ export default function Branding () {
                               { path: `/settings/checkout/preview/profiles/${selected?.split('/')[4]}`, newContext: true }
                             )
                           }> Preview </Button>
-                      </HorizontalStack>
+                      </InlineStack>
 
                       {/* <Box>
                         <Button critical> Remove </Button>
@@ -269,7 +269,7 @@ export default function Branding () {
 
                     </Box>
                   }
-                </VerticalStack>
+                </BlockStack>
 
               </Box>
 
@@ -280,9 +280,9 @@ export default function Branding () {
                   width="100"
                 />
               </Box>
-            </HorizontalStack>
+            </InlineStack>
             
-          </AlphaCard>
+          </Card>
         </Layout.Section>
 
         <Layout.Section>

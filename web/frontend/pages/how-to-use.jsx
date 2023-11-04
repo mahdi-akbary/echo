@@ -1,8 +1,8 @@
 import {
   Page,
   Layout,
-  VerticalStack,
-  HorizontalGrid,
+  BlockStack,
+  InlineGrid,
   Box,
   Text,
   Divider,
@@ -70,7 +70,7 @@ export default function HowToUse() {
       <TitleBar title="How to use" primaryAction={null} />
       <Layout>
         <Layout.Section>
-          <VerticalStack gap="3">
+          <BlockStack gap="3">
             <Text variant="headingLg" as="h2">
               How to use
             </Text>
@@ -79,25 +79,25 @@ export default function HowToUse() {
               of each app (extenstion).
             </Text>
             <Divider borderWidth="0" />
-          </VerticalStack>
+          </BlockStack>
         </Layout.Section>
         {videoList.map((video, i) => (
           <Layout.Section key={i}>
-            <VerticalStack gap={{ xs: "8", sm: "4" }}>
-              <HorizontalGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="4">
+            <BlockStack gap={{ xs: "8", sm: "4" }}>
+              <InlineGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="4">
                 <Box
                   as="section"
                   paddingInlineStart={{ xs: 4, sm: 0 }}
                   paddingInlineEnd={{ xs: 4, sm: 0 }}
                 >
-                  <VerticalStack gap="4">
+                  <BlockStack gap="4">
                     <Text as="h3" variant="headingMd">
                       {video.title}
                     </Text>
                     <Text as="p" variant="bodyMd">
                       {video.subTitle}
                     </Text>
-                  </VerticalStack>
+                  </BlockStack>
                 </Box>
 
                 <Box
@@ -132,9 +132,9 @@ export default function HowToUse() {
                     }}
                   ></iframe>
                 </Box>
-              </HorizontalGrid>
+              </InlineGrid>
               <Box padding="4"></Box>
-            </VerticalStack>
+            </BlockStack>
           </Layout.Section>
         ))}
       </Layout>

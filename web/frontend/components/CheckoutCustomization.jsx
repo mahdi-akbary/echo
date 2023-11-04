@@ -1,15 +1,9 @@
 import { 
     Select, 
-    Checkbox,
-    Box,
-    Button,
     Text,
-    TextField,
-    AlphaCard,
-    Divider,
-    HorizontalStack,
+    Card,
     Grid,
-    VerticalStack,
+    BlockStack,
     FormLayout,
     Tabs
 } from '@shopify/polaris';
@@ -102,7 +96,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                 <Grid columns={{ xs: 1, sm: 3, md: 3, lg: 3, xl: 3 }} gap={2}>
                     
                     <Grid.Cell gap="2" columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
-                        <VerticalStack gap="2">
+                        <BlockStack gap="2">
                             <Text as="h3" variant="headingMd">
                                Global typography
                             </Text>
@@ -110,11 +104,11 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                             <Text as='p' variant="bodyMd">
                                 Chnage global customization for typography.
                             </Text>
-                        </VerticalStack>
+                        </BlockStack>
                     </Grid.Cell>
 
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2 }}>
-                        <AlphaCard title="Global customisation">
+                        <Card title="Global customisation">
                             <FormLayout>
                                 <Select label="Letter case"
                                     options={[
@@ -163,7 +157,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
 
                             </FormLayout>
                            
-                        </AlphaCard>
+                        </Card>
                     </Grid.Cell>
                     
                 </Grid>
@@ -171,7 +165,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                 <Grid columns={{ xs: 1, sm: 3, md: 3, lg: 3, xl: 3 }} gap={2}>
                     
                     <Grid.Cell gap="2" columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
-                        <VerticalStack gap="2">
+                        <BlockStack gap="2">
                             <Text as="h3" variant="headingMd">
                                Header
                             </Text>
@@ -179,11 +173,11 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                             <Text as='p' variant="bodyMd">
                                 Change the header alignment and position.
                             </Text>
-                        </VerticalStack>
+                        </BlockStack>
                     </Grid.Cell>
 
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
-                        <AlphaCard title="Header" sectioned>
+                        <Card title="Header" sectioned>
                             <FormLayout>
                                 <Select
                                     label="Alignment"
@@ -234,7 +228,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                 
 
                             </FormLayout>
-                        </AlphaCard>
+                        </Card>
                     </Grid.Cell>
                     
                 </Grid>
@@ -242,7 +236,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                 <Grid columns={{ xs: 1, sm: 3, md: 3, lg: 3, xl: 3 }} gap={2}>
                     
                     <Grid.Cell gap="2" columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
-                        <VerticalStack gap="2">
+                        <BlockStack gap="2">
                             <Text as="h3" variant="headingMd">
                                Main
                             </Text>
@@ -250,11 +244,11 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                             <Text as='p' variant="bodyMd">
                                 Main section customization.
                             </Text>
-                        </VerticalStack>
+                        </BlockStack>
                     </Grid.Cell>
 
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
-                        <AlphaCard title="Main section" sectioned>
+                        <Card title="Main section" sectioned>
                             <FormLayout>
                                 <Select
                                     label="Background color"
@@ -280,7 +274,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                 />
 
                             </FormLayout>
-                        </AlphaCard>
+                        </Card>
                     </Grid.Cell>
                     
                 </Grid>
@@ -288,7 +282,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                 <Grid columns={{ xs: 1, sm: 3, md: 3, lg: 3, xl: 3 }} gap={2}>
                     
                     <Grid.Cell gap="2" columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
-                        <VerticalStack gap="2">
+                        <BlockStack gap="2">
                             <Text as="h3" variant="headingMd">
                                Order Summary
                             </Text>
@@ -296,11 +290,11 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                             <Text as='p' variant="bodyMd">
                                 Order summary customization. This section is your sidebar on the right side of the checkout.
                             </Text>
-                        </VerticalStack>
+                        </BlockStack>
                     </Grid.Cell>
 
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
-                        <AlphaCard title="Main section" sectioned>
+                        <Card title="Main section" sectioned>
                             <FormLayout>
                                 <Select
                                     label="Background color"
@@ -326,7 +320,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                 />
 
                             </FormLayout>
-                        </AlphaCard>
+                        </Card>
                     </Grid.Cell>
                     
                 </Grid>
@@ -334,7 +328,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                 <Grid columns={{ xs: 1, sm: 3, md: 3, lg: 3, xl: 3 }} gap={2}>
                     
                     <Grid.Cell gap="2" columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
-                        <VerticalStack gap="2">
+                        <BlockStack gap="2">
                             <Text as="h3" variant="headingMd">
                                Form elements
                             </Text>
@@ -342,12 +336,12 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                             <Text as='p' variant="bodyMd">
                                 Change form elements desing and appearance.
                             </Text>
-                        </VerticalStack>
+                        </BlockStack>
                     </Grid.Cell>
 
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
                         <Tabs tabs={FromElementsTabs} selected={selectedTab} onSelect={ handleTabChange }></Tabs>
-                        <AlphaCard title="Form Elements">
+                        <Card title="Form Elements">
 
                             {/* General - controls */}
                             {FromElementsTabs[selectedTab].id === 'general-1' ? (
@@ -1219,14 +1213,14 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                             ): null}
 
 
-                        </AlphaCard>
+                        </Card>
                     </Grid.Cell>
                     
                 </Grid>
 
                 <Grid columns={{ xs: 1, sm: 3, md: 3, lg: 3, xl: 3 }} gap={2}>
                     <Grid.Cell gap="2" columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
-                        <VerticalStack gap="2">
+                        <BlockStack gap="2">
                             <Text as="h3" variant="headingMd">
                                Headings
                             </Text>
@@ -1234,13 +1228,13 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                             <Text as='p' variant="bodyMd">
                                 Change headings desing, typography and appearance.
                             </Text>
-                        </VerticalStack>
+                        </BlockStack>
                     </Grid.Cell>
 
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
                         <Tabs tabs={HeadingTabs} selected={selectedHeadingTab} onSelect={(value) => setSelectedHeadingTab(value)} />
 
-                        <AlphaCard>
+                        <Card>
 
                             { HeadingTabs[selectedHeadingTab].id === 'heading-1' ? (
                                 <FormLayout>
@@ -1609,7 +1603,7 @@ export function CheckoutCustomization({activeProfile = {}, handleDataChange}) {
                                 </FormLayout>
                             ): null}
                          
-                        </AlphaCard>
+                        </Card>
 
                     </Grid.Cell>
 

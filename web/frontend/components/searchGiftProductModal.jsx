@@ -1,4 +1,4 @@
-import { Box, Button, HorizontalStack, Modal, Spinner, TextField, Toast } from "@shopify/polaris";
+import { Box, Button, InlineStack, Modal, Spinner, TextField, Toast } from "@shopify/polaris";
 import { ProductGiftList } from "./productGiftList";
 import { useState } from "react";
 import { useAuthenticatedFetch } from "../hooks";
@@ -110,9 +110,9 @@ export function SearchGiftProductModal ({ isOpen, handleClose, discount, refetch
         <Box position="relative">
           {selectLoading ?
             <Box position="absolute" paddingBlockStart="12" insetBlockEnd="0" insetBlockStart="0" width="100%" minHeight="100%" zIndex="20" opacity="0.7" background="bg-app-hover">
-              <HorizontalStack align="center" blockAlign="center">
+              <InlineStack align="center" blockAlign="center">
                 <Spinner size="small" />
-              </HorizontalStack>
+              </InlineStack>
             </Box>
             : null}
           <ProductGiftList rows={list} />

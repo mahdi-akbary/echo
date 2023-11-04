@@ -1,7 +1,7 @@
 import { useAppQuery } from "../hooks";
 import '@shopify/polaris-viz/build/esm/styles.css';
 import { BarChart } from "@shopify/polaris-viz";
-import { AlphaCard, VerticalStack, Box, Loading, SkeletonBodyText, SkeletonDisplayText, Stack, Text } from "@shopify/polaris";
+import { Card, BlockStack, Box, Loading, SkeletonBodyText, SkeletonDisplayText, Text } from "@shopify/polaris";
 export function FeedbackCountChart () {
     const { data: data, isRefetching: isRefetching, isLoading: isLoading, refetch: fetch } = useAppQuery({
         url: "/api/feedbacks/chart/count"
@@ -19,17 +19,17 @@ export function FeedbackCountChart () {
         }} /> : null;
 
     const loadingMarkup = isLoading || isRefetching ? (
-        <AlphaCard>
+        <Card>
             <Loading />
             <SkeletonBodyText />
-        </AlphaCard>
+        </Card>
     ) : null;
     const loadingTextMarkup = isLoading || isRefetching ? (
         <SkeletonDisplayText size="small" />
     ) : null;
     const markup = (!isLoading && !isRefetching) && data?.length > 0 ? (
-        <AlphaCard >
-            <VerticalStack gap='1'>
+        <Card >
+            <BlockStack gap='1'>
                 <Box padding='2'>
                     <Text as='h2' variant='headingLg'>Total Feedbacks</Text>
                 </Box>
@@ -43,8 +43,8 @@ export function FeedbackCountChart () {
                 </Box>
 
                 {dateBaseChart}
-            </VerticalStack>
-        </AlphaCard>
+            </BlockStack>
+        </Card>
     ) : null
     return (
         <>

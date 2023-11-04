@@ -1,18 +1,14 @@
 import { 
-    Banner, 
-    Box,
-    Button,
+
     Text,
     TextField,
     Select,
-    AlphaCard,
-    Divider,
-    HorizontalStack,
+    Card,
+    InlineStack,
     Grid,
-    VerticalStack,
+    BlockStack,
     FormLayout,
     Tabs,
-Form,
 } from '@shopify/polaris';
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 import { useState, useEffect } from "react";
@@ -75,19 +71,19 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
         <div style={{
             padding: '2rem 1rem',
             }}>
-            <HorizontalStack gap={{ xs: "2", sm: "4" }}>
+            <InlineStack gap={{ xs: "2", sm: "4" }}>
 
                 <Grid columns={{ xs: 1, sm: 3, md: 3, lg: 3, xl: 3 }} gap={2}>
                     
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
-                        <VerticalStack gap="2">
+                        <BlockStack gap="2">
                             <Text as="h3" variant="headingMd">
                                 Color
                             </Text>
                             <Text as='p' variant="bodyMd">
                                 A way of making the checkout page look nice and easy to use. You can change the colors, fonts, and shapes of the things on the page. 
                             </Text>
-                        </VerticalStack>
+                        </BlockStack>
                     </Grid.Cell>
 
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
@@ -97,7 +93,7 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
                             selected={colorsTabsSelected}
                             onSelect={(value) => setColorsTabsSelected(value)}
                         />
-                        <AlphaCard title="Colors" sectioned>
+                        <Card title="Colors" sectioned>
                            {/* If global tab active */}
                            {colorsTabs[colorsTabsSelected].id === 'global' ? (
                                 <FormLayout>
@@ -2349,19 +2345,19 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
 
 
 
-                        </AlphaCard>
+                        </Card>
                     </Grid.Cell>
                     
                 </Grid>
 
                 <Grid columns={{ xs: 1, sm: 3, md: 3, lg: 3, xl: 3 }} gap={2}>
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1 }}>
-                        <VerticalStack gap="2">
+                        <BlockStack gap="2">
                             <Text as="h3" variant="headingMd"> Typography </Text>
                             <Text as='p' variant="bodyMd">
                                 Adjust the typography settings for your design system. Fonts, font sizes, line heights, and font weights can be customized.
                             </Text>
-                        </VerticalStack>
+                        </BlockStack>
                     </Grid.Cell>
 
                     <Grid.Cell columnSpan={{xs: 3, sm: 3, md: 2, lg: 2, xl: 2}}>
@@ -2371,7 +2367,7 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
                             onSelect={(value) => setTypographyTabsSelected(value)}
                         />
 
-                        <AlphaCard title="Typography" sectioned>
+                        <Card title="Typography" sectioned>
                             {/* Primary tab */}
                             {typographyTabs[typographyTabsSelected].id === 'primary-typography' ? (
                                 <FormLayout>
@@ -2487,11 +2483,11 @@ export function DesignSystem({ activeProfile = {}, handleDataChange }) {
 
                             ): null}
 
-                        </AlphaCard>
+                        </Card>
                     </Grid.Cell>
 
                 </Grid>
-            </HorizontalStack>
+            </InlineStack>
         </div>
        
     );

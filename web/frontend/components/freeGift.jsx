@@ -1,14 +1,14 @@
 import {
-  AlphaCard,
+  Card,
   Box,
   Button,
-  HorizontalGrid,
-  HorizontalStack,
+  InlineGrid,
+  InlineStack,
   Loading,
   SkeletonBodyText,
   Spinner,
   Text,
-  VerticalStack,
+  BlockStack,
 } from "@shopify/polaris";
 import { ProductGiftList } from "./productGiftList";
 import { SearchGiftProductModal } from "./searchGiftProductModal";
@@ -32,10 +32,10 @@ export function FreeGift () {
   });
 
   const loadingMarkup = (
-    <AlphaCard>
+    <Card>
       <Loading />
       <SkeletonBodyText />
-    </AlphaCard>
+    </Card>
   )
 
   const {
@@ -86,9 +86,9 @@ export function FreeGift () {
   const giftListMarkup = <Box position="relative">
     {isLoading || isRefetching || isDeleting ?
       <Box position="absolute" paddingBlockStart="12" insetBlockEnd="0" insetBlockStart="0" width="100%" minHeight="100%" zIndex="20" opacity="0.7" background="bg-app-hover">
-        <HorizontalStack align="center" blockAlign="center">
+        <InlineStack align="center" blockAlign="center">
           <Spinner size="small" />
-        </HorizontalStack>
+        </InlineStack>
       </Box>
       : null}
     <Button
@@ -101,22 +101,22 @@ export function FreeGift () {
   </Box>
 
   return (
-    <VerticalStack gap={{ xs: "8", sm: "4" }}>
-      <HorizontalGrid columns={{ xs: "2fr", md: "3fr 6fr" }} gap="4">
+    <BlockStack gap={{ xs: "8", sm: "4" }}>
+      <InlineGrid columns={{ xs: "2fr", md: "3fr 6fr" }} gap="4">
         <Box
           paddingBlockStart="5"
           as="section"
           paddingInlineStart={{ xs: 4, sm: 0 }}
           paddingInlineEnd={{ xs: 4, sm: 0 }}
         >
-          <VerticalStack gap="3">
+          <BlockStack gap="3">
             <Text as="h3" variant="headingMd">
               Checkout Free Gifts
             </Text>
             <Text as="p" variant="bodyMd">
               Free gifts with purchase provide added value, motivating customers to buy and boosting conversion rates.
             </Text>
-          </VerticalStack>
+          </BlockStack>
         </Box>
         <Box
           paddingBlockStart="5"
@@ -126,9 +126,9 @@ export function FreeGift () {
         >
           {
             isLoadingDiscount || isRefetchingDiscount ? loadingMarkup :
-              <AlphaCard>
-                <VerticalStack gap="8">
-                  <HorizontalStack align="space-between" blockAlign="center">
+              <Card>
+                <BlockStack gap="8">
+                  <InlineStack align="space-between" blockAlign="center">
                     <Box>
                       <Text as="h2" variant="headingLg">
                         Threshold
@@ -145,13 +145,13 @@ export function FreeGift () {
                     <Button isLoading={isLoadingDiscount} primary onClick={() => setThresholdModalToggle(true)}>
                       Set Threshold
                     </Button>
-                  </HorizontalStack>
+                  </InlineStack>
                   {discount ? giftListMarkup : null}
-                </VerticalStack>
-              </AlphaCard>
+                </BlockStack>
+              </Card>
           }
         </Box>
-      </HorizontalGrid>
+      </InlineGrid>
 
       <Box padding="4"></Box>
       <SearchGiftProductModal
@@ -166,6 +166,6 @@ export function FreeGift () {
         discount={discount}
         refetch={refetchDiscount}
       />
-    </VerticalStack>
+    </BlockStack>
   );
 }

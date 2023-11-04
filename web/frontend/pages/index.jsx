@@ -2,14 +2,12 @@ import {
   Page,
   Layout,
   CalloutCard,
-  VerticalStack,
-  HorizontalGrid,
+  BlockStack,
+  InlineGrid,
   Box,
   Text,
   Divider,
-  useBreakpoints,
   Modal,
-  TextContainer,
   Spinner,
   Banner,
 } from "@shopify/polaris";
@@ -134,7 +132,7 @@ export default function HomePage () {
           </CalloutCard>
         </Layout.Section>
         <Layout.Section>
-          <VerticalStack gap={"1"}>
+          <BlockStack gap={"1"}>
             <Text variant="headingLg" as="h2">
               Dashboard & Analytics
             </Text>
@@ -142,17 +140,17 @@ export default function HomePage () {
               Here’s what’s happening with your store in the past 7 days.
             </Text>
             <Divider borderWidth="0" />
-          </VerticalStack>
+          </BlockStack>
         </Layout.Section>
         <Layout.Section>
-          <VerticalStack gap={{ xs: "8", sm: "4" }}>
-            <HorizontalGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="4">
+          <BlockStack gap={{ xs: "8", sm: "4" }}>
+            <InlineGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="4">
               <Box
                 as="section"
                 paddingInlineStart={{ xs: 4, sm: 0 }}
                 paddingInlineEnd={{ xs: 4, sm: 0 }}
               >
-                <VerticalStack gap="4">
+                <BlockStack gap="4">
                   <Text as="h3" variant="headingMd">
                     AI Product Recommendations
                   </Text>
@@ -160,39 +158,39 @@ export default function HomePage () {
                     Use AI to recommend products to your customers. View
                     analytics to see how your recommendations are performing.
                   </Text>
-                </VerticalStack>
+                </BlockStack>
               </Box>
               <CountChart />
               <Box></Box>
               <AddedProductList />
-            </HorizontalGrid>
+            </InlineGrid>
             <Box padding="4"></Box>
-          </VerticalStack>
+          </BlockStack>
         </Layout.Section>
 
         <Layout.Section>
-          <VerticalStack gap={{ xs: "8", sm: "4" }}>
-            <HorizontalGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="4">
+          <BlockStack gap={{ xs: "8", sm: "4" }}>
+            <InlineGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="4">
               <Box
                 as="section"
                 paddingInlineStart={{ xs: 4, sm: 0 }}
                 paddingInlineEnd={{ xs: 4, sm: 0 }}
               >
-                <VerticalStack gap="4">
+                <BlockStack gap="4">
                   <Text as="h3" variant="headingMd">
                     Survey & Feedbacks
                   </Text>
                   <Text as="p" variant="bodyMd">
                     Here you can have customer's responses at a glance.
                   </Text>
-                </VerticalStack>
+                </BlockStack>
               </Box>
               <SurveyCountChart />
               <Box></Box>
               <FeedbackCountChart />
-            </HorizontalGrid>
+            </InlineGrid>
             <Box padding="4"></Box>
-          </VerticalStack>
+          </BlockStack>
         </Layout.Section>
       </Layout>
     </Page>

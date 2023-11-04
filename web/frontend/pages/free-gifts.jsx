@@ -1,12 +1,6 @@
 import {
   Page,
   Layout,
-  Text,
-  VerticalStack,
-  Box,
-  Divider,
-  Modal,
-  TextField,
 } from "@shopify/polaris";
 import { FreeGift } from "../components";
 import { TitleBar } from "@shopify/app-bridge-react";

@@ -3,13 +3,13 @@ import {
   Layout,
   Grid,
   Text,
-  VerticalStack,
+  BlockStack,
   Divider,
   Box,
   Icon,
-  HorizontalStack,
+  InlineStack,
   Button,
-  AlphaCard,
+  Card,
   Image,
   Loading,
   SkeletonBodyText,
@@ -61,34 +61,34 @@ export default function Pricing () {
     <>
       <Loading />
       <Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3 }}>
-        <AlphaCard padding="8" background="">
-          <VerticalStack gap="4">
+        <Card padding="8" background="">
+          <BlockStack gap="4">
             <SkeletonBodyText />
             <SkeletonBodyText />
             <SkeletonBodyText />
             <SkeletonDisplayText size="medium" />
-          </VerticalStack>
-        </AlphaCard>
+          </BlockStack>
+        </Card>
       </Grid.Cell>
       <Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3 }}>
-        <AlphaCard padding="8" background="">
-          <VerticalStack gap="4">
+        <Card padding="8" background="">
+          <BlockStack gap="4">
             <SkeletonBodyText />
             <SkeletonBodyText />
             <SkeletonBodyText />
             <SkeletonDisplayText size="medium" />
-          </VerticalStack>
-        </AlphaCard>
+          </BlockStack>
+        </Card>
       </Grid.Cell>
       <Grid.Cell columnSpan={{ xs: 3, sm: 3, md: 3, lg: 3 }}>
-        <AlphaCard padding="8" background="">
-          <VerticalStack gap="4">
+        <Card padding="8" background="">
+          <BlockStack gap="4">
             <SkeletonBodyText />
             <SkeletonBodyText />
             <SkeletonBodyText />
             <SkeletonDisplayText size="medium" />
-          </VerticalStack>
-        </AlphaCard>
+          </BlockStack>
+        </Card>
       </Grid.Cell>
     </>
   );
@@ -141,9 +141,9 @@ export default function Pricing () {
       <TitleBar title="Pricing" primaryAction={null} />
       <Layout>
         <Layout.Section>
-          <AlphaCard fullWidth>
-            <HorizontalStack align="space-between">
-              <VerticalStack gap="2">
+          <Card fullWidth>
+            <InlineStack align="space-between">
+              <BlockStack gap="2">
                 <Text variant="headingMd" fontWeight="semibold">
                   Please select a plan that suits your business
                 </Text>
@@ -153,15 +153,15 @@ export default function Pricing () {
                   you receive per month, and the features you need.
                 </Text>
 
-                <HorizontalStack>{unsubscribeMarkup}</HorizontalStack>
-              </VerticalStack>
+                <InlineStack>{unsubscribeMarkup}</InlineStack>
+              </BlockStack>
               <Image
                 source="https://cdn.shopify.com/s/files/1/0725/8836/2008/files/bill.png?v=1685711340"
                 alt="Billing guide"
                 style={{ width: "90px", height: "90px" }}
               />
-            </HorizontalStack>
-          </AlphaCard>
+            </InlineStack>
+          </Card>
         </Layout.Section>
         <Layout.Section>
           <Grid columns={{xs: 1, sm: 2, md: 3, lg: 3, xl: 3 }}>
@@ -170,7 +170,7 @@ export default function Pricing () {
               : BILLING_PLANS?.map((plan, index) => (
                 <Grid.Cell
                   key={index}>
-                  <AlphaCard
+                  <Card
                     background={
                       currentBilling?.name === plan.name ||
                         (!currentBilling?.name && plan.amount === 0)
@@ -178,7 +178,7 @@ export default function Pricing () {
                         : "bg"
                     }
                   >
-                    <VerticalStack gap="2">
+                    <BlockStack gap="2">
                       <Text variant="heading2xl" as="h2">
                         {plan.name}
                       </Text>
@@ -198,12 +198,12 @@ export default function Pricing () {
                         </Text>
                       </Text>
                       <Text>{plan.description}</Text>
-                    </VerticalStack>
+                    </BlockStack>
                     <div style={{ margin: "1rem" }}></div>
-                    <VerticalStack gap="3">
+                    <BlockStack gap="3">
                       <Divider />
                       {plan.features.map((feature, index) => (
-                        <HorizontalStack
+                        <InlineStack
                           key={index}
                           blockAlign="center"
                           gap="3"
@@ -215,9 +215,9 @@ export default function Pricing () {
                           <Box as="span" width="100%">
                             <Text>{feature}</Text>
                           </Box>
-                        </HorizontalStack>
+                        </InlineStack>
                       ))}
-                    </VerticalStack>
+                    </BlockStack>
                     <div style={{ margin: "1rem" }}></div>
                     {currentBilling?.name === plan.name ||
                       (!currentBilling?.name && plan.amount === 0) ? (
@@ -242,22 +242,22 @@ export default function Pricing () {
                           : "Upgrade plan"}
                       </Button>
                     )}
-                  </AlphaCard>
+                  </Card>
                 </Grid.Cell>
               ))}
           </Grid>
         </Layout.Section>
 
         <Layout.Section>
-          <AlphaCard fullWidth>
-            <HorizontalStack align="space-between" gap="3">
-              <VerticalStack gap="2">
+          <Card fullWidth>
+            <InlineStack align="space-between" gap="3">
+              <BlockStack gap="2">
                 <Text variant="headingMd" fontWeight="semibold">
                   All plans come with a 7-day free trial and includes the following features:
                 </Text>
 
                 {appFeatures.map((feature, index) => (
-                  <HorizontalStack
+                  <InlineStack
                     key={index}
                     blockAlign="center"
                     gap="3"
@@ -269,18 +269,18 @@ export default function Pricing () {
                     <Box as="span" width="100%">
                       <Text>{feature}</Text>
                     </Box>
-                  </HorizontalStack>
+                  </InlineStack>
                 ))}
                 
 
-              </VerticalStack>
+              </BlockStack>
               <Image
                 source="https://cdn.shopify.com/s/files/1/0793/1333/8655/files/team-work.png?v=1695088038"
                 alt="Features guide"
                 style={{ width: "90px", height: "90px" }}
               />
-            </HorizontalStack>
-          </AlphaCard>
+            </InlineStack>
+          </Card>
         </Layout.Section>
       </Layout>
     </Page>

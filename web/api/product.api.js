@@ -149,6 +149,7 @@ export default function productApiEndPoints(app, shopify) {
                     await createDiscountGraphQl(client)
 
                 if (automaticAppDiscount == null) {
+                    console.error(userErrors)
                     throw new Error(`Can't create discount on shopify! ` + userErrors.message);
                 }
                 discountData.discountId = automaticAppDiscount.discountId

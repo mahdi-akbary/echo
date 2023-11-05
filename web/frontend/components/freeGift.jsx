@@ -9,10 +9,11 @@ import {
   Spinner,
   Text,
   BlockStack,
+  SkeletonDisplayText,
 } from "@shopify/polaris";
 import { ProductGiftList } from "./productGiftList";
 import { SearchGiftProductModal } from "./searchGiftProductModal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 import { ThresholdModal } from "./thresholdModal";
 export function FreeGift () {
@@ -22,10 +23,9 @@ export function FreeGift () {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const { isLoading: isLoadingDiscount, isRefetching: isRefetchingDiscount, refetch: refetchDiscount } = useAppQuery({
-    url: "/api/products/discounts",
-    reactQueryOptions: {
+    url: "/api/products/discounts", reactQueryOptions: {
       onSuccess: (data) => {
-        if(data?.amount)
+        if (data?.amount)
           setDiscount(data);
       },
     },
@@ -34,17 +34,18 @@ export function FreeGift () {
   const loadingMarkup = (
     <Card>
       <Loading />
-      <SkeletonBodyText />
+      <BlockStack gap="200">
+        <InlineStack align="space-between">
+          <SkeletonBodyText lines={1} />
+          <SkeletonDisplayText size="medium" />
+        </InlineStack>
+        <SkeletonBodyText />
+      </BlockStack>
     </Card>
   )
 
-  const {
-    isRefetching: isRefetching,
-    isLoading: isLoading,
-    refetch: refetch,
-  } = useAppQuery({
-    url: "/api/products",
-    reactQueryOptions: {
+  const { isRefetching: isRefetching, isLoading: isLoading, refetch: refetch } = useAppQuery({
+    url: "/api/products", reactQueryOptions: {
       onSuccess: (data) => {
         setList(
           data?.map((item) => [
@@ -52,8 +53,8 @@ export function FreeGift () {
             item?.price,
             item?.inventory_quantity,
             <Button
-              plain
-              destructive
+              variant="plain"
+              tone="critical"
               onClick={async () => { await handleProductDelete(item) }}
             >
               Delete
@@ -83,33 +84,23 @@ export function FreeGift () {
 
   const [thresholdModalToggle, setThresholdModalToggle] = useState(false);
 
+  const addProductMarkup = <Button size="slim" onClick={() => setSearchModalToggle(true)}> Add Product </Button>
   const giftListMarkup = <Box position="relative">
     {isLoading || isRefetching || isDeleting ?
-      <Box position="absolute" paddingBlockStart="12" insetBlockEnd="0" insetBlockStart="0" width="100%" minHeight="100%" zIndex="20" opacity="0.7" background="bg-app-hover">
-        <InlineStack align="center" blockAlign="center">
-          <Spinner size="small" />
-        </InlineStack>
-      </Box>
-      : null}
-    <Button
-      size="slim"
-      onClick={() => setSearchModalToggle(true)}
-    >
-      Add Product
-    </Button>
-    <ProductGiftList rows={list} />
+      <SkeletonBodyText />
+      : <ProductGiftList rows={list} />}
   </Box>
 
   return (
-    <BlockStack gap={{ xs: "8", sm: "4" }}>
-      <InlineGrid columns={{ xs: "2fr", md: "3fr 6fr" }} gap="4">
+    <BlockStack gap={{ xs: "800", sm: "400" }}>
+      <InlineGrid columns={{ xs: "2fr", md: "3fr 6fr" }} gap="500">
         <Box
-          paddingBlockStart="5"
+          paddingBlockStart="050"
           as="section"
-          paddingInlineStart={{ xs: 4, sm: 0 }}
-          paddingInlineEnd={{ xs: 4, sm: 0 }}
+          paddingInlineStart={{ xs: 400, sm: 0 }}
+          paddingInlineEnd={{ xs: 400, sm: 0 }}
         >
-          <BlockStack gap="3">
+          <BlockStack gap="200">
             <Text as="h3" variant="headingMd">
               Checkout Free Gifts
             </Text>
@@ -122,29 +113,32 @@ export function FreeGift () {
           paddingBlockStart="5"
           as="section"
           paddingInlineStart="5"
-          paddingInlineEnd={{ xs: 4, sm: 0 }}
+          paddingInlineEnd={{ xs: 400, sm: 0 }}
         >
           {
             isLoadingDiscount || isRefetchingDiscount ? loadingMarkup :
               <Card>
-                <BlockStack gap="8">
+                <BlockStack gap="300">
                   <InlineStack align="space-between" blockAlign="center">
                     <Box>
-                      <Text as="h2" variant="headingLg">
+                      <Text as="h2" variant="headingMd" fontWeight="bold" tone="subdued">
                         Threshold
                       </Text>
                       <Text
                         as="p"
-                        variant="bodyMd"
-                        color="success"
+                        variant="bodyLg"
+                        tone="success"
                         fontWeight="bold"
                       >
                         {discount?.amount ? discount?.amount : "Not set"}
                       </Text>
                     </Box>
-                    <Button isLoading={isLoadingDiscount} primary onClick={() => setThresholdModalToggle(true)}>
-                      Set Threshold
-                    </Button>
+                    <InlineStack gap="200" blockAlign="center">
+                      {addProductMarkup}
+                      <Button isLoading={isLoadingDiscount} variant="primary" onClick={() => setThresholdModalToggle(true)}>
+                        Set Threshold
+                      </Button>
+                    </InlineStack>
                   </InlineStack>
                   {discount ? giftListMarkup : null}
                 </BlockStack>
@@ -153,7 +147,6 @@ export function FreeGift () {
         </Box>
       </InlineGrid>
 
-      <Box padding="4"></Box>
       <SearchGiftProductModal
         isOpen={searchModalToggle}
         handleClose={setSearchModalToggle}

@@ -68,7 +68,7 @@ export default function HowToUse() {
     <Page>
       <Layout>
         <Layout.Section>
-          <BlockStack gap="3">
+          <BlockStack gap="200">
             <Text variant="headingLg" as="h2">
               How to use
             </Text>
@@ -81,14 +81,14 @@ export default function HowToUse() {
         </Layout.Section>
         {videoList.map((video, i) => (
           <Layout.Section key={i}>
-            <BlockStack gap={{ xs: "8", sm: "4" }}>
-              <InlineGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="4">
+            <BlockStack gap={{ xs: "800", sm: "400" }}>
+              <InlineGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="400">
                 <Box
                   as="section"
                   paddingInlineStart={{ xs: 4, sm: 0 }}
                   paddingInlineEnd={{ xs: 4, sm: 0 }}
                 >
-                  <BlockStack gap="4">
+                  <BlockStack gap="200">
                     <Text as="h3" variant="headingMd">
                       {video.title}
                     </Text>
@@ -100,8 +100,8 @@ export default function HowToUse() {
 
                 <Box
                   position="relative"
-                  width={width < 780 ? "100%" : `${(width * 50) / 100}px`}
-                  minHeight={`${(width * 33) / 100}px`}
+                  width={width < 780 ? "100%" : `${(width * 40) / 100}px`}
+                  minHeight={`${(width * 20) / 100}px`}
                 >
                   <div
                     style={{
@@ -131,7 +131,7 @@ export default function HowToUse() {
                   ></iframe>
                 </Box>
               </InlineGrid>
-              <Box padding="4"></Box>
+              <Box padding="200"></Box>
             </BlockStack>
           </Layout.Section>
         ))}

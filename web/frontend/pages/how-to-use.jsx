@@ -8,7 +8,6 @@ import {
   Divider,
   Spinner,
 } from "@shopify/polaris";
-import { TitleBar } from "@shopify/app-bridge-react";
 import { useEffect, useState } from "react";
 
 export default function HowToUse() {
@@ -66,8 +65,7 @@ export default function HowToUse() {
   ];
 
   return (
-    <Page fullWidth>
-      <TitleBar title="How to use" primaryAction={null} />
+    <Page>
       <Layout>
         <Layout.Section>
           <BlockStack gap="3">

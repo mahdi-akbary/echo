@@ -8,15 +8,11 @@ import {
   Card,
   Loading,
   SkeletonBodyText,
-  Select,
-  TextField,
   Modal,
   Button,
   Image,
-  ChoiceList,
   Badge,
   Tabs,
-  Grid,
   Toast,
   ActionList,
   Popover,
@@ -24,7 +20,6 @@ import {
 } from "@shopify/polaris";
 import {
   useAuthenticatedFetch,
-  TitleBar,
   ContextualSaveBar,
   useAppBridge,
 } from "@shopify/app-bridge-react";
@@ -32,8 +27,6 @@ import { useCallback, useState } from "react";
 import { Redirect } from "@shopify/app-bridge/actions";
 
 import { useAppQuery } from "../hooks";
-import { ColorPickerInput } from "../components";
-import { FONTS } from "../components/fonts";
 import { CheckoutCustomization } from "../components/CheckoutCustomization";
 import { DesignSystem } from "../components/DesignSystem";
 
@@ -186,7 +179,6 @@ export default function Branding () {
 
   const contentMarkup = (
     <>
-      <TitleBar title="Branding" primaryAction={null} />
       {toastMarkup}
       <Layout>
         <Modal
@@ -346,7 +338,6 @@ export default function Branding () {
       />
       {false ? (
         <Page
-          fullWidth
           primaryAction={{
             content: "Publish",
           }}
@@ -354,7 +345,7 @@ export default function Branding () {
           {contentMarkup}
         </Page>
       ) : (
-        <Page fullWidth>{contentMarkup}</Page>
+        <Page >{contentMarkup}</Page>
       )}
     </>
   );

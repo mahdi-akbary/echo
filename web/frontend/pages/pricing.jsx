@@ -15,7 +15,7 @@ import {
   SkeletonBodyText,
   SkeletonDisplayText,
 } from "@shopify/polaris";
-import { useAuthenticatedFetch, TitleBar, useAppBridge } from "@shopify/app-bridge-react";
+import { useAuthenticatedFetch, useAppBridge } from "@shopify/app-bridge-react";
 import { CircleTickMajor } from "@shopify/polaris-icons";
 import { BILLING_PLANS } from "../../billing";
 import { useEffect, useState } from "react";
@@ -137,8 +137,7 @@ export default function Pricing () {
     </Button>
   ) : null;
   return (
-    <Page fullWidth>
-      <TitleBar title="Pricing" primaryAction={null} />
+    <Page>
       <Layout>
         <Layout.Section>
           <Card fullWidth>

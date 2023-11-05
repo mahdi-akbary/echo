@@ -4,16 +4,13 @@ import {
     useBreakpoints,
     CalloutCard
   } from "@shopify/polaris";
-  import { TitleBar } from "@shopify/app-bridge-react";
   
   export default function Settings() {
     const { smUp } = useBreakpoints();
 
     return (
-      <Page fullWidth>
-      <TitleBar title="Contact us" primaryAction={null} />
+      <Page>
         <Layout>
-          
           <Layout.Section>
             <CalloutCard
                     title="Contact us"

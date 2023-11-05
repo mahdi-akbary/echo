@@ -18,7 +18,6 @@ import {
 } from "@shopify/polaris";
 import {
   useAuthenticatedFetch,
-  TitleBar,
   ContextualSaveBar,
   useAppBridge,
 } from "@shopify/app-bridge-react";
@@ -130,7 +129,6 @@ export default function Branding () {
 
   const contentMarkup = (
     <>
-      <TitleBar title="Branding" primaryAction={null} />
       <Layout>
         <Modal
           open={activeCheckoutWarning}
@@ -773,7 +771,6 @@ export default function Branding () {
       />
       {false ? (
         <Page
-          fullWidth
           primaryAction={{
             content: "Publish",
           }}
@@ -781,7 +778,7 @@ export default function Branding () {
           {contentMarkup}
         </Page>
       ) : (
-        <Page fullWidth>{contentMarkup}</Page>
+        <Page >{contentMarkup}</Page>
       )}
     </>
   );

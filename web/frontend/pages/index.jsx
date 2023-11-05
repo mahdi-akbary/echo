@@ -11,7 +11,7 @@ import {
   Spinner,
   Banner,
 } from "@shopify/polaris";
-import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
+import { useAppBridge } from "@shopify/app-bridge-react";
 import { useEffect, useState } from "react";
 import {
   CountChart,
@@ -40,8 +40,7 @@ export default function HomePage () {
     setDisplayVideoGuide(!displayVideoGuide);
   };
   return (
-    <Page fullWidth>
-      <TitleBar title="Dashboard" primaryAction={null} />
+    <Page >
       <Layout>
         <Modal
         large

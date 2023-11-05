@@ -19,37 +19,37 @@ export default function productApiEndPoints(app, shopify) {
         }
     })
     app.post("/api/products", async (req, res) => {
-        const body = req.body;
+        const {variants, discountAmount, discountId} = req.body;
         const { session } = res.locals.shopify;
         const client = new shopify.api.clients.Graphql({ session });
         try {
-            const { data: exists, error: existsError } = await supabase
+            const { error: deleteError } = await supabase
                 .from('gift_products')
-                .select()
+                .delete()
                 .eq('shop', session?.shop)
-                .eq('variant_id', body?.id)
-            if (existsError) throw new Error(existsError.message)
-            if (exists?.length > 0) throw new Error('Already exists!')
+            if (deleteError) throw new Error(deleteError.message)
+
+            const preparedData = variants.map(variant => ({
+                shop: session?.shop,
+                variant_id: variant?.id,
+                title: variant?.title,
+                display_name: variant?.displayName,
+                inventory_quantity: variant?.inventoryQuantity,
+                price: variant?.price,
+                image_url: variant?.image?.url || ''
+            }))
             const { data, error } = await supabase
                 .from('gift_products')
-                .insert({
-                    shop: session?.shop,
-                    variant_id: body?.id,
-                    title: body?.title,
-                    display_name: body?.displayName,
-                    inventory_quantity: body?.inventoryQuantity,
-                    price: body?.price,
-                    image_url: body?.image?.url || body?.product?.featuredImage?.url
-                })
+                .insert(preparedData)
                 .select()
             if (error) throw new Error(error.message)
 
             await setMetaFields(client, {
                 shop: session?.shop,
-                amount: body?.discountAmount,
-                discountId: body?.discountId
+                amount: discountAmount,
+                discountId: discountId
             })
-            res.status(200).send(data[0]);
+            res.status(200).send(data);
         } catch (error) {
             console.error(error)
             res.status(500).send({ message: error.message });

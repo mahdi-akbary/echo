@@ -6,21 +6,22 @@ import {
   InlineStack,
   Loading,
   SkeletonBodyText,
-  Spinner,
   Text,
   BlockStack,
   SkeletonDisplayText,
+  Toast,
 } from "@shopify/polaris";
 import { ProductGiftList } from "./productGiftList";
-import { SearchGiftProductModal } from "./searchGiftProductModal";
 import { useState } from "react";
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 import { ThresholdModal } from "./thresholdModal";
+import { ResourcePicker } from '@shopify/app-bridge-react';
 export function FreeGift () {
   const fetch = useAuthenticatedFetch();
   const [list, setList] = useState([]);
   const [discount, setDiscount] = useState(null);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [productVariantIds, setProductVariantsIds] = useState([]);
 
   const { isLoading: isLoadingDiscount, isRefetching: isRefetchingDiscount, refetch: refetchDiscount } = useAppQuery({
     url: "/api/products/discounts", reactQueryOptions: {
@@ -47,49 +48,57 @@ export function FreeGift () {
   const { isRefetching: isRefetching, isLoading: isLoading, refetch: refetch } = useAppQuery({
     url: "/api/products", reactQueryOptions: {
       onSuccess: (data) => {
+        setProductVariantsIds(data?.map((item) => ({ id: item?.variant_id })))
         setList(
           data?.map((item) => [
             item?.display_name,
             item?.price,
-            item?.inventory_quantity,
-            <Button
-              variant="plain"
-              tone="critical"
-              onClick={async () => { await handleProductDelete(item) }}
-            >
-              Delete
-            </Button>,
+            item?.inventory_quantity
           ])
         );
       },
     },
   });
-  const handleProductDelete = async (item) => {
-
-    setIsDeleting(true)
-    const response = await fetch(`/api/products/${item?.id}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (response.ok) {
-      setIsDeleting(false)
-      refetch();
-    } else {
-      setIsDeleting(false)
-      refetch();
-    }
-  }
   const [searchModalToggle, setSearchModalToggle] = useState(false);
 
   const [thresholdModalToggle, setThresholdModalToggle] = useState(false);
 
-  const addProductMarkup = <Button size="slim" onClick={() => setSearchModalToggle(true)}> Add Product </Button>
+  const addProductMarkup = discount?.amount ? <Button size="slim" onClick={() => setSearchModalToggle(true)}> Add Product </Button> : null
   const giftListMarkup = <Box position="relative">
-    {isLoading || isRefetching || isDeleting ?
+    {isLoading || isRefetching || isSaving ?
       <SkeletonBodyText />
       : <ProductGiftList rows={list} />}
   </Box>
+
+  const [toastContent, setToastContent] = useState({ content: null });
+
+  const toastMarkup = toastContent.content && (
+    <Toast {...toastContent} onDismiss={() => setToastContent({ content: null })} />
+  );
+
+  const handleVariantSelection = async ({ selection }) => {
+    setSearchModalToggle(false)
+    setIsSaving(true)
+    const response = await fetch("/api/products", {
+      method: "POST",
+      body: JSON.stringify({
+        variants: selection,
+        discountId: discount?.discount_id,
+        discountAmount: discount?.amount,
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      setToastContent({ content: 'Saved!' })
+      setIsSaving(false)
+      refetch()
+    } else {
+      setIsSaving(false)
+      const data = await response.json();
+      setToastContent({ content: data.message })
+    }
+  }
 
   return (
     <BlockStack gap={{ xs: "800", sm: "400" }}>
@@ -147,18 +156,20 @@ export function FreeGift () {
         </Box>
       </InlineGrid>
 
-      <SearchGiftProductModal
-        isOpen={searchModalToggle}
-        handleClose={setSearchModalToggle}
-        discount={discount}
-        refetch={refetch}
-      />
       <ThresholdModal
         isOpen={thresholdModalToggle}
         handleClose={setThresholdModalToggle}
         discount={discount}
         refetch={refetchDiscount}
       />
+      <ResourcePicker
+        initialSelectionIds={productVariantIds}
+        onSelection={handleVariantSelection}
+        resourceType="ProductVariant"
+        open={searchModalToggle}
+        onCancel={() => setSearchModalToggle(false)} />
+      {toastMarkup}
     </BlockStack>
+
   );
 }

@@ -24,8 +24,8 @@ export function ProductGiftList({
         loadingMarkup
       ) : (
         <DataTable
-          columnContentTypes={["text", "numeric", "numeric", "text"]}
-          headings={["Product", "Price", "Quantity", ""]}
+          columnContentTypes={["text", "numeric", "numeric"]}
+          headings={["Product", "Price", "Quantity"]}
           rows={rows}
         />
       )}

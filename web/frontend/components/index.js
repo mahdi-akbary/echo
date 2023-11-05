@@ -8,5 +8,6 @@ export { SearchGiftProductModal } from "./searchGiftProductModal"
 export { ColorPickerInput } from "./colorPickerInput"
 export { SurveyCountChart } from "./surveyCountChart"
 export { FeedbackCountChart } from "./feedbackCountChart"
+export { OverviewModal } from "./overviewModal"
 export * from "./providers";
 

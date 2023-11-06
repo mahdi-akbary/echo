@@ -1,13 +1,9 @@
 import {
     Select,
     Text,
-    Card,
-    Grid,
-    BlockStack,
     FormLayout,
     Tabs,
     Banner,
-    Divider
 } from '@shopify/polaris';
 import { useState } from "react";
 import { TabDivider } from './tabDivider';

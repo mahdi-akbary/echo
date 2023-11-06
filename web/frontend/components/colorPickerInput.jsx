@@ -23,7 +23,7 @@ export function ColorPickerInput ({ inputColor = "#fff", label, onChange, helpTe
   const [buttonColor, setButtonColor] = useState(inputColor);
   const activator = (
     <>
-      <InlineStack align="start" gap="4">
+      <InlineStack align="start" gap="200">
         <div
           onClick={togglePopoverActive}
           style={{
@@ -59,6 +59,7 @@ export function ColorPickerInput ({ inputColor = "#fff", label, onChange, helpTe
         autofocusTarget="first-node"
         onClose={togglePopoverActive}>
         <BlockStack >
+        <Box padding="200">
           <ColorPicker
             onChange={(value) => {
               let color = {
@@ -76,7 +77,8 @@ export function ColorPickerInput ({ inputColor = "#fff", label, onChange, helpTe
             allowAlpha
             color={color}
           />
-          <Box width="90%" padding="1">
+          </Box>
+          <Box padding="200" paddingBlockStart="0">
             <TextField value={buttonColor} focused={false} readOnly />
           </Box>
         </BlockStack>

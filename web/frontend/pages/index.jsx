@@ -8,6 +8,7 @@ import {
   Text,
   Divider,
   Banner,
+  Card,
 } from "@shopify/polaris";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { useState } from "react";
@@ -31,14 +32,16 @@ export default function HomePage () {
   };
 
   const bannerHtml = !isBannerClosed ? <Layout.Section>
-    <Banner tone="info" onDismiss={() => {
-      setIsBannerClosed(true)
-      localStorage.setItem('isBannerClosed', true)
-    }}>
-      <p>
-        Thank you for installing our app. Currently, checkout extensibility is only for Shopify Plus merchants. However, Shopify plans to expand this feature to Basic, Shopify, and Advanced plans by <strong>April 30, 2024</strong>. We will notify you once it becomes available for your store. Thank you for your patience and support.
-      </p>
-    </Banner>
+    <Card>
+      <Banner onDismiss={() => {
+        setIsBannerClosed(true)
+        localStorage.setItem('isBannerClosed', true)
+      }}>
+        <p>
+          Thank you for installing our app. Currently, checkout extensibility is only for Shopify Plus merchants. However, Shopify plans to expand this feature to Basic, Shopify, and Advanced plans by <strong>April 30, 2024</strong>. We will notify you once it becomes available for your store. Thank you for your patience and support.
+        </p>
+      </Banner>
+    </Card>
   </Layout.Section> : null
 
   return (

@@ -1,4 +1,4 @@
-import { Box, Button, InlineStack, Modal, Spinner, TextField, Toast } from "@shopify/polaris";
+import { Box, Button, Modal, TextField, Toast } from "@shopify/polaris";
 import { ProductGiftList } from "./productGiftList";
 import { useRef, useState } from "react";
 import { useAuthenticatedFetch } from "../hooks";

@@ -9,5 +9,7 @@ export { ColorPickerInput } from "./colorPickerInput"
 export { SurveyCountChart } from "./surveyCountChart"
 export { FeedbackCountChart } from "./feedbackCountChart"
 export { OverviewModal } from "./overviewModal"
+export { BrandingOptionList } from "./brandingOptionList"
+export { TabDivider } from "./tabDivider"
 export * from "./providers";
 

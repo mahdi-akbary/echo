@@ -12,12 +12,11 @@ import {
   Button,
   Image,
   Badge,
-  Tabs,
   Toast,
   ActionList,
   Popover,
-  Banner,
   Grid,
+  SkeletonDisplayText,
 } from "@shopify/polaris";
 import {
   useAuthenticatedFetch,
@@ -40,10 +39,9 @@ export default function Branding () {
   const [hasChange, setHasChange] = useState(false);
 
   const [selected, setSelected] = useState(undefined);
-  const [selectedTab, setSelectedTab] = useState(0);
   const [toastActive, setToastActive] = useState(false);
 
-  // Profile dropdown
+
   const [active, setActive] = useState(false);
   const toggleActive = useCallback(() => setActive((active) => !active), []);
 
@@ -67,13 +65,9 @@ export default function Branding () {
 
 
   const {
-    data: activeProfile,
-    refetch: refetchProductProfile,
-    isLoading: isLoadingProfile,
-    isRefetching: isRefetchingProfile,
+    data: activeProfile, refetch: refetchProductProfile, isLoading: isLoadingProfile, isRefetching: isRefetchingProfile,
   } = useAppQuery({
-    url: selected ? `/api/branding?id=${selected}` : "/api/branding",
-    reactQueryOptions: {
+    url: selected ? `/api/branding?id=${selected}` : "/api/branding", reactQueryOptions: {
       onSuccess: (res) => {
         if (!hasChange) {
           if (res.designSystem && res.designSystem.typography) {
@@ -96,43 +90,24 @@ export default function Branding () {
     },
   });
 
-  const settingTabs = [
-    {
-      id: 'design-system-1',
-      content: 'Design system',
-      panelID: 'Design-system-content-1',
-    },
-    {
-      id: 'customization-1',
-      content: 'Customization',
-      accessibilityLabel: 'Customization',
-      panelID: 'customization-content-1',
-    },
-    {
-      id: 'template-1',
-      content: 'Template',
-      accessibilityLabel: 'Template',
-      panelID: 'template-content-1',
-    },
-
-  ];
-
-  // Toaster mockup
   const toastMarkup = toastActive ? (
     <Toast content="Changes saved" onDismiss={toggleToastActive} />
   ) : null;
 
 
-  //   console.log('activeProfile', activeProfile);
-
   const loadingMarkup = (
-    <div style={{ padding: "2rem 1rem" }}>
-      <Loading />
-      <InlineStack align="space-between">
-        <SkeletonBodyText />
-        <SkeletonBodyText />
-      </InlineStack>
-    </div>
+    <>
+      <Layout.Section variant="oneThird">
+        <Card padding="800">
+          <SkeletonBodyText lines="20" />
+        </Card>
+      </Layout.Section>
+      <Layout.Section >
+        <Card padding="800">
+          <SkeletonBodyText lines="20" />
+        </Card>
+      </Layout.Section>
+    </>
   );
 
   const handleSubmit = async () => {
@@ -178,6 +153,55 @@ export default function Branding () {
       </div>
     </Button>
   );
+  const actionsLoading = <>
+    <InlineStack gap="150">
+      <Box width="120px">
+        <SkeletonDisplayText size="small" />
+      </Box>
+      <Box width="120px">
+        <SkeletonDisplayText size="small" />
+      </Box>
+    </InlineStack>
+    <Box width="120px">
+      <SkeletonDisplayText size="small" />
+    </Box>
+  </>
+  const actionsMarkups = <>
+    <InlineStack gap="200">
+      <Popover
+        active={active}
+        activator={profileSelector}
+        autofocusTarget="first-node"
+        onClose={toggleActive}>
+        <ActionList
+          actionRole="menuitem"
+          items={
+            (data.profiles || []).map(profile => ({
+              active: profile.id === selected,
+              content: profile.name,
+              value: profile.id,
+              ...(profile.isPublished ? {
+                badge: {
+                  tone: 'success-strong',
+                  content: profile.isPublished ? 'Active' : null
+                }
+              } : {}),
+              onAction: () => { handleChange(profile.id); toggleActive() },
+            }))
+          }
+        />
+      </Popover>
+
+      <Button variant="primary"
+        onClick={() =>
+          redirect.dispatch(
+            Redirect.Action.ADMIN_PATH,
+            { path: `/settings/checkout/preview/profiles/${selected?.split('/')[4]}`, newContext: true }
+          )
+        }> Preview </Button>
+    </InlineStack>
+    <Button tone="critical" onClick={() => console.log('her')}>Reset to default</Button>
+  </>
 
   const [selectedListOption, setSelectedListOption] = useState('global-colors')
 
@@ -234,71 +258,30 @@ export default function Branding () {
                 </Grid.Cell>
               </Grid>
               <InlineStack align="space-between">
-                {isLoadingProfile || isRefetchingProfile ? null :
-                  <>
-                    <Box style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      gap: "1rem",
-                    }}>
-                      <InlineStack gap="200">
-                        <Popover
-                          active={active}
-                          activator={profileSelector}
-                          autofocusTarget="first-node"
-                          onClose={toggleActive}>
-                          <ActionList
-                            actionRole="menuitem"
-                            items={
-                              (data.profiles || []).map(profile => ({
-                                active: profile.id === selected,
-                                content: profile.name,
-                                value: profile.id,
-                                ...(profile.isPublished ? {
-                                  badge: {
-                                    tone: 'success-strong',
-                                    content: profile.isPublished ? 'Active' : null
-                                  }
-                                } : {}),
-                                onAction: () => { handleChange(profile.id); toggleActive() },
-                              }))
-                            }
-                          />
-                        </Popover>
-
-                        <Button variant="primary"
-                          onClick={() =>
-                            redirect.dispatch(
-                              Redirect.Action.ADMIN_PATH,
-                              { path: `/settings/checkout/preview/profiles/${selected?.split('/')[4]}`, newContext: true }
-                            )
-                          }> Preview </Button>
-                      </InlineStack>
-                    </Box>
-                    <Button tone="critical" onClick={() => console.log('her')}>Reset to default</Button>
-                  </>
-                }
-
+                {isLoadingProfile || isRefetchingProfile ? actionsLoading : actionsMarkups}
               </InlineStack>
-
             </BlockStack>
           </Card>
 
 
         </Layout.Section>
 
-        <Layout.Section variant="oneThird">
-          <Card padding="200">
-            <BrandingOptionList selected={selectedListOption} setSelected={setSelectedListOption} />
-          </Card>
-        </Layout.Section>
-        <Layout.Section>
-          <Card sectioned>
-            <DesignSystem activeProfile={activeProfile} handleDataChange={handleDataChange} selectedListOption={selectedListOption} />
-            <CheckoutCustomization activeProfile={activeProfile} handleDataChange={handleDataChange} selectedListOption={selectedListOption} />
-          </Card>
-        </Layout.Section>
+        {isLoadingProfile || isRefetchingProfile ? loadingMarkup :
+          <>
+            <Layout.Section variant="oneThird">
+              <Card padding="200">
+                <BrandingOptionList selected={selectedListOption} setSelected={setSelectedListOption} />
+              </Card>
+            </Layout.Section>
+
+            <Layout.Section>
+              <Card sectioned>
+                <DesignSystem activeProfile={activeProfile} handleDataChange={handleDataChange} selectedListOption={selectedListOption} />
+                <CheckoutCustomization activeProfile={activeProfile} handleDataChange={handleDataChange} selectedListOption={selectedListOption} />
+              </Card>
+            </Layout.Section>
+          </>
+        }
 
       </Layout>
     </>

@@ -13,17 +13,17 @@ import {
 } from "@shopify/polaris";
 import { useCallback, useState } from "react";
 
-export function ColorPickerInput ({ inputColor = "#fff", label, onChange, helpText = null }) {
+export function ColorPickerInput ({ inputColor = null, label, onChange, helpText = null }) {
   const [popoverActive, setPopoverActive] = useState(false);
 
   const togglePopoverActive = useCallback(
     () => setPopoverActive((popoverActive) => !popoverActive),
     []
   );
-  const [buttonColor, setButtonColor] = useState(inputColor);
+  const [buttonColor, setButtonColor] = useState(inputColor ? inputColor : '#fff');
   const activator = (
     <>
-      <InlineStack align="start" gap="200">
+      <InlineStack align="start" gap="200" wrap={false}>
         <div
           onClick={togglePopoverActive}
           style={{
@@ -36,13 +36,13 @@ export function ColorPickerInput ({ inputColor = "#fff", label, onChange, helpTe
           }}
         ></div>
         <Box>
-          <Text>{ label }</Text>
-          <Text Variant="bodyMd">{buttonColor}</Text>
+          <Text as="p" variant="bodyMd">{inputColor ? label : `Override ${label} Color`}</Text>
+          <Text Variant="bodySm" tone="subdued" fontWeight="regular"  >
+          <p style={{ fontSize: '11px'}}>{
+            inputColor ? buttonColor : helpText
+          }</p></Text>
         </Box>
       </InlineStack>
-
-      {helpText && <div style={{ paddingTop: "0.4rem"}} ><Text variant="subdued">{helpText}</Text></div>}
-
     </>
   );
   const [color, setColor] = useState({
@@ -59,24 +59,24 @@ export function ColorPickerInput ({ inputColor = "#fff", label, onChange, helpTe
         autofocusTarget="first-node"
         onClose={togglePopoverActive}>
         <BlockStack >
-        <Box padding="200">
-          <ColorPicker
-            onChange={(value) => {
-              let color = {
-                alpha: value.alpha,
-                hue: value.hue,
-                saturation: value.saturation || null, 
-                brightness: value.brightness || null
-              }
-              
-              setColor(color);
-              const hexColor = rgbToHex(hsbToRgb(color))
-              setButtonColor(hexColor);
-              onChange(hexColor)
-            }}
-            allowAlpha
-            color={color}
-          />
+          <Box padding="200">
+            <ColorPicker
+              onChange={(value) => {
+                let color = {
+                  alpha: value.alpha,
+                  hue: value.hue,
+                  saturation: value.saturation || null,
+                  brightness: value.brightness || null
+                }
+
+                setColor(color);
+                const hexColor = rgbToHex(hsbToRgb(color))
+                setButtonColor(hexColor);
+                onChange(hexColor)
+              }}
+              allowAlpha
+              color={color}
+            />
           </Box>
           <Box padding="200" paddingBlockStart="0">
             <TextField value={buttonColor} focused={false} readOnly />

@@ -192,7 +192,7 @@ export default function Branding () {
         />
       </Popover>
 
-      <Button variant="primary"
+      <Button variant="tertiary"
         onClick={() =>
           redirect.dispatch(
             Redirect.Action.ADMIN_PATH,
@@ -275,7 +275,7 @@ export default function Branding () {
             </Layout.Section>
 
             <Layout.Section>
-              <Card sectioned>
+              <Card padding="600" sectioned>
                 <DesignSystem activeProfile={activeProfile} handleDataChange={handleDataChange} selectedListOption={selectedListOption} />
                 <CheckoutCustomization activeProfile={activeProfile} handleDataChange={handleDataChange} selectedListOption={selectedListOption} />
               </Card>

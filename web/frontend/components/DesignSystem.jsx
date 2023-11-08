@@ -6,7 +6,7 @@ import {
     BlockStack,
     Tabs,
 } from '@shopify/polaris';
-import { ColorPickerInput, TabDivider } from "../components";
+import { ColorPickerInput, HelpText, TabDivider } from "../components";
 import { FONTS } from "../components/fonts";
 import { useState } from 'react';
 
@@ -276,7 +276,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                 {SchemeOneTabs[selectedSchemeOneTab].id === 'colors' ? <BlockStack gap="500">
                     <ColorPickerInput
                         helpText="Text color for scheme 1"
-                        label="Text color"
+                        label="Text"
                         onChange={(value) => {
                             const temp = activeProfile;
                             temp.designSystem = {
@@ -304,7 +304,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                     {/* Background */}
                     <ColorPickerInput
                         helpText="Background color for scheme 1"
-                        label="Background color"
+                        label="Background"
                         onChange={(value) => {
                             const temp = activeProfile;
                             temp.designSystem = {
@@ -332,7 +332,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                     {/* Border color */}
                     <ColorPickerInput
                         helpText="Border color for scheme 1"
-                        label="Border color"
+                        label="Border"
                         onChange={(value) => {
                             const temp = activeProfile;
                             temp.designSystem = {
@@ -360,7 +360,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                     {/* decorative */}
                     <ColorPickerInput
                         helpText="Decorative color for scheme 1"
-                        label="Decorative color"
+                        label="Decorative"
                         onChange={(value) => {
                             const temp = activeProfile;
                             temp.designSystem = {
@@ -388,7 +388,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                     {/* accent */}
                     <ColorPickerInput
                         helpText="The color of accented objects (links and focused state)."
-                        label="Accent color"
+                        label="Accent"
                         onChange={(value) => {
                             const temp = activeProfile;
                             temp.designSystem = {
@@ -2375,8 +2375,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                 handleDataChange(temp);
                             }}
                         />
-
-
+                        <HelpText text="A font group used for most components such as text, buttons and form controls." />
                     </FormLayout> : null}
                 {typographyTabs[selectedTypographyTab].id === 'secondary' ?
                     <FormLayout>
@@ -2402,7 +2401,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                 handleDataChange(temp);
                             }}
                         />
-
+                        <HelpText text="A font group used for heading components by default." />
                     </FormLayout> : null}
                 {typographyTabs[selectedTypographyTab].id === 'font' ?
                     <FormLayout>
@@ -2428,6 +2427,8 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                             value={activeProfile?.designSystem?.typography?.size?.base}
                             autoComplete="off"
                         />
+                        <HelpText text="The base font size." />
+
                         <Select
                             label="Ratio"
                             options={[
@@ -2452,6 +2453,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                 handleDataChange(temp);
                             }}
                             value={activeProfile?.designSystem?.typography?.size?.ratio} />
+                            <HelpText text="The scale ratio used to derive all font sizes such as small and large." />
                     </FormLayout> : null}
             </FormLayout>
         ) : null}

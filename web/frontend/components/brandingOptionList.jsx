@@ -38,7 +38,7 @@ export function BrandingOptionList ({ selected, setSelected }) {
         {
             title: 'Pre-defined Templates',
             items: [
-                { content: 'Comming soon...', icon: TemplateMinor },
+                { content: 'Coming soon...', icon: TemplateMinor },
             ],
         },
     ]

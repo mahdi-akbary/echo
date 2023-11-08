@@ -6,7 +6,6 @@ import {
   Box,
   InlineStack,
   Card,
-  Loading,
   SkeletonBodyText,
   Modal,
   Button,
@@ -29,7 +28,7 @@ import { Redirect } from "@shopify/app-bridge/actions";
 import { useAppQuery } from "../hooks";
 import { CheckoutCustomization } from "../components/CheckoutCustomization";
 import { DesignSystem } from "../components/DesignSystem";
-import { BrandingOptionList } from "../components";
+import { BrandingOptionList, ResetConfirmationModal } from "../components";
 
 
 export default function Branding () {
@@ -40,11 +39,11 @@ export default function Branding () {
 
   const [selected, setSelected] = useState(undefined);
   const [toastActive, setToastActive] = useState(false);
+  const [openResetModal, setOpenResetModal] = useState(false);
 
 
   const [active, setActive] = useState(false);
   const toggleActive = useCallback(() => setActive((active) => !active), []);
-
 
   const toggleToastActive = useCallback(
     () => setToastActive((active) => !active),
@@ -200,7 +199,7 @@ export default function Branding () {
           )
         }> Preview </Button>
     </InlineStack>
-    <Button tone="critical" onClick={() => console.log('her')}>Reset to default</Button>
+    <Button tone="critical" onClick={() => setOpenResetModal(true)}>Reset to default</Button>
   </>
 
   const [selectedListOption, setSelectedListOption] = useState('global-colors')
@@ -304,6 +303,7 @@ export default function Branding () {
           }
         }}
       />
+      <ResetConfirmationModal handleClose={setOpenResetModal} isOpen={openResetModal} profileId={activeProfile?.id} refetch={refetchProductProfile} />
       {false ? (
         <Page
           primaryAction={{

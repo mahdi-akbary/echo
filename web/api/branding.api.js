@@ -25,7 +25,7 @@ export default function brandingApiEndPoints (app, shopify) {
       res.status(500).send(error);
     }
   })
-  
+
   app.post("/api/branding", async (req, res) => {
     const body = req.body;
     const { session } = res.locals.shopify;
@@ -39,10 +39,65 @@ export default function brandingApiEndPoints (app, shopify) {
     }
   })
 
-  async function upsert (client, profileData) {
+  app.post("/api/branding/reset", async (req, res) => {
+    const body = req.body;
+    const { session } = res.locals.shopify;
+    const client = new shopify.api.clients.Graphql({ session });
+    try {
+      const response = await reset(client, body)
+      res.status(200).send(response);
+    } catch (error) {
+      console.error(error?.response)
+      res.status(500).send({ message: error.message });
+    }
+  })
+
+  async function reset (client, { id }) {
     return await client.query({
       data: {
-        "query": `mutation checkoutBrandingUpsert($checkoutBrandingInput: CheckoutBrandingInput!, $checkoutProfileId: ID!) {
+        query: `mutation ChangeColorSchemeAndOrderSummary($checkoutBrandingInput: CheckoutBrandingInput!, $checkoutProfileId: ID!) {
+          checkoutBrandingUpsert(checkoutBrandingInput: $checkoutBrandingInput, checkoutProfileId: $checkoutProfileId) {
+            checkoutBranding {
+              designSystem {
+                colors {
+                  schemes {
+                    scheme1 {
+                      base {
+                        background
+                        text
+                      }
+                    }
+                  }
+                }
+              }
+              customizations {
+                orderSummary {
+                  colorScheme
+                }
+              }
+            }
+            userErrors {
+              field
+              message
+            }
+          }
+        }
+        `,
+        variables: {
+          "checkoutProfileId": id,
+          "checkoutBrandingInput": {
+            "designSystem": null,
+            "customizations": null
+          }
+        }
+      }
+    })
+  }
+
+  async function upsert (client, { id, designSystem, customizations }) {
+    return await client.query({
+      data: {
+        query: `mutation checkoutBrandingUpsert($checkoutBrandingInput: CheckoutBrandingInput!, $checkoutProfileId: ID!) {
                     checkoutBrandingUpsert(checkoutBrandingInput: $checkoutBrandingInput, checkoutProfileId: $checkoutProfileId) {
                       checkoutBranding {
                         designSystem {
@@ -344,261 +399,259 @@ export default function brandingApiEndPoints (app, shopify) {
                       }
                     }
                   }`,
-                  
-        "variables": {
-          "checkoutProfileId": profileData?.id,
+        variables: {
+          "checkoutProfileId": id,
           "checkoutBrandingInput": {
             "designSystem": {
               "colors": {
                 "global": {
-                  "brand": profileData?.designSystem?.colors?.global?.brand,
-                  "accent": profileData?.designSystem?.colors?.global?.accent,
-                  "success": profileData?.designSystem?.colors?.global?.success,
-                  "info": profileData?.designSystem?.colors?.global?.info,
-                  "warning": profileData?.designSystem?.colors?.global?.warning,
-                  "critical": profileData?.designSystem?.colors?.global?.critical,
-                  "decorative": profileData?.designSystem?.colors?.global?.decorative,
+                  "brand": designSystem?.colors?.global?.brand,
+                  "accent": designSystem?.colors?.global?.accent,
+                  "success": designSystem?.colors?.global?.success,
+                  "info": designSystem?.colors?.global?.info,
+                  "warning": designSystem?.colors?.global?.warning,
+                  "critical": designSystem?.colors?.global?.critical,
+                  "decorative": designSystem?.colors?.global?.decorative,
                 },
                 "schemes": {
                   "scheme1": {
                     "base": {
-                      "background": profileData?.designSystem?.colors?.schemes?.scheme1?.base?.background,
-                      "border": profileData?.designSystem?.colors?.schemes?.scheme1?.base?.border,
-                      "text": profileData?.designSystem?.colors?.schemes?.scheme1?.base?.text,
-                      "icon": profileData?.designSystem?.colors?.schemes?.scheme1?.base?.icon,
-                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme1?.base?.decorative,
-                      "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.base?.accent,
+                      "background": designSystem?.colors?.schemes?.scheme1?.base?.background,
+                      "border": designSystem?.colors?.schemes?.scheme1?.base?.border,
+                      "text": designSystem?.colors?.schemes?.scheme1?.base?.text,
+                      "icon": designSystem?.colors?.schemes?.scheme1?.base?.icon,
+                      "decorative": designSystem?.colors?.schemes?.scheme1?.base?.decorative,
+                      "accent": designSystem?.colors?.schemes?.scheme1?.base?.accent,
                     },
                     "control": {
-                      "text": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.text,
-                      "background": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.background,
-                      "border": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.border,
-                      "icon": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.icon,
-                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.decorative,
-                      "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.accent,
+                      "text": designSystem?.colors?.schemes?.scheme1?.control?.text,
+                      "background": designSystem?.colors?.schemes?.scheme1?.control?.background,
+                      "border": designSystem?.colors?.schemes?.scheme1?.control?.border,
+                      "icon": designSystem?.colors?.schemes?.scheme1?.control?.icon,
+                      "decorative": designSystem?.colors?.schemes?.scheme1?.control?.decorative,
+                      "accent": designSystem?.colors?.schemes?.scheme1?.control?.accent,
                       "selected": {
-                        "text": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.text,
-                        "background": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.background,
-                        "border": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.border,
-                        "icon": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.icon,
-                        "decorative": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.decorative,
-                        "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.control?.selected?.accent,
+                        "text": designSystem?.colors?.schemes?.scheme1?.control?.selected?.text,
+                        "background": designSystem?.colors?.schemes?.scheme1?.control?.selected?.background,
+                        "border": designSystem?.colors?.schemes?.scheme1?.control?.selected?.border,
+                        "icon": designSystem?.colors?.schemes?.scheme1?.control?.selected?.icon,
+                        "decorative": designSystem?.colors?.schemes?.scheme1?.control?.selected?.decorative,
+                        "accent": designSystem?.colors?.schemes?.scheme1?.control?.selected?.accent,
                       }
                     },
                     "primaryButton": {
-                      "text": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.text,
-                      "background": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.background,
-                      "border": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.border,
-                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.decorative,
-                      "icon": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.icon,
-                      "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.accent,
+                      "text": designSystem?.colors?.schemes?.scheme1?.primaryButton?.text,
+                      "background": designSystem?.colors?.schemes?.scheme1?.primaryButton?.background,
+                      "border": designSystem?.colors?.schemes?.scheme1?.primaryButton?.border,
+                      "decorative": designSystem?.colors?.schemes?.scheme1?.primaryButton?.decorative,
+                      "icon": designSystem?.colors?.schemes?.scheme1?.primaryButton?.icon,
+                      "accent": designSystem?.colors?.schemes?.scheme1?.primaryButton?.accent,
                       "hover": {
-                        "text": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.text,
-                        "background": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.background,
-                        "border": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.border,
-                        "decorative": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.decorative,
-                        "icon": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.icon,
-                        "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.accent,
+                        "text": designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.text,
+                        "background": designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.background,
+                        "border": designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.border,
+                        "decorative": designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.decorative,
+                        "icon": designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.icon,
+                        "accent": designSystem?.colors?.schemes?.scheme1?.primaryButton?.hover?.accent,
                       }
                     },
                     "secondaryButton": {
-                      "text": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.text,
-                      "background": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.background,
-                      "border": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.border,
-                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.decorative,
-                      "icon": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.icon,
-                      "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.accent,
+                      "text": designSystem?.colors?.schemes?.scheme1?.secondaryButton?.text,
+                      "background": designSystem?.colors?.schemes?.scheme1?.secondaryButton?.background,
+                      "border": designSystem?.colors?.schemes?.scheme1?.secondaryButton?.border,
+                      "decorative": designSystem?.colors?.schemes?.scheme1?.secondaryButton?.decorative,
+                      "icon": designSystem?.colors?.schemes?.scheme1?.secondaryButton?.icon,
+                      "accent": designSystem?.colors?.schemes?.scheme1?.secondaryButton?.accent,
                       "hover": {
-                        "text": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.text,
-                        "background": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.background,
-                        "border": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.border,
-                        "decorative": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.decorative,
-                        "icon": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.icon,
-                        "accent": profileData?.designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.accent,
+                        "text": designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.text,
+                        "background": designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.background,
+                        "border": designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.border,
+                        "decorative": designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.decorative,
+                        "icon": designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.icon,
+                        "accent": designSystem?.colors?.schemes?.scheme1?.secondaryButton?.hover?.accent,
                       }
-                    },    
+                    },
                   },
-        
+
                   "scheme2": {
                     "base": {
-                      "background": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.background,
-                      "border": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.border,
-                      "text": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.text,
-                      "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.icon,
-                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.decorative,
-                      "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.base?.accent,
+                      "background": designSystem?.colors?.schemes?.scheme2?.base?.background,
+                      "border": designSystem?.colors?.schemes?.scheme2?.base?.border,
+                      "text": designSystem?.colors?.schemes?.scheme2?.base?.text,
+                      "icon": designSystem?.colors?.schemes?.scheme2?.base?.icon,
+                      "decorative": designSystem?.colors?.schemes?.scheme2?.base?.decorative,
+                      "accent": designSystem?.colors?.schemes?.scheme2?.base?.accent,
                     },
                     "control": {
-                      "text": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.text,
-                      "background": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.background,
-                      "border": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.border,
-                      "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.icon,
-                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.decorative,
-                      "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.accent,
+                      "text": designSystem?.colors?.schemes?.scheme2?.control?.text,
+                      "background": designSystem?.colors?.schemes?.scheme2?.control?.background,
+                      "border": designSystem?.colors?.schemes?.scheme2?.control?.border,
+                      "icon": designSystem?.colors?.schemes?.scheme2?.control?.icon,
+                      "decorative": designSystem?.colors?.schemes?.scheme2?.control?.decorative,
+                      "accent": designSystem?.colors?.schemes?.scheme2?.control?.accent,
                       "selected": {
-                        "text": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.text,
-                        "background": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.background,
-                        "border": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.border,
-                        "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.icon,
-                        "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.decorative,
-                        "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.control?.selected?.accent,
+                        "text": designSystem?.colors?.schemes?.scheme2?.control?.selected?.text,
+                        "background": designSystem?.colors?.schemes?.scheme2?.control?.selected?.background,
+                        "border": designSystem?.colors?.schemes?.scheme2?.control?.selected?.border,
+                        "icon": designSystem?.colors?.schemes?.scheme2?.control?.selected?.icon,
+                        "decorative": designSystem?.colors?.schemes?.scheme2?.control?.selected?.decorative,
+                        "accent": designSystem?.colors?.schemes?.scheme2?.control?.selected?.accent,
                       }
                     },
                     "primaryButton": {
-                      "text": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.text,
-                      "background": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.background,
-                      "border": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.border,
-                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.decorative,
-                      "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.icon,
-                      "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.accent,
+                      "text": designSystem?.colors?.schemes?.scheme2?.primaryButton?.text,
+                      "background": designSystem?.colors?.schemes?.scheme2?.primaryButton?.background,
+                      "border": designSystem?.colors?.schemes?.scheme2?.primaryButton?.border,
+                      "decorative": designSystem?.colors?.schemes?.scheme2?.primaryButton?.decorative,
+                      "icon": designSystem?.colors?.schemes?.scheme2?.primaryButton?.icon,
+                      "accent": designSystem?.colors?.schemes?.scheme2?.primaryButton?.accent,
                       "hover": {
-                        "text": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.text,
-                        "background": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.background,
-                        "border": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.border,
-                        "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.decorative,
-                        "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.icon,
-                        "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.accent,
+                        "text": designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.text,
+                        "background": designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.background,
+                        "border": designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.border,
+                        "decorative": designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.decorative,
+                        "icon": designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.icon,
+                        "accent": designSystem?.colors?.schemes?.scheme2?.primaryButton?.hover?.accent,
                       }
                     },
                     "secondaryButton": {
-                      "text": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.text,
-                      "background": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.background,
-                      "border": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.border,
-                      "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.decorative,
-                      "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.icon,
-                      "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.accent,
+                      "text": designSystem?.colors?.schemes?.scheme2?.secondaryButton?.text,
+                      "background": designSystem?.colors?.schemes?.scheme2?.secondaryButton?.background,
+                      "border": designSystem?.colors?.schemes?.scheme2?.secondaryButton?.border,
+                      "decorative": designSystem?.colors?.schemes?.scheme2?.secondaryButton?.decorative,
+                      "icon": designSystem?.colors?.schemes?.scheme2?.secondaryButton?.icon,
+                      "accent": designSystem?.colors?.schemes?.scheme2?.secondaryButton?.accent,
                       "hover": {
-                        "text": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.text,
-                        "background": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.background,
-                        "border": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.border,
-                        "decorative": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.decorative,
-                        "icon": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.icon,
-                        "accent": profileData?.designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.accent,
+                        "text": designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.text,
+                        "background": designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.background,
+                        "border": designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.border,
+                        "decorative": designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.decorative,
+                        "icon": designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.icon,
+                        "accent": designSystem?.colors?.schemes?.scheme2?.secondaryButton?.hover?.accent,
                       }
-                    },    
+                    },
                   },
                 },
               },
               "typography": {
-                "primary": {
+                "primary": designSystem?.typography?.primary?.shopifyFontGroup?.name ? {
                   "shopifyFontGroup": {
-                    "name": profileData?.designSystem?.typography?.primary?.shopifyFontGroup?.name,
+                    "name": designSystem?.typography?.primary?.shopifyFontGroup?.name,
                   }
-                },
-
-                "secondary": {
+                } : {},
+                "secondary": designSystem?.typography?.secondary?.shopifyFontGroup?.name ? {
                   "shopifyFontGroup": {
-                    "name": profileData?.designSystem?.typography?.secondary?.shopifyFontGroup?.name,
+                    "name": designSystem?.typography?.secondary?.shopifyFontGroup?.name,
                   }
-                },
+                } : {},
 
                 "size": {
-                  "base": profileData?.designSystem?.typography?.size?.base,
-                  "ratio": profileData?.designSystem?.typography?.size?.ratio,
+                  "base": designSystem?.typography?.size?.base,
+                  "ratio": designSystem?.typography?.size?.ratio,
                 },
               },
 
             },
             "customizations": {
               "global": {
-                "cornerRadius": profileData?.customizations.global?.cornerRadius,
+                "cornerRadius": customizations?.global?.cornerRadius,
                 "typography": {
-                  "letterCase": profileData?.customizations.global?.typography?.letterCase,
-                  "kerning": profileData?.customizations.global?.typography?.kerning
+                  "letterCase": customizations?.global?.typography?.letterCase,
+                  "kerning": customizations?.global?.typography?.kerning
                 }
               },
               "header": {
-                "alignment": profileData?.customizations?.header?.alignment,
-                "position": profileData?.customizations?.header?.position
+                "alignment": customizations?.header?.alignment,
+                "position": customizations?.header?.position
               },
               "main": {
-                "colorScheme": profileData?.customizations?.main?.colorScheme
+                "colorScheme": customizations?.main?.colorScheme
               },
               "orderSummary": {
-                "colorScheme": profileData?.customizations?.orderSummary?.colorScheme
+                "colorScheme": customizations?.orderSummary?.colorScheme
               },
               "control": {
-                "border": profileData?.customizations?.control?.border,
-                "cornerRadius": profileData?.customizations?.control?.cornerRadius,
-                "color": profileData?.customizations?.control?.color,
-                "labelPosition": profileData?.customizations?.control?.labelPosition
+                "border": customizations?.control?.border,
+                "cornerRadius": customizations?.control?.cornerRadius,
+                "color": customizations?.control?.color,
+                "labelPosition": customizations?.control?.labelPosition
               },
               "textField": {
-                "border": profileData?.customizations?.textField?.border,
+                "border": customizations?.textField?.border,
                 "typography": {
-                  "font": profileData?.customizations?.textField?.typography?.font,
-                  "kerning": profileData?.customizations?.textField?.typography?.kerning,
-                  "size": profileData?.customizations?.textField?.typography?.size,
-                  "letterCase": profileData?.customizations?.textField?.typography?.letterCase,
-                  "weight": profileData?.customizations?.textField?.typography?.weight
+                  "font": customizations?.textField?.typography?.font,
+                  "kerning": customizations?.textField?.typography?.kerning,
+                  "size": customizations?.textField?.typography?.size,
+                  "letterCase": customizations?.textField?.typography?.letterCase,
+                  "weight": customizations?.textField?.typography?.weight
                 }
               },
               "select": {
-                "border": profileData?.customizations?.select?.border,
+                "border": customizations?.select?.border,
                 "typography": {
-                  "font": profileData?.customizations?.select?.typography?.font,
-                  "kerning": profileData?.customizations?.select?.typography?.kerning,
-                  "letterCase": profileData?.customizations?.select?.typography?.letterCase,
-                  "size": profileData?.customizations?.select?.typography?.size,
-                  "weight": profileData?.customizations?.select?.typography?.weight
+                  "font": customizations?.select?.typography?.font,
+                  "kerning": customizations?.select?.typography?.kerning,
+                  "letterCase": customizations?.select?.typography?.letterCase,
+                  "size": customizations?.select?.typography?.size,
+                  "weight": customizations?.select?.typography?.weight
                 }
               },
               "checkbox": {
-                "cornerRadius": profileData?.customizations?.checkbox?.cornerRadius
+                "cornerRadius": customizations?.checkbox?.cornerRadius
               },
               "primaryButton": {
-                "background": profileData?.customizations?.primaryButton?.background,
-                "border": profileData?.customizations?.primaryButton?.border,
-                "cornerRadius": profileData?.customizations?.primaryButton?.cornerRadius,
-                "blockPadding": profileData?.customizations?.primaryButton?.blockPadding,
-                "inlinePadding": profileData?.customizations?.primaryButton?.inlinePadding,
+                "background": customizations?.primaryButton?.background,
+                "border": customizations?.primaryButton?.border,
+                "cornerRadius": customizations?.primaryButton?.cornerRadius,
+                "blockPadding": customizations?.primaryButton?.blockPadding,
+                "inlinePadding": customizations?.primaryButton?.inlinePadding,
                 "typography": {
-                  "font": profileData?.customizations?.primaryButton?.typography?.font,
-                  "kerning": profileData?.customizations?.primaryButton?.typography?.kerning,
-                  "letterCase": profileData?.customizations?.primaryButton?.typography?.letterCase,
-                  "size": profileData?.customizations?.primaryButton?.typography?.size,
-                  "weight": profileData?.customizations?.primaryButton?.typography?.weight
+                  "font": customizations?.primaryButton?.typography?.font,
+                  "kerning": customizations?.primaryButton?.typography?.kerning,
+                  "letterCase": customizations?.primaryButton?.typography?.letterCase,
+                  "size": customizations?.primaryButton?.typography?.size,
+                  "weight": customizations?.primaryButton?.typography?.weight
                 }
               },
               "secondaryButton": {
-                "background": profileData?.customizations?.secondaryButton?.background,
-                "border": profileData?.customizations?.secondaryButton?.border,
-                "cornerRadius": profileData?.customizations?.secondaryButton?.cornerRadius,
-                "blockPadding": profileData?.customizations?.secondaryButton?.blockPadding,
-                "inlinePadding": profileData?.customizations?.secondaryButton?.inlinePadding,
+                "background": customizations?.secondaryButton?.background,
+                "border": customizations?.secondaryButton?.border,
+                "cornerRadius": customizations?.secondaryButton?.cornerRadius,
+                "blockPadding": customizations?.secondaryButton?.blockPadding,
+                "inlinePadding": customizations?.secondaryButton?.inlinePadding,
                 "typography": {
-                  "font": profileData?.customizations?.secondaryButton?.typography?.font,
-                  "kerning": profileData?.customizations?.secondaryButton?.typography?.kerning,
-                  "letterCase": profileData?.customizations?.secondaryButton?.typography?.letterCase,
-                  "size": profileData?.customizations?.secondaryButton?.typography?.size,
-                  "weight": profileData?.customizations?.secondaryButton?.typography?.weight
+                  "font": customizations?.secondaryButton?.typography?.font,
+                  "kerning": customizations?.secondaryButton?.typography?.kerning,
+                  "letterCase": customizations?.secondaryButton?.typography?.letterCase,
+                  "size": customizations?.secondaryButton?.typography?.size,
+                  "weight": customizations?.secondaryButton?.typography?.weight
                 }
               },
               "headingLevel1": {
                 "typography": {
-                  "font": profileData?.customizations?.headingLevel1?.typography?.font,
-                  "kerning": profileData?.customizations?.headingLevel1?.typography?.kerning,
-                  "letterCase": profileData?.customizations?.headingLevel1?.typography?.letterCase,
-                  "size": profileData?.customizations?.headingLevel1?.typography?.size,
-                  "weight": profileData?.customizations?.headingLevel1?.typography?.weight
+                  "font": customizations?.headingLevel1?.typography?.font,
+                  "kerning": customizations?.headingLevel1?.typography?.kerning,
+                  "letterCase": customizations?.headingLevel1?.typography?.letterCase,
+                  "size": customizations?.headingLevel1?.typography?.size,
+                  "weight": customizations?.headingLevel1?.typography?.weight
                 }
               },
               "headingLevel2": {
                 "typography": {
-                  "font": profileData?.customizations?.headingLevel2?.typography?.font,
-                  "kerning": profileData?.customizations?.headingLevel2?.typography?.kerning,
-                  "letterCase": profileData?.customizations?.headingLevel2?.typography?.letterCase,
-                  "size": profileData?.customizations?.headingLevel2?.typography?.size,
-                  "weight": profileData?.customizations?.headingLevel2?.typography?.weight
+                  "font": customizations?.headingLevel2?.typography?.font,
+                  "kerning": customizations?.headingLevel2?.typography?.kerning,
+                  "letterCase": customizations?.headingLevel2?.typography?.letterCase,
+                  "size": customizations?.headingLevel2?.typography?.size,
+                  "weight": customizations?.headingLevel2?.typography?.weight
                 }
               },
               "headingLevel3": {
                 "typography": {
-                  "font": profileData?.customizations?.headingLevel3?.typography?.font,
-                  "kerning": profileData?.customizations?.headingLevel3?.typography?.kerning,
-                  "letterCase": profileData?.customizations?.headingLevel3?.typography?.letterCase,
-                  "size": profileData?.customizations?.headingLevel3?.typography?.size,
-                  "weight": profileData?.customizations?.headingLevel3?.typography?.weight
+                  "font": customizations?.headingLevel3?.typography?.font,
+                  "kerning": customizations?.headingLevel3?.typography?.kerning,
+                  "letterCase": customizations?.headingLevel3?.typography?.letterCase,
+                  "size": customizations?.headingLevel3?.typography?.size,
+                  "weight": customizations?.headingLevel3?.typography?.weight
                 }
               }
 

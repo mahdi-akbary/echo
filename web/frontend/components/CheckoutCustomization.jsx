@@ -4,6 +4,7 @@ import {
     FormLayout,
     Tabs,
     Banner,
+    BlockStack,
 } from '@shopify/polaris';
 import { useState } from "react";
 import { TabDivider } from './tabDivider';
@@ -12,8 +13,6 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
     const [selectedTab, setSelectedTab] = useState(0);
     const [selectedHeadingTab, setSelectedHeadingTab] = useState(0);
 
-
-    // Form elements tabs
     const FromElementsTabs = [
         {
             id: 'general-1',
@@ -57,8 +56,6 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
         setSelectedTab(selectedTabIndex);
     }
 
-    // Heading tabs
-
     const HeadingTabs = [
         {
             id: 'heading-1',
@@ -86,6 +83,15 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
         <>
             {selectedListOption === 'global-typography' ?
                 <FormLayout>
+                    <BlockStack gap="100">
+                        <Text as="h4" variant="bodyLg">
+                            Global Typography
+                        </Text>
+                        <Text variant='bodySm' tone='subdued'>
+                            The global typography that apply to specific font faces, sizes, and weights.
+                        </Text>
+                    </BlockStack>
+                    <TabDivider />
                     <Select label="Letter case"
                         options={[
                             { label: 'None', value: 'NONE' },
@@ -1473,8 +1479,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                         </FormLayout>
                     ) : null}
                 </> : null}
-            {selectedListOption == 'comming-soon...' ?
-
+            {selectedListOption == 'coming-soon...' ?
                 <Banner title="Under development">
                     <p>
                         This feature is under development, we will release it soon. You can still customize your checkout using the other settings.

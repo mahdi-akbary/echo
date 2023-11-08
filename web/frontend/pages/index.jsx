@@ -20,6 +20,7 @@ import {
   OverviewModal,
 } from "../components";
 import { Redirect } from "@shopify/app-bridge/actions";
+import { useAppQuery } from "../hooks";
 
 export default function HomePage () {
   const app = useAppBridge();
@@ -31,7 +32,11 @@ export default function HomePage () {
     setDisplayVideoGuide(!displayVideoGuide);
   };
 
-  const bannerHtml = !isBannerClosed ? <Layout.Section>
+  const {
+    data: {shopifyPlus}
+  } = useAppQuery({ url: '/api/branding/is-compatible' });
+
+  const bannerHtml = (shopifyPlus === false && !isBannerClosed) ? <Layout.Section>
     <Card>
       <Banner onDismiss={() => {
         setIsBannerClosed(true)

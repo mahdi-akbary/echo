@@ -662,6 +662,25 @@ export default function brandingApiEndPoints (app, shopify) {
     })
   }
 
+  app.get("/api/branding/is-compatible", async (req, res) => {
+    const { session } = res.locals.shopify;
+    const client = new shopify.api.clients.Graphql({ session });
+
+    const { body: { data: { shop: {plan: shopifyPlus} } } } = await client.query({
+      data: `
+      query {
+        shop {
+            plan {
+              shopifyPlus
+            }
+          }
+        }
+      `
+    })
+    console.log(shopifyPlus, '<<<<<<<')
+    res.status(200).send(shopifyPlus);
+  })
+
   async function getCurrent (client, profileId) {
     return await client.query({
       data: `

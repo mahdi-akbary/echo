@@ -14,17 +14,22 @@ export default function cartItemApiEndPoints (app) {
                     variant_title: body?.title,
                     product_title: body?.productTitle,
                     handle: body?.handle,
-                    price: body?.price.amount,
+                    price: body?.price?.amount,
                     price_currency: body?.price.currencyCode,
                     image_alt: body?.image.altText,
                     image_url: body?.image.url
                 })
                 .select()
-            if (error) throw new Error(error.message)
-            res.status(200).send(data[0]);
-        } catch (error) {
+
+                if (error) throw error;
+                // Send back the first item of the inserted data, ensuring the response is JSON.
+                res.status(200).json(data[0]); // Use .json to automatically set Content-Type to application/json
+        
+            } catch (error) {
             console.error(error)
-            res.status(500).send(error);
+            // When there is an error, return a JSON object with an error message.
+            // This ensures the client always receives a JSON response.
+            res.status(500).json({ error: error.message });
         }
     })
 

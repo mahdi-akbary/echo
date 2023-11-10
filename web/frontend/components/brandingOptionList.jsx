@@ -9,6 +9,7 @@ import {
     TemplateMinor,
     OrderStatusMinor,
     BuyButtonButtonLayoutMajor,
+    SidebarRightMajor,
     TitleMinor
 } from '@shopify/polaris-icons';
 
@@ -30,7 +31,7 @@ export function BrandingOptionList ({ selected, setSelected }) {
                 { content: 'Global typography', icon: TypeMinor },
                 { content: 'Header', icon: HeaderMajor },
                 { content: 'Main', icon: BuyButtonButtonLayoutMajor },
-                { content: 'Order Summary', icon: OrderStatusMinor },
+                { content: 'Order Summary', icon: SidebarRightMajor },
                 { content: 'Forms', icon: FormsMajor },
                 { content: 'Headings', icon: TitleMinor },
             ],

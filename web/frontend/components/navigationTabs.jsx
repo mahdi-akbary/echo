@@ -1,13 +1,24 @@
 import { useNavigate } from '@shopify/app-bridge-react';
-import { Tabs } from '@shopify/polaris';
+import { Layout, Tabs, Icon,Card } from '@shopify/polaris';
 import { useState, useCallback, useEffect } from 'react';
 import { navStructure } from '../services/data';
 import { useLocation } from "react-router-dom";
+import {
+  SidebarRightMajor
+} from '@shopify/polaris-icons';
 
 const IDENTIFIER_PREFIX = 'checkout_app_';
 
 const capitalize = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function TabIcon({ children }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+      {children}
+    </div>
+  );
 }
 
 export function NavigationTabs () {
@@ -49,7 +60,11 @@ export function NavigationTabs () {
       tempTabs.push(
         {
           id: `${IDENTIFIER_PREFIX} ${element.label}`,
-          content: capitalize(element.label),
+          content: <TabIcon> 
+            {/* if element has icon, render it */}
+            {element.icon && <Icon source={element.icon} color="base" />}
+            {capitalize(element.label)}
+          </TabIcon> ,
           accessibilityLabel: `Main ${capitalize(element.label)}`,
           panelID: IDENTIFIER_PREFIX + `${element.label}-content`,
         })
@@ -58,11 +73,18 @@ export function NavigationTabs () {
   }
 
   return (
-    <Tabs
-      tabs={generateTabsData(navStructure)}
-      selected={selected}
-      onSelect={handleTabChange}
-      disclosureText="More views">
-    </Tabs>
+        <div style={
+          {
+            backgroundColor: '#fff',
+          }
+        }>
+          <Tabs
+            tabs={generateTabsData(navStructure)}
+            selected={selected}
+            onSelect={handleTabChange}
+            disclosureText="More views">
+          </Tabs>
+        </div>
+
   );
 }

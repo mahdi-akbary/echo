@@ -1,30 +1,55 @@
 export default function brandingApiEndPoints (app, shopify) {
+
   app.get("/api/branding", async (req, res) => {
     const { session } = res.locals.shopify;
     const client = new shopify.api.clients.Graphql({ session });
     try {
-      const { body: { data: { checkoutProfiles: { edges } } } } = await client.query({
-        data: `query checkoutProfiles {
+      const query = `query checkoutProfiles {
                         checkoutProfiles(first: 10) {
-                            edges {
-                                node {
-                                    name
-                                    id
-                                    isPublished
-                                }
+                          edges {
+                            node {
+                              name
+                              id
+                              isPublished
                             }
+                          }
                         }
-                    }`
-      });
-      const selectedProfile = edges.find(edge => (req.query.id ? edge.node.id == req.query.id : edge.node.isPublished == true))
-      const profiles = edges.map(edge => edge.node)
-      const { body: { data: { checkoutBranding: currentProfileData } } } = await getCurrent(client, selectedProfile.node.id)
+                    }`;
+      const response = await client.query({ data: query });
+
+      if (!response.body.data || !response.body.data.checkoutProfiles || !response.body.data.checkoutProfiles.edges) {
+        return res.status(500).send("Unexpected response structure from Shopify GraphQL API");
+      }
+
+      const edges = response.body.data.checkoutProfiles.edges;
+      let selectedProfile = edges.find(edge => (
+        req.query.id ? edge.node.id === req.query.id : edge.node.isPublished
+      ));
+
+      // If selected profile is not found, return the first profile
+      if (!selectedProfile) {
+        selectedProfile = edges[0];
+      }
+
+      if (!selectedProfile) {
+        return res.status(404).send("No matching checkout profile found");
+      }
+
+      const profiles = edges.map(edge => edge.node);
+      const currentProfileDataResponse = await getCurrent(client, selectedProfile.node.id);
+
+      if (!currentProfileDataResponse.body.data || !currentProfileDataResponse.body.data.checkoutBranding) {
+        return res.status(500).send("Unexpected response structure from getCurrent function");
+      }
+
+      const currentProfileData = currentProfileDataResponse.body.data.checkoutBranding;
       res.status(200).send({ ...selectedProfile.node, ...currentProfileData, profiles });
+
     } catch (error) {
-      console.error(error)
+      console.error(error);
       res.status(500).send(error);
     }
-  })
+  });
 
   app.get("/api/branding/custom-font", async (req, res) => {
     const { session } = res.locals.shopify;

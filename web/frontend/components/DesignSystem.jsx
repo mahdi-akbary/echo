@@ -90,7 +90,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
     const normalizedFonts = customFonts.map(font => ({ label: font.url?.split("/")?.pop(".")?.split(".")[0], value: font.id }))
     const customFontMarkup = <Banner title="Custom Font">
         <p>
-            For your custom font to be listed, Please head to the <strong> Content -{'>'} Files section </strong> of your store and upload your file that has to be in <strong>.woff format</strong>
+            For your custom font to be listed, Please head to the <strong> Content -{'>'} Files </strong>section of your store and upload your file that has to be in <strong>.woff format</strong>
         </p>
     </Banner>
 

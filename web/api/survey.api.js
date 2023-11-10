@@ -20,6 +20,7 @@ export default function surveyApiEndPoints (app) {
             res.status(500).send(error);
         }
     })
+    
 
     app.get("/api/surveys/chart/count", async (req, res) => {
         try {

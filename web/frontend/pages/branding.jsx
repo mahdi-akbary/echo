@@ -2,29 +2,23 @@ import {
   Page,
   Layout,
   Text,
-  VerticalStack,
+  BlockStack,
   Box,
-  HorizontalStack,
-  AlphaCard,
-  Loading,
+  InlineStack,
+  Card,
   SkeletonBodyText,
-  Select,
-  TextField,
   Modal,
   Button,
   Image,
-  ChoiceList,
   Badge,
-  Tabs,
-  Grid,
   Toast,
   ActionList,
   Popover,
-  Banner,
+  Grid,
+  SkeletonDisplayText,
 } from "@shopify/polaris";
 import {
   useAuthenticatedFetch,
-  TitleBar,
   ContextualSaveBar,
   useAppBridge,
 } from "@shopify/app-bridge-react";
@@ -32,10 +26,9 @@ import { useCallback, useState } from "react";
 import { Redirect } from "@shopify/app-bridge/actions";
 
 import { useAppQuery } from "../hooks";
-import { ColorPickerInput } from "../components";
-import { FONTS } from "../components/fonts";
 import { CheckoutCustomization } from "../components/CheckoutCustomization";
 import { DesignSystem } from "../components/DesignSystem";
+import { BrandingOptionList, ResetConfirmationModal } from "../components";
 
 
 export default function Branding () {
@@ -45,13 +38,12 @@ export default function Branding () {
   const [hasChange, setHasChange] = useState(false);
 
   const [selected, setSelected] = useState(undefined);
-  const [selectedTab, setSelectedTab] = useState(0);
   const [toastActive, setToastActive] = useState(false);
+  const [openResetModal, setOpenResetModal] = useState(false);
 
-  // Profile dropdown
+
   const [active, setActive] = useState(false);
   const toggleActive = useCallback(() => setActive((active) => !active), []);
-
 
   const toggleToastActive = useCallback(
     () => setToastActive((active) => !active),
@@ -72,13 +64,9 @@ export default function Branding () {
 
 
   const {
-    data: activeProfile,
-    refetch: refetchProductProfile,
-    isLoading: isLoadingProfile,
-    isRefetching: isRefetchingProfile,
+    data: activeProfile, refetch: refetchProductProfile, isLoading: isLoadingProfile, isRefetching: isRefetchingProfile,
   } = useAppQuery({
-    url: selected ? `/api/branding?id=${selected}` : "/api/branding",
-    reactQueryOptions: {
+    url: selected ? `/api/branding?id=${selected}` : "/api/branding", reactQueryOptions: {
       onSuccess: (res) => {
         if (!hasChange) {
           if (res.designSystem && res.designSystem.typography) {
@@ -101,43 +89,24 @@ export default function Branding () {
     },
   });
 
-  const settingTabs = [
-    {
-      id: 'design-system-1',
-      content: 'Design system',
-      panelID: 'Design-system-content-1',
-    },
-    {
-      id: 'customization-1',
-      content: 'Customization',
-      accessibilityLabel: 'Customization',
-      panelID: 'customization-content-1',
-    },
-    {
-      id: 'template-1',
-      content: 'Template',
-      accessibilityLabel: 'Template',
-      panelID: 'template-content-1',
-    },
-   
-  ];
-
-  // Toaster mockup
   const toastMarkup = toastActive ? (
     <Toast content="Changes saved" onDismiss={toggleToastActive} />
   ) : null;
 
 
-//   console.log('activeProfile', activeProfile);
-
   const loadingMarkup = (
-    <div style={{ padding: "2rem 1rem" }}>
-      <Loading />
-      <HorizontalStack align="space-between">
-        <SkeletonBodyText />
-        <SkeletonBodyText />
-      </HorizontalStack>
-    </div>
+    <>
+      <Layout.Section variant="oneThird">
+        <Card padding="800">
+          <SkeletonBodyText lines="20" />
+        </Card>
+      </Layout.Section>
+      <Layout.Section >
+        <Card padding="800">
+          <SkeletonBodyText lines="20" />
+        </Card>
+      </Layout.Section>
+    </>
   );
 
   const handleSubmit = async () => {
@@ -176,17 +145,67 @@ export default function Branding () {
 
   const profileSelector = (
     <Button onClick={toggleActive} disclosure>
-      <div style={{display: "flex", gap: "0.4rem", alignItems: "center"}}>
-        { selected ? data.profiles.find(profile => profile.id === selected).name : 'Select profile'}
+      <div style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
+        {selected ? data.profiles.find(profile => profile.id === selected).name : 'Select profile'}
         {/* if isPublished show live badge, otherwise show draft badge */}
-        { selected ? data.profiles.find(profile => profile.id === selected).isPublished ? <Badge status="success"> Active </Badge> : <Badge status="info"> Draft </Badge> : null}
+        {selected ? data.profiles.find(profile => profile.id === selected).isPublished ? <Badge tone="success"> Live </Badge> : <Badge tone="info"> Draft </Badge> : null}
       </div>
     </Button>
   );
+  const actionsLoading = <>
+    <InlineStack gap="150">
+      <Box width="120px">
+        <SkeletonDisplayText size="small" />
+      </Box>
+      <Box width="120px">
+        <SkeletonDisplayText size="small" />
+      </Box>
+    </InlineStack>
+    <Box width="120px">
+      <SkeletonDisplayText size="small" />
+    </Box>
+  </>
+  const actionsMarkups = <>
+    <InlineStack gap="200">
+      <Popover
+        active={active}
+        activator={profileSelector}
+        autofocusTarget="first-node"
+        onClose={toggleActive}>
+        <ActionList
+          actionRole="menuitem"
+          items={
+            (data.profiles || []).map(profile => ({
+              active: profile.id === selected,
+              content: profile.name,
+              value: profile.id,
+              ...(profile.isPublished ? {
+                badge: {
+                  tone: 'success',
+                  content: profile.isPublished ? 'Live' : null
+                }
+              } : {}),
+              onAction: () => { handleChange(profile.id); toggleActive() },
+            }))
+          }
+        />
+      </Popover>
+
+      <Button variant="tertiary"
+        onClick={() =>
+          redirect.dispatch(
+            Redirect.Action.ADMIN_PATH,
+            { path: `/settings/checkout/preview/profiles/${selected?.split('/')[4]}`, newContext: true }
+          )
+        }> Preview </Button>
+    </InlineStack>
+    <Button tone="critical" onClick={() => setOpenResetModal(true)}>Reset to default</Button>
+  </>
+
+  const [selectedListOption, setSelectedListOption] = useState('global-colors')
 
   const contentMarkup = (
     <>
-      <TitleBar title="Branding" primaryAction={null} />
       {toastMarkup}
       <Layout>
         <Modal
@@ -204,7 +223,7 @@ export default function Branding () {
             },
           ]}
         >
-        <Modal.Section>
+          <Modal.Section>
             <Box>
               <Text variant="headingMd">
                 It's your Active checkout, the changes will take effect immediately.
@@ -214,115 +233,55 @@ export default function Branding () {
           </Modal.Section>
         </Modal>
 
-        <Layout.Section>
-          <AlphaCard>
-            <HorizontalStack>
-              <Box width="90%">
-                <VerticalStack gap="4">
-                  <Box>
-                    <VerticalStack gap="2">
-                      <Text variant="headingLg">Checkout branding</Text>
-                      <Text variant="bodyMd">
-                        An advance checkout branding tool that allows you to customize your checkout page, new customer accounts, thank you and order status pages.
-                      </Text>
-                    </VerticalStack>
-                  </Box>
-                 
-                  {isLoadingProfile || isRefetchingProfile ? null : 
-                    <Box style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      gap: "1rem",
-                    }}>
-                      <HorizontalStack gap="3">
-                        <Popover
-                          active={active}
-                          activator={profileSelector}
-                          autofocusTarget="first-node"
-                          onClose={ toggleActive }>
-                          <ActionList
-                            actionRole="menuitem"
-                            items={
-                              (data.profiles || []).map(profile => ({
-                                active: profile.id === selected,
-                                content: <>{profile.name} { profile.isPublished ? <Badge status="success">Active</Badge> : null}</>,
-                                value: profile.id,
-                                onAction: () => { handleChange(profile.id); toggleActive() },
-                              }))
-                            }
-                          />
-                        </Popover>
+        <Layout.Section variant="fullWidth">
+          <Card>
+            <BlockStack gap="400">
+              <Grid >
+                <Grid.Cell columnSpan={{ xs: 4, sm: 4, lg: 10 }}>
+                  <BlockStack gap="150">
+                    <Text variant="headingLg" >Checkout branding</Text>
+                    <Text variant="bodyMd" breakWord>
+                      An advance checkout branding tool that allows you to customize your checkout page, new customer accounts, thank you and order status pages.
+                    </Text>
+                  </BlockStack>
 
-                        <Button primary
-                          onClick={() =>
-                            redirect.dispatch(
-                              Redirect.Action.ADMIN_PATH,
-                              { path: `/settings/checkout/preview/profiles/${selected?.split('/')[4]}`, newContext: true }
-                            )
-                          }> Preview </Button>
-                      </HorizontalStack>
+                </Grid.Cell>
+                <Grid.Cell columnSpan={{ xs: 2, sm: 2, lg: 2 }}>
+                  <InlineStack align="end" >
+                    <Image
+                      src="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg"
+                      alt="paint"
+                      width="80"
+                    />
+                  </InlineStack>
+                </Grid.Cell>
+              </Grid>
+              <InlineStack align="space-between">
+                {isLoadingProfile || isRefetchingProfile ? actionsLoading : actionsMarkups}
+              </InlineStack>
+            </BlockStack>
+          </Card>
 
-                      {/* <Box>
-                        <Button critical> Remove </Button>
-                      </Box> */}
 
-                    </Box>
-                  }
-                </VerticalStack>
-
-              </Box>
-
-              <Box width="10%">
-                <Image
-                  src="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg"
-                  alt="paint"
-                  width="100"
-                />
-              </Box>
-            </HorizontalStack>
-            
-          </AlphaCard>
         </Layout.Section>
 
-        <Layout.Section>
-          <Tabs tabs={settingTabs} selected={selectedTab} onSelect={(value) => setSelectedTab(value) }></Tabs>
-          
-          {/* If still loading hide the settings and show placholder */}
+        {isLoadingProfile || isRefetchingProfile ? loadingMarkup :
+          <>
+            <Layout.Section variant="oneThird">
+              <Card padding="200">
+                <BrandingOptionList selected={selectedListOption} setSelected={setSelectedListOption} />
+              </Card>
+            </Layout.Section>
 
-          { isLoadingProfile || isRefetchingProfile ? (
-            loadingMarkup
-          ) : (
-            <>
+            <Layout.Section>
+              <Card padding="600" sectioned>
+                <DesignSystem activeProfile={activeProfile} handleDataChange={handleDataChange} selectedListOption={selectedListOption} />
+                <CheckoutCustomization activeProfile={activeProfile} handleDataChange={handleDataChange} selectedListOption={selectedListOption} />
+              </Card>
+            </Layout.Section>
+          </>
+        }
 
-            { settingTabs[selectedTab].id === 'customization-1' ? 
-              <CheckoutCustomization activeProfile={activeProfile} handleDataChange={handleDataChange}></CheckoutCustomization>
-            : null }  
-
-            { settingTabs[selectedTab].id === 'design-system-1' ? 
-              <DesignSystem  activeProfile={activeProfile} handleDataChange={handleDataChange}></DesignSystem>
-            : null }    
-
-            { settingTabs[selectedTab].id === 'template-1' ? 
-              <div style={{
-                paddingTop: "1rem",
-              }}>
-                <Banner title="Under development" status="warning">
-                  <p>
-                    This feature is under development, we will release it soon. You can still customize your checkout using the other settings.
-                  </p>
-                </Banner>
-              </div>
-
-            : null  }    
-          
-            </>
-          )}
-
-          
-        </Layout.Section>
-
-        
       </Layout>
     </>
   );
@@ -344,9 +303,9 @@ export default function Branding () {
           }
         }}
       />
+      <ResetConfirmationModal handleClose={setOpenResetModal} isOpen={openResetModal} profileId={activeProfile?.id} refetch={refetchProductProfile} />
       {false ? (
         <Page
-          fullWidth
           primaryAction={{
             content: "Publish",
           }}
@@ -354,7 +313,7 @@ export default function Branding () {
           {contentMarkup}
         </Page>
       ) : (
-        <Page fullWidth>{contentMarkup}</Page>
+        <Page >{contentMarkup}</Page>
       )}
     </>
   );

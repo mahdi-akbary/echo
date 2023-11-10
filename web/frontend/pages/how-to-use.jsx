@@ -1,14 +1,13 @@
 import {
   Page,
   Layout,
-  VerticalStack,
-  HorizontalGrid,
+  BlockStack,
+  InlineGrid,
   Box,
   Text,
   Divider,
   Spinner,
 } from "@shopify/polaris";
-import { TitleBar } from "@shopify/app-bridge-react";
 import { useEffect, useState } from "react";
 
 export default function HowToUse() {
@@ -66,11 +65,10 @@ export default function HowToUse() {
   ];
 
   return (
-    <Page fullWidth>
-      <TitleBar title="How to use" primaryAction={null} />
+    <Page>
       <Layout>
         <Layout.Section>
-          <VerticalStack gap="3">
+          <BlockStack gap="200">
             <Text variant="headingLg" as="h2">
               How to use
             </Text>
@@ -79,31 +77,31 @@ export default function HowToUse() {
               of each app (extenstion).
             </Text>
             <Divider borderWidth="0" />
-          </VerticalStack>
+          </BlockStack>
         </Layout.Section>
         {videoList.map((video, i) => (
           <Layout.Section key={i}>
-            <VerticalStack gap={{ xs: "8", sm: "4" }}>
-              <HorizontalGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="4">
+            <BlockStack gap={{ xs: "800", sm: "400" }}>
+              <InlineGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="400">
                 <Box
                   as="section"
                   paddingInlineStart={{ xs: 4, sm: 0 }}
                   paddingInlineEnd={{ xs: 4, sm: 0 }}
                 >
-                  <VerticalStack gap="4">
+                  <BlockStack gap="200">
                     <Text as="h3" variant="headingMd">
                       {video.title}
                     </Text>
                     <Text as="p" variant="bodyMd">
                       {video.subTitle}
                     </Text>
-                  </VerticalStack>
+                  </BlockStack>
                 </Box>
 
                 <Box
                   position="relative"
-                  width={width < 780 ? "100%" : `${(width * 50) / 100}px`}
-                  minHeight={`${(width * 33) / 100}px`}
+                  width={width < 780 ? "100%" : `${(width * 40) / 100}px`}
+                  minHeight={`${(width * 20) / 100}px`}
                 >
                   <div
                     style={{
@@ -132,9 +130,9 @@ export default function HowToUse() {
                     }}
                   ></iframe>
                 </Box>
-              </HorizontalGrid>
-              <Box padding="4"></Box>
-            </VerticalStack>
+              </InlineGrid>
+              <Box padding="200"></Box>
+            </BlockStack>
           </Layout.Section>
         ))}
       </Layout>

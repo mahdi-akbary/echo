@@ -1,5 +1,5 @@
 import {
-  AlphaCard,
+  Card,
   Button,
   DataTable,
   Loading,
@@ -12,10 +12,10 @@ export function ProductGiftList({
 }) {
   
   const loadingMarkup = (
-    <AlphaCard>
+    <Card>
       <Loading />
       <SkeletonBodyText />
-    </AlphaCard>
+    </Card>
   );
 
   return (
@@ -24,8 +24,8 @@ export function ProductGiftList({
         loadingMarkup
       ) : (
         <DataTable
-          columnContentTypes={["text", "numeric", "numeric", "text"]}
-          headings={["Product", "Price", "Quantity", ""]}
+          columnContentTypes={["text", "numeric", "numeric"]}
+          headings={["Product", "Price", "Quantity"]}
           rows={rows}
         />
       )}

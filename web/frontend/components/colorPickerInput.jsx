@@ -1,11 +1,11 @@
 import {
   Box,
   ColorPicker,
-  HorizontalStack,
+  InlineStack,
   Popover,
   Text,
   TextField,
-  VerticalStack,
+  BlockStack,
   hexToRgb,
   hsbToRgb,
   rgbToHex,
@@ -13,17 +13,17 @@ import {
 } from "@shopify/polaris";
 import { useCallback, useState } from "react";
 
-export function ColorPickerInput ({ inputColor = "#fff", label, onChange, helpText = null }) {
+export function ColorPickerInput ({ inputColor = null, label, onChange, helpText = null }) {
   const [popoverActive, setPopoverActive] = useState(false);
 
   const togglePopoverActive = useCallback(
     () => setPopoverActive((popoverActive) => !popoverActive),
     []
   );
-  const [buttonColor, setButtonColor] = useState(inputColor);
+  const [buttonColor, setButtonColor] = useState(inputColor ? inputColor : '#fff');
   const activator = (
     <>
-      <HorizontalStack align="start" gap="4">
+      <InlineStack align="start" gap="200" wrap={false}>
         <div
           onClick={togglePopoverActive}
           style={{
@@ -36,13 +36,13 @@ export function ColorPickerInput ({ inputColor = "#fff", label, onChange, helpTe
           }}
         ></div>
         <Box>
-          <Text>{ label }</Text>
-          <Text Variant="bodyMd">{buttonColor}</Text>
+          <Text as="p" variant="bodyMd">{inputColor ? label : `Override ${label} Color`}</Text>
+          <Text Variant="bodySm" tone="subdued" fontWeight="regular"  >
+          <p style={{ fontSize: '11px'}}>{
+            inputColor ? buttonColor : helpText
+          }</p></Text>
         </Box>
-      </HorizontalStack>
-
-      {helpText && <div style={{ paddingTop: "0.4rem"}} ><Text variant="subdued">{helpText}</Text></div>}
-
+      </InlineStack>
     </>
   );
   const [color, setColor] = useState({
@@ -52,35 +52,37 @@ export function ColorPickerInput ({ inputColor = "#fff", label, onChange, helpTe
   });
 
   return (
-    <VerticalStack align="end">
+    <BlockStack align="end">
       <Popover
         active={popoverActive}
         activator={activator}
         autofocusTarget="first-node"
         onClose={togglePopoverActive}>
-        <VerticalStack >
-          <ColorPicker
-            onChange={(value) => {
-              let color = {
-                alpha: value.alpha,
-                hue: value.hue,
-                saturation: value.saturation || null, 
-                brightness: value.brightness || null
-              }
-              
-              setColor(color);
-              const hexColor = rgbToHex(hsbToRgb(color))
-              setButtonColor(hexColor);
-              onChange(hexColor)
-            }}
-            allowAlpha
-            color={color}
-          />
-          <Box width="90%" padding="1">
+        <BlockStack >
+          <Box padding="200">
+            <ColorPicker
+              onChange={(value) => {
+                let color = {
+                  alpha: value.alpha,
+                  hue: value.hue,
+                  saturation: value.saturation || null,
+                  brightness: value.brightness || null
+                }
+
+                setColor(color);
+                const hexColor = rgbToHex(hsbToRgb(color))
+                setButtonColor(hexColor);
+                onChange(hexColor)
+              }}
+              allowAlpha
+              color={color}
+            />
+          </Box>
+          <Box padding="200" paddingBlockStart="0">
             <TextField value={buttonColor} focused={false} readOnly />
           </Box>
-        </VerticalStack>
+        </BlockStack>
       </Popover>
-    </VerticalStack>
+    </BlockStack>
   );
 }

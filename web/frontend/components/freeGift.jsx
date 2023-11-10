@@ -1,171 +1,175 @@
 import {
-  AlphaCard,
+  Card,
   Box,
   Button,
-  HorizontalGrid,
-  HorizontalStack,
+  InlineGrid,
+  InlineStack,
   Loading,
   SkeletonBodyText,
-  Spinner,
   Text,
-  VerticalStack,
+  BlockStack,
+  SkeletonDisplayText,
+  Toast,
 } from "@shopify/polaris";
 import { ProductGiftList } from "./productGiftList";
-import { SearchGiftProductModal } from "./searchGiftProductModal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 import { ThresholdModal } from "./thresholdModal";
+import { ResourcePicker } from '@shopify/app-bridge-react';
 export function FreeGift () {
   const fetch = useAuthenticatedFetch();
   const [list, setList] = useState([]);
   const [discount, setDiscount] = useState(null);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [productVariantIds, setProductVariantsIds] = useState([]);
 
   const { isLoading: isLoadingDiscount, isRefetching: isRefetchingDiscount, refetch: refetchDiscount } = useAppQuery({
-    url: "/api/products/discounts",
-    reactQueryOptions: {
+    url: "/api/products/discounts", reactQueryOptions: {
       onSuccess: (data) => {
-        if(data?.amount)
+        if (data?.amount)
           setDiscount(data);
       },
     },
   });
 
   const loadingMarkup = (
-    <AlphaCard>
+    <Card>
       <Loading />
-      <SkeletonBodyText />
-    </AlphaCard>
+      <BlockStack gap="200">
+        <InlineStack align="space-between">
+          <SkeletonBodyText lines={1} />
+          <SkeletonDisplayText size="medium" />
+        </InlineStack>
+        <SkeletonBodyText />
+      </BlockStack>
+    </Card>
   )
 
-  const {
-    isRefetching: isRefetching,
-    isLoading: isLoading,
-    refetch: refetch,
-  } = useAppQuery({
-    url: "/api/products",
-    reactQueryOptions: {
+  const { isRefetching: isRefetching, isLoading: isLoading, refetch: refetch } = useAppQuery({
+    url: "/api/products", reactQueryOptions: {
       onSuccess: (data) => {
+        setProductVariantsIds(data?.map((item) => ({ id: item?.variant_id })))
         setList(
           data?.map((item) => [
             item?.display_name,
             item?.price,
-            item?.inventory_quantity,
-            <Button
-              plain
-              destructive
-              onClick={async () => { await handleProductDelete(item) }}
-            >
-              Delete
-            </Button>,
+            item?.inventory_quantity
           ])
         );
       },
     },
   });
-  const handleProductDelete = async (item) => {
-
-    setIsDeleting(true)
-    const response = await fetch(`/api/products/${item?.id}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (response.ok) {
-      setIsDeleting(false)
-      refetch();
-    } else {
-      setIsDeleting(false)
-      refetch();
-    }
-  }
   const [searchModalToggle, setSearchModalToggle] = useState(false);
 
   const [thresholdModalToggle, setThresholdModalToggle] = useState(false);
 
+  const addProductMarkup = discount?.amount ? <Button size="slim" onClick={() => setSearchModalToggle(true)}> Add Product </Button> : null
   const giftListMarkup = <Box position="relative">
-    {isLoading || isRefetching || isDeleting ?
-      <Box position="absolute" paddingBlockStart="12" insetBlockEnd="0" insetBlockStart="0" width="100%" minHeight="100%" zIndex="20" opacity="0.7" background="bg-app-hover">
-        <HorizontalStack align="center" blockAlign="center">
-          <Spinner size="small" />
-        </HorizontalStack>
-      </Box>
-      : null}
-    <Button
-      size="slim"
-      onClick={() => setSearchModalToggle(true)}
-    >
-      Add Product
-    </Button>
-    <ProductGiftList rows={list} />
+    {isLoading || isRefetching || isSaving ?
+      <SkeletonBodyText />
+      : <ProductGiftList rows={list} />}
   </Box>
 
+  const [toastContent, setToastContent] = useState({ content: null });
+
+  const toastMarkup = toastContent.content && (
+    <Toast {...toastContent} onDismiss={() => setToastContent({ content: null })} />
+  );
+
+  const handleVariantSelection = async ({ selection }) => {
+    setSearchModalToggle(false)
+    setIsSaving(true)
+    const response = await fetch("/api/products", {
+      method: "POST",
+      body: JSON.stringify({
+        variants: selection,
+        discountId: discount?.discount_id,
+        discountAmount: discount?.amount,
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      setToastContent({ content: 'Saved!' })
+      setIsSaving(false)
+      refetch()
+    } else {
+      setIsSaving(false)
+      const data = await response.json();
+      setToastContent({ content: data.message })
+    }
+  }
+
   return (
-    <VerticalStack gap={{ xs: "8", sm: "4" }}>
-      <HorizontalGrid columns={{ xs: "2fr", md: "3fr 6fr" }} gap="4">
+    <BlockStack gap={{ xs: "800", sm: "400" }}>
+      <InlineGrid columns={{ xs: "2fr", md: "3fr 6fr" }} gap="500">
         <Box
-          paddingBlockStart="5"
+          paddingBlockStart="050"
           as="section"
-          paddingInlineStart={{ xs: 4, sm: 0 }}
-          paddingInlineEnd={{ xs: 4, sm: 0 }}
+          paddingInlineStart={{ xs: 400, sm: 0 }}
+          paddingInlineEnd={{ xs: 400, sm: 0 }}
         >
-          <VerticalStack gap="3">
+          <BlockStack gap="200">
             <Text as="h3" variant="headingMd">
               Checkout Free Gifts
             </Text>
             <Text as="p" variant="bodyMd">
               Free gifts with purchase provide added value, motivating customers to buy and boosting conversion rates.
             </Text>
-          </VerticalStack>
+          </BlockStack>
         </Box>
         <Box
           paddingBlockStart="5"
           as="section"
           paddingInlineStart="5"
-          paddingInlineEnd={{ xs: 4, sm: 0 }}
+          paddingInlineEnd={{ xs: 400, sm: 0 }}
         >
           {
             isLoadingDiscount || isRefetchingDiscount ? loadingMarkup :
-              <AlphaCard>
-                <VerticalStack gap="8">
-                  <HorizontalStack align="space-between" blockAlign="center">
+              <Card>
+                <BlockStack gap="300">
+                  <InlineStack align="space-between" blockAlign="center">
                     <Box>
-                      <Text as="h2" variant="headingLg">
+                      <Text as="h2" variant="headingMd" fontWeight="bold" tone="subdued">
                         Threshold
                       </Text>
                       <Text
                         as="p"
-                        variant="bodyMd"
-                        color="success"
+                        variant="bodyLg"
+                        tone="success"
                         fontWeight="bold"
                       >
                         {discount?.amount ? discount?.amount : "Not set"}
                       </Text>
                     </Box>
-                    <Button isLoading={isLoadingDiscount} primary onClick={() => setThresholdModalToggle(true)}>
-                      Set Threshold
-                    </Button>
-                  </HorizontalStack>
+                    <InlineStack gap="200" blockAlign="center">
+                      {addProductMarkup}
+                      <Button isLoading={isLoadingDiscount} variant="primary" onClick={() => setThresholdModalToggle(true)}>
+                        Set Threshold
+                      </Button>
+                    </InlineStack>
+                  </InlineStack>
                   {discount ? giftListMarkup : null}
-                </VerticalStack>
-              </AlphaCard>
+                </BlockStack>
+              </Card>
           }
         </Box>
-      </HorizontalGrid>
+      </InlineGrid>
 
-      <Box padding="4"></Box>
-      <SearchGiftProductModal
-        isOpen={searchModalToggle}
-        handleClose={setSearchModalToggle}
-        discount={discount}
-        refetch={refetch}
-      />
       <ThresholdModal
         isOpen={thresholdModalToggle}
         handleClose={setThresholdModalToggle}
         discount={discount}
         refetch={refetchDiscount}
       />
-    </VerticalStack>
+      <ResourcePicker
+        initialSelectionIds={productVariantIds}
+        onSelection={handleVariantSelection}
+        resourceType="ProductVariant"
+        open={searchModalToggle}
+        onCancel={() => setSearchModalToggle(false)} />
+      {toastMarkup}
+    </BlockStack>
+
   );
 }

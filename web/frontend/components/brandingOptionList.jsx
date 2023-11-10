@@ -59,7 +59,6 @@ export function BrandingOptionList ({ selected, setSelected }) {
                             suffix: selected === slug ? <Icon source={TickSmallMinor} /> : null,
                             onAction: () => {
                                 setSelected(slug)
-                                console.log(selected, slug)
                             }
                         }
                     })
@@ -68,12 +67,3 @@ export function BrandingOptionList ({ selected, setSelected }) {
         />
     )
 }
-
-
-
-{/* <Text as="h3" variant="headingMd">
-                                Color
-                            </Text>
-                            <Text as='p' variant="bodyMd">
-                                A way of making the checkout page look nice and easy to use. You can change the colors, fonts, and shapes of the things on the page. 
-                            </Text> */}

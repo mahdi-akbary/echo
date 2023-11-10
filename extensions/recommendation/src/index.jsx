@@ -14,7 +14,7 @@ import {
 import { getCountryCode } from './getCountryCode.jsx';
 import { ProductCard } from './productCard.jsx';
 import { ProductList } from './productList.jsx';
-const BASE_URL = 'https://checkout-plus.fly.dev'
+const BASE_URL = 'https://freebsd-commodity-rehab-eating.trycloudflare.com'
 
 export default reactExtension("purchase.checkout.block.render", () => <App />);
 

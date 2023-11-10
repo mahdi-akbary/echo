@@ -148,7 +148,7 @@ export default function Branding () {
       <div style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
         {selected ? data.profiles.find(profile => profile.id === selected).name : 'Select profile'}
         {/* if isPublished show live badge, otherwise show draft badge */}
-        {selected ? data.profiles.find(profile => profile.id === selected).isPublished ? <Badge status="success"> Active </Badge> : <Badge status="info"> Draft </Badge> : null}
+        {selected ? data.profiles.find(profile => profile.id === selected).isPublished ? <Badge tone="success"> Live </Badge> : <Badge tone="info"> Draft </Badge> : null}
       </div>
     </Button>
   );
@@ -181,8 +181,8 @@ export default function Branding () {
               value: profile.id,
               ...(profile.isPublished ? {
                 badge: {
-                  tone: 'success-strong',
-                  content: profile.isPublished ? 'Active' : null
+                  tone: 'success',
+                  content: profile.isPublished ? 'Live' : null
                 }
               } : {}),
               onAction: () => { handleChange(profile.id); toggleActive() },

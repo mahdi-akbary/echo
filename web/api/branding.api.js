@@ -26,6 +26,34 @@ export default function brandingApiEndPoints (app, shopify) {
     }
   })
 
+  app.get("/api/branding/custom-font", async (req, res) => {
+    const { session } = res.locals.shopify;
+    const client = new shopify.api.clients.Graphql({ session });
+    try {
+      const { body: { data: { files: { edges } } } } = await client.query({
+        data: `query queryFiles {
+          files(first: 50, query: "media_type:GenericFile" ) {
+            edges {
+              node {
+                ... on GenericFile {
+                  id
+                  url
+                  fileStatus
+                  mimeType
+                }
+              }
+            }
+          }
+        }`
+      });
+      const fonts = edges.map(edge => edge.node)
+      res.status(200).send(fonts);
+    } catch (error) {
+      console.error(error)
+      res.status(500).send(error);
+    }
+  })
+
   app.post("/api/branding", async (req, res) => {
     const body = req.body;
     const { session } = res.locals.shopify;
@@ -538,13 +566,18 @@ export default function brandingApiEndPoints (app, shopify) {
                   "shopifyFontGroup": {
                     "name": designSystem?.typography?.primary?.shopifyFontGroup?.name,
                   }
-                } : {},
+                } : (
+                  designSystem?.typography?.primary?.customFontGroup?.base?.genericFileId ?
+                    { "customFontGroup": designSystem?.typography?.primary?.customFontGroup } : {}
+                ),
                 "secondary": designSystem?.typography?.secondary?.shopifyFontGroup?.name ? {
                   "shopifyFontGroup": {
                     "name": designSystem?.typography?.secondary?.shopifyFontGroup?.name,
                   }
-                } : {},
-
+                } : (
+                  designSystem?.typography?.secondary?.customFontGroup?.base?.genericFileId ?
+                    { "customFontGroup": designSystem?.typography?.secondary?.customFontGroup } : {}
+                ),
                 "size": {
                   "base": designSystem?.typography?.size?.base,
                   "ratio": designSystem?.typography?.size?.ratio,
@@ -664,11 +697,11 @@ export default function brandingApiEndPoints (app, shopify) {
 
   app.get("/api/branding/is-compatible", async (req, res) => {
     try {
-        const { session } = res.locals.shopify;
-        const client = new shopify.api.clients.Graphql({ session });
+      const { session } = res.locals.shopify;
+      const client = new shopify.api.clients.Graphql({ session });
 
-        const response = await client.query({
-          data: `
+      const response = await client.query({
+        data: `
           query {
             shop {
                 plan {
@@ -677,16 +710,16 @@ export default function brandingApiEndPoints (app, shopify) {
               }
             }
           `
-        });
+      });
 
-        const shopifyPlus = response.body.data.shop.plan.shopifyPlus;
-        // Send back a JSON response with 'shopifyPlus' as a property
-        res.status(200).json({ shopifyPlus });
+      const shopifyPlus = response.body.data.shop.plan.shopifyPlus;
+      // Send back a JSON response with 'shopifyPlus' as a property
+      res.status(200).json({ shopifyPlus });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "An error occurred while fetching the Shopify plan." });
+      console.error(error);
+      res.status(500).json({ error: "An error occurred while fetching the Shopify plan." });
     }
-});
+  });
 
   async function getCurrent (client, profileId) {
     return await client.query({

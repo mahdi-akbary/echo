@@ -5,12 +5,13 @@ import {
     FormLayout,
     BlockStack,
     Tabs,
+    Banner,
 } from '@shopify/polaris';
 import { ColorPickerInput, HelpText, TabDivider } from "../components";
 import { FONTS } from "../components/fonts";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedListOption }) {
+export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedListOption, customFonts = [] }) {
     const SchemeOneTabs = [
         {
             id: 'colors',
@@ -86,6 +87,29 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
         },
 
     ];
+    const normalizedFonts = customFonts.map(font => ({ label: font.url?.split("/")?.pop(".")?.split(".")[0], value: font.id }))
+    const customFontMarkup = <Banner title="Custom Font">
+        <p>
+            For your custom font to be listed, Please head to the <strong> Content -{'>'} Files section </strong> of your store and upload your file that has to be in <strong>.woff format</strong>
+        </p>
+    </Banner>
+
+    const [primaryCustomFontSelected, setPrimaryCustomFontSelected] = useState(null);
+    const [secondaryCustomFontSelected, setSecondaryCustomFontSelected] = useState(null);
+    const getCustomFont = (sourceString) => {
+        if (sourceString?.includes('files')) {
+            const selectedFont = sourceString.split("/")?.pop(".")?.split(".")[0]
+            const font = customFonts.find(font => font.url?.includes(selectedFont))
+            return font.id
+        }
+        return null
+    }
+
+    useEffect(() => {
+        setPrimaryCustomFontSelected(getCustomFont(activeProfile?.designSystem?.typography?.primary?.base?.sources))
+        setSecondaryCustomFontSelected(getCustomFont(activeProfile?.designSystem?.typography?.secondary?.base?.sources))
+    }, [activeProfile])
+
     const [selectedSchemeOneTab, setSelectedSchemeOneTab] = useState(0);
     const [selectedSchemeTwoTab, setSelectedSchemeTwoTab] = useState(0);
     const [selectedTypographyTab, setSelectedTypographyTab] = useState(0);
@@ -2354,54 +2378,118 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                 {typographyTabs[selectedTypographyTab].id === 'primary' ?
                     <FormLayout>
                         <Select
-                            label="Font"
-                            options={FONTS}
-                            value={activeProfile?.designSystem?.typography?.primary?.shopifyFontGroup?.name || null}
+                            label="Fonts"
+                            options={[
+                                normalizedFonts?.length ? { label: 'Custom fonts ---', value: '1', disabled: true } : {},
+                                ...normalizedFonts,
+                                { label: 'System fonts ---', value: '2', disabled: true },
+                                ...FONTS
+                            ]}
+                            value={primaryCustomFontSelected ?
+                                primaryCustomFontSelected :
+                                activeProfile?.designSystem?.typography?.primary?.shopifyFontGroup?.name
+                            }
                             onChange={(value) => {
                                 const temp = activeProfile;
-                                temp.designSystem = {
-                                    ...temp?.designSystem,
-                                    typography: {
-                                        ...temp?.designSystem?.typography,
-                                        primary: {
-                                            ...temp?.designSystem?.typography?.primary,
-                                            shopifyFontGroup: {
-                                                ...temp?.designSystem?.typography?.primary?.shopifyFontGroup,
-                                                name: value,
-                                            }
+                                if (value.includes('GenericFile')) {
+                                    setPrimaryCustomFontSelected(value)
+                                    temp.designSystem = {
+                                        ...temp?.designSystem,
+                                        typography: {
+                                            ...temp?.designSystem?.typography,
+                                            primary: {
+                                                customFontGroup: {
+                                                    base: {
+                                                        genericFileId: value,
+                                                        weight: 500
+                                                    },
+                                                    bold: {
+                                                        genericFileId: value,
+                                                        weight: 500
+                                                    }
+                                                }
+                                            },
                                         },
-                                    },
-                                };
+                                    };
+                                } else {
+                                    setPrimaryCustomFontSelected(null)
+                                    temp.designSystem = {
+                                        ...temp?.designSystem,
+                                        typography: {
+                                            ...temp?.designSystem?.typography,
+                                            primary: {
+                                                ...temp?.designSystem?.typography?.primary,
+                                                shopifyFontGroup: {
+                                                    ...temp?.designSystem?.typography?.primary?.shopifyFontGroup,
+                                                    name: value,
+                                                }
+                                            },
+                                        },
+                                    };
+                                }
                                 handleDataChange(temp);
                             }}
                         />
                         <HelpText text="A font group used for most components such as text, buttons and form controls." />
+                        {customFontMarkup}
                     </FormLayout> : null}
                 {typographyTabs[selectedTypographyTab].id === 'secondary' ?
                     <FormLayout>
                         <Select
-                            label="Font"
-                            options={FONTS}
-                            value={activeProfile?.designSystem?.typography?.secondary?.shopifyFontGroup?.name || null}
+                            label="Fonts"
+                            options={[
+                                normalizedFonts?.length ? { label: 'Custom fonts ---', value: '1', disabled: true } : {},
+                                ...normalizedFonts,
+                                { label: 'System fonts ---', value: '2', disabled: true },
+                                ...FONTS
+                            ]}
+                            value={secondaryCustomFontSelected ?
+                                secondaryCustomFontSelected :
+                                activeProfile?.designSystem?.typography?.secondary?.shopifyFontGroup?.name
+                            }
                             onChange={(value) => {
                                 const temp = activeProfile;
-                                temp.designSystem = {
-                                    ...temp?.designSystem,
-                                    typography: {
-                                        ...temp?.designSystem?.typography,
-                                        secondary: {
-                                            ...temp?.designSystem?.typography?.secondary,
-                                            shopifyFontGroup: {
-                                                ...temp?.designSystem?.typography?.secondary?.shopifyFontGroup,
-                                                name: value,
-                                            }
+                                if (value.includes('GenericFile')) {
+                                    setSecondaryCustomFontSelected(value)
+                                    temp.designSystem = {
+                                        ...temp?.designSystem,
+                                        typography: {
+                                            ...temp?.designSystem?.typography,
+                                            secondary: {
+                                                customFontGroup: {
+                                                    base: {
+                                                        genericFileId: value,
+                                                        weight: 500
+                                                    },
+                                                    bold: {
+                                                        genericFileId: value,
+                                                        weight: 500
+                                                    }
+                                                }
+                                            },
                                         },
-                                    },
-                                };
+                                    };
+                                } else {
+                                    setSecondaryCustomFontSelected(null)
+                                    temp.designSystem = {
+                                        ...temp?.designSystem,
+                                        typography: {
+                                            ...temp?.designSystem?.typography,
+                                            secondary: {
+                                                ...temp?.designSystem?.typography?.secondary,
+                                                shopifyFontGroup: {
+                                                    ...temp?.designSystem?.typography?.secondary?.shopifyFontGroup,
+                                                    name: value,
+                                                }
+                                            },
+                                        },
+                                    };
+                                }
                                 handleDataChange(temp);
                             }}
                         />
                         <HelpText text="A font group used for heading components by default." />
+                        {customFontMarkup}
                     </FormLayout> : null}
                 {typographyTabs[selectedTypographyTab].id === 'font' ?
                     <FormLayout>
@@ -2453,9 +2541,11 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                 handleDataChange(temp);
                             }}
                             value={activeProfile?.designSystem?.typography?.size?.ratio} />
-                            <HelpText text="The scale ratio used to derive all font sizes such as small and large." />
+                        <HelpText text="The scale ratio used to derive all font sizes such as small and large." />
                     </FormLayout> : null}
             </FormLayout>
+
+
         ) : null}
     </>
     );

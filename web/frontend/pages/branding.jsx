@@ -71,11 +71,13 @@ export default function Branding () {
         if (!hasChange) {
           if (res.designSystem && res.designSystem.typography) {
             res.designSystem.typography.secondary = {
+              ...res.designSystem.typography.secondary,
               shopifyFontGroup: {
                 name: res?.designSystem?.typography?.secondary?.name,
               },
             };
             res.designSystem.typography.primary = {
+              ...res.designSystem.typography.primary,
               shopifyFontGroup: {
                 name: res?.designSystem?.typography?.primary?.name,
               },
@@ -88,6 +90,8 @@ export default function Branding () {
       },
     },
   });
+
+  const { data: fonts=[] } = useAppQuery({ url: "/api/branding/custom-font" });
 
   const toastMarkup = toastActive ? (
     <Toast content="Changes saved" onDismiss={toggleToastActive} />
@@ -275,7 +279,7 @@ export default function Branding () {
 
             <Layout.Section>
               <Card padding="600" sectioned>
-                <DesignSystem activeProfile={activeProfile} handleDataChange={handleDataChange} selectedListOption={selectedListOption} />
+                <DesignSystem activeProfile={activeProfile} handleDataChange={handleDataChange} selectedListOption={selectedListOption} customFonts={fonts}/>
                 <CheckoutCustomization activeProfile={activeProfile} handleDataChange={handleDataChange} selectedListOption={selectedListOption} />
               </Card>
             </Layout.Section>

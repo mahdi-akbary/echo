@@ -37,6 +37,7 @@ export default function App () {
               <NavigationMenu
                 navigationLinks={navStructure}
               />
+
               <Frame>
                 <Routes pages={pages} />
               </Frame>

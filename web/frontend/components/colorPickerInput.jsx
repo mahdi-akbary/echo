@@ -38,9 +38,11 @@ export function ColorPickerInput ({ inputColor = null, label, onChange, helpText
         <Box>
           <Text as="p" variant="bodyMd">{inputColor ? label : `Override ${label} Color`}</Text>
           <Text Variant="bodySm" tone="subdued" fontWeight="regular"  >
-          <p style={{ fontSize: '11px'}}>{
-            inputColor ? buttonColor : helpText
-          }</p></Text>
+            <span style={{ fontSize: '12px'}}>{
+              inputColor ? buttonColor : helpText
+            }
+            </span>
+          </Text>
         </Box>
       </InlineStack>
     </>

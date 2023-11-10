@@ -148,10 +148,10 @@ export default function Branding () {
   };
 
   const handleAddNewProfile = () => {
-    // Logic to add a new profile goes here
-    console.log('Add new profile clicked');
-    // For example, navigate to the page where a new profile can be created
-    // or open a modal/dialog where the user can enter details for the new profile.
+    redirect.dispatch(
+      Redirect.Action.ADMIN_PATH,
+      "/settings/checkout"
+    );
   };
 
   const profileSelector = (

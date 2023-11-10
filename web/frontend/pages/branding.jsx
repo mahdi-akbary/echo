@@ -19,7 +19,7 @@ import {
 Icon,
 } from "@shopify/polaris";
 
-import {CirclePlusMinor, ThemeEditMajor, ThemesMajor} from '@shopify/polaris-icons';
+import {CirclePlusMinor, ThemeEditMajor, ThemesMajor, ViewMajor, ResetMinor, SelectMinor} from '@shopify/polaris-icons';
 
 import {
   useAuthenticatedFetch,
@@ -157,7 +157,7 @@ export default function Branding () {
   const profileSelector = (
     <Button onClick={toggleActive} disclosure>
       <div style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
-        <Icon source={selected ? ThemeEditMajor : ThemesMajor} />
+        <Icon source={selected ? SelectMinor : ThemesMajor} />
         {selected ? data.profiles.find(profile => profile.id === selected).name : 'Select profile'}
         {/* if isPublished show live badge, otherwise show draft badge */}
         {selected ? data.profiles.find(profile => profile.id === selected).isPublished ? <Badge tone="success"> Live </Badge> : <Badge tone="info"> Draft </Badge> : null}
@@ -214,14 +214,18 @@ export default function Branding () {
       </Popover>
 
       <Button variant="tertiary"
+        icon={ViewMajor}
         onClick={() =>
           redirect.dispatch(
             Redirect.Action.ADMIN_PATH,
             { path: `/settings/checkout/preview/profiles/${selected?.split('/')[4]}`, newContext: true }
           )
-        }> Preview </Button>
+        }>
+
+            Preview 
+          </Button>
     </InlineStack>
-    <Button tone="critical" onClick={() => setOpenResetModal(true)}>Reset to default</Button>
+    <Button tone="critical" icon={ResetMinor} onClick={() => setOpenResetModal(true)}>Reset to default</Button>
   </>
 
   const [selectedListOption, setSelectedListOption] = useState('global-colors')

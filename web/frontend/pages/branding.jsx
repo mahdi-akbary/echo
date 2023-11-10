@@ -16,7 +16,11 @@ import {
   Popover,
   Grid,
   SkeletonDisplayText,
+Icon,
 } from "@shopify/polaris";
+
+import {CirclePlusMinor, ThemeEditMajor, ThemesMajor} from '@shopify/polaris-icons';
+
 import {
   useAuthenticatedFetch,
   ContextualSaveBar,
@@ -143,9 +147,17 @@ export default function Branding () {
     setActiveCheckoutWarning(!activeCheckoutWarning);
   };
 
+  const handleAddNewProfile = () => {
+    // Logic to add a new profile goes here
+    console.log('Add new profile clicked');
+    // For example, navigate to the page where a new profile can be created
+    // or open a modal/dialog where the user can enter details for the new profile.
+  };
+
   const profileSelector = (
     <Button onClick={toggleActive} disclosure>
       <div style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
+        <Icon source={selected ? ThemeEditMajor : ThemesMajor} />
         {selected ? data.profiles.find(profile => profile.id === selected).name : 'Select profile'}
         {/* if isPublished show live badge, otherwise show draft badge */}
         {selected ? data.profiles.find(profile => profile.id === selected).isPublished ? <Badge tone="success"> Live </Badge> : <Badge tone="info"> Draft </Badge> : null}
@@ -174,20 +186,30 @@ export default function Branding () {
         onClose={toggleActive}>
         <ActionList
           actionRole="menuitem"
-          items={
-            (data.profiles || []).map(profile => ({
+          items={[
+            // Map your existing profiles to ActionList items
+            ...(data.profiles || []).map(profile => ({
               active: profile.id === selected,
               content: profile.name,
               value: profile.id,
+              icon: profile.id == selected ? ThemeEditMajor : ThemesMajor,
               ...(profile.isPublished ? {
                 badge: {
                   tone: 'success',
-                  content: profile.isPublished ? 'Live' : null
+                  content: 'Live',
                 }
               } : {}),
-              onAction: () => { handleChange(profile.id); toggleActive() },
-            }))
-          }
+              onAction: () => { handleChange(profile.id); toggleActive(); },
+            })),
+          
+        
+            // Add the "Add new profile" item
+            {
+              content: 'Add new profile',
+              onAction: () => handleAddNewProfile(), 
+              icon: CirclePlusMinor, 
+            },
+          ]}
         />
       </Popover>
 

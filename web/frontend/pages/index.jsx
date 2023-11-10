@@ -32,11 +32,16 @@ export default function HomePage () {
     setDisplayVideoGuide(!displayVideoGuide);
   };
 
-  const {
-    data: {shopifyPlus}
-  } = useAppQuery({ url: '/api/branding/is-compatible' });
+  const { data, error } = useAppQuery({ url: '/api/branding/is-compatible' });
+  if (error) {
+    // Handle the error appropriately in your UI
+    console.error("Error fetching shopifyPlus:", error);
+  }
+  
+  // Be aware that `data` might initially be `undefined` until the fetch completes
+  const shopifyPlusStatus = data?.shopifyPlus;
 
-  const bannerHtml = (shopifyPlus === false && !isBannerClosed) ? <Layout.Section>
+  const bannerHtml = (shopifyPlusStatus === false && !isBannerClosed) ? <Layout.Section>
     <Card>
       <Banner onDismiss={() => {
         setIsBannerClosed(true)

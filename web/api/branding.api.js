@@ -663,23 +663,30 @@ export default function brandingApiEndPoints (app, shopify) {
   }
 
   app.get("/api/branding/is-compatible", async (req, res) => {
-    const { session } = res.locals.shopify;
-    const client = new shopify.api.clients.Graphql({ session });
+    try {
+        const { session } = res.locals.shopify;
+        const client = new shopify.api.clients.Graphql({ session });
 
-    const { body: { data: { shop: {plan: shopifyPlus} } } } = await client.query({
-      data: `
-      query {
-        shop {
-            plan {
-              shopifyPlus
+        const response = await client.query({
+          data: `
+          query {
+            shop {
+                plan {
+                  shopifyPlus
+                }
+              }
             }
-          }
-        }
-      `
-    })
-    console.log(shopifyPlus, '<<<<<<<')
-    res.status(200).send(shopifyPlus);
-  })
+          `
+        });
+
+        const shopifyPlus = response.body.data.shop.plan.shopifyPlus;
+        // Send back a JSON response with 'shopifyPlus' as a property
+        res.status(200).json({ shopifyPlus });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "An error occurred while fetching the Shopify plan." });
+    }
+});
 
   async function getCurrent (client, profileId) {
     return await client.query({

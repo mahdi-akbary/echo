@@ -31,6 +31,7 @@ export function ColorPickerInput ({ inputColor = null, label, onChange, helpText
           style={{
             width: "40px",
             height: "40px",
+            minWidth: "40px",
             borderRadius: "20%",
             background: inputColor ? buttonColor : '#eee',
             cursor: "pointer",

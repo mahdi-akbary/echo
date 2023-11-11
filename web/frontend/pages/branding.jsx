@@ -306,7 +306,7 @@ export default function Branding () {
             <Layout.Section>
               <Card padding="600" sectioned>
                 <DesignSystem activeProfile={activeProfile} handleDataChange={handleDataChange} selectedListOption={selectedListOption} customFonts={fonts}/>
-                <CheckoutCustomization activeProfile={activeProfile} handleDataChange={handleDataChange} selectedListOption={selectedListOption} />
+                <CheckoutCustomization activeProfile={activeProfile} handleDataChange={handleDataChange} selectedListOption={selectedListOption}/>
               </Card>
             </Layout.Section>
           </>

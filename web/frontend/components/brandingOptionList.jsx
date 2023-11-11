@@ -7,10 +7,11 @@ import {
     ThemeEditMajor,
     TypeMinor,
     TemplateMinor,
-    OrderStatusMinor,
+    ButtonCornerRoundedMajor,
     BuyButtonButtonLayoutMajor,
     SidebarRightMajor,
-    TitleMinor
+    TitleMinor,
+    IconsMajor
 } from '@shopify/polaris-icons';
 
 export function BrandingOptionList ({ selected, setSelected }) {
@@ -23,12 +24,14 @@ export function BrandingOptionList ({ selected, setSelected }) {
                 { content: 'Scheme 1', icon: ThemeEditMajor },
                 { content: 'Scheme 2', icon: ThemeEditMajor },
                 { content: 'Typography', icon: TypeMinor },
+                { content: 'Corner radius', icon: ButtonCornerRoundedMajor },
             ],
         },
         {
             title: "Customize UI",
             items: [
-                { content: 'Global typography', icon: TypeMinor },
+                { content: 'Global', icon: TypeMinor },
+                { content: 'Favicon', icon: IconsMajor },
                 { content: 'Header', icon: HeaderMajor },
                 { content: 'Main', icon: BuyButtonButtonLayoutMajor },
                 { content: 'Order Summary', icon: SidebarRightMajor },

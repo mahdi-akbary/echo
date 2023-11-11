@@ -2552,6 +2552,76 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
 
 
         ) : null}
+
+        {selectedListOption === 'corner-radius' ? (<FormLayout>
+            <BlockStack gap="100">
+                <Text as="h4" variant="bodyLg">
+                    Corner Radius
+                </Text>
+                <Text variant='bodySm' tone='subdued'>
+                    The global variables used to update the corner radius.
+                </Text>
+            </BlockStack>
+            <TabDivider />
+            <FormLayout>
+                <BlockStack gap="200">
+                    <TextField
+                        label="Small"
+                        helpText="The pixel value for small corner radiuses. It should be strictly positive."
+                        type="number"
+                        onChange={(value) => {
+                            const temp = activeProfile;
+                            temp.designSystem = {
+                                ...temp?.designSystem,
+                                cornerRadius: {
+                                    ...temp?.designSystem?.cornerRadius,
+                                    small: +value
+                                },
+                            };
+                            handleDataChange(temp);
+                        }}
+                        value={activeProfile?.designSystem?.cornerRadius?.small}
+                        autoComplete="off"
+                    />
+                    <TextField
+                        label="Base"
+                        helpText="The pixel value for base corner radiuses. It should be strictly positive."
+                        type="number"
+                        onChange={(value) => {
+                            const temp = activeProfile;
+                            temp.designSystem = {
+                                ...temp?.designSystem,
+                                cornerRadius: {
+                                    ...temp?.designSystem?.cornerRadius,
+                                    base: +value
+                                },
+                            };
+                            handleDataChange(temp);
+                        }}
+                        value={activeProfile?.designSystem?.cornerRadius?.base}
+                        autoComplete="off"
+                    />
+                    <TextField
+                        label="Large"
+                        helpText="The pixel value for large corner radiuses. It should be strictly positive."
+                        type="number"
+                        onChange={(value) => {
+                            const temp = activeProfile;
+                            temp.designSystem = {
+                                ...temp?.designSystem,
+                                cornerRadius: {
+                                    ...temp?.designSystem?.cornerRadius,
+                                    large: +value
+                                },
+                            };
+                            handleDataChange(temp);
+                        }}
+                        value={activeProfile?.designSystem?.cornerRadius?.large}
+                        autoComplete="off"
+                    />
+                </BlockStack>
+            </FormLayout>
+        </FormLayout>) : null}
     </>
     );
 }

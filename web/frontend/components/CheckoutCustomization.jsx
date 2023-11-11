@@ -5,13 +5,33 @@ import {
     Tabs,
     Banner,
     BlockStack,
+    Image,
+    Box,
+    Thumbnail,
+    TextField,
 } from '@shopify/polaris';
 import { useState } from "react";
 import { TabDivider } from './tabDivider';
 
-export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, selectedListOption }) {
+export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, selectedListOption}) {
     const [selectedTab, setSelectedTab] = useState(0);
+    const [selectedGlobalTab, setSelectedGlobalTab] = useState(0);
     const [selectedHeadingTab, setSelectedHeadingTab] = useState(0);
+
+    const globalSectionTabs = [
+        {
+            id: 'typography',
+            content: 'Typography',
+            accessibilityLabel: 'Typography',
+            panelID: 'typography-content-1',
+        },
+        {
+            id: 'corner-radius',
+            content: 'Corner radius',
+            accessibilityLabel: 'Corner radius',
+            panelID: 'corner-radius-content-1',
+        }
+    ]
 
     const FromElementsTabs = [
         {
@@ -81,67 +101,122 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
 
     return (
         <>
-            {selectedListOption === 'global-typography' ?
+            {selectedListOption === 'global' ?
                 <FormLayout>
                     <BlockStack gap="100">
                         <Text as="h4" variant="bodyLg">
-                            Global Typography
+                            Global
                         </Text>
                         <Text variant='bodySm' tone='subdued'>
-                            The global typography that apply to specific font faces, sizes, and weights.
+                            The input fields used to update the global customizations.
                         </Text>
                     </BlockStack>
+                    <Tabs tabs={globalSectionTabs} selected={selectedGlobalTab} onSelect={(index => setSelectedGlobalTab(index))}></Tabs>
                     <TabDivider />
                     <BlockStack gap="200">
-                        <Select label="Letter case"
-                            helpText="Customize the letter case."
-                            options={[
-                                { label: 'None', value: 'NONE' },
-                                { label: 'Lowercase', value: 'LOWER' },
-                                { label: 'Titlecase', value: 'TITLE' },
-                                { label: 'Uppercase', value: 'UPPER' }
-                            ]}
-                            onChange={(value) => {
-                                const temp = activeProfile;
-                                temp.customizations = {
-                                    ...temp?.customizations,
-                                    global: {
-                                        ...temp?.customizations?.global,
-                                        typography: {
-                                            ...temp?.customizations?.global?.typography,
-                                            letterCase: value,
+                        {globalSectionTabs[selectedGlobalTab].id === 'typography' ? (<>
+                            <Select label="Letter case"
+                                helpText="Customize the letter case."
+                                options={[
+                                    { label: 'None', value: 'NONE' },
+                                    { label: 'Lowercase', value: 'LOWER' },
+                                    { label: 'Titlecase', value: 'TITLE' },
+                                    { label: 'Uppercase', value: 'UPPER' }
+                                ]}
+                                onChange={(value) => {
+                                    const temp = activeProfile;
+                                    temp.customizations = {
+                                        ...temp?.customizations,
+                                        global: {
+                                            ...temp?.customizations?.global,
+                                            typography: {
+                                                ...temp?.customizations?.global?.typography,
+                                                letterCase: value,
+                                            },
                                         },
-                                    },
-                                };
-                                handleDataChange(temp)
-                            }}
-                            value={activeProfile?.customizations?.global?.typography?.letterCase || ''} />
+                                    };
+                                    handleDataChange(temp)
+                                }}
+                                value={activeProfile?.customizations?.global?.typography?.letterCase || ''} />
 
-                        <Select label="Letter spacing (kerning)"
-                            helpText="Set the space between letters."
-                            options={[
-                                { label: 'Base', value: 'BASE' },
-                                { label: 'Loose', value: 'LOOSE' },
-                                { label: 'Extra loose', value: 'EXTRA_LOOSE' }
-                            ]}
-                            onChange={(value) => {
-                                const temp = activeProfile;
-                                temp.customizations = {
-                                    ...temp?.customizations,
-                                    global: {
-                                        ...temp?.customizations?.global,
-                                        typography: {
-                                            ...temp?.customizations?.global?.typography,
-                                            kerning: value,
+                            <Select label="Letter spacing (kerning)"
+                                helpText="Set the space between letters."
+                                options={[
+                                    { label: 'Base', value: 'BASE' },
+                                    { label: 'Loose', value: 'LOOSE' },
+                                    { label: 'Extra loose', value: 'EXTRA_LOOSE' }
+                                ]}
+                                onChange={(value) => {
+                                    const temp = activeProfile;
+                                    temp.customizations = {
+                                        ...temp?.customizations,
+                                        global: {
+                                            ...temp?.customizations?.global,
+                                            typography: {
+                                                ...temp?.customizations?.global?.typography,
+                                                kerning: value,
+                                            },
                                         },
-                                    },
-                                };
-                                handleDataChange(temp)
-                            }}
-                            value={activeProfile?.customizations?.global?.typography?.kerning || ''} />
+                                    };
+                                    handleDataChange(temp)
+                                }}
+                                value={activeProfile?.customizations?.global?.typography?.kerning || ''} />
+                        </>) : null}
+                        {globalSectionTabs[selectedGlobalTab].id === 'corner-radius' ? (
+                            <Select label="Cornor radius"
+                                helpText="The global corner radius ."
+                                options={[
+                                    { label: 'None', value: 'NONE' },
+                                ]}
+                                onChange={(value) => {
+                                    const temp = activeProfile;
+                                    temp.customizations = {
+                                        ...temp?.customizations,
+                                        global: {
+                                            ...temp?.customizations?.global,
+                                            cornerRadius: value,
+                                        },
+                                    };
+                                    handleDataChange(temp)
+                                }}
+                                value={activeProfile?.customizations?.global?.cornerRadius || ''} />
+                        ) : null}
                     </BlockStack>
                 </FormLayout>
                 : null}
+
+            {selectedListOption == 'favicon' ?
+                <FormLayout>
+                    <BlockStack gap="100">
+                        <Text as="h4" variant="bodyLg">
+                            Favicon
+                        </Text>
+                        <Text variant='bodySm' tone='subdued'>
+                            The input field used to update a checkout branding favicon using image url.
+                        </Text>
+                    </BlockStack>
+                    <TabDivider />
+                    <TextField
+                        label="Favicon url"
+                        helpText="The pixel value for large corner radiuses. It should be strictly positive."
+                        type="Text"
+                        onChange={(value) => {
+                            const temp = activeProfile;
+                            temp.customizations = {
+                                ...temp?.customizations,
+                                favicon: {
+                                    ...temp?.customizations?.favicon,
+                                    mediaImageId: value
+                                    
+                                },
+                            };
+                            handleDataChange(temp)
+                        }}
+                        value={activeProfile?.customizations?.favicon?.mediaImageId || ''}
+                        autoComplete="off"
+                    />
+
+                </FormLayout> : null}
 
             {selectedListOption == 'header' ?
                 <FormLayout>

@@ -84,6 +84,10 @@ export default function brandingApiEndPoints (app, shopify) {
     const { session } = res.locals.shopify;
     const client = new shopify.api.clients.Graphql({ session });
     try {
+      if(body?.customizations?.favicon?.mediaImageId){
+        const {body: {data:{fileCreate: {files: [image]}}}} = await createImageFile(client , body?.customizations?.favicon?.mediaImageId)
+        body.customizations.favicon.mediaImageId = image?.id
+      }
       const response = await upsert(client, body)
       res.status(200).send(response);
     } catch (error) {
@@ -288,6 +292,12 @@ export default function brandingApiEndPoints (app, shopify) {
                                 }
                               }
                             }
+                          }
+
+                          cornerRadius {
+                            base
+                            large
+                            small
                           }
 
                           # Typography
@@ -618,6 +628,9 @@ export default function brandingApiEndPoints (app, shopify) {
                   "kerning": customizations?.global?.typography?.kerning
                 }
               },
+              // "favicon": {
+              //   "mediaImageId": "gid://shopify/MediaImage/36026740441368"
+              // },
               "header": {
                 "alignment": customizations?.header?.alignment,
                 "position": customizations?.header?.position
@@ -888,8 +901,14 @@ export default function brandingApiEndPoints (app, shopify) {
                         
                       }
                     }
-                    # Typography
 
+                    cornerRadius {
+                      base
+                      large
+                      small
+                    }
+
+                    # Typography
                     typography{
                       primary{
                         name
@@ -939,8 +958,7 @@ export default function brandingApiEndPoints (app, shopify) {
                     }
                     main{
                       colorScheme
-                    }
-
+                    } 
                     orderSummary{
                       colorScheme
                     }
@@ -1040,6 +1058,32 @@ export default function brandingApiEndPoints (app, shopify) {
               }
           }
             `,
+    })
+  }
+
+  async function createImageFile (client, imageUrl) {
+    return await client.query({
+      data: {
+        query: `
+              mutation fileCreate($files: [FileCreateInput!]!) {
+                fileCreate(files: $files) {
+                  files {
+                    id
+                    alt
+                    createdAt
+                  }
+                }
+              }`,
+        variables: {
+          "files": [
+            {
+              "alt": "custom-image",
+              "filename": "custom-image-" + Date.now(),
+              "originalSource": imageUrl
+            }
+          ]
+        }
+      }
     })
   }
 }

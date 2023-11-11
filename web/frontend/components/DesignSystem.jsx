@@ -6,8 +6,9 @@ import {
     BlockStack,
     Tabs,
     Banner,
+    Box,
 } from '@shopify/polaris';
-import { ColorPickerInput, HelpText, TabDivider } from "../components";
+import { ColorPickerInput, TabDivider } from "../components";
 import { FONTS } from "../components/fonts";
 import { useEffect, useState } from 'react';
 
@@ -88,11 +89,13 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
 
     ];
     const normalizedFonts = customFonts.map(font => ({ label: font.url?.split("/")?.pop(".")?.split(".")[0], value: font.id }))
-    const customFontMarkup = <Banner title="Custom Font">
-        <p>
-            For your custom font to be listed, Please head to the <strong> Content -{'>'} Files </strong>section of your store and upload your file that has to be in <strong>.woff format</strong>
-        </p>
-    </Banner>
+    const customFontMarkup = <Box paddingBlockStart="300">
+        <Banner title="Custom Font">
+            <p>
+                For your custom font to be listed, Please head to the <strong> Content -{'>'} Files </strong>section of your store and upload your file that has to be in <strong>.woff</strong> format.
+            </p>
+        </Banner>
+    </Box>
 
     const [primaryCustomFontSelected, setPrimaryCustomFontSelected] = useState(null);
     const [secondaryCustomFontSelected, setSecondaryCustomFontSelected] = useState(null);
@@ -2379,6 +2382,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                     <FormLayout>
                         <Select
                             label="Fonts"
+                            helpText="A font group used for most components such as text, buttons and form controls."
                             options={[
                                 normalizedFonts?.length ? { label: 'Custom fonts ---', value: '1', disabled: true } : {},
                                 ...normalizedFonts,
@@ -2430,13 +2434,13 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                 handleDataChange(temp);
                             }}
                         />
-                        <HelpText text="A font group used for most components such as text, buttons and form controls." />
                         {customFontMarkup}
                     </FormLayout> : null}
                 {typographyTabs[selectedTypographyTab].id === 'secondary' ?
                     <FormLayout>
                         <Select
                             label="Fonts"
+                            helpText="A font group used for heading components by default."
                             options={[
                                 normalizedFonts?.length ? { label: 'Custom fonts ---', value: '1', disabled: true } : {},
                                 ...normalizedFonts,
@@ -2488,60 +2492,61 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                 handleDataChange(temp);
                             }}
                         />
-                        <HelpText text="A font group used for heading components by default." />
                         {customFontMarkup}
                     </FormLayout> : null}
                 {typographyTabs[selectedTypographyTab].id === 'font' ?
                     <FormLayout>
-                        <TextField
-                            label="Size"
-                            type="number"
-                            min="12"
-                            max="18"
-                            onChange={(value) => {
-                                const temp = activeProfile;
-                                temp.designSystem = {
-                                    ...temp?.designSystem,
-                                    typography: {
-                                        ...temp?.designSystem?.typography,
-                                        size: {
-                                            ...temp?.designSystem?.typography?.size,
-                                            ...{ base: +value },
+                        <BlockStack gap="200">
+                            <TextField
+                                helpText="The base font size."
+                                label="Size"
+                                type="number"
+                                min="12"
+                                max="18"
+                                onChange={(value) => {
+                                    const temp = activeProfile;
+                                    temp.designSystem = {
+                                        ...temp?.designSystem,
+                                        typography: {
+                                            ...temp?.designSystem?.typography,
+                                            size: {
+                                                ...temp?.designSystem?.typography?.size,
+                                                ...{ base: +value },
+                                            },
                                         },
-                                    },
-                                };
-                                handleDataChange(temp);
-                            }}
-                            value={activeProfile?.designSystem?.typography?.size?.base}
-                            autoComplete="off"
-                        />
-                        <HelpText text="The base font size." />
+                                    };
+                                    handleDataChange(temp);
+                                }}
+                                value={activeProfile?.designSystem?.typography?.size?.base}
+                                autoComplete="off"
+                            />
 
-                        <Select
-                            label="Ratio"
-                            options={[
-                                { label: "1.0", value: 1.0 },
-                                { label: "1.1", value: 1.1 },
-                                { label: "1.2", value: 1.2 },
-                                { label: "1.3", value: 1.3 },
-                                { label: "1.4", value: 1.4 },
-                            ]}
-                            onChange={(value) => {
-                                const temp = activeProfile;
-                                temp.designSystem = {
-                                    ...temp?.designSystem,
-                                    typography: {
-                                        ...temp?.designSystem?.typography,
-                                        size: {
-                                            ...temp?.designSystem?.typography?.size,
-                                            ...{ ratio: + value },
+                            <Select
+                                label="Ratio"
+                                helpText="The scale ratio used to derive all font sizes such as small and large."
+                                options={[
+                                    { label: "1.0", value: 1.0 },
+                                    { label: "1.1", value: 1.1 },
+                                    { label: "1.2", value: 1.2 },
+                                    { label: "1.3", value: 1.3 },
+                                    { label: "1.4", value: 1.4 },
+                                ]}
+                                onChange={(value) => {
+                                    const temp = activeProfile;
+                                    temp.designSystem = {
+                                        ...temp?.designSystem,
+                                        typography: {
+                                            ...temp?.designSystem?.typography,
+                                            size: {
+                                                ...temp?.designSystem?.typography?.size,
+                                                ...{ ratio: + value },
+                                            },
                                         },
-                                    },
-                                };
-                                handleDataChange(temp);
-                            }}
-                            value={activeProfile?.designSystem?.typography?.size?.ratio} />
-                        <HelpText text="The scale ratio used to derive all font sizes such as small and large." />
+                                    };
+                                    handleDataChange(temp);
+                                }}
+                                value={activeProfile?.designSystem?.typography?.size?.ratio} />
+                        </BlockStack>
                     </FormLayout> : null}
             </FormLayout>
 

@@ -81,8 +81,21 @@ export default function HowToUse() {
   return (
     <Page>
       <Layout>
-        <Layout.Section>
 
+        <Layout.Section>
+          <BlockStack gap="200">
+            <Text variant="headingLg" as="h2">
+              How to use
+            </Text>
+            <Text as="span" tone="subdued">
+              You can reach video resources for better understanding and usage
+              of each app (extenstion).
+            </Text>
+            <Divider borderWidth="0" />
+          </BlockStack>
+        </Layout.Section>
+
+        <Layout.Section>
             <Grid>
               <Grid.Cell columnSpan={{ xs: 12, sm: 12, md:4, lg: 4, xl: 4}}>
                 <Card title="Video titles" padding={100}>
@@ -101,13 +114,23 @@ export default function HowToUse() {
               <Grid.Cell columnSpan={{xs: 12, sm: 12, md: 8, lg: 8, xl: 8}}>
                 <Card title="Video content" sectioned>
                     {/* Render video and title based on active index */}
-                    <Text variant="headingLg" as="h2">
-                      {videoList[activeVideo].title}
-                    </Text>
-                    <Text as="span" color="subdued">
-                      {videoList[activeVideo].subTitle}
-                    </Text>
-                    <Divider borderWidth="0" />
+                    <div style={
+                      {
+                        marginBottom: '20px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '6px',
+                      }
+                    }>
+                      <Text variant="headingMd" as="h3">
+                        {videoList[activeVideo].title}
+                      </Text>
+                      <Text as="p" tone="subdued">
+                        {videoList[activeVideo].subTitle}
+                      </Text>
+                    </div>
+
+                    <Divider />
                     <Box position="relative">
                       <div 
                         style={

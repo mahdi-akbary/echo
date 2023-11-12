@@ -7,11 +7,25 @@ import {
   Text,
   Divider,
   Spinner,
+  Card,
+  Grid,
+  ActionList,
+  Icon,
 } from "@shopify/polaris";
 import { useEffect, useState } from "react";
 
+import {PlayCircleMajor} from '@shopify/polaris-icons';
+
+
 export default function HowToUse() {
   const [width, setWidth] = useState(window.innerWidth);
+
+  const [activeVideo, setActiveVideo] = useState(0);
+
+  const handleVideoClick = (index) => {
+    setActiveVideo(index);
+  };
+
   const updateDimensions = () => {
     setWidth(window.innerWidth);
   };
@@ -67,74 +81,88 @@ export default function HowToUse() {
   return (
     <Page>
       <Layout>
+
         <Layout.Section>
           <BlockStack gap="200">
             <Text variant="headingLg" as="h2">
               How to use
             </Text>
-            <Text as="span" color="subdued">
+            <Text as="span" tone="subdued">
               You can reach video resources for better understanding and usage
               of each app (extenstion).
             </Text>
             <Divider borderWidth="0" />
           </BlockStack>
         </Layout.Section>
-        {videoList.map((video, i) => (
-          <Layout.Section key={i}>
-            <BlockStack gap={{ xs: "800", sm: "400" }}>
-              <InlineGrid columns={{ xs: "1fr", md: "2fr 5fr" }} gap="400">
-                <Box
-                  as="section"
-                  paddingInlineStart={{ xs: 4, sm: 0 }}
-                  paddingInlineEnd={{ xs: 4, sm: 0 }}
-                >
-                  <BlockStack gap="200">
-                    <Text as="h3" variant="headingMd">
-                      {video.title}
-                    </Text>
-                    <Text as="p" variant="bodyMd">
-                      {video.subTitle}
-                    </Text>
-                  </BlockStack>
-                </Box>
 
-                <Box
-                  position="relative"
-                  width={width < 780 ? "100%" : `${(width * 40) / 100}px`}
-                  minHeight={`${(width * 20) / 100}px`}
-                >
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      zIndex: 1,
-                      position: "absolute",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      border: "1px solid #ccc",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    <Spinner size="large" />
-                  </div>
-                  <iframe
-                    src={video.link}
-                    frameBorder="0"
-                    allowFullScreen
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      zIndex: 2,
-                      position: "relative",
-                    }}
-                  ></iframe>
-                </Box>
-              </InlineGrid>
-              <Box padding="200"></Box>
-            </BlockStack>
-          </Layout.Section>
-        ))}
+        <Layout.Section>
+            <Grid>
+              <Grid.Cell columnSpan={{ xs: 12, sm: 12, md:4, lg: 4, xl: 4}}>
+                <Card title="Video titles" padding={100}>
+                  <ActionList
+                    actionRole="menuitem"
+                    items={videoList.map((video, index) => ({
+                      content: video.title,
+                      icon: PlayCircleMajor,
+                      active: activeVideo === index,
+                      onAction: () => handleVideoClick(index),
+                      key: index, // You should provide a unique key for each item
+                    }))}
+                  />
+                </Card>
+              </Grid.Cell>
+              <Grid.Cell columnSpan={{xs: 12, sm: 12, md: 8, lg: 8, xl: 8}}>
+                <Card title="Video content" sectioned>
+                    {/* Render video and title based on active index */}
+                    <div style={
+                      {
+                        marginBottom: '20px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '6px',
+                      }
+                    }>
+                      <Text variant="headingMd" as="h3">
+                        {videoList[activeVideo].title}
+                      </Text>
+                      <Text as="p" tone="subdued">
+                        {videoList[activeVideo].subTitle}
+                      </Text>
+                    </div>
+
+                    <Divider />
+                    <Box position="relative">
+                      <div 
+                        style={
+                          {
+                            position: 'relative',
+                            paddingBottom: '54.545454545454554%',
+                            height: '0',
+                          }}>
+                          <iframe 
+                          src={videoList[activeVideo].link}
+                          frameborder="0" 
+                          webkitallowfullscreen mozallowfullscreen allowfullscreen 
+                          style={
+                            {
+                              position: 'absolute',
+                              top: '0',
+                              left: '0',
+                              width: '100%',
+                              height: '100%',
+                            }
+                          }></iframe>
+                        </div>
+
+                    </Box>
+                    
+
+                </Card>
+              </Grid.Cell>
+          </Grid>
+
+        </Layout.Section>
+
       </Layout>
     </Page>
   );

@@ -95,9 +95,8 @@ export default function HowToUse() {
           </BlockStack>
         </Layout.Section>
 
-        <Layout.Section>
-            <Grid>
-              <Grid.Cell columnSpan={{ xs: 12, sm: 12, md:4, lg: 4, xl: 4}}>
+          <Layout>
+            <Layout.Section variant="oneThird">
                 <Card title="Video titles" padding={100}>
                   <ActionList
                     actionRole="menuitem"
@@ -110,58 +109,58 @@ export default function HowToUse() {
                     }))}
                   />
                 </Card>
-              </Grid.Cell>
-              <Grid.Cell columnSpan={{xs: 12, sm: 12, md: 8, lg: 8, xl: 8}}>
+            </Layout.Section>
+            <Layout.Section>
                 <Card title="Video content" sectioned>
-                    {/* Render video and title based on active index */}
-                    <div style={
-                      {
-                        marginBottom: '20px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '6px',
-                      }
-                    }>
-                      <Text variant="headingMd" as="h3">
-                        {videoList[activeVideo].title}
-                      </Text>
-                      <Text as="p" tone="subdued">
-                        {videoList[activeVideo].subTitle}
-                      </Text>
-                    </div>
+                      {/* Render video and title based on active index */}
+                      <div style={
+                        {
+                          marginBottom: '20px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '6px',
+                        }
+                      }>
+                        <Text variant="headingMd" as="h3">
+                          {videoList[activeVideo].title}
+                        </Text>
+                        <Text as="p" tone="subdued">
+                          {videoList[activeVideo].subTitle}
+                        </Text>
+                      </div>
 
-                    <Divider />
-                    <Box position="relative">
-                      <div 
-                        style={
-                          {
-                            position: 'relative',
-                            paddingBottom: '54.545454545454554%',
-                            height: '0',
-                          }}>
-                          <iframe 
-                          src={videoList[activeVideo].link}
-                          frameborder="0" 
-                          webkitallowfullscreen mozallowfullscreen allowfullscreen 
+                      <Divider />
+                      <Box position="relative">
+                        <div 
                           style={
                             {
-                              position: 'absolute',
-                              top: '0',
-                              left: '0',
-                              width: '100%',
-                              height: '100%',
-                            }
-                          }></iframe>
-                        </div>
+                              position: 'relative',
+                              paddingBottom: '54.545454545454554%',
+                              height: '0',
+                            }}>
+                            <iframe 
+                            src={videoList[activeVideo].link}
+                            frameborder="0" 
+                            webkitallowfullscreen mozallowfullscreen allowfullscreen 
+                            style={
+                              {
+                                position: 'absolute',
+                                top: '0',
+                                left: '0',
+                                width: '100%',
+                                height: '100%',
+                              }
+                            }></iframe>
+                          </div>
 
-                    </Box>
-                    
+                      </Box>
+                      
 
-                </Card>
-              </Grid.Cell>
-          </Grid>
+                  </Card>
+            </Layout.Section>
+          </Layout>
+        
 
-        </Layout.Section>
 
       </Layout>
     </Page>

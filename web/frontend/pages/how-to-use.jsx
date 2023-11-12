@@ -7,11 +7,25 @@ import {
   Text,
   Divider,
   Spinner,
+  Card,
+  Grid,
+  ActionList,
+  Icon,
 } from "@shopify/polaris";
 import { useEffect, useState } from "react";
 
+import {PlayCircleMajor} from '@shopify/polaris-icons';
+
+
 export default function HowToUse() {
   const [width, setWidth] = useState(window.innerWidth);
+
+  const [activeVideo, setActiveVideo] = useState(0);
+
+  const handleVideoClick = (index) => {
+    setActiveVideo(index);
+  };
+
   const updateDimensions = () => {
     setWidth(window.innerWidth);
   };
@@ -68,6 +82,33 @@ export default function HowToUse() {
     <Page>
       <Layout>
         <Layout.Section>
+
+            <Grid>
+              <Grid.Cell columnSpan={{ xs: 12, sm: 12, md:4, lg: 4, xl: 4}}>
+                <Card title="Video titles" padding={100}>
+
+                  <ActionList
+                    actionRole="menuitem"
+                    items={videoList.map((video, index) => ({
+                      content: video.title,
+                      icon: PlayCircleMajor,
+                      active: activeVideo === index,
+                      onAction: () => handleVideoClick(index),
+                      key: index, // You should provide a unique key for each item
+                    }))}
+                  />
+
+                </Card>
+              </Grid.Cell>
+              <Grid.Cell columnSpan={{xs: 12, sm: 12, md: 8, lg: 8, xl: 8}}>
+                <Card title="Video content" sectioned>
+                  
+
+
+                </Card>
+              </Grid.Cell>
+          </Grid>
+
           <BlockStack gap="200">
             <Text variant="headingLg" as="h2">
               How to use

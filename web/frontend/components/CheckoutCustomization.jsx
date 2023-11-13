@@ -5,15 +5,14 @@ import {
     Tabs,
     Banner,
     BlockStack,
-    Image,
     Box,
-    Thumbnail,
     TextField,
 } from '@shopify/polaris';
 import { useState } from "react";
 import { TabDivider } from './tabDivider';
+import { FileUpload } from './fileUpload';
 
-export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, selectedListOption}) {
+export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, selectedListOption }) {
     const [selectedTab, setSelectedTab] = useState(0);
     const [selectedGlobalTab, setSelectedGlobalTab] = useState(0);
     const [selectedHeadingTab, setSelectedHeadingTab] = useState(0);
@@ -192,29 +191,20 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                             Favicon
                         </Text>
                         <Text variant='bodySm' tone='subdued'>
-                            The input field used to update a checkout branding favicon using image url.
+                            The input field used to update a checkout branding favicon.
                         </Text>
                     </BlockStack>
                     <TabDivider />
-                    <TextField
-                        label="Favicon url"
-                        helpText="The pixel value for large corner radiuses. It should be strictly positive."
-                        type="Text"
-                        onChange={(value) => {
-                            const temp = activeProfile;
-                            temp.customizations = {
-                                ...temp?.customizations,
-                                favicon: {
-                                    ...temp?.customizations?.favicon,
-                                    mediaImageId: value
-                                    
-                                },
-                            };
-                            handleDataChange(temp)
-                        }}
-                        value={activeProfile?.customizations?.favicon?.mediaImageId || ''}
-                        autoComplete="off"
-                    />
+                    <FileUpload onFileIdGenerated={(id) => {
+                        const temp = activeProfile;
+                        temp.customizations = {
+                            ...temp?.customizations,
+                            favicon: {
+                                mediaImageId: id,
+                            },
+                        }
+                        handleDataChange(temp)
+                    }} />
 
                 </FormLayout> : null}
 
@@ -278,6 +268,67 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                             }}
                             value={activeProfile?.customizations?.header?.position || ''}
                         />
+
+                        
+                        <BlockStack gap="150">
+                        <Text variant='bodyMd'>Banner</Text>
+                        <Text variant='bodySm' tone='subdued'>The banner will appear in the header only if the position is in full width.</Text>
+                        <FileUpload onFileIdGenerated={(id) => {
+                            const temp = activeProfile;
+                            temp.customizations = {
+                                ...temp?.customizations,
+                                header: {
+                                    ...temp?.customizations?.header,
+                                    banner: {
+                                        mediaImageId: id
+                                    },
+                                },
+                            }
+                            handleDataChange(temp)
+                        }} />
+                        </BlockStack>
+
+                        <BlockStack gap="050">
+                        <Text variant='bodyMd'>Logo</Text>
+                        <Text variant='bodySm' tone='subdued'>To set the logo.</Text>
+                        <FileUpload onFileIdGenerated={(id) => {
+                            const temp = activeProfile;
+                            temp.customizations = {
+                                ...temp?.customizations,
+                                header: {
+                                    ...temp?.customizations?.header,
+                                    logo: {
+                                        ...temp?.customizations?.header.logo,
+                                        image: {
+                                            mediaImageId: id
+                                        }
+                                    },
+                                },
+                            }
+                            handleDataChange(temp)
+                        }} />
+                        </BlockStack>
+                        <TextField
+                        label="Logo max width"
+                        helpText="The maximum width of the logo."
+                        type="number"
+                        onChange={(value) => {
+                            const temp = activeProfile;
+                            temp.customizations = {
+                                ...temp?.customizations,
+                                header: {
+                                    ...temp?.customizations?.header,
+                                    logo: {
+                                        ...temp?.customizations?.header.logo,
+                                        maxWidth: value
+                                    },
+                                },
+                            }
+                            handleDataChange(temp);
+                        }}
+                        value={activeProfile?.customizations?.header?.logo?.maxWidth}
+                        autoComplete="off"
+                    />
 
                     </BlockStack>
                 </FormLayout> : null}

@@ -1,5 +1,37 @@
 export default function brandingApiEndPoints (app, shopify) {
 
+  app.post("/api/branding/stage-upload", async (req, res) => {
+    const { session } = res.locals.shopify;
+    const client = new shopify.api.clients.Graphql({ session });
+    const { body: { data: { stagedUploadsCreate: { stagedTargets: [stagedUpload] } } } } = await client.query({
+      data: {
+        query: `mutation stagedUploadsCreate($input: [StagedUploadInput!]!) {
+          stagedUploadsCreate(input: $input) {
+            stagedTargets {
+              url
+              resourceUrl
+              parameters {
+                name
+                value
+              }
+            }
+          }
+        }`,
+        variables: {
+          "input": [
+            {
+              "filename": req.body.name,
+              "mimeType": req.body.type,
+              "httpMethod": "POST",
+              "resource": "IMAGE"
+            }
+          ]
+        }
+      }
+    })
+    res.status(200).send(stagedUpload)
+  })
+
   app.get("/api/branding", async (req, res) => {
     const { session } = res.locals.shopify;
     const client = new shopify.api.clients.Graphql({ session });
@@ -84,10 +116,6 @@ export default function brandingApiEndPoints (app, shopify) {
     const { session } = res.locals.shopify;
     const client = new shopify.api.clients.Graphql({ session });
     try {
-      if(body?.customizations?.favicon?.mediaImageId){
-        const {body: {data:{fileCreate: {files: [image]}}}} = await createImageFile(client , body?.customizations?.favicon?.mediaImageId)
-        body.customizations.favicon.mediaImageId = image?.id
-      }
       const response = await upsert(client, body)
       res.status(200).send(response);
     } catch (error) {
@@ -350,7 +378,6 @@ export default function brandingApiEndPoints (app, shopify) {
                               kerning
                             }
                           }
-
                           main{
                             colorScheme
                           }
@@ -628,12 +655,21 @@ export default function brandingApiEndPoints (app, shopify) {
                   "kerning": customizations?.global?.typography?.kerning
                 }
               },
-              // "favicon": {
-              //   "mediaImageId": "gid://shopify/MediaImage/36026740441368"
-              // },
+              "favicon": {
+                "mediaImageId": customizations?.favicon?.mediaImageId
+              },
               "header": {
                 "alignment": customizations?.header?.alignment,
-                "position": customizations?.header?.position
+                "position": customizations?.header?.position,
+                "banner": {
+                  "mediaImageId": customizations?.header?.banner?.mediaImageId
+                },
+                "logo": {
+                  "image": {
+                    "mediaImageId": customizations?.header?.logo?.image?.mediaImageId
+                  },
+                  "maxWidth" : +customizations?.header?.logo?.maxWidth
+                }
               },
               "main": {
                 "colorScheme": customizations?.main?.colorScheme
@@ -1061,29 +1097,35 @@ export default function brandingApiEndPoints (app, shopify) {
     })
   }
 
-  async function createImageFile (client, imageUrl) {
-    return await client.query({
+  app.post("/api/branding/upload", async (req, res) => {
+    const body = req.body;
+    const { session } = res.locals.shopify;
+    const client = new shopify.api.clients.Graphql({ session });
+
+    const { body: { data: { fileCreate: { files: [image] } } } } = await client.query({
       data: {
         query: `
-              mutation fileCreate($files: [FileCreateInput!]!) {
-                fileCreate(files: $files) {
-                  files {
-                    id
-                    alt
-                    createdAt
+                mutation fileCreate($files: [FileCreateInput!]!) {
+                  fileCreate(files: $files) {
+                    files {
+                      id
+                      alt
+                      createdAt
+                    }
                   }
-                }
-              }`,
+                }`,
         variables: {
           "files": [
             {
               "alt": "custom-image",
-              "filename": "custom-image-" + Date.now(),
-              "originalSource": imageUrl
+              "filename": body.name,
+              "originalSource": body.url
             }
           ]
         }
       }
     })
-  }
+
+    res.status(200).json(image)
+  })
 }

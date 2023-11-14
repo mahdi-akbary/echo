@@ -117,6 +117,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                             <Select label="Letter case"
                                 helpText="Customize the letter case."
                                 options={[
+                                    { label: 'Not set', value: null },
                                     { label: 'None', value: 'NONE' },
                                     { label: 'Lowercase', value: 'LOWER' },
                                     { label: 'Titlecase', value: 'TITLE' },
@@ -141,6 +142,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                             <Select label="Letter spacing (kerning)"
                                 helpText="Set the space between letters."
                                 options={[
+                                    { label: 'Not set', value: null },
                                     { label: 'Base', value: 'BASE' },
                                     { label: 'Loose', value: 'LOOSE' },
                                     { label: 'Extra loose', value: 'EXTRA_LOOSE' }
@@ -165,6 +167,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                             <Select label="Cornor radius"
                                 helpText="The global corner radius ."
                                 options={[
+                                    { label: 'Not set', value: null },
                                     { label: 'None', value: 'NONE' },
                                 ]}
                                 onChange={(value) => {
@@ -204,7 +207,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                             },
                         }
                         handleDataChange(temp)
-                    }} />
+                    }} url={activeProfile?.customizations?.favicon?.image?.url} />
 
                 </FormLayout> : null}
 
@@ -224,7 +227,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                             label="Alignment"
                             helpText="The header alignment."
                             options={[
-                                { label: "Default", value: '' },
+                                { label: "Not set", value: null },
                                 { label: "Start", value: "START" },
                                 { label: "Center", value: "CENTER" },
                                 { label: "End", value: "END" },
@@ -248,6 +251,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                             label="Position"
                             helpText="The header position."
                             options={[
+                                { label: "Not set", value: null },
                                 { label: "Full width", value: "START" },
                                 {
                                     label: "Order summary",
@@ -285,7 +289,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 },
                             }
                             handleDataChange(temp)
-                        }} />
+                        }} url={activeProfile?.customizations?.header?.banner?.image?.url} />
                         </BlockStack>
 
                         <BlockStack gap="050">
@@ -306,7 +310,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 },
                             }
                             handleDataChange(temp)
-                        }} />
+                        }} url={activeProfile?.customizations?.header?.logo?.image?.url} />
                         </BlockStack>
                         <TextField
                         label="Logo max width"
@@ -347,6 +351,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                         label="Background color"
                         helpText="The selected color scheme for the main area of the checkout."
                         options={[
+                            { label: 'Not set', value: null },
                             { label: "Transparent", value: 'TRANSPARENT' },
                             { label: "Color scheme 1", value: "COLOR_SCHEME1" },
                             { label: "Color scheme 2", value: "COLOR_SCHEME2" },
@@ -382,6 +387,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                         label="Background color"
                         helpText="The selected color scheme for the order summary area of the checkout."
                         options={[
+                            { label: 'Not set', value: null },
                             { label: "Transparent", value: 'TRANSPARENT' },
                             { label: "Color scheme 1", value: "COLOR_SCHEME1" },
                             { label: "Color scheme 2", value: "COLOR_SCHEME2" },
@@ -421,6 +427,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Border"
                                     helpText="The border used for form controls."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Full", value: "FULL" },
                                     ]}
@@ -443,6 +450,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Corner radius"
                                     helpText="The corner radius used for form controls."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Small", value: "SMALL" },
                                         { label: "Base", value: "BASE" },
@@ -466,7 +474,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Background color"
                                     helpText="Set to TRANSPARENT to define transparent form controls. If null, form controls inherit colors from their scheme settings."
                                     options={[
-                                        { label: "Default", value: "default" },
+                                        { label: 'Not set', value: null },
                                         { label: "Transparent", value: "TRANSPARENT" },
                                     ]}
                                     onChange={(value) => {
@@ -475,7 +483,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations,
                                             control: {
                                                 ...temp?.customizations?.control,
-                                                color: (value === 'TRANSPARENT') ? 'TRANSPARENT' : 'Defaults',
+                                                color: (value === 'TRANSPARENT') ? 'TRANSPARENT' : null,
                                             },
                                         };
                                         handleDataChange(temp);
@@ -486,6 +494,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select
                                     label="Label position"
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Inside", value: "INSIDE" },
                                         { label: "Outside", value: "OUTSIDE" },
                                     ]}
@@ -513,6 +522,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Border"
                                     helpText="The border used for text fields."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Block End", value: "BLOCK_END" },
                                         { label: "Full", value: "FULL" },
@@ -534,6 +544,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Font"
                                     helpText="The font customizations used for text fields."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Primary", value: "PRIMARY" },
                                         { label: "Secondary", value: "SECONDARY" },
                                     ]}
@@ -558,6 +569,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Letter spacing (kerning)"
                                     helpText="The kerning customizations used for text fields."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Base", value: "BASE" },
                                         { label: "Loose", value: "LOOSE" },
                                         { label: "Extra loose", value: "EXTRA_LOOSE" },
@@ -583,6 +595,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Font size"
                                     helpText="The font size customizations used for text fields."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Extra small", value: "EXTRA_SMALL" },
                                         { label: "Small", value: "SMALL" },
                                         { label: "Base", value: "BASE" },
@@ -612,6 +625,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Letter case"
                                     helpText="The letter case customizations used for text fields."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Lowercase", value: "LOWER" },
                                         { label: "Titlecase", value: "TITLE" },
@@ -638,6 +652,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Font weight"
                                     helpText="The font weight customizations used for text fields."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Base", value: "BASE" },
                                         { label: "Bold", value: "BOLD" },
                                     ]}
@@ -668,6 +683,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Border"
                                     helpText="The border used for selects."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Block End", value: "BLOCK_END" },
                                         { label: "Full", value: "FULL" },
@@ -689,6 +705,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Font"
                                     helpText="The font customizations used for selects."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Primary", value: "PRIMARY" },
                                         { label: "Secondary", value: "SECONDARY" },
                                     ]}
@@ -713,6 +730,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Letter spacing (kerning)"
                                     helpText="The kerning customizations used for selects."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Base", value: "BASE" },
                                         { label: "Loose", value: "LOOSE" },
                                         { label: "Extra loose", value: "EXTRA_LOOSE" },
@@ -738,6 +756,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Font size"
                                     helpText="The font size customizations used for selects."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Extra small", value: "EXTRA_SMALL" },
                                         { label: "Small", value: "SMALL" },
                                         { label: "Base", value: "BASE" },
@@ -767,6 +786,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Letter case"
                                     helpText="The letter case customizations used for selects."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Lowercase", value: "LOWER" },
                                         { label: "Titlecase", value: "TITLE" },
@@ -793,6 +813,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Font weight"
                                     helpText="The font weight customizations used for selects."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Base", value: "BASE" },
                                         { label: "Bold", value: "BOLD" },
                                     ]}
@@ -823,6 +844,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 label="Corner radius"
                                 helpText="The corner radius used for checkboxes."
                                 options={[
+                                    { label: 'Not set', value: null },
                                     { label: "None", value: "NONE" },
                                     { label: "Small", value: "SMALL" },
                                     { label: "Base", value: "BASE" },
@@ -852,6 +874,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Background"
                                     helpText="The background style used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Solid", value: "SOLID" },
                                         { label: "None", value: "NONE" },
                                     ]}
@@ -871,6 +894,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Border"
                                     helpText="The border used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Full", value: "FULL" },
                                     ]}
@@ -890,6 +914,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Corner radius"
                                     helpText="The corner radius used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Small", value: "SMALL" },
                                         { label: "Base", value: "BASE" },
@@ -912,6 +937,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Block padding"
                                     helpText="The block padding used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Extra tight", value: "EXTRA_TIGHT" },
                                         { label: "Tight", value: "TIGHT" },
@@ -936,6 +962,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Inline padding"
                                     helpText="The inline padding used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Extra tight", value: "EXTRA_TIGHT" },
                                         { label: "Tight", value: "TIGHT" },
@@ -959,6 +986,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Font"
                                     helpText="The font used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Primary", value: "PRIMARY" },
                                         { label: "Secondary", value: "SECONDARY" },
                                     ]}
@@ -982,6 +1010,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Letter spacing (kerning)"
                                     helpText="The kerning used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Base", value: "BASE" },
                                         { label: "Loose", value: "LOOSE" },
                                         { label: "Extra loose", value: "EXTRA_LOOSE" },
@@ -1005,6 +1034,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Font size"
                                     helpText="The font size used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Extra small", value: "EXTRA_SMALL" },
                                         { label: "Small", value: "SMALL" },
                                         { label: "Base", value: "BASE" },
@@ -1032,6 +1062,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Letter case"
                                     helpText="The letter case used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Lowercase", value: "LOWER" },
                                         { label: "Titlecase", value: "TITLE" },
@@ -1056,6 +1087,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Font weight"
                                     helpText="The font weight used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Base", value: "BASE" },
                                         { label: "Bold", value: "BOLD" },
                                     ]}
@@ -1087,6 +1119,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Background"
                                     helpText="The background style used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Solid", value: "SOLID" },
                                         { label: "None", value: "NONE" },
                                     ]}
@@ -1106,6 +1139,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Border"
                                     helpText="The border used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Full", value: "FULL" },
                                     ]}
@@ -1125,6 +1159,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Corner radius"
                                     helpText="The corner radius used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Small", value: "SMALL" },
                                         { label: "Base", value: "BASE" },
@@ -1147,6 +1182,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Block padding"
                                     helpText="The block padding used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Extra tight", value: "EXTRA_TIGHT" },
                                         { label: "Tight", value: "TIGHT" },
@@ -1171,6 +1207,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     label="Inline padding"
                                     helpText="The inline padding used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Extra tight", value: "EXTRA_TIGHT" },
                                         { label: "Tight", value: "TIGHT" },
@@ -1194,6 +1231,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Font"
                                     helpText="The font used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Primary", value: "PRIMARY" },
                                         { label: "Secondary", value: "SECONDARY" },
                                     ]}
@@ -1217,6 +1255,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Letter spacing (kerning)"
                                     helpText="The kerning used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Base", value: "BASE" },
                                         { label: "Loose", value: "LOOSE" },
                                         { label: "Extra loose", value: "EXTRA_LOOSE" },
@@ -1240,6 +1279,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Font size"
                                     helpText="The font size used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Extra small", value: "EXTRA_SMALL" },
                                         { label: "Small", value: "SMALL" },
                                         { label: "Base", value: "BASE" },
@@ -1267,6 +1307,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Letter case"
                                     helpText="The letter case used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Lowercase", value: "LOWER" },
                                         { label: "Titlecase", value: "TITLE" },
@@ -1291,6 +1332,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Font weight"
                                     helpText="The font weight used for buttons."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Base", value: "BASE" },
                                         { label: "Bold", value: "BOLD" },
                                     ]}
@@ -1333,6 +1375,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Font"
                                     helpText="The font customizations used for headings."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Primary", value: "PRIMARY" },
                                         { label: "Secondary", value: "SECONDARY" },
                                     ]}
@@ -1356,6 +1399,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Letter spacing (kerning)"
                                     helpText="The kerning customizations used for headings."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Base", value: "BASE" },
                                         { label: "Loose", value: "LOOSE" },
                                         { label: "Extra loose", value: "EXTRA_LOOSE" },
@@ -1380,6 +1424,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Font size"
                                     helpText="The font size customizations used for headings."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Extra small", value: "EXTRA_SMALL" },
                                         { label: "Small", value: "SMALL" },
                                         { label: "Base", value: "BASE" },
@@ -1407,6 +1452,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Letter case"
                                     helpText="The letter case customizations used for headings."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Lowercase", value: "LOWER" },
                                         { label: "Titlecase", value: "TITLE" },
@@ -1432,6 +1478,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Font weight"
                                     helpText="The font weight customizations used for headings."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Base", value: "BASE" },
                                         { label: "Bold", value: "BOLD" },
                                     ]}
@@ -1461,6 +1508,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Font"
                                     helpText="The font customizations used for headings."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Primary", value: "PRIMARY" },
                                         { label: "Secondary", value: "SECONDARY" },
                                     ]}
@@ -1483,6 +1531,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Letter spacing (kerning)"
                                     helpText="The kerning customizations used for headings."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Base", value: "BASE" },
                                         { label: "Loose", value: "LOOSE" },
                                         { label: "Extra loose", value: "EXTRA_LOOSE" },
@@ -1507,6 +1556,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Font size"
                                     helpText="The font size customizations used for headings."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Extra small", value: "EXTRA_SMALL" },
                                         { label: "Small", value: "SMALL" },
                                         { label: "Base", value: "BASE" },
@@ -1534,6 +1584,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Letter case"
                                     helpText="The letter case customizations used for headings."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Lowercase", value: "LOWER" },
                                         { label: "Titlecase", value: "TITLE" },
@@ -1558,6 +1609,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Font weight"
                                     helpText="The font weight customizations used for headings."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Base", value: "BASE" },
                                         { label: "Bold", value: "BOLD" },
                                     ]}
@@ -1587,6 +1639,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Font"
                                     helpText="The font customizations used for headings."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Primary", value: "PRIMARY" },
                                         { label: "Secondary", value: "SECONDARY" },
                                     ]}
@@ -1609,6 +1662,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Letter spacing (kerning)"
                                     helpText="The kerning customizations used for headings."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Base", value: "BASE" },
                                         { label: "Loose", value: "LOOSE" },
                                         { label: "Extra loose", value: "EXTRA_LOOSE" },
@@ -1633,6 +1687,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Font size"
                                     helpText="The font size customizations used for headings."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Extra small", value: "EXTRA_SMALL" },
                                         { label: "Small", value: "SMALL" },
                                         { label: "Base", value: "BASE" },
@@ -1660,6 +1715,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Letter case"
                                     helpText="The letter case customizations used for headings."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "None", value: "NONE" },
                                         { label: "Lowercase", value: "LOWER" },
                                         { label: "Titlecase", value: "TITLE" },
@@ -1684,6 +1740,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 <Select label="Font weight"
                                     helpText="The font weight customizations used for headings."
                                     options={[
+                                        { label: 'Not set', value: null },
                                         { label: "Base", value: "BASE" },
                                         { label: "Bold", value: "BOLD" },
                                     ]}

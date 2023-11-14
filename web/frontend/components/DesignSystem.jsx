@@ -1386,7 +1386,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                         scheme2: {
                                             ...temp?.designSystem?.colors?.schemes?.scheme2,
                                             base: {
-                                                ...temp?.designSystem?.colors?.schemes?.scheme2.base,
+                                                ...temp?.designSystem?.colors?.schemes?.scheme2?.base,
                                                 background: value,
                                             },
                                         },

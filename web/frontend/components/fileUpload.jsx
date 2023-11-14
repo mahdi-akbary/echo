@@ -1,9 +1,9 @@
-import { DropZone, Thumbnail, Text, Card, BlockStack, Box, Spinner } from '@shopify/polaris';
+import { DropZone, Thumbnail, Text, Card, BlockStack, Box, Spinner, Bleed } from '@shopify/polaris';
 import { NoteMinor } from '@shopify/polaris-icons';
 import { useState, useCallback } from 'react';
 import { useAuthenticatedFetch } from '../hooks';
 
-export function FileUpload ({ onFileIdGenerated, label = null}) {
+export function FileUpload ({ onFileIdGenerated, label = null, url = null }) {
     const fetch = useAuthenticatedFetch();
     const [files, setFiles] = useState([]);
     const [isFileUploading, setIsFileUploading] = useState(false);
@@ -59,11 +59,11 @@ export function FileUpload ({ onFileIdGenerated, label = null}) {
 
     const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
 
-    const fileUpload = !files.length && <DropZone.FileUpload />;
-    const uploadedFiles = files.length > 0 && isFileUploading === false && (
+    const fileUpload = !files.length && <DropZone.FileUpload actionTitle={url == null ? 'Upload Image' : 'Change Image'} />;
+    const uploadedFiles = (files.length > 0 && isFileUploading === false) && (
         <div style={{ padding: '0' }}>
             {files.map((file, index) => (
-                <Box paddingBlockStart="500" key={index}>
+                <Box paddingBlockStart="200" key={index}>
                     <BlockStack inlineAlign="center" align="center">
                         <Thumbnail
                             size="small"
@@ -96,13 +96,24 @@ export function FileUpload ({ onFileIdGenerated, label = null}) {
                 actionHint="Accepts .png"
                 accept="image/png"
                 type="image">
-                {uploadedFiles}
-                {fileUpload}
-                {isFileUploading == true && <Box paddingBlockStart="1600">
-                    <BlockStack align='center' inlineAlign='center'>
-                        <Spinner size="small" />
-                    </BlockStack>
-                </Box>}
+                <Box paddingBlockStart="300">
+                    {uploadedFiles}
+                    {url !== null && files.length == 0 ? <Bleed marginBlockEnd="500">
+                        <BlockStack align='center' inlineAlign='center'>
+                            <Thumbnail
+                                size="small"
+                                alt=""
+                                source={url ? url : ''}
+                            />
+                        </BlockStack>
+                    </Bleed> : null}
+                    {fileUpload}
+                    {isFileUploading == true &&
+                        <BlockStack align='center' inlineAlign='center'>
+                            <Spinner size="small" />
+                        </BlockStack>
+                    }
+                </Box>
             </DropZone>
             {files.length > 0 && isFileUploading === false && <Text variant='bodySm' tone='subdued'>To save changes, Please hit the Save button at top right corner!</Text>}
         </BlockStack>

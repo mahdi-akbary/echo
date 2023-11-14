@@ -1,3 +1,5 @@
+import * as fs from 'fs'
+
 export default function brandingApiEndPoints (app, shopify) {
 
   app.post("/api/branding/stage-upload", async (req, res) => {
@@ -119,7 +121,7 @@ export default function brandingApiEndPoints (app, shopify) {
       const response = await upsert(client, body)
       res.status(200).send(response);
     } catch (error) {
-      console.error(error?.response)
+      console.error(error, '<<<<<')
       res.status(500).send({ message: error.message });
     }
   })
@@ -180,6 +182,11 @@ export default function brandingApiEndPoints (app, shopify) {
   }
 
   async function upsert (client, { id, designSystem, customizations }) {
+    // fs.writeFile("./../template-1.json", JSON.stringify({ designSystem, customizations }), function (err) {
+    //   if (err) throw err;
+    //   console.log('complete');
+    // }
+    // );
     return await client.query({
       data: {
         query: `mutation checkoutBrandingUpsert($checkoutBrandingInput: CheckoutBrandingInput!, $checkoutProfileId: ID!) {
@@ -623,6 +630,11 @@ export default function brandingApiEndPoints (app, shopify) {
                   },
                 },
               },
+              "cornerRadius": {
+                "base": designSystem?.cornerRadius?.base,
+                "large": designSystem?.cornerRadius?.large,
+                "small": designSystem?.cornerRadius?.small
+              },
               "typography": {
                 "primary": designSystem?.typography?.primary?.shopifyFontGroup?.name ? {
                   "shopifyFontGroup": {
@@ -668,7 +680,7 @@ export default function brandingApiEndPoints (app, shopify) {
                   "image": {
                     "mediaImageId": customizations?.header?.logo?.image?.mediaImageId
                   },
-                  "maxWidth" : +customizations?.header?.logo?.maxWidth
+                  "maxWidth": +customizations?.header?.logo?.maxWidth
                 }
               },
               "main": {
@@ -991,6 +1003,25 @@ export default function brandingApiEndPoints (app, shopify) {
                     header{
                       alignment
                       position
+                      banner {
+                        image {
+                          id
+                          url
+                        }
+                      }
+                      logo {
+                        maxWidth
+                        image {
+                          id
+                          url
+                        }
+                      }
+                    }
+                    favicon {
+                      image {
+                        id
+                        url
+                      }
                     }
                     main{
                       colorScheme

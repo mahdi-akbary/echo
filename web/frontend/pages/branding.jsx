@@ -137,6 +137,7 @@ export default function Branding () {
     if (response.ok) {
       const res = await response.json();
       setIsLoading(false);
+      refetchProductProfile()
       setHasChange(false);
       toggleToastActive();
     }

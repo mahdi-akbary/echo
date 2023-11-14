@@ -91,7 +91,10 @@ export function ColorPickerInput ({ inputColor = null, label, onChange, helpText
             />
           </Box>
           <Box padding="200" paddingBlockStart="0">
-            <TextField value={buttonColor} focused={false} readOnly />
+            <TextField value={buttonColor} focused={false} onChange={(value)=> {
+              setButtonColor(value)
+              onChange(value === '' ? null : value)
+              }}/>
           </Box>
         </BlockStack>
       </Popover>

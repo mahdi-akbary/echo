@@ -42,7 +42,7 @@ export function BrandingOptionList ({ selected, setSelected }) {
         {
             title: 'Pre-defined Templates',
             items: [
-                { content: 'Coming soon...', icon: TemplateMinor },
+                { content: 'Template 1', icon: TemplateMinor },
             ],
         },
     ]

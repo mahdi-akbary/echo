@@ -3,20 +3,24 @@ import {
     Text,
     FormLayout,
     Tabs,
-    Banner,
     BlockStack,
-    Box,
     TextField,
+    Button,
+    Thumbnail,
+    Image,
+    Box,
 } from '@shopify/polaris';
 import { useState } from "react";
 import { TabDivider } from './tabDivider';
 import { FileUpload } from './fileUpload';
+import { useAuthenticatedFetch } from '../hooks';
+import Template1 from "../assets/template-1.png"
 
-export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, selectedListOption }) {
+export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, selectedListOption, setToastActive, refetchProfile }) {
     const [selectedTab, setSelectedTab] = useState(0);
     const [selectedGlobalTab, setSelectedGlobalTab] = useState(0);
     const [selectedHeadingTab, setSelectedHeadingTab] = useState(0);
-
+    const fetch = useAuthenticatedFetch();
     const globalSectionTabs = [
         {
             id: 'typography',
@@ -97,6 +101,24 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
         },
 
     ];
+
+    const [loadingTemplate, setLoadingTemplate] = useState(false)
+
+    const applyTemplate = async () => {
+        setLoadingTemplate(true)
+        const response = await fetch("/api/branding/set-template", {
+            method: "POST",
+            body: JSON.stringify({ id: activeProfile?.id, template: 'template-1' }),
+            headers: { "Content-Type": "application/json" },
+        });
+
+        if (response.ok) {
+            setLoadingTemplate(false)
+            const res = await response.json();
+            refetchProfile()
+            setToastActive(true)
+        }
+    }
 
     return (
         <>
@@ -1799,12 +1821,11 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                         </FormLayout>
                     ) : null}
                 </> : null}
-            {selectedListOption == 'coming-soon...' ?
-                <Banner title="Under development">
-                    <p>
-                        This feature is under development, we will release it soon. You can still customize your checkout using the other settings.
-                    </p>
-                </Banner>
+            {selectedListOption == 'template-1' ?
+                <BlockStack gap="200" inlineAlign='end'>
+                    <Button variant='primary' onClick={async () => await applyTemplate()} loading={loadingTemplate}>Apply</Button>
+                    <Image source={Template1} alt='template' width="100%" />
+                </BlockStack>
                 : null}
 
         </>

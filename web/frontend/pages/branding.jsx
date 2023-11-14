@@ -57,7 +57,7 @@ export default function Branding () {
 
   const handleChange = useCallback((value) => {
     setSelected(value)
-    refetchProductProfile();
+    refetchProfile();
 
   }, []);
 
@@ -68,7 +68,7 @@ export default function Branding () {
 
 
   const {
-    data: activeProfile, refetch: refetchProductProfile, isLoading: isLoadingProfile, isRefetching: isRefetchingProfile,
+    data: activeProfile, refetch: refetchProfile, isLoading: isLoadingProfile, isRefetching: isRefetchingProfile,
   } = useAppQuery({
     url: selected ? `/api/branding?id=${selected}` : "/api/branding", reactQueryOptions: {
       onSuccess: (res) => {
@@ -137,7 +137,7 @@ export default function Branding () {
     if (response.ok) {
       const res = await response.json();
       setIsLoading(false);
-      refetchProductProfile()
+      refetchProfile()
       setHasChange(false);
       toggleToastActive();
     }
@@ -307,7 +307,13 @@ export default function Branding () {
             <Layout.Section>
               <Card padding="600" sectioned>
                 <DesignSystem activeProfile={activeProfile} handleDataChange={handleDataChange} selectedListOption={selectedListOption} customFonts={fonts}/>
-                <CheckoutCustomization activeProfile={activeProfile} handleDataChange={handleDataChange} selectedListOption={selectedListOption}/>
+                <CheckoutCustomization 
+                activeProfile={activeProfile} 
+                handleDataChange={handleDataChange} 
+                selectedListOption={selectedListOption}
+                setToastActive={setToastActive}
+                refetchProfile={refetchProfile}
+                />
               </Card>
             </Layout.Section>
           </>
@@ -330,11 +336,11 @@ export default function Branding () {
         discardAction={{
           onAction: () => {
             setHasChange(false);
-            refetchProductProfile();
+            refetchProfile();
           }
         }}
       />
-      <ResetConfirmationModal handleClose={setOpenResetModal} isOpen={openResetModal} profileId={activeProfile?.id} refetch={refetchProductProfile} />
+      <ResetConfirmationModal handleClose={setOpenResetModal} isOpen={openResetModal} profileId={activeProfile?.id} refetch={refetchProfile} />
       {false ? (
         <Page
           primaryAction={{

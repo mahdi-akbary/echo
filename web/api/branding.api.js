@@ -121,7 +121,7 @@ export default function brandingApiEndPoints (app, shopify) {
       const response = await upsert(client, body)
       res.status(200).send(response);
     } catch (error) {
-      console.error(error, '<<<<<')
+      console.error(error.message)
       res.status(500).send({ message: error.message });
     }
   })
@@ -1177,5 +1177,19 @@ export default function brandingApiEndPoints (app, shopify) {
     })
 
     res.status(200).json(image)
+  })
+  app.post("/api/branding/set-template", async (req, res) => {
+    const { id, template } = req.body;
+    const { session } = res.locals.shopify;
+    const client = new shopify.api.clients.Graphql({ session });
+    try {
+      const file = fs.readFileSync(`./frontend/assets/${template}.json`)
+      const data = JSON.parse(file)
+      const response = await upsert(client, { id, ...data })
+      res.status(200).send(response);
+    } catch (error) {
+      console.error(error?.response)
+      res.status(500).send({ message: error.message });
+    }
   })
 }

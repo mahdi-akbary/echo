@@ -636,21 +636,22 @@ export default function brandingApiEndPoints (app, shopify) {
                 "small": designSystem?.cornerRadius?.small
               },
               "typography": {
-                "primary": designSystem?.typography?.primary?.shopifyFontGroup?.name ? {
+                "primary": designSystem?.typography?.primary?.shopifyFontGroup?.name && !designSystem?.typography?.primary?.loadingStrategy ? {
                   "shopifyFontGroup": {
                     "name": designSystem?.typography?.primary?.shopifyFontGroup?.name,
                   }
                 } : (
                   designSystem?.typography?.primary?.customFontGroup?.base?.genericFileId ?
-                    { "customFontGroup": designSystem?.typography?.primary?.customFontGroup } : {}
+                    { "customFontGroup": designSystem?.typography?.primary?.customFontGroup } : null
                 ),
-                "secondary": designSystem?.typography?.secondary?.shopifyFontGroup?.name ? {
+
+                "secondary": designSystem?.typography?.secondary?.shopifyFontGroup?.name && !designSystem?.typography?.secondary?.loadingStrategy ? {
                   "shopifyFontGroup": {
                     "name": designSystem?.typography?.secondary?.shopifyFontGroup?.name,
                   }
                 } : (
                   designSystem?.typography?.secondary?.customFontGroup?.base?.genericFileId ?
-                    { "customFontGroup": designSystem?.typography?.secondary?.customFontGroup } : {}
+                    { "customFontGroup": designSystem?.typography?.secondary?.customFontGroup } : null
                 ),
                 "size": {
                   "base": designSystem?.typography?.size?.base,
@@ -684,10 +685,16 @@ export default function brandingApiEndPoints (app, shopify) {
                 }
               },
               "main": {
-                "colorScheme": customizations?.main?.colorScheme
+                "colorScheme": customizations?.main?.colorScheme,
+                "backgroundImage": {
+                  "mediaImageId": customizations?.main?.backgroundImage?.mediaImageId
+                },
               },
               "orderSummary": {
-                "colorScheme": customizations?.orderSummary?.colorScheme
+                "colorScheme": customizations?.orderSummary?.colorScheme,
+                "backgroundImage": {
+                  "mediaImageId": customizations?.orderSummary?.backgroundImage?.mediaImageId
+                },
               },
               "control": {
                 "border": customizations?.control?.border,
@@ -1025,9 +1032,21 @@ export default function brandingApiEndPoints (app, shopify) {
                     }
                     main{
                       colorScheme
+                      backgroundImage {
+                        image {
+                          id
+                          url
+                        }
+                      }
                     } 
                     orderSummary{
                       colorScheme
+                      backgroundImage {
+                        image {
+                          id
+                          url
+                        }
+                      }
                     }
 
                     control{

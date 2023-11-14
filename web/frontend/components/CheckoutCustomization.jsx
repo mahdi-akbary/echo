@@ -273,66 +273,65 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                             value={activeProfile?.customizations?.header?.position || ''}
                         />
 
-                        
                         <BlockStack gap="150">
-                        <Text variant='bodyMd'>Banner</Text>
-                        <Text variant='bodySm' tone='subdued'>The banner will appear in the header only if the position is in full width.</Text>
-                        <FileUpload onFileIdGenerated={(id) => {
-                            const temp = activeProfile;
-                            temp.customizations = {
-                                ...temp?.customizations,
-                                header: {
-                                    ...temp?.customizations?.header,
-                                    banner: {
-                                        mediaImageId: id
+                            <Text variant='bodyMd'>Banner</Text>
+                            <Text variant='bodySm' tone='subdued'>The banner will appear in the header only if the position is in full width.</Text>
+                            <FileUpload onFileIdGenerated={(id) => {
+                                const temp = activeProfile;
+                                temp.customizations = {
+                                    ...temp?.customizations,
+                                    header: {
+                                        ...temp?.customizations?.header,
+                                        banner: {
+                                            mediaImageId: id
+                                        },
                                     },
-                                },
-                            }
-                            handleDataChange(temp)
-                        }} url={activeProfile?.customizations?.header?.banner?.image?.url} />
+                                }
+                                handleDataChange(temp)
+                            }} url={activeProfile?.customizations?.header?.banner?.image?.url} />
                         </BlockStack>
 
                         <BlockStack gap="050">
-                        <Text variant='bodyMd'>Logo</Text>
-                        <Text variant='bodySm' tone='subdued'>To set the logo.</Text>
-                        <FileUpload onFileIdGenerated={(id) => {
-                            const temp = activeProfile;
-                            temp.customizations = {
-                                ...temp?.customizations,
-                                header: {
-                                    ...temp?.customizations?.header,
-                                    logo: {
-                                        ...temp?.customizations?.header.logo,
-                                        image: {
-                                            mediaImageId: id
-                                        }
+                            <Text variant='bodyMd'>Logo</Text>
+                            <Text variant='bodySm' tone='subdued'>To set the logo.</Text>
+                            <FileUpload onFileIdGenerated={(id) => {
+                                const temp = activeProfile;
+                                temp.customizations = {
+                                    ...temp?.customizations,
+                                    header: {
+                                        ...temp?.customizations?.header,
+                                        logo: {
+                                            ...temp?.customizations?.header.logo,
+                                            image: {
+                                                mediaImageId: id
+                                            }
+                                        },
                                     },
-                                },
-                            }
-                            handleDataChange(temp)
-                        }} url={activeProfile?.customizations?.header?.logo?.image?.url} />
+                                }
+                                handleDataChange(temp)
+                            }} url={activeProfile?.customizations?.header?.logo?.image?.url} />
                         </BlockStack>
                         <TextField
-                        label="Logo max width"
-                        helpText="The maximum width of the logo."
-                        type="number"
-                        onChange={(value) => {
-                            const temp = activeProfile;
-                            temp.customizations = {
-                                ...temp?.customizations,
-                                header: {
-                                    ...temp?.customizations?.header,
-                                    logo: {
-                                        ...temp?.customizations?.header.logo,
-                                        maxWidth: value
+                            label="Logo max width"
+                            helpText="The maximum width of the logo."
+                            type="number"
+                            onChange={(value) => {
+                                const temp = activeProfile;
+                                temp.customizations = {
+                                    ...temp?.customizations,
+                                    header: {
+                                        ...temp?.customizations?.header,
+                                        logo: {
+                                            ...temp?.customizations?.header.logo,
+                                            maxWidth: value
+                                        },
                                     },
-                                },
-                            }
-                            handleDataChange(temp);
-                        }}
-                        value={activeProfile?.customizations?.header?.logo?.maxWidth}
-                        autoComplete="off"
-                    />
+                                }
+                                handleDataChange(temp);
+                            }}
+                            value={activeProfile?.customizations?.header?.logo?.maxWidth}
+                            autoComplete="off"
+                        />
 
                     </BlockStack>
                 </FormLayout> : null}
@@ -371,6 +370,24 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                         value={activeProfile?.customizations?.main?.colorScheme || ''}
                     />
 
+                    <BlockStack gap="150">
+                        <Text variant='bodyMd'>Background image</Text>
+                        <Text variant='bodySm' tone='subdued'>The background image of the main area (must not be of SVG format).</Text>
+                        <FileUpload onFileIdGenerated={(id) => {
+                            const temp = activeProfile;
+                            temp.customizations = {
+                                ...temp?.customizations,
+                                main: {
+                                    ...temp?.customizations?.main,
+                                    backgroundImage: {
+                                        mediaImageId: id
+                                    },
+                                },
+                            }
+                            handleDataChange(temp)
+                        }} url={activeProfile?.customizations?.main?.backgroundImage?.image?.url} />
+                    </BlockStack>
+
                 </FormLayout> : null}
             {selectedListOption == 'order-summary' ?
                 <FormLayout>
@@ -406,6 +423,24 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                         }}
                         value={activeProfile?.customizations?.orderSummary?.colorScheme || ''}
                     />
+
+                    <BlockStack gap="150">
+                        <Text variant='bodyMd'>Background image</Text>
+                        <Text variant='bodySm' tone='subdued'>The background image of the order summary (must not be of SVG format).</Text>
+                        <FileUpload onFileIdGenerated={(id) => {
+                            const temp = activeProfile;
+                            temp.customizations = {
+                                ...temp?.customizations,
+                                orderSummary: {
+                                    ...temp?.customizations?.orderSummary,
+                                    backgroundImage: {
+                                        mediaImageId: id
+                                    },
+                                },
+                            }
+                            handleDataChange(temp)
+                        }} url={activeProfile?.customizations?.orderSummary?.backgroundImage?.image?.url} />
+                    </BlockStack>
 
                 </FormLayout> : null}
             {selectedListOption == 'forms' ?

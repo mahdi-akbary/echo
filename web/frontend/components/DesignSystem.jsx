@@ -99,18 +99,33 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
 
     const [primaryCustomFontSelected, setPrimaryCustomFontSelected] = useState(null);
     const [secondaryCustomFontSelected, setSecondaryCustomFontSelected] = useState(null);
-    const getCustomFont = (sourceString) => {
+    
+    const getCustomFont = (sourceString, type) => {
         if (sourceString?.includes('files')) {
             const selectedFont = sourceString.split("/")?.pop(".")?.split(".")[0]
             const font = customFonts.find(font => font.url?.includes(selectedFont))
+
+            activeProfile.designSystem.typography[type] = {
+                customFontGroup: {
+                    base: {
+                        genericFileId: font.id,
+                        weight: 400
+                    },
+                    bold: {
+                        genericFileId: font.id,
+                        weight: 400
+                    },
+
+                }
+            }
             return font.id
         }
         return null
     }
 
     useEffect(() => {
-        setPrimaryCustomFontSelected(getCustomFont(activeProfile?.designSystem?.typography?.primary?.base?.sources))
-        setSecondaryCustomFontSelected(getCustomFont(activeProfile?.designSystem?.typography?.secondary?.base?.sources))
+        setPrimaryCustomFontSelected(getCustomFont(activeProfile?.designSystem?.typography?.primary?.base?.sources, 'primary'))
+        setSecondaryCustomFontSelected(getCustomFont(activeProfile?.designSystem?.typography?.secondary?.base?.sources, 'secondary'))
     }, [activeProfile])
 
     const [selectedSchemeOneTab, setSelectedSchemeOneTab] = useState(0);
@@ -2384,14 +2399,17 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                             label="Fonts"
                             helpText="A font group used for most components such as text, buttons and form controls."
                             options={[
-                                normalizedFonts?.length ? { label: 'Custom fonts ---', value: '1', disabled: true } : {},
+                                { label: 'Not set', value: null },
+                                normalizedFonts?.length ? { label: 'Custom fonts', value: '1', disabled: true } : {},
                                 ...normalizedFonts,
-                                { label: 'System fonts ---', value: '2', disabled: true },
+                                { label: 'Shopify fonts', value: '2', disabled: true },
                                 ...FONTS
                             ]}
                             value={primaryCustomFontSelected ?
                                 primaryCustomFontSelected :
-                                activeProfile?.designSystem?.typography?.primary?.shopifyFontGroup?.name
+                                (activeProfile?.designSystem?.typography?.primary?.shopifyFontGroup?.name ?
+                                    activeProfile?.designSystem?.typography?.primary?.shopifyFontGroup?.name :
+                                    activeProfile?.designSystem?.typography?.primary?.name)
                             }
                             onChange={(value) => {
                                 const temp = activeProfile;
@@ -2405,12 +2423,13 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                                 customFontGroup: {
                                                     base: {
                                                         genericFileId: value,
-                                                        weight: 500
+                                                        weight: 400
                                                     },
                                                     bold: {
                                                         genericFileId: value,
-                                                        weight: 500
-                                                    }
+                                                        weight: 400
+                                                    },
+                                                    loadingStrategy: "AUTO",
                                                 }
                                             },
                                         },
@@ -2422,9 +2441,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                         typography: {
                                             ...temp?.designSystem?.typography,
                                             primary: {
-                                                ...temp?.designSystem?.typography?.primary,
                                                 shopifyFontGroup: {
-                                                    ...temp?.designSystem?.typography?.primary?.shopifyFontGroup,
                                                     name: value,
                                                 }
                                             },
@@ -2442,14 +2459,17 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                             label="Fonts"
                             helpText="A font group used for heading components by default."
                             options={[
-                                normalizedFonts?.length ? { label: 'Custom fonts ---', value: '1', disabled: true } : {},
+                                { label: 'Not set', value: null },
+                                normalizedFonts?.length ? { label: 'Custom fonts', value: '1', disabled: true } : {},
                                 ...normalizedFonts,
-                                { label: 'System fonts ---', value: '2', disabled: true },
+                                { label: 'Shopify fonts', value: '2', disabled: true },
                                 ...FONTS
                             ]}
                             value={secondaryCustomFontSelected ?
                                 secondaryCustomFontSelected :
-                                activeProfile?.designSystem?.typography?.secondary?.shopifyFontGroup?.name
+                                (activeProfile?.designSystem?.typography?.secondary?.shopifyFontGroup?.name ?
+                                    activeProfile?.designSystem?.typography?.secondary?.shopifyFontGroup?.name :
+                                    activeProfile?.designSystem?.typography?.secondary?.name)
                             }
                             onChange={(value) => {
                                 const temp = activeProfile;
@@ -2463,12 +2483,13 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                                 customFontGroup: {
                                                     base: {
                                                         genericFileId: value,
-                                                        weight: 500
+                                                        weight: 400
                                                     },
                                                     bold: {
                                                         genericFileId: value,
-                                                        weight: 500
-                                                    }
+                                                        weight: 400
+                                                    },
+                                                    loadingStrategy: "AUTO",
                                                 }
                                             },
                                         },
@@ -2480,9 +2501,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                         typography: {
                                             ...temp?.designSystem?.typography,
                                             secondary: {
-                                                ...temp?.designSystem?.typography?.secondary,
                                                 shopifyFontGroup: {
-                                                    ...temp?.designSystem?.typography?.secondary?.shopifyFontGroup,
                                                     name: value,
                                                 }
                                             },

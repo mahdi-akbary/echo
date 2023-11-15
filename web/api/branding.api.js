@@ -182,11 +182,6 @@ export default function brandingApiEndPoints (app, shopify) {
   }
 
   async function upsert (client, { id, designSystem, customizations }) {
-    fs.writeFile("./../template-2.json", JSON.stringify({ designSystem, customizations }), function (err) {
-      if (err) throw err;
-      console.log('complete');
-    }
-    );
     return await client.query({
       data: {
         query: `mutation checkoutBrandingUpsert($checkoutBrandingInput: CheckoutBrandingInput!, $checkoutProfileId: ID!) {

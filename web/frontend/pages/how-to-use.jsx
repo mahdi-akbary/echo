@@ -141,7 +141,7 @@ export default function HowToUse() {
                           }}>
                           <iframe 
                           src={videoList[activeVideo].link}
-                          frameborder="0" 
+                          frameBorder="0" 
                           webkitallowfullscreen mozallowfullscreen allowfullscreen 
                           style={
                             {

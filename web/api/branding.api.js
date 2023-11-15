@@ -1,4 +1,38 @@
+import * as fs from 'fs'
+
 export default function brandingApiEndPoints (app, shopify) {
+
+  app.post("/api/branding/stage-upload", async (req, res) => {
+    const { session } = res.locals.shopify;
+    const client = new shopify.api.clients.Graphql({ session });
+    const { body: { data: { stagedUploadsCreate: { stagedTargets: [stagedUpload] } } } } = await client.query({
+      data: {
+        query: `mutation stagedUploadsCreate($input: [StagedUploadInput!]!) {
+          stagedUploadsCreate(input: $input) {
+            stagedTargets {
+              url
+              resourceUrl
+              parameters {
+                name
+                value
+              }
+            }
+          }
+        }`,
+        variables: {
+          "input": [
+            {
+              "filename": req.body.name,
+              "mimeType": req.body.type,
+              "httpMethod": "POST",
+              "resource": "IMAGE"
+            }
+          ]
+        }
+      }
+    })
+    res.status(200).send(stagedUpload)
+  })
 
   app.get("/api/branding", async (req, res) => {
     const { session } = res.locals.shopify;
@@ -87,7 +121,7 @@ export default function brandingApiEndPoints (app, shopify) {
       const response = await upsert(client, body)
       res.status(200).send(response);
     } catch (error) {
-      console.error(error?.response)
+      console.error(error.message)
       res.status(500).send({ message: error.message });
     }
   })
@@ -148,6 +182,11 @@ export default function brandingApiEndPoints (app, shopify) {
   }
 
   async function upsert (client, { id, designSystem, customizations }) {
+    // fs.writeFile("./../template-1.json", JSON.stringify({ designSystem, customizations }), function (err) {
+    //   if (err) throw err;
+    //   console.log('complete');
+    // }
+    // );
     return await client.query({
       data: {
         query: `mutation checkoutBrandingUpsert($checkoutBrandingInput: CheckoutBrandingInput!, $checkoutProfileId: ID!) {
@@ -290,6 +329,12 @@ export default function brandingApiEndPoints (app, shopify) {
                             }
                           }
 
+                          cornerRadius {
+                            base
+                            large
+                            small
+                          }
+
                           # Typography
                           typography{
                             primary{
@@ -340,7 +385,6 @@ export default function brandingApiEndPoints (app, shopify) {
                               kerning
                             }
                           }
-
                           main{
                             colorScheme
                           }
@@ -586,22 +630,28 @@ export default function brandingApiEndPoints (app, shopify) {
                   },
                 },
               },
+              "cornerRadius": {
+                "base": designSystem?.cornerRadius?.base,
+                "large": designSystem?.cornerRadius?.large,
+                "small": designSystem?.cornerRadius?.small
+              },
               "typography": {
-                "primary": designSystem?.typography?.primary?.shopifyFontGroup?.name ? {
+                "primary": designSystem?.typography?.primary?.shopifyFontGroup?.name && !designSystem?.typography?.primary?.loadingStrategy ? {
                   "shopifyFontGroup": {
                     "name": designSystem?.typography?.primary?.shopifyFontGroup?.name,
                   }
                 } : (
                   designSystem?.typography?.primary?.customFontGroup?.base?.genericFileId ?
-                    { "customFontGroup": designSystem?.typography?.primary?.customFontGroup } : {}
+                    { "customFontGroup": designSystem?.typography?.primary?.customFontGroup } : null
                 ),
-                "secondary": designSystem?.typography?.secondary?.shopifyFontGroup?.name ? {
+
+                "secondary": designSystem?.typography?.secondary?.shopifyFontGroup?.name && !designSystem?.typography?.secondary?.loadingStrategy ? {
                   "shopifyFontGroup": {
                     "name": designSystem?.typography?.secondary?.shopifyFontGroup?.name,
                   }
                 } : (
                   designSystem?.typography?.secondary?.customFontGroup?.base?.genericFileId ?
-                    { "customFontGroup": designSystem?.typography?.secondary?.customFontGroup } : {}
+                    { "customFontGroup": designSystem?.typography?.secondary?.customFontGroup } : null
                 ),
                 "size": {
                   "base": designSystem?.typography?.size?.base,
@@ -618,15 +668,33 @@ export default function brandingApiEndPoints (app, shopify) {
                   "kerning": customizations?.global?.typography?.kerning
                 }
               },
+              "favicon": {
+                "mediaImageId": customizations?.favicon?.mediaImageId
+              },
               "header": {
                 "alignment": customizations?.header?.alignment,
-                "position": customizations?.header?.position
+                "position": customizations?.header?.position,
+                "banner": {
+                  "mediaImageId": customizations?.header?.banner?.mediaImageId
+                },
+                "logo": {
+                  "image": {
+                    "mediaImageId": customizations?.header?.logo?.image?.mediaImageId
+                  },
+                  "maxWidth": +customizations?.header?.logo?.maxWidth
+                }
               },
               "main": {
-                "colorScheme": customizations?.main?.colorScheme
+                "colorScheme": customizations?.main?.colorScheme,
+                "backgroundImage": {
+                  "mediaImageId": customizations?.main?.backgroundImage?.mediaImageId
+                },
               },
               "orderSummary": {
-                "colorScheme": customizations?.orderSummary?.colorScheme
+                "colorScheme": customizations?.orderSummary?.colorScheme,
+                "backgroundImage": {
+                  "mediaImageId": customizations?.orderSummary?.backgroundImage?.mediaImageId
+                },
               },
               "control": {
                 "border": customizations?.control?.border,
@@ -888,8 +956,14 @@ export default function brandingApiEndPoints (app, shopify) {
                         
                       }
                     }
-                    # Typography
 
+                    cornerRadius {
+                      base
+                      large
+                      small
+                    }
+
+                    # Typography
                     typography{
                       primary{
                         name
@@ -936,13 +1010,43 @@ export default function brandingApiEndPoints (app, shopify) {
                     header{
                       alignment
                       position
+                      banner {
+                        image {
+                          id
+                          url
+                        }
+                      }
+                      logo {
+                        maxWidth
+                        image {
+                          id
+                          url
+                        }
+                      }
+                    }
+                    favicon {
+                      image {
+                        id
+                        url
+                      }
                     }
                     main{
                       colorScheme
-                    }
-
+                      backgroundImage {
+                        image {
+                          id
+                          url
+                        }
+                      }
+                    } 
                     orderSummary{
                       colorScheme
+                      backgroundImage {
+                        image {
+                          id
+                          url
+                        }
+                      }
                     }
 
                     control{
@@ -1042,4 +1146,50 @@ export default function brandingApiEndPoints (app, shopify) {
             `,
     })
   }
+
+  app.post("/api/branding/upload", async (req, res) => {
+    const body = req.body;
+    const { session } = res.locals.shopify;
+    const client = new shopify.api.clients.Graphql({ session });
+
+    const { body: { data: { fileCreate: { files: [image] } } } } = await client.query({
+      data: {
+        query: `
+                mutation fileCreate($files: [FileCreateInput!]!) {
+                  fileCreate(files: $files) {
+                    files {
+                      id
+                      alt
+                      createdAt
+                    }
+                  }
+                }`,
+        variables: {
+          "files": [
+            {
+              "alt": "custom-image",
+              "filename": body.name,
+              "originalSource": body.url
+            }
+          ]
+        }
+      }
+    })
+
+    res.status(200).json(image)
+  })
+  app.post("/api/branding/set-template", async (req, res) => {
+    const { id, template } = req.body;
+    const { session } = res.locals.shopify;
+    const client = new shopify.api.clients.Graphql({ session });
+    try {
+      const file = fs.readFileSync(`./frontend/assets/${template}.json`)
+      const data = JSON.parse(file)
+      const response = await upsert(client, { id, ...data })
+      res.status(200).send(response);
+    } catch (error) {
+      console.error(error?.response)
+      res.status(500).send({ message: error.message });
+    }
+  })
 }

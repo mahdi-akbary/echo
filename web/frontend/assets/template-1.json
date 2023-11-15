@@ -1,0 +1,273 @@
+{
+    "designSystem": {
+        "colors": {
+            "global": {
+                "accent": "#60a453",
+                "brand": null,
+                "success": null,
+                "info": null,
+                "warning": null,
+                "critical": null,
+                "decorative": null
+            },
+            "schemes": {
+                "scheme1": {
+                    "base": {
+                        "background": "#1a272d",
+                        "border": null,
+                        "text": null,
+                        "icon": null,
+                        "decorative": null,
+                        "accent": null
+                    },
+                    "control": {
+                        "text": null,
+                        "background": "#1a272d",
+                        "border": null,
+                        "icon": null,
+                        "decorative": null,
+                        "accent": "#9a64f6",
+                        "selected": {
+                            "text": null,
+                            "background": null,
+                            "border": null,
+                            "icon": null,
+                            "decorative": null,
+                            "accent": null
+                        }
+                    },
+                    "primaryButton": {
+                        "text": null,
+                        "background": "#9a64f6",
+                        "border": null,
+                        "decorative": null,
+                        "icon": null,
+                        "accent": null,
+                        "hover": {
+                            "text": null,
+                            "background": null,
+                            "border": null,
+                            "decorative": null,
+                            "icon": null,
+                            "accent": null
+                        }
+                    },
+                    "secondaryButton": {
+                        "text": null,
+                        "background": null,
+                        "border": null,
+                        "decorative": null,
+                        "icon": null,
+                        "accent": null,
+                        "hover": {
+                            "text": null,
+                            "background": null,
+                            "border": null,
+                            "decorative": null,
+                            "icon": null,
+                            "accent": null
+                        }
+                    }
+                },
+                "scheme2": {
+                    "base": {
+                        "background": "#1a272d",
+                        "border": null,
+                        "text": null,
+                        "icon": null,
+                        "decorative": null,
+                        "accent": null
+                    },
+                    "control": {
+                        "text": null,
+                        "background": "#1a272d",
+                        "border": null,
+                        "icon": null,
+                        "decorative": null,
+                        "accent": "#9a64f6",
+                        "selected": {
+                            "text": null,
+                            "background": null,
+                            "border": null,
+                            "icon": null,
+                            "decorative": null,
+                            "accent": null
+                        }
+                    },
+                    "primaryButton": {
+                        "text": null,
+                        "background": "#9a64f6",
+                        "border": null,
+                        "decorative": null,
+                        "icon": null,
+                        "accent": null,
+                        "hover": {
+                            "text": null,
+                            "background": null,
+                            "border": null,
+                            "decorative": null,
+                            "icon": null,
+                            "accent": null
+                        }
+                    },
+                    "secondaryButton": {
+                        "text": null,
+                        "background": null,
+                        "border": null,
+                        "decorative": null,
+                        "icon": null,
+                        "accent": null,
+                        "hover": {
+                            "text": null,
+                            "background": null,
+                            "border": null,
+                            "decorative": null,
+                            "icon": null,
+                            "accent": null
+                        }
+                    }
+                }
+            }
+        },
+        "cornerRadius": null,
+        "typography": {
+            "primary": {
+                "name": "Abel",
+                "base": {
+                    "sources": "local('Abel Regular'), local('Abel-Regular'), url(https://fonts.shopifycdn.com/abel/abel_n4.2b4bc5e26465e4423e1674428c5593b0074dff23.woff2?valid_until=MTY5OTk2Mzc1Mw&hmac=a0821742768c00057c21d1cf601033382c48423434137f37ea40fd87d44bf444) format('woff2'),url(https://fonts.shopifycdn.com/abel/abel_n4.0ee737a0dba62c4db0b41249f4fa9e628bc93fa3.woff?valid_until=MTY5OTk2Mzc1Mw&hmac=26d7beb05e39cb7aa05edc4880273c9be4b30c72d90998443209c65e8988d624) format('woff')",
+                    "weight": 400
+                },
+                "bold": {
+                    "sources": "local('Abel Regular'), local('Abel-Regular'), url(https://fonts.shopifycdn.com/abel/abel_n4.2b4bc5e26465e4423e1674428c5593b0074dff23.woff2?valid_until=MTY5OTk2Mzc1Mw&hmac=a0821742768c00057c21d1cf601033382c48423434137f37ea40fd87d44bf444) format('woff2'),url(https://fonts.shopifycdn.com/abel/abel_n4.0ee737a0dba62c4db0b41249f4fa9e628bc93fa3.woff?valid_until=MTY5OTk2Mzc1Mw&hmac=26d7beb05e39cb7aa05edc4880273c9be4b30c72d90998443209c65e8988d624) format('woff')",
+                    "weight": 400
+                },
+                "loadingStrategy": null,
+                "shopifyFontGroup": {
+                    "name": "Abel"
+                }
+            },
+            "secondary": {
+                "name": "DIN Neuzeit Grotesk",
+                "base": {
+                    "sources": "local('DIN Neuzeit Grotesk Light'), local('DINNeuzeitGrotesk-Light'), url(https://fonts.shopifycdn.com/din_neuzeit_grotesk/dinneuzeitgrotesk_n3.a0f3c74e63f622e59b916bd3ad28c501f51e0350.woff2?valid_until=MTY5OTk2Mzc1Mw&hmac=01c2e77da7f7010f1c169d2790014c5c3610e790e228c87b3c82fbd3406f9fae) format('woff2'),url(https://fonts.shopifycdn.com/din_neuzeit_grotesk/dinneuzeitgrotesk_n3.7652704516cc290a4e9a5e4108824e968ea40fa9.woff?valid_until=MTY5OTk2Mzc1Mw&hmac=6241ac89f9a20c2dacaaa7aba86634b85e2e404873f00da91c80971f9639a5d1) format('woff')",
+                    "weight": 300
+                },
+                "bold": {
+                    "sources": "local('DIN Neuzeit Grotesk Light'), local('DINNeuzeitGrotesk-Light'), url(https://fonts.shopifycdn.com/din_neuzeit_grotesk/dinneuzeitgrotesk_n3.a0f3c74e63f622e59b916bd3ad28c501f51e0350.woff2?valid_until=MTY5OTk2Mzc1Mw&hmac=01c2e77da7f7010f1c169d2790014c5c3610e790e228c87b3c82fbd3406f9fae) format('woff2'),url(https://fonts.shopifycdn.com/din_neuzeit_grotesk/dinneuzeitgrotesk_n3.7652704516cc290a4e9a5e4108824e968ea40fa9.woff?valid_until=MTY5OTk2Mzc1Mw&hmac=6241ac89f9a20c2dacaaa7aba86634b85e2e404873f00da91c80971f9639a5d1) format('woff')",
+                    "weight": 300
+                },
+                "loadingStrategy": null,
+                "shopifyFontGroup": {
+                    "name": "DIN Neuzeit Grotesk"
+                }
+            },
+            "size": {
+                "base": null,
+                "ratio": null
+            }
+        }
+    },
+    "customizations": {
+        "global": {
+            "cornerRadius": null,
+            "typography": {
+                "letterCase": null,
+                "kerning": null
+            }
+        },
+        "header": {
+            "alignment": null,
+            "position": null
+        },
+        "main": {
+            "colorScheme": "COLOR_SCHEME1"
+        },
+        "orderSummary": {
+            "colorScheme": "COLOR_SCHEME2"
+        },
+        "control": {
+            "border": null,
+            "cornerRadius": "NONE",
+            "color": null,
+            "labelPosition": null
+        },
+        "textField": {
+            "border": null,
+            "typography": {
+                "font": null,
+                "kerning": null,
+                "size": null,
+                "letterCase": null,
+                "weight": null
+            }
+        },
+        "select": {
+            "border": null,
+            "typography": {
+                "font": null,
+                "kerning": null,
+                "letterCase": null,
+                "size": null,
+                "weight": null
+            }
+        },
+        "checkbox": {
+            "cornerRadius": "NONE"
+        },
+        "primaryButton": {
+            "background": null,
+            "border": null,
+            "cornerRadius": "NONE",
+            "blockPadding": "EXTRA_TIGHT",
+            "inlinePadding": "TIGHT",
+            "typography": {
+                "font": null,
+                "kerning": null,
+                "letterCase": null,
+                "size": null,
+                "weight": null
+            }
+        },
+        "secondaryButton": {
+            "background": null,
+            "border": null,
+            "cornerRadius": null,
+            "blockPadding": null,
+            "inlinePadding": null,
+            "typography": {
+                "font": null,
+                "kerning": null,
+                "letterCase": null,
+                "size": null,
+                "weight": null
+            }
+        },
+        "headingLevel1": {
+            "typography": {
+                "font": null,
+                "kerning": "BASE",
+                "letterCase": "UPPER",
+                "size": "EXTRA_EXTRA_LARGE",
+                "weight": null
+            }
+        },
+        "headingLevel2": {
+            "typography": {
+                "font": null,
+                "kerning": null,
+                "letterCase": null,
+                "size": null,
+                "weight": null
+            }
+        },
+        "headingLevel3": {
+            "typography": {
+                "font": null,
+                "kerning": null,
+                "letterCase": null,
+                "size": null,
+                "weight": null
+            }
+        }
+    }
+}

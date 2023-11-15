@@ -1,11 +1,8 @@
 import { useNavigate } from '@shopify/app-bridge-react';
-import { Layout, Tabs, Icon,Card } from '@shopify/polaris';
+import { Tabs, Icon,Card } from '@shopify/polaris';
 import { useState, useCallback, useEffect } from 'react';
 import { navStructure } from '../services/data';
 import { useLocation } from "react-router-dom";
-import {
-  SidebarRightMajor
-} from '@shopify/polaris-icons';
 
 const IDENTIFIER_PREFIX = 'checkout_app_';
 

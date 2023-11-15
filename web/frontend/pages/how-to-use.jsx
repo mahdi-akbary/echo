@@ -129,18 +129,18 @@ export default function HowToUse() {
                         </Text>
                       </div>
 
-                      <Divider />
-                      <Box position="relative">
-                        <div 
-                          style={
-                            {
-                              position: 'relative',
-                              paddingBottom: '54.545454545454554%',
-                              height: '0',
-                            }}>
+                    <Divider />
+                    <Box position="relative">
+                      <div 
+                        style={
+                          {
+                            position: 'relative',
+                            paddingBottom: '54.545454545454554%',
+                            height: '0',
+                          }}>
                             <iframe 
                             src={videoList[activeVideo].link}
-                            frameborder="0" 
+                            frameBorder="0" 
                             webkitallowfullscreen mozallowfullscreen allowfullscreen 
                             style={
                               {

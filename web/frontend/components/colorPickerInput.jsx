@@ -10,8 +10,10 @@ import {
   hsbToRgb,
   rgbToHex,
   rgbToHsb,
+  Icon,
 } from "@shopify/polaris";
 import { useCallback, useState } from "react";
+import { ColorsMajor } from '@shopify/polaris-icons';
 
 export function ColorPickerInput ({ inputColor = null, label, onChange, helpText = null }) {
   const [popoverActive, setPopoverActive] = useState(false);
@@ -29,16 +31,24 @@ export function ColorPickerInput ({ inputColor = null, label, onChange, helpText
           style={{
             width: "40px",
             height: "40px",
+            minWidth: "40px",
             borderRadius: "20%",
-            background: buttonColor,
+            background: inputColor ? buttonColor : '#eee',
             cursor: "pointer",
             border: "1px solid #bbb",
+            display: "flex"
           }}
-        ></div>
+        >
+          {inputColor ? null :
+            <Icon
+              source={ColorsMajor}
+              tone="subdued"
+            />}
+        </div>
         <Box>
           <Text as="p" variant="bodyMd">{inputColor ? label : `Override ${label} Color`}</Text>
           <Text Variant="bodySm" tone="subdued" fontWeight="regular"  >
-            <span style={{ fontSize: '12px'}}>{
+            <span style={{ fontSize: '12px' }}>{
               inputColor ? buttonColor : helpText
             }
             </span>
@@ -81,7 +91,10 @@ export function ColorPickerInput ({ inputColor = null, label, onChange, helpText
             />
           </Box>
           <Box padding="200" paddingBlockStart="0">
-            <TextField value={buttonColor} focused={false} readOnly />
+            <TextField value={buttonColor} focused={false} onChange={(value)=> {
+              setButtonColor(value)
+              onChange(value === '' ? null : value)
+              }}/>
           </Box>
         </BlockStack>
       </Popover>

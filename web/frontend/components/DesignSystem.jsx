@@ -6,8 +6,9 @@ import {
     BlockStack,
     Tabs,
     Banner,
+    Box,
 } from '@shopify/polaris';
-import { ColorPickerInput, HelpText, TabDivider } from "../components";
+import { ColorPickerInput, TabDivider } from "../components";
 import { FONTS } from "../components/fonts";
 import { useEffect, useState } from 'react';
 
@@ -88,26 +89,43 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
 
     ];
     const normalizedFonts = customFonts.map(font => ({ label: font.url?.split("/")?.pop(".")?.split(".")[0], value: font.id }))
-    const customFontMarkup = <Banner title="Custom Font">
-        <p>
-            For your custom font to be listed, Please head to the <strong> Content -{'>'} Files </strong>section of your store and upload your file that has to be in <strong>.woff format</strong>
-        </p>
-    </Banner>
+    const customFontMarkup = <Box paddingBlockStart="300">
+        <Banner title="Custom Font">
+            <p>
+                For your custom font to be listed, Please head to the <strong> Content -{'>'} Files </strong>section of your store and upload your file that has to be in <strong>.woff</strong> format.
+            </p>
+        </Banner>
+    </Box>
 
     const [primaryCustomFontSelected, setPrimaryCustomFontSelected] = useState(null);
     const [secondaryCustomFontSelected, setSecondaryCustomFontSelected] = useState(null);
-    const getCustomFont = (sourceString) => {
+    
+    const getCustomFont = (sourceString, type) => {
         if (sourceString?.includes('files')) {
             const selectedFont = sourceString.split("/")?.pop(".")?.split(".")[0]
             const font = customFonts.find(font => font.url?.includes(selectedFont))
+
+            activeProfile.designSystem.typography[type] = {
+                customFontGroup: {
+                    base: {
+                        genericFileId: font.id,
+                        weight: 400
+                    },
+                    bold: {
+                        genericFileId: font.id,
+                        weight: 400
+                    },
+
+                }
+            }
             return font.id
         }
         return null
     }
 
     useEffect(() => {
-        setPrimaryCustomFontSelected(getCustomFont(activeProfile?.designSystem?.typography?.primary?.base?.sources))
-        setSecondaryCustomFontSelected(getCustomFont(activeProfile?.designSystem?.typography?.secondary?.base?.sources))
+        setPrimaryCustomFontSelected(getCustomFont(activeProfile?.designSystem?.typography?.primary?.base?.sources, 'primary'))
+        setSecondaryCustomFontSelected(getCustomFont(activeProfile?.designSystem?.typography?.secondary?.base?.sources, 'secondary'))
     }, [activeProfile])
 
     const [selectedSchemeOneTab, setSelectedSchemeOneTab] = useState(0);
@@ -1383,7 +1401,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                         scheme2: {
                                             ...temp?.designSystem?.colors?.schemes?.scheme2,
                                             base: {
-                                                ...temp?.designSystem?.colors?.schemes?.scheme2.base,
+                                                ...temp?.designSystem?.colors?.schemes?.scheme2?.base,
                                                 background: value,
                                             },
                                         },
@@ -2379,15 +2397,19 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                     <FormLayout>
                         <Select
                             label="Fonts"
+                            helpText="A font group used for most components such as text, buttons and form controls."
                             options={[
-                                normalizedFonts?.length ? { label: 'Custom fonts ---', value: '1', disabled: true } : {},
+                                { label: 'Not set', value: null },
+                                normalizedFonts?.length ? { label: 'Custom fonts', value: '1', disabled: true } : {},
                                 ...normalizedFonts,
-                                { label: 'System fonts ---', value: '2', disabled: true },
+                                { label: 'Shopify fonts', value: '2', disabled: true },
                                 ...FONTS
                             ]}
                             value={primaryCustomFontSelected ?
                                 primaryCustomFontSelected :
-                                activeProfile?.designSystem?.typography?.primary?.shopifyFontGroup?.name
+                                (activeProfile?.designSystem?.typography?.primary?.shopifyFontGroup?.name ?
+                                    activeProfile?.designSystem?.typography?.primary?.shopifyFontGroup?.name :
+                                    activeProfile?.designSystem?.typography?.primary?.name)
                             }
                             onChange={(value) => {
                                 const temp = activeProfile;
@@ -2401,12 +2423,13 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                                 customFontGroup: {
                                                     base: {
                                                         genericFileId: value,
-                                                        weight: 500
+                                                        weight: 400
                                                     },
                                                     bold: {
                                                         genericFileId: value,
-                                                        weight: 500
-                                                    }
+                                                        weight: 400
+                                                    },
+                                                    loadingStrategy: "AUTO",
                                                 }
                                             },
                                         },
@@ -2418,9 +2441,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                         typography: {
                                             ...temp?.designSystem?.typography,
                                             primary: {
-                                                ...temp?.designSystem?.typography?.primary,
                                                 shopifyFontGroup: {
-                                                    ...temp?.designSystem?.typography?.primary?.shopifyFontGroup,
                                                     name: value,
                                                 }
                                             },
@@ -2430,22 +2451,25 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                 handleDataChange(temp);
                             }}
                         />
-                        <HelpText text="A font group used for most components such as text, buttons and form controls." />
                         {customFontMarkup}
                     </FormLayout> : null}
                 {typographyTabs[selectedTypographyTab].id === 'secondary' ?
                     <FormLayout>
                         <Select
                             label="Fonts"
+                            helpText="A font group used for heading components by default."
                             options={[
-                                normalizedFonts?.length ? { label: 'Custom fonts ---', value: '1', disabled: true } : {},
+                                { label: 'Not set', value: null },
+                                normalizedFonts?.length ? { label: 'Custom fonts', value: '1', disabled: true } : {},
                                 ...normalizedFonts,
-                                { label: 'System fonts ---', value: '2', disabled: true },
+                                { label: 'Shopify fonts', value: '2', disabled: true },
                                 ...FONTS
                             ]}
                             value={secondaryCustomFontSelected ?
                                 secondaryCustomFontSelected :
-                                activeProfile?.designSystem?.typography?.secondary?.shopifyFontGroup?.name
+                                (activeProfile?.designSystem?.typography?.secondary?.shopifyFontGroup?.name ?
+                                    activeProfile?.designSystem?.typography?.secondary?.shopifyFontGroup?.name :
+                                    activeProfile?.designSystem?.typography?.secondary?.name)
                             }
                             onChange={(value) => {
                                 const temp = activeProfile;
@@ -2459,12 +2483,13 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                                 customFontGroup: {
                                                     base: {
                                                         genericFileId: value,
-                                                        weight: 500
+                                                        weight: 400
                                                     },
                                                     bold: {
                                                         genericFileId: value,
-                                                        weight: 500
-                                                    }
+                                                        weight: 400
+                                                    },
+                                                    loadingStrategy: "AUTO",
                                                 }
                                             },
                                         },
@@ -2476,9 +2501,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                         typography: {
                                             ...temp?.designSystem?.typography,
                                             secondary: {
-                                                ...temp?.designSystem?.typography?.secondary,
                                                 shopifyFontGroup: {
-                                                    ...temp?.designSystem?.typography?.secondary?.shopifyFontGroup,
                                                     name: value,
                                                 }
                                             },
@@ -2488,65 +2511,136 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                 handleDataChange(temp);
                             }}
                         />
-                        <HelpText text="A font group used for heading components by default." />
                         {customFontMarkup}
                     </FormLayout> : null}
                 {typographyTabs[selectedTypographyTab].id === 'font' ?
                     <FormLayout>
-                        <TextField
-                            label="Size"
-                            type="number"
-                            min="12"
-                            max="18"
-                            onChange={(value) => {
-                                const temp = activeProfile;
-                                temp.designSystem = {
-                                    ...temp?.designSystem,
-                                    typography: {
-                                        ...temp?.designSystem?.typography,
-                                        size: {
-                                            ...temp?.designSystem?.typography?.size,
-                                            ...{ base: +value },
+                        <BlockStack gap="200">
+                            <TextField
+                                helpText="The base font size."
+                                label="Size"
+                                type="number"
+                                min="12"
+                                max="18"
+                                onChange={(value) => {
+                                    const temp = activeProfile;
+                                    temp.designSystem = {
+                                        ...temp?.designSystem,
+                                        typography: {
+                                            ...temp?.designSystem?.typography,
+                                            size: {
+                                                ...temp?.designSystem?.typography?.size,
+                                                ...{ base: +value },
+                                            },
                                         },
-                                    },
-                                };
-                                handleDataChange(temp);
-                            }}
-                            value={activeProfile?.designSystem?.typography?.size?.base}
-                            autoComplete="off"
-                        />
-                        <HelpText text="The base font size." />
+                                    };
+                                    handleDataChange(temp);
+                                }}
+                                value={activeProfile?.designSystem?.typography?.size?.base}
+                                autoComplete="off"
+                            />
 
-                        <Select
-                            label="Ratio"
-                            options={[
-                                { label: "1.0", value: 1.0 },
-                                { label: "1.1", value: 1.1 },
-                                { label: "1.2", value: 1.2 },
-                                { label: "1.3", value: 1.3 },
-                                { label: "1.4", value: 1.4 },
-                            ]}
-                            onChange={(value) => {
-                                const temp = activeProfile;
-                                temp.designSystem = {
-                                    ...temp?.designSystem,
-                                    typography: {
-                                        ...temp?.designSystem?.typography,
-                                        size: {
-                                            ...temp?.designSystem?.typography?.size,
-                                            ...{ ratio: + value },
+                            <Select
+                                label="Ratio"
+                                helpText="The scale ratio used to derive all font sizes such as small and large."
+                                options={[
+                                    { label: "1.0", value: 1.0 },
+                                    { label: "1.1", value: 1.1 },
+                                    { label: "1.2", value: 1.2 },
+                                    { label: "1.3", value: 1.3 },
+                                    { label: "1.4", value: 1.4 },
+                                ]}
+                                onChange={(value) => {
+                                    const temp = activeProfile;
+                                    temp.designSystem = {
+                                        ...temp?.designSystem,
+                                        typography: {
+                                            ...temp?.designSystem?.typography,
+                                            size: {
+                                                ...temp?.designSystem?.typography?.size,
+                                                ...{ ratio: + value },
+                                            },
                                         },
-                                    },
-                                };
-                                handleDataChange(temp);
-                            }}
-                            value={activeProfile?.designSystem?.typography?.size?.ratio} />
-                        <HelpText text="The scale ratio used to derive all font sizes such as small and large." />
+                                    };
+                                    handleDataChange(temp);
+                                }}
+                                value={activeProfile?.designSystem?.typography?.size?.ratio} />
+                        </BlockStack>
                     </FormLayout> : null}
             </FormLayout>
 
 
         ) : null}
+
+        {selectedListOption === 'corner-radius' ? (<FormLayout>
+            <BlockStack gap="100">
+                <Text as="h4" variant="bodyLg">
+                    Corner Radius
+                </Text>
+                <Text variant='bodySm' tone='subdued'>
+                    The global variables used to update the corner radius.
+                </Text>
+            </BlockStack>
+            <TabDivider />
+            <FormLayout>
+                <BlockStack gap="200">
+                    <TextField
+                        label="Small"
+                        helpText="The pixel value for small corner radiuses. It should be strictly positive."
+                        type="number"
+                        onChange={(value) => {
+                            const temp = activeProfile;
+                            temp.designSystem = {
+                                ...temp?.designSystem,
+                                cornerRadius: {
+                                    ...temp?.designSystem?.cornerRadius,
+                                    small: +value
+                                },
+                            };
+                            handleDataChange(temp);
+                        }}
+                        value={activeProfile?.designSystem?.cornerRadius?.small}
+                        autoComplete="off"
+                    />
+                    <TextField
+                        label="Base"
+                        helpText="The pixel value for base corner radiuses. It should be strictly positive."
+                        type="number"
+                        onChange={(value) => {
+                            const temp = activeProfile;
+                            temp.designSystem = {
+                                ...temp?.designSystem,
+                                cornerRadius: {
+                                    ...temp?.designSystem?.cornerRadius,
+                                    base: +value
+                                },
+                            };
+                            handleDataChange(temp);
+                        }}
+                        value={activeProfile?.designSystem?.cornerRadius?.base}
+                        autoComplete="off"
+                    />
+                    <TextField
+                        label="Large"
+                        helpText="The pixel value for large corner radiuses. It should be strictly positive."
+                        type="number"
+                        onChange={(value) => {
+                            const temp = activeProfile;
+                            temp.designSystem = {
+                                ...temp?.designSystem,
+                                cornerRadius: {
+                                    ...temp?.designSystem?.cornerRadius,
+                                    large: +value
+                                },
+                            };
+                            handleDataChange(temp);
+                        }}
+                        value={activeProfile?.designSystem?.cornerRadius?.large}
+                        autoComplete="off"
+                    />
+                </BlockStack>
+            </FormLayout>
+        </FormLayout>) : null}
     </>
     );
 }

@@ -15,7 +15,8 @@ processes = []
   HOST = "https://checkout-plus.fly.dev"
   PORT = "8081"
   SHOPIFY_API_KEY = "49be3e74c8a62e808de0bbbea1c1d985"
-  SCOPES = "write_products, write_discounts, read_discounts, write_checkout_branding_settings,read_files"
+  SCOPES = "write_products, write_discounts, read_discounts, write_checkout_branding_settings,read_files, write_files, write_themes"
+
 
 [experimental]
   auto_rollback = true

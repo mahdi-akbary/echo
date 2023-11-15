@@ -182,11 +182,11 @@ export default function brandingApiEndPoints (app, shopify) {
   }
 
   async function upsert (client, { id, designSystem, customizations }) {
-    // fs.writeFile("./../template-1.json", JSON.stringify({ designSystem, customizations }), function (err) {
-    //   if (err) throw err;
-    //   console.log('complete');
-    // }
-    // );
+    fs.writeFile("./../template-2.json", JSON.stringify({ designSystem, customizations }), function (err) {
+      if (err) throw err;
+      console.log('complete');
+    }
+    );
     return await client.query({
       data: {
         query: `mutation checkoutBrandingUpsert($checkoutBrandingInput: CheckoutBrandingInput!, $checkoutProfileId: ID!) {
@@ -1179,12 +1179,16 @@ export default function brandingApiEndPoints (app, shopify) {
     res.status(200).json(image)
   })
   app.post("/api/branding/set-template", async (req, res) => {
-    const { id, template } = req.body;
+    const { id, template, primaryColor } = req.body;
     const { session } = res.locals.shopify;
     const client = new shopify.api.clients.Graphql({ session });
     try {
       const file = fs.readFileSync(`./frontend/assets/${template}.json`)
       const data = JSON.parse(file)
+      if (primaryColor) {
+        data.designSystem.colors.schemes.scheme1.primaryButton.background = primaryColor
+        data.designSystem.colors.schemes.scheme2.primaryButton.background = primaryColor
+      }
       const response = await upsert(client, { id, ...data })
       res.status(200).send(response);
     } catch (error) {

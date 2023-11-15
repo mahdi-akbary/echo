@@ -2,7 +2,7 @@
     "designSystem": {
         "colors": {
             "global": {
-                "accent": "#60a453",
+                "accent": null,
                 "brand": null,
                 "success": null,
                 "info": null,
@@ -13,8 +13,8 @@
             "schemes": {
                 "scheme1": {
                     "base": {
-                        "background": "#1a272d",
-                        "border": "#1a272d",
+                        "background": "#e4c132",
+                        "border": "#e4c132",
                         "text": null,
                         "icon": null,
                         "decorative": null,
@@ -22,11 +22,11 @@
                     },
                     "control": {
                         "text": null,
-                        "background": "#1a272d",
+                        "background": "#e4c132",
                         "border": null,
                         "icon": null,
                         "decorative": null,
-                        "accent": "#9a64f6",
+                        "accent": null,
                         "selected": {
                             "text": null,
                             "background": null,
@@ -38,7 +38,7 @@
                     },
                     "primaryButton": {
                         "text": null,
-                        "background": "#9a64f6",
+                        "background": "#010001",
                         "border": null,
                         "decorative": null,
                         "icon": null,
@@ -71,8 +71,8 @@
                 },
                 "scheme2": {
                     "base": {
-                        "background": "#1a272d",
-                        "border": "#1a272d",
+                        "background": "#d4b118",
+                        "border": "#d4b118",
                         "text": null,
                         "icon": null,
                         "decorative": null,
@@ -80,11 +80,11 @@
                     },
                     "control": {
                         "text": null,
-                        "background": "#1a272d",
+                        "background": "#d4b118",
                         "border": null,
                         "icon": null,
                         "decorative": null,
-                        "accent": "#9a64f6",
+                        "accent": null,
                         "selected": {
                             "text": null,
                             "background": null,
@@ -96,7 +96,7 @@
                     },
                     "primaryButton": {
                         "text": null,
-                        "background": "#9a64f6",
+                        "background": "#010001",
                         "border": null,
                         "decorative": null,
                         "icon": null,
@@ -129,36 +129,28 @@
                 }
             }
         },
-        "cornerRadius": null,
+        "cornerRadius": {
+            "base": 3,
+            "large": 40,
+            "small": null
+        },
         "typography": {
             "primary": {
-                "name": "Abel",
-                "base": {
-                    "sources": "local('Abel Regular'), local('Abel-Regular'), url(https://fonts.shopifycdn.com/abel/abel_n4.2b4bc5e26465e4423e1674428c5593b0074dff23.woff2?valid_until=MTY5OTk2Mzc1Mw&hmac=a0821742768c00057c21d1cf601033382c48423434137f37ea40fd87d44bf444) format('woff2'),url(https://fonts.shopifycdn.com/abel/abel_n4.0ee737a0dba62c4db0b41249f4fa9e628bc93fa3.woff?valid_until=MTY5OTk2Mzc1Mw&hmac=26d7beb05e39cb7aa05edc4880273c9be4b30c72d90998443209c65e8988d624) format('woff')",
-                    "weight": 400
-                },
-                "bold": {
-                    "sources": "local('Abel Regular'), local('Abel-Regular'), url(https://fonts.shopifycdn.com/abel/abel_n4.2b4bc5e26465e4423e1674428c5593b0074dff23.woff2?valid_until=MTY5OTk2Mzc1Mw&hmac=a0821742768c00057c21d1cf601033382c48423434137f37ea40fd87d44bf444) format('woff2'),url(https://fonts.shopifycdn.com/abel/abel_n4.0ee737a0dba62c4db0b41249f4fa9e628bc93fa3.woff?valid_until=MTY5OTk2Mzc1Mw&hmac=26d7beb05e39cb7aa05edc4880273c9be4b30c72d90998443209c65e8988d624) format('woff')",
-                    "weight": 400
-                },
-                "loadingStrategy": null,
-                "shopifyFontGroup": {
-                    "name": "Abel"
-                }
+                "shopifyFontGroup": {}
             },
             "secondary": {
-                "name": "DIN Neuzeit Grotesk",
+                "name": "Righteous",
                 "base": {
-                    "sources": "local('DIN Neuzeit Grotesk Light'), local('DINNeuzeitGrotesk-Light'), url(https://fonts.shopifycdn.com/din_neuzeit_grotesk/dinneuzeitgrotesk_n3.a0f3c74e63f622e59b916bd3ad28c501f51e0350.woff2?valid_until=MTY5OTk2Mzc1Mw&hmac=01c2e77da7f7010f1c169d2790014c5c3610e790e228c87b3c82fbd3406f9fae) format('woff2'),url(https://fonts.shopifycdn.com/din_neuzeit_grotesk/dinneuzeitgrotesk_n3.7652704516cc290a4e9a5e4108824e968ea40fa9.woff?valid_until=MTY5OTk2Mzc1Mw&hmac=6241ac89f9a20c2dacaaa7aba86634b85e2e404873f00da91c80971f9639a5d1) format('woff')",
-                    "weight": 300
+                    "sources": "local('Righteous Regular'), local('Righteous-Regular'), url(https://fonts.shopifycdn.com/righteous/righteous_n4.ae12f723ca3ef357f8426575ae5515969ffe8b06.woff2?valid_until=MTcwMDA3NzY0Mw&hmac=ae4842a1b356ac3b918676f897ac602355717d86fffd64e194bdd6fcf78ef76e) format('woff2'),url(https://fonts.shopifycdn.com/righteous/righteous_n4.7aa6adcc7bf30be1c2818f73fafed582b16ac212.woff?valid_until=MTcwMDA3NzY0Mw&hmac=327b569d0eeca58281c0c2ed7b34ee41e2f2a0a760fb1653798664678bb89b3c) format('woff')",
+                    "weight": 400
                 },
                 "bold": {
-                    "sources": "local('DIN Neuzeit Grotesk Light'), local('DINNeuzeitGrotesk-Light'), url(https://fonts.shopifycdn.com/din_neuzeit_grotesk/dinneuzeitgrotesk_n3.a0f3c74e63f622e59b916bd3ad28c501f51e0350.woff2?valid_until=MTY5OTk2Mzc1Mw&hmac=01c2e77da7f7010f1c169d2790014c5c3610e790e228c87b3c82fbd3406f9fae) format('woff2'),url(https://fonts.shopifycdn.com/din_neuzeit_grotesk/dinneuzeitgrotesk_n3.7652704516cc290a4e9a5e4108824e968ea40fa9.woff?valid_until=MTY5OTk2Mzc1Mw&hmac=6241ac89f9a20c2dacaaa7aba86634b85e2e404873f00da91c80971f9639a5d1) format('woff')",
-                    "weight": 300
+                    "sources": "local('Righteous Regular'), local('Righteous-Regular'), url(https://fonts.shopifycdn.com/righteous/righteous_n4.ae12f723ca3ef357f8426575ae5515969ffe8b06.woff2?valid_until=MTcwMDA3NzY0Mw&hmac=ae4842a1b356ac3b918676f897ac602355717d86fffd64e194bdd6fcf78ef76e) format('woff2'),url(https://fonts.shopifycdn.com/righteous/righteous_n4.7aa6adcc7bf30be1c2818f73fafed582b16ac212.woff?valid_until=MTcwMDA3NzY0Mw&hmac=327b569d0eeca58281c0c2ed7b34ee41e2f2a0a760fb1653798664678bb89b3c) format('woff')",
+                    "weight": 400
                 },
                 "loadingStrategy": null,
                 "shopifyFontGroup": {
-                    "name": "DIN Neuzeit Grotesk"
+                    "name": "Righteous"
                 }
             },
             "size": {
@@ -176,23 +168,39 @@
             }
         },
         "header": {
-            "alignment": null,
-            "position": null
+            "alignment": "CENTER",
+            "position": "INLINE",
+            "banner": {
+                "image": null
+            },
+            "logo": {
+                "maxWidth": 0,
+                "image": null
+            }
+        },
+        "favicon": {
+            "image": null
         },
         "main": {
-            "colorScheme": "COLOR_SCHEME1"
+            "colorScheme": null,
+            "backgroundImage": {
+                "image": null
+            }
         },
         "orderSummary": {
-            "colorScheme": "COLOR_SCHEME2"
+            "colorScheme": null,
+            "backgroundImage": {
+                "image": null
+            }
         },
         "control": {
             "border": null,
-            "cornerRadius": "NONE",
+            "cornerRadius": null,
             "color": null,
             "labelPosition": null
         },
         "textField": {
-            "border": null,
+            "border": "BLOCK_END",
             "typography": {
                 "font": null,
                 "kerning": null,
@@ -212,18 +220,18 @@
             }
         },
         "checkbox": {
-            "cornerRadius": "NONE"
+            "cornerRadius": null
         },
         "primaryButton": {
             "background": null,
             "border": null,
-            "cornerRadius": "NONE",
-            "blockPadding": "EXTRA_TIGHT",
-            "inlinePadding": "TIGHT",
+            "cornerRadius": "LARGE",
+            "blockPadding": "TIGHT",
+            "inlinePadding": null,
             "typography": {
-                "font": null,
+                "font": "SECONDARY",
                 "kerning": null,
-                "letterCase": null,
+                "letterCase": "UPPER",
                 "size": null,
                 "weight": null
             }
@@ -235,7 +243,7 @@
             "blockPadding": null,
             "inlinePadding": null,
             "typography": {
-                "font": null,
+                "font": "SECONDARY",
                 "kerning": null,
                 "letterCase": null,
                 "size": null,
@@ -245,24 +253,24 @@
         "headingLevel1": {
             "typography": {
                 "font": null,
-                "kerning": "BASE",
+                "kerning": null,
                 "letterCase": "UPPER",
-                "size": "EXTRA_EXTRA_LARGE",
+                "size": null,
                 "weight": null
             }
         },
         "headingLevel2": {
             "typography": {
-                "font": null,
+                "font": "SECONDARY",
                 "kerning": null,
-                "letterCase": null,
+                "letterCase": "UPPER",
                 "size": null,
                 "weight": null
             }
         },
         "headingLevel3": {
             "typography": {
-                "font": null,
+                "font": "SECONDARY",
                 "kerning": null,
                 "letterCase": null,
                 "size": null,

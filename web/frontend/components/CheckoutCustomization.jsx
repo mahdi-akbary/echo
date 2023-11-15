@@ -6,20 +6,24 @@ import {
     BlockStack,
     TextField,
     Button,
-    Thumbnail,
     Image,
     Box,
+    InlineStack,
 } from '@shopify/polaris';
 import { useState } from "react";
 import { TabDivider } from './tabDivider';
 import { FileUpload } from './fileUpload';
 import { useAuthenticatedFetch } from '../hooks';
 import Template1 from "../assets/template-1.png"
+import Template2 from "../assets/template-2.png"
+import Template3 from "../assets/template-3.png"
+import { ColorPickerInput } from './colorPickerInput';
 
 export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, selectedListOption, setToastActive, refetchProfile }) {
     const [selectedTab, setSelectedTab] = useState(0);
     const [selectedGlobalTab, setSelectedGlobalTab] = useState(0);
     const [selectedHeadingTab, setSelectedHeadingTab] = useState(0);
+    const [templatePrimaryColor, setTemplatePrimaryColor] = useState(null);
     const fetch = useAuthenticatedFetch();
     const globalSectionTabs = [
         {
@@ -104,11 +108,11 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
 
     const [loadingTemplate, setLoadingTemplate] = useState(false)
 
-    const applyTemplate = async () => {
+    const applyTemplate = async (template) => {
         setLoadingTemplate(true)
         const response = await fetch("/api/branding/set-template", {
             method: "POST",
-            body: JSON.stringify({ id: activeProfile?.id, template: 'template-1' }),
+            body: JSON.stringify({ id: activeProfile?.id, template: template, primaryColor: templatePrimaryColor }),
             headers: { "Content-Type": "application/json" },
         });
 
@@ -153,7 +157,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations?.global,
                                             typography: {
                                                 ...temp?.customizations?.global?.typography,
-                                                letterCase: value,
+                                                letterCase: value === 'Not set' ? null : value,
                                             },
                                         },
                                     };
@@ -177,7 +181,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations?.global,
                                             typography: {
                                                 ...temp?.customizations?.global?.typography,
-                                                kerning: value,
+                                                kerning: value === 'Not set' ? null : value,
                                             },
                                         },
                                     };
@@ -198,7 +202,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                         ...temp?.customizations,
                                         global: {
                                             ...temp?.customizations?.global,
-                                            cornerRadius: value,
+                                            cornerRadius: value === 'Not set' ? null : value,
                                         },
                                     };
                                     handleDataChange(temp)
@@ -261,7 +265,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     ...temp?.customizations,
                                     header: {
                                         ...temp?.customizations?.header,
-                                        alignment: value,
+                                        alignment: value === 'Not set' ? null : value,
                                     },
                                 };
                                 handleDataChange(temp);
@@ -287,7 +291,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                     ...temp?.customizations,
                                     header: {
                                         ...temp?.customizations?.header,
-                                        position: value,
+                                        position: value === 'Not set' ? null : value,
                                     },
                                 };
                                 handleDataChange(temp);
@@ -384,7 +388,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 ...temp?.customizations,
                                 main: {
                                     ...temp?.customizations?.main,
-                                    colorScheme: value,
+                                    colorScheme: value === 'Not set' ? null : value,
                                 },
                             };
                             handleDataChange(temp);
@@ -438,7 +442,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                 ...temp?.customizations,
                                 orderSummary: {
                                     ...temp?.customizations?.orderSummary,
-                                    colorScheme: value,
+                                    colorScheme: value === 'Not set' ? null : value,
                                 },
                             };
                             handleDataChange(temp);
@@ -494,7 +498,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations,
                                             control: {
                                                 ...temp?.customizations?.control,
-                                                border: value,
+                                                border: value === 'Not set' ? null : value,
                                             },
                                         };
                                         handleDataChange(temp);
@@ -519,7 +523,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations,
                                             control: {
                                                 ...temp?.customizations?.control,
-                                                cornerRadius: value,
+                                                cornerRadius: value === 'Not set' ? null : value,
                                             },
                                         };
                                         handleDataChange(temp);
@@ -561,7 +565,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations,
                                             control: {
                                                 ...temp?.customizations?.control,
-                                                labelPosition: value,
+                                                labelPosition: value === 'Not set' ? null : value,
                                             },
                                         };
                                         handleDataChange(temp);
@@ -590,7 +594,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations,
                                             textField: {
                                                 ...temp?.customizations?.textField,
-                                                border: value,
+                                                border: value === 'Not set' ? null : value,
                                             },
                                         };
                                         handleDataChange(temp);
@@ -613,7 +617,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.textField,
                                                 typography: {
                                                     ...temp?.customizations?.textField?.typography,
-                                                    font: value,
+                                                    font: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -639,7 +643,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.textField,
                                                 typography: {
                                                     ...temp?.customizations?.textField?.typography,
-                                                    kerning: value,
+                                                    kerning: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -669,7 +673,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.textField,
                                                 typography: {
                                                     ...temp?.customizations?.textField?.typography,
-                                                    size: value,
+                                                    size: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -696,7 +700,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.textField,
                                                 typography: {
                                                     ...temp?.customizations?.textField?.typography,
-                                                    letterCase: value,
+                                                    letterCase: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -721,7 +725,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.textField,
                                                 typography: {
                                                     ...temp?.customizations?.textField?.typography,
-                                                    weight: value,
+                                                    weight: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -751,7 +755,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations,
                                             select: {
                                                 ...temp?.customizations?.select,
-                                                border: value,
+                                                border: value === 'Not set' ? null : value,
                                             },
                                         };
                                         handleDataChange(temp);
@@ -774,7 +778,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.select,
                                                 typography: {
                                                     ...temp?.customizations?.select?.typography,
-                                                    font: value,
+                                                    font: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -800,7 +804,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.select,
                                                 typography: {
                                                     ...temp?.customizations?.select?.typography,
-                                                    kerning: value,
+                                                    kerning: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -830,7 +834,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.select,
                                                 typography: {
                                                     ...temp?.customizations?.select?.typography,
-                                                    size: value,
+                                                    size: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -857,7 +861,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.select,
                                                 typography: {
                                                     ...temp?.customizations?.select?.typography,
-                                                    letterCase: value,
+                                                    letterCase: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -882,7 +886,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.select,
                                                 typography: {
                                                     ...temp?.customizations?.select?.typography,
-                                                    weight: value,
+                                                    weight: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -913,7 +917,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                         ...temp?.customizations,
                                         checkbox: {
                                             ...temp?.customizations?.checkbox,
-                                            cornerRadius: value,
+                                            cornerRadius: value === 'Not set' ? null : value,
                                         },
                                     };
                                     handleDataChange(temp);
@@ -941,7 +945,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations,
                                             primaryButton: {
                                                 ...temp?.customizations?.primaryButton,
-                                                background: value,
+                                                background: value === 'Not set' ? null : value,
                                             },
                                         };
                                         handleDataChange(temp);
@@ -961,7 +965,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations,
                                             primaryButton: {
                                                 ...temp?.customizations?.primaryButton,
-                                                border: value,
+                                                border: value === 'Not set' ? null : value,
                                             },
                                         };
                                         handleDataChange(temp);
@@ -983,7 +987,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations,
                                             primaryButton: {
                                                 ...temp?.customizations?.primaryButton,
-                                                cornerRadius: value,
+                                                cornerRadius: value === 'Not set' ? null : value,
                                             },
                                         };
                                         handleDataChange(temp);
@@ -1008,7 +1012,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations,
                                             primaryButton: {
                                                 ...temp?.customizations?.primaryButton,
-                                                blockPadding: value,
+                                                blockPadding: value === 'Not set' ? null : value,
                                             },
                                         };
                                         handleDataChange(temp);
@@ -1033,7 +1037,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations,
                                             primaryButton: {
                                                 ...temp?.customizations?.primaryButton,
-                                                inlinePadding: value,
+                                                inlinePadding: value === 'Not set' ? null : value,
                                             },
                                         };
                                         handleDataChange(temp);
@@ -1055,7 +1059,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.primaryButton,
                                                 typography: {
                                                     ...temp?.customizations?.primaryButton?.typography,
-                                                    font: value,
+                                                    font: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1080,7 +1084,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.primaryButton,
                                                 typography: {
                                                     ...temp?.customizations?.primaryButton?.typography,
-                                                    kerning: value,
+                                                    kerning: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1108,7 +1112,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.primaryButton,
                                                 typography: {
                                                     ...temp?.customizations?.primaryButton?.typography,
-                                                    size: value,
+                                                    size: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1133,7 +1137,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.primaryButton,
                                                 typography: {
                                                     ...temp?.customizations?.primaryButton?.typography,
-                                                    letterCase: value,
+                                                    letterCase: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1156,7 +1160,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.primaryButton,
                                                 typography: {
                                                     ...temp?.customizations?.primaryButton?.typography,
-                                                    weight: value,
+                                                    weight: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1186,7 +1190,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations,
                                             secondaryButton: {
                                                 ...temp?.customizations?.secondaryButton,
-                                                background: value,
+                                                background: value === 'Not set' ? null : value,
                                             },
                                         };
                                         handleDataChange(temp);
@@ -1206,7 +1210,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations,
                                             secondaryButton: {
                                                 ...temp?.customizations?.secondaryButton,
-                                                border: value,
+                                                border: value === 'Not set' ? null : value,
                                             },
                                         };
                                         handleDataChange(temp);
@@ -1228,7 +1232,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations,
                                             secondaryButton: {
                                                 ...temp?.customizations?.secondaryButton,
-                                                cornerRadius: value,
+                                                cornerRadius: value === 'Not set' ? null : value,
                                             },
                                         };
                                         handleDataChange(temp);
@@ -1253,7 +1257,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations,
                                             secondaryButton: {
                                                 ...temp?.customizations?.secondaryButton,
-                                                blockPadding: value,
+                                                blockPadding: value === 'Not set' ? null : value,
                                             },
                                         };
                                         handleDataChange(temp);
@@ -1278,7 +1282,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                             ...temp?.customizations,
                                             secondaryButton: {
                                                 ...temp?.customizations?.secondaryButton,
-                                                inlinePadding: value,
+                                                inlinePadding: value === 'Not set' ? null : value,
                                             },
                                         };
                                         handleDataChange(temp);
@@ -1300,7 +1304,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.secondaryButton,
                                                 typography: {
                                                     ...temp?.customizations?.secondaryButton?.typography,
-                                                    font: value,
+                                                    font: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1325,7 +1329,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.secondaryButton,
                                                 typography: {
                                                     ...temp?.customizations?.secondaryButton?.typography,
-                                                    kerning: value,
+                                                    kerning: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1353,7 +1357,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.secondaryButton,
                                                 typography: {
                                                     ...temp?.customizations?.secondaryButton?.typography,
-                                                    size: value,
+                                                    size: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1378,7 +1382,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.secondaryButton,
                                                 typography: {
                                                     ...temp?.customizations?.secondaryButton?.typography,
-                                                    letterCase: value,
+                                                    letterCase: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1401,7 +1405,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.secondaryButton,
                                                 typography: {
                                                     ...temp?.customizations?.secondaryButton?.typography,
-                                                    weight: value,
+                                                    weight: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1444,7 +1448,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.headingLevel1,
                                                 typography: {
                                                     ...temp?.customizations?.headingLevel1?.typography,
-                                                    font: value,
+                                                    font: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1469,7 +1473,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.headingLevel1,
                                                 typography: {
                                                     ...temp?.customizations?.headingLevel1?.typography,
-                                                    kerning: value,
+                                                    kerning: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1498,7 +1502,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.headingLevel1,
                                                 typography: {
                                                     ...temp?.customizations?.headingLevel1?.typography,
-                                                    size: value,
+                                                    size: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1523,7 +1527,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.headingLevel1,
                                                 typography: {
                                                     ...temp?.customizations?.headingLevel1?.typography,
-                                                    letterCase: value,
+                                                    letterCase: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1547,7 +1551,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.headingLevel1,
                                                 typography: {
                                                     ...temp?.customizations?.headingLevel1?.typography,
-                                                    weight: value,
+                                                    weight: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1570,6 +1574,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                         { label: "Secondary", value: "SECONDARY" },
                                     ]}
                                     onChange={(value) => {
+                                        console.log(value)
                                         const temp = activeProfile;
                                         temp.customizations = {
                                             ...temp?.customizations,
@@ -1577,7 +1582,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.headingLevel2,
                                                 typography: {
                                                     ...temp?.customizations?.headingLevel2?.typography,
-                                                    font: value,
+                                                    font: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1601,7 +1606,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.headingLevel2,
                                                 typography: {
                                                     ...temp?.customizations?.headingLevel2?.typography,
-                                                    kerning: value,
+                                                    kerning: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1630,7 +1635,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.headingLevel2,
                                                 typography: {
                                                     ...temp?.customizations?.headingLevel2?.typography,
-                                                    size: value,
+                                                    size: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1655,7 +1660,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.headingLevel2,
                                                 typography: {
                                                     ...temp?.customizations?.headingLevel2?.typography,
-                                                    letterCase: value,
+                                                    letterCase: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1678,7 +1683,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.headingLevel2,
                                                 typography: {
                                                     ...temp?.customizations?.headingLevel2?.typography,
-                                                    weight: value,
+                                                    weight: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1708,7 +1713,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.headingLevel3,
                                                 typography: {
                                                     ...temp?.customizations?.headingLevel3?.typography,
-                                                    font: value,
+                                                    font: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1732,7 +1737,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.headingLevel3,
                                                 typography: {
                                                     ...temp?.customizations?.headingLevel3?.typography,
-                                                    kerning: value,
+                                                    kerning: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1761,7 +1766,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.headingLevel3,
                                                 typography: {
                                                     ...temp?.customizations?.headingLevel3?.typography,
-                                                    size: value,
+                                                    size: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1786,7 +1791,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.headingLevel3,
                                                 typography: {
                                                     ...temp?.customizations?.headingLevel3?.typography,
-                                                    letterCase: value,
+                                                    letterCase: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1809,7 +1814,7 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                                                 ...temp?.customizations?.headingLevel3,
                                                 typography: {
                                                     ...temp?.customizations?.headingLevel3?.typography,
-                                                    weight: value,
+                                                    weight: value === 'Not set' ? null : value,
                                                 },
                                             },
                                         };
@@ -1823,8 +1828,67 @@ export function CheckoutCustomization ({ activeProfile = {}, handleDataChange, s
                 </> : null}
             {selectedListOption == 'template-1' ?
                 <BlockStack gap="200" inlineAlign='end'>
-                    <Button variant='primary' onClick={async () => await applyTemplate()} loading={loadingTemplate}>Apply</Button>
+                    <Box width='100%'>
+                        <InlineStack align='space-between' >
+                            <ColorPickerInput
+                                label="Primary color"
+                                helpText="The primary color of the brand"
+                                onChange={(value) => setTemplatePrimaryColor(value)}
+                                inputColor={
+                                    templatePrimaryColor ?
+                                        templatePrimaryColor :
+                                        activeProfile?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.background
+                                }
+                            />
+                            <Button variant='primary' onClick={async () => await applyTemplate('template-1')} loading={loadingTemplate}>Apply</Button>
+
+                        </InlineStack>
+                    </Box>
                     <Image source={Template1} alt='template' width="100%" />
+                </BlockStack>
+                : null}
+
+            {selectedListOption == 'template-2' ?
+                <BlockStack gap="200" inlineAlign='end'>
+                    <Box width='100%'>
+                        <InlineStack align='space-between' >
+                            <ColorPickerInput
+                                label="Primary color"
+                                helpText="The primary color of the brand"
+                                onChange={(value) => setTemplatePrimaryColor(value)}
+                                inputColor={
+                                    templatePrimaryColor ?
+                                        templatePrimaryColor :
+                                        activeProfile?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.background
+                                }
+                            />
+                            <Button variant='primary' onClick={async () => await applyTemplate('template-2')} loading={loadingTemplate}>Apply</Button>
+
+                        </InlineStack>
+                    </Box>
+                    <Image source={Template2} alt='template' width="100%" />
+                </BlockStack>
+                : null}
+
+                {selectedListOption == 'template-3' ?
+                <BlockStack gap="200" inlineAlign='end'>
+                    <Box width='100%'>
+                        <InlineStack align='space-between' >
+                            <ColorPickerInput
+                                label="Primary color"
+                                helpText="The primary color of the brand"
+                                onChange={(value) => setTemplatePrimaryColor(value)}
+                                inputColor={
+                                    templatePrimaryColor ?
+                                        templatePrimaryColor :
+                                        activeProfile?.designSystem?.colors?.schemes?.scheme1?.primaryButton?.background
+                                }
+                            />
+                            <Button variant='primary' onClick={async () => await applyTemplate('template-3')} loading={loadingTemplate}>Apply</Button>
+
+                        </InlineStack>
+                    </Box>
+                    <Image source={Template3} alt='template' width="100%" />
                 </BlockStack>
                 : null}
 

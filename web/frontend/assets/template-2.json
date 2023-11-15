@@ -2,7 +2,7 @@
     "designSystem": {
         "colors": {
             "global": {
-                "accent": "#60a453",
+                "accent": null,
                 "brand": null,
                 "success": null,
                 "info": null,
@@ -13,24 +13,24 @@
             "schemes": {
                 "scheme1": {
                     "base": {
-                        "background": "#1a272d",
-                        "border": "#1a272d",
-                        "text": null,
+                        "background": "#f7f0ea",
+                        "border": "#f7f0ea",
+                        "text": "#473d37",
                         "icon": null,
                         "decorative": null,
-                        "accent": null
+                        "accent": "#242d4c"
                     },
                     "control": {
                         "text": null,
-                        "background": "#1a272d",
-                        "border": null,
+                        "background": "#fffdff",
+                        "border": "#eadec8",
                         "icon": null,
                         "decorative": null,
-                        "accent": "#9a64f6",
+                        "accent": null,
                         "selected": {
                             "text": null,
                             "background": null,
-                            "border": null,
+                            "border": "#eadec8",
                             "icon": null,
                             "decorative": null,
                             "accent": null
@@ -38,7 +38,7 @@
                     },
                     "primaryButton": {
                         "text": null,
-                        "background": "#9a64f6",
+                        "background": "#242d4c",
                         "border": null,
                         "decorative": null,
                         "icon": null,
@@ -71,20 +71,20 @@
                 },
                 "scheme2": {
                     "base": {
-                        "background": "#1a272d",
-                        "border": "#1a272d",
+                        "background": "#f7f0ea",
+                        "border": "#f7f0ea",
                         "text": null,
                         "icon": null,
                         "decorative": null,
-                        "accent": null
+                        "accent": "#242d4c"
                     },
                     "control": {
                         "text": null,
-                        "background": "#1a272d",
+                        "background": null,
                         "border": null,
                         "icon": null,
                         "decorative": null,
-                        "accent": "#9a64f6",
+                        "accent": null,
                         "selected": {
                             "text": null,
                             "background": null,
@@ -96,7 +96,7 @@
                     },
                     "primaryButton": {
                         "text": null,
-                        "background": "#9a64f6",
+                        "background": "#242d4c",
                         "border": null,
                         "decorative": null,
                         "icon": null,
@@ -129,36 +129,28 @@
                 }
             }
         },
-        "cornerRadius": null,
+        "cornerRadius": {
+            "base": 5,
+            "large": 40,
+            "small": 5
+        },
         "typography": {
             "primary": {
-                "name": "Abel",
-                "base": {
-                    "sources": "local('Abel Regular'), local('Abel-Regular'), url(https://fonts.shopifycdn.com/abel/abel_n4.2b4bc5e26465e4423e1674428c5593b0074dff23.woff2?valid_until=MTY5OTk2Mzc1Mw&hmac=a0821742768c00057c21d1cf601033382c48423434137f37ea40fd87d44bf444) format('woff2'),url(https://fonts.shopifycdn.com/abel/abel_n4.0ee737a0dba62c4db0b41249f4fa9e628bc93fa3.woff?valid_until=MTY5OTk2Mzc1Mw&hmac=26d7beb05e39cb7aa05edc4880273c9be4b30c72d90998443209c65e8988d624) format('woff')",
-                    "weight": 400
-                },
-                "bold": {
-                    "sources": "local('Abel Regular'), local('Abel-Regular'), url(https://fonts.shopifycdn.com/abel/abel_n4.2b4bc5e26465e4423e1674428c5593b0074dff23.woff2?valid_until=MTY5OTk2Mzc1Mw&hmac=a0821742768c00057c21d1cf601033382c48423434137f37ea40fd87d44bf444) format('woff2'),url(https://fonts.shopifycdn.com/abel/abel_n4.0ee737a0dba62c4db0b41249f4fa9e628bc93fa3.woff?valid_until=MTY5OTk2Mzc1Mw&hmac=26d7beb05e39cb7aa05edc4880273c9be4b30c72d90998443209c65e8988d624) format('woff')",
-                    "weight": 400
-                },
-                "loadingStrategy": null,
-                "shopifyFontGroup": {
-                    "name": "Abel"
-                }
+                "shopifyFontGroup": {}
             },
             "secondary": {
-                "name": "DIN Neuzeit Grotesk",
+                "name": "Abril Fatface",
                 "base": {
-                    "sources": "local('DIN Neuzeit Grotesk Light'), local('DINNeuzeitGrotesk-Light'), url(https://fonts.shopifycdn.com/din_neuzeit_grotesk/dinneuzeitgrotesk_n3.a0f3c74e63f622e59b916bd3ad28c501f51e0350.woff2?valid_until=MTY5OTk2Mzc1Mw&hmac=01c2e77da7f7010f1c169d2790014c5c3610e790e228c87b3c82fbd3406f9fae) format('woff2'),url(https://fonts.shopifycdn.com/din_neuzeit_grotesk/dinneuzeitgrotesk_n3.7652704516cc290a4e9a5e4108824e968ea40fa9.woff?valid_until=MTY5OTk2Mzc1Mw&hmac=6241ac89f9a20c2dacaaa7aba86634b85e2e404873f00da91c80971f9639a5d1) format('woff')",
-                    "weight": 300
+                    "sources": "local('Abril Fatface Regular'), local('AbrilFatface-Regular'), url(https://fonts.shopifycdn.com/abril_fatface/abrilfatface_n4.ba1d95cfd327492b9b2e70d2bf6de3283042fdf5.woff2?valid_until=MTcwMDA3NDcwMg&hmac=a6d7596ecb713cd0fbe9b4da453ae2ab61c0784355a64f6062afe33c0f6f8104) format('woff2'),url(https://fonts.shopifycdn.com/abril_fatface/abrilfatface_n4.15dba6ecd1dbe45e34997dc101cb33f1f43f72dd.woff?valid_until=MTcwMDA3NDcwMg&hmac=33fec3922c7c8d2d63b99ca35b7efa754bddb90e7af31e7011546cbc179ea44b) format('woff')",
+                    "weight": 400
                 },
                 "bold": {
-                    "sources": "local('DIN Neuzeit Grotesk Light'), local('DINNeuzeitGrotesk-Light'), url(https://fonts.shopifycdn.com/din_neuzeit_grotesk/dinneuzeitgrotesk_n3.a0f3c74e63f622e59b916bd3ad28c501f51e0350.woff2?valid_until=MTY5OTk2Mzc1Mw&hmac=01c2e77da7f7010f1c169d2790014c5c3610e790e228c87b3c82fbd3406f9fae) format('woff2'),url(https://fonts.shopifycdn.com/din_neuzeit_grotesk/dinneuzeitgrotesk_n3.7652704516cc290a4e9a5e4108824e968ea40fa9.woff?valid_until=MTY5OTk2Mzc1Mw&hmac=6241ac89f9a20c2dacaaa7aba86634b85e2e404873f00da91c80971f9639a5d1) format('woff')",
-                    "weight": 300
+                    "sources": "local('Abril Fatface Regular'), local('AbrilFatface-Regular'), url(https://fonts.shopifycdn.com/abril_fatface/abrilfatface_n4.ba1d95cfd327492b9b2e70d2bf6de3283042fdf5.woff2?valid_until=MTcwMDA3NDcwMg&hmac=a6d7596ecb713cd0fbe9b4da453ae2ab61c0784355a64f6062afe33c0f6f8104) format('woff2'),url(https://fonts.shopifycdn.com/abril_fatface/abrilfatface_n4.15dba6ecd1dbe45e34997dc101cb33f1f43f72dd.woff?valid_until=MTcwMDA3NDcwMg&hmac=33fec3922c7c8d2d63b99ca35b7efa754bddb90e7af31e7011546cbc179ea44b) format('woff')",
+                    "weight": 400
                 },
                 "loadingStrategy": null,
                 "shopifyFontGroup": {
-                    "name": "DIN Neuzeit Grotesk"
+                    "name": "Abril Fatface"
                 }
             },
             "size": {
@@ -176,18 +168,34 @@
             }
         },
         "header": {
-            "alignment": null,
-            "position": null
+            "alignment": "CENTER",
+            "position": "START",
+            "banner": {
+                "image": null
+            },
+            "logo": {
+                "maxWidth": 0,
+                "image": null
+            }
+        },
+        "favicon": {
+            "image": null
         },
         "main": {
-            "colorScheme": "COLOR_SCHEME1"
+            "colorScheme": null,
+            "backgroundImage": {
+                "image": null
+            }
         },
         "orderSummary": {
-            "colorScheme": "COLOR_SCHEME2"
+            "colorScheme": null,
+            "backgroundImage": {
+                "image": null
+            }
         },
         "control": {
             "border": null,
-            "cornerRadius": "NONE",
+            "cornerRadius": null,
             "color": null,
             "labelPosition": null
         },
@@ -212,16 +220,16 @@
             }
         },
         "checkbox": {
-            "cornerRadius": "NONE"
+            "cornerRadius": null
         },
         "primaryButton": {
             "background": null,
             "border": null,
-            "cornerRadius": "NONE",
-            "blockPadding": "EXTRA_TIGHT",
-            "inlinePadding": "TIGHT",
+            "cornerRadius": "LARGE",
+            "blockPadding": null,
+            "inlinePadding": null,
             "typography": {
-                "font": null,
+                "font": "SECONDARY",
                 "kerning": null,
                 "letterCase": null,
                 "size": null,
@@ -245,8 +253,8 @@
         "headingLevel1": {
             "typography": {
                 "font": null,
-                "kerning": "BASE",
-                "letterCase": "UPPER",
+                "kerning": null,
+                "letterCase": null,
                 "size": "EXTRA_EXTRA_LARGE",
                 "weight": null
             }

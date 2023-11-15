@@ -2442,7 +2442,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                             ...temp?.designSystem?.typography,
                                             primary: {
                                                 shopifyFontGroup: {
-                                                    name: value,
+                                                    name: value == 'Not set' ? null : value,
                                                 }
                                             },
                                         },
@@ -2502,7 +2502,7 @@ export function DesignSystem ({ activeProfile = {}, handleDataChange, selectedLi
                                             ...temp?.designSystem?.typography,
                                             secondary: {
                                                 shopifyFontGroup: {
-                                                    name: value,
+                                                    name: value == 'Not set' ? null : value,
                                                 }
                                             },
                                         },

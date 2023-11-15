@@ -223,10 +223,9 @@ export default function Branding () {
         onClick={() =>
           redirect.dispatch(
             Redirect.Action.ADMIN_PATH,
-            { path: `/settings/checkout/preview/profiles/${selected?.split('/')[4]}`, newContext: true }
+            { path: `/settings/checkout/editor/profiles/${selected?.split('/')[4]}`, newContext: true }
           )
         }>
-
             Preview 
           </Button>
     </InlineStack>

@@ -15,7 +15,7 @@ processes = []
   HOST = "https://checkout-plus.fly.dev"
   PORT = "8081"
   SHOPIFY_API_KEY = "49be3e74c8a62e808de0bbbea1c1d985"
-  SCOPES = "write_products, write_discounts, read_discounts, write_checkout_branding_settings,read_files, write_files, write_themes"
+  SCOPES = "write_products, write_discounts, read_discounts, write_checkout_branding_settings,read_files,write_files,write_themes"
 
 
 [experimental]
@@ -24,6 +24,9 @@ processes = []
 [[services]]
   http_checks = []
   internal_port = 8081
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
@@ -42,7 +45,7 @@ processes = []
     port = 443
 
   [[services.tcp_checks]]
-    grace_period = "1s"
+    grace_period = "20s"
     interval = "15s"
     restart_limit = 0
-    timeout = "2s"
+    timeout = "12s"

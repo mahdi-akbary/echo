@@ -1,5 +1,5 @@
 import { useNavigate } from '@shopify/app-bridge-react';
-import { Tabs, Icon,Card } from '@shopify/polaris';
+import { Tabs, Icon,Card, Layout } from '@shopify/polaris';
 import { useState, useCallback, useEffect } from 'react';
 import { navStructure } from '../services/data';
 import { useLocation } from "react-router-dom";
@@ -73,14 +73,15 @@ export function NavigationTabs () {
         <div style={
           {
             backgroundColor: '#fff',
-          }
-        }>
-          <Tabs
-            tabs={generateTabsData(navStructure)}
-            selected={selected}
-            onSelect={handleTabChange}
-            disclosureText="More views">
-          </Tabs>
+          }}>
+            <div className='Polaris-Page'>
+              <Tabs
+                tabs={generateTabsData(navStructure)}
+                selected={selected}
+                onSelect={handleTabChange}
+                disclosureText="More views">
+              </Tabs>
+            </div>
         </div>
 
   );

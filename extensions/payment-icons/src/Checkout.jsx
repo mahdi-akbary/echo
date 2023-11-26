@@ -16,8 +16,7 @@ export default reactExtension(
 function Extension() {
   const translate = useTranslate();
   const { extension } = useApi();
-  const { title, icons, grid } = useSettings();
-
+  let { icons, grid, spacing } = useSettings();
 
   let icons_name = icons || "visa,mastercard,amex,discover"
   icons_name = icons_name.split(",")
@@ -43,12 +42,15 @@ function Extension() {
   }else{
     grid_columns = "auto,auto,auto,auto"
   }
+  grid_columns = grid_columns.split(",");
+
+  let icon_spacing = spacing || "base"
   
   return (
-      <Grid spacing="base" columns={[grid_columns]}> 
+      <Grid spacing={icon_spacing} columns={grid_columns}> 
           {/* Loop through icons_name and render */}
           {icons_name.map((icon_name) => (
-              <PaymentIcon name={icon_name} accessibilityLabel={icon_name} />
+              <PaymentIcon name={icon_name} key={icon_name} accessibilityLabel={icon_name} />
           ))}
       </Grid>
   );

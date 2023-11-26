@@ -57,3 +57,11 @@ api_access = true
     [[extensions.settings.fields.validations]]
     name = "choices"
     value = '["2 columns","3 columns","4 columns", "5 columns", "6 columns", "7 columns", "8 columns", "9 columns", "10 columns"]'
+
+[[extensions.settings.fields]]
+    key = "spacing"
+    type = "single_line_text_field"
+    name = "Spacing"
+    [[extensions.settings.fields.validations]]
+    name = "choices"
+    value = '["none","extraTight","tight", "base", "loose", "extraLoose"]'

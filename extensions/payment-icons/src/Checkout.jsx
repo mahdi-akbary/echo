@@ -18,7 +18,10 @@ function Extension() {
   const { extension } = useApi();
   let { icons, grid, spacing } = useSettings();
 
+  
   let icons_name = icons || "visa,mastercard,amex,discover"
+  icons = 'visa, mastercard'
+
   icons_name = icons_name.split(",")
   let grid_columns = ""
   if(grid == '2 columns'){
@@ -43,6 +46,8 @@ function Extension() {
     grid_columns = "auto,auto,auto,auto"
   }
   grid_columns = grid_columns.split(",");
+  // remove whitespace from   icons = 'visa, mastercard'
+  icons = icons.replace(/\s/g, '');
 
   let icon_spacing = spacing || "base"
   

@@ -44,8 +44,22 @@ api_access = true
 # https://shopify.dev/docs/api/checkout-ui-extensions/unstable/configuration#settings-definition
 
 # [extensions.settings]
-# [[extensions.settings.fields]]
-# key = "banner_title"
-# type = "single_line_text_field"
-# name = "Banner title"
-# description = "Enter a title for the banner"
+[[extensions.settings.fields]]
+    key = "title"
+    type = "single_line_text_field"
+    name = "Title"
+
+[[extensions.settings.fields]]
+    key = "number"
+    type = "single_line_text_field"
+    name = "Review Number"
+
+[[extensions.settings.fields]]
+    key = "content"
+    type = "single_line_text_field"
+    name = "Review Content"
+
+[[extensions.settings.fields]]
+    key = "author"
+    type = "single_line_text_field"
+    name = "Review Author"

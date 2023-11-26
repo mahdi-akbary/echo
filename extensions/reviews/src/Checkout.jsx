@@ -11,6 +11,7 @@ import {
   GridItem,
   BlockStack,
   Style,
+  useSettings,
 } from '@shopify/ui-extensions-react/checkout';
 
 export default reactExtension(
@@ -21,11 +22,12 @@ export default reactExtension(
 function Extension() {
   const translate = useTranslate();
   const { extension } = useApi();
-  let title = "Love my tee!"
-  let review_number = "5"
-  let review_content = "Comfy, stylish, eco-friendly tee. Love the quality and unique designs! 🌟"
-  let review_author = "Jane Doe"
+  const { title, number, content, author } = useSettings();
 
+  review_title = title || "Love my tee!"
+  review_number = number || "5"
+  review_content = content || "Comfy, stylish, eco-friendly tee. Love the quality and unique designs! 🌟"
+  review_author = author || "Jane Doe"
 
   return (
     <View padding='tight' border="base" cornerRadius="base">
@@ -47,7 +49,7 @@ function Extension() {
         </Text>
 
         <Text emphasis="bold">
-            { title }
+            { review_title }
         </Text>
 
         <GridItem columnSpan={4}>

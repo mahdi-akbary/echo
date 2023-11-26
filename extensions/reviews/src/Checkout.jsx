@@ -10,6 +10,7 @@ import {
   TextBlock,
   GridItem,
   BlockStack,
+  Style,
 } from '@shopify/ui-extensions-react/checkout';
 
 export default reactExtension(
@@ -51,7 +52,7 @@ function Extension() {
 
         <GridItem columnSpan={4}>
 
-          <Grid columns={['8%', 'fill' ]}>
+          <Grid columns={['10%', 'fill' ]}>
             <View border="none" padding="base">
               
             </View>

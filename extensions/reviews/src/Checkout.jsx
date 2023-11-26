@@ -9,6 +9,7 @@ import {
   Text,
   TextBlock,
   GridItem,
+  BlockStack,
 } from '@shopify/ui-extensions-react/checkout';
 
 export default reactExtension(
@@ -22,6 +23,8 @@ function Extension() {
   let title = "Love my tee!"
   let review_number = "5"
   let review_content = "Comfy, stylish, eco-friendly tee. Love the quality and unique designs! 🌟"
+  let review_author = "Jane Doe"
+
 
   return (
     <View padding='tight' border="base" cornerRadius="base">
@@ -38,11 +41,11 @@ function Extension() {
 
         <Image source="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMjQiIHdpZHRoPSIxMDAiIGhlaWdodD0iMjAiIGZpbGw9ImN1cnJlbnRDb2xvciI+DQogIDxwb2x5Z29uIHBvaW50cz0iMTIgMiAxNS4wOSA4LjI2IDIyIDkuMjcgMTcgMTQuMTQgMTguMTggMjEuMDIgMTIgMTcuNzcgNS44MiAyMS4wMiA3IDE0LjE0IDIgOS4yNyA4LjkxIDguMjYgMTIgMiIgLz4NCiAgPHBvbHlnb24gcG9pbnRzPSIzNiAyIDM5LjA5IDguMjYgNDYgOS4yNyA0MSAxNC4xNCA0Mi4xOCAyMS4wMiAzNiAxNy43NyAyOS44MiAyMS4wMiAzMSAxNC4xNCAyNiA5LjI3IDMyLjkxIDguMjYgMzYgMiIgLz4NCiAgPHBvbHlnb24gcG9pbnRzPSI2MCAyIDYzLjA5IDguMjYgNzAgOS4yNyA2NSAxNC4xNCA2Ni4xOCAyMS4wMiA2MCAxNy43NyA1My44MiAyMS4wMiA1NSAxNC4xNCA1MCA5LjI3IDU2LjkxIDguMjYgNjAgMiIgLz4NCiAgPHBvbHlnb24gcG9pbnRzPSI4NCAyIDg3LjA5IDguMjYgOTQgOS4yNyA4OSAxNC4xNCA5MC4xOCAyMS4wMiA4NCAxNy43NyA3Ny44MiAyMS4wMiA3OSAxNC4xNCA3NCA5LjI3IDgwLjkxIDguMjYgODQgMiIgLz4NCiAgPHBvbHlnb24gcG9pbnRzPSIxMDggMiAxMTEuMDkgOC4yNiAxMTggOS4yNyAxMTMgMTQuMTQgMTE0LjE4IDIxLjAyIDEwOCAxNy43NyAxMDEuODIgMjEuMDIgMTAzIDE0LjE0IDk4IDkuMjcgMTA0LjkxIDguMjYgMTA4IDIiIC8+DQo8L3N2Zz4NCg==" />
 
-        <Text size="medium">
+        <Text emphasis="bold">
           { review_number }
         </Text>
 
-        <Text size="medium">
+        <Text emphasis="bold">
             { title }
         </Text>
 
@@ -52,10 +55,17 @@ function Extension() {
             <View border="none" padding="base">
               
             </View>
-            <TextBlock appearance="subdued">
-              { review_content }
-            </TextBlock>
-            
+            <BlockStack spacing="tight">
+              <TextBlock appearance="subdued">
+                { review_content }
+              </TextBlock>
+
+              <Text emphasis="bold">
+                { review_author }
+              </Text>
+
+            </BlockStack>
+
           </Grid>
 
         </GridItem>

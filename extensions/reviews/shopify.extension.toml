@@ -56,7 +56,7 @@ api_access = true
 
 [[extensions.settings.fields]]
     key = "content"
-    type = "single_line_text_field"
+    type = "multi_line_text_field"
     name = "Review Content"
 
 [[extensions.settings.fields]]

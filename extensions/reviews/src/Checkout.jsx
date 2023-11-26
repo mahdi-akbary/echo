@@ -25,7 +25,7 @@ function Extension() {
   const { title, number, content, author } = useSettings();
 
   review_title = title || "Love my tee!"
-  review_number = number || "5"
+  review_number = number || "5.0"
   review_content = content || "Comfy, stylish, eco-friendly tee. Love the quality and unique designs! 🌟"
   review_author = author || "Jane Doe"
 

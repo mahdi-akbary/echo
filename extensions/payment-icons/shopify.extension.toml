@@ -43,9 +43,17 @@ api_access = true
 # your extension. Learn more:
 # https://shopify.dev/docs/api/checkout-ui-extensions/unstable/configuration#settings-definition
 
-# [extensions.settings]
-# [[extensions.settings.fields]]
-# key = "banner_title"
-# type = "single_line_text_field"
-# name = "Banner title"
-# description = "Enter a title for the banner"
+[extensions.settings]
+[[extensions.settings.fields]]
+    key = "icons"
+    type = "multi_line_text_field"
+    name = "Icons"
+    description= "Comma-separated icon names. See names here: <a href='https://shopify.dev/docs/api/checkout-ui-extensions/2023-10/components/media/paymenticon#paymentmethod' target='_blank'> payment icons </a> "
+
+[[extensions.settings.fields]]
+    key = "grid"
+    type = "single_line_text_field"
+    name = "Grid"
+    [[extensions.settings.fields.validations]]
+    name = "choices"
+    value = '["2 columns","3 columns","4 columns", "5 columns", "6 columns", "7 columns", "8 columns", "9 columns", "10 columns"]'

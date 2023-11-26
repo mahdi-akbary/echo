@@ -48,7 +48,7 @@ api_access = true
     key = "icons"
     type = "multi_line_text_field"
     name = "Icons"
-    description= "Comma-separated icon names. See names here: <a href='https://shopify.dev/docs/api/checkout-ui-extensions/2023-10/components/media/paymenticon#paymentmethod' target='_blank'> payment icons </a> "
+    description= "Comma-separated icon names. See names here: https://shopify.dev/docs/api/checkout-ui-extensions/2023-10/components/media/paymenticon#paymentmethod"
 
 [[extensions.settings.fields]]
     key = "grid"

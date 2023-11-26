@@ -22,7 +22,11 @@ function Extension() {
   let icons_name = icons || "visa,mastercard,amex,discover"
   icons = 'visa, mastercard'
 
+  icons_name = icons_name.replace(/\s/g, '');
   icons_name = icons_name.split(",")
+
+  let icon_spacing = spacing || "base"
+
   let grid_columns = ""
   if(grid == '2 columns'){
     grid_columns = "auto,auto"
@@ -46,10 +50,6 @@ function Extension() {
     grid_columns = "auto,auto,auto,auto"
   }
   grid_columns = grid_columns.split(",");
-  // remove whitespace from   icons = 'visa, mastercard'
-  icons = icons.replace(/\s/g, '');
-
-  let icon_spacing = spacing || "base"
   
   return (
       <Grid spacing={icon_spacing} columns={grid_columns}> 

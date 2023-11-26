@@ -1660,7 +1660,7 @@
     "@remote-ui/rpc" "^1.3.6"
     "@remote-ui/types" "^1.1.3"
 
-"@remote-ui/core@^2.1.17":
+"@remote-ui/core@^2.1.17", "@remote-ui/core@^2.2.2", "@remote-ui/core@^2.2.3":
   version "2.2.3"
   resolved "https://registry.npmjs.org/@remote-ui/core/-/core-2.2.3.tgz"
   integrity sha512-LWwAlDJw9c+b61dViU6v8ivU0AalgGikvqidVoBLt+CLjTAXMwIkzIeYdjyRyp7JgGxnTYxnmVHUdJdxX144jg==
@@ -1679,6 +1679,17 @@
     "@types/react" ">=17.0.0 <18.0.0"
     "@types/react-reconciler" "^0.26.0"
     react-reconciler ">=0.26.0 <0.27.0"
+
+"@remote-ui/react@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@remote-ui/react/-/react-5.0.2.tgz#449a935d53eb38265708f691bc9d57674d02be4b"
+  integrity sha512-v1C6QekhR6NrpzHA1dGMPun47N0TBb6VRq+yjIN5b6Z7i7wApf5+ifKc5gYouv4ENfoKPhatXAsOoYblG5iRpw==
+  dependencies:
+    "@remote-ui/async-subscription" "^2.1.14"
+    "@remote-ui/core" "^2.2.2"
+    "@remote-ui/rpc" "^1.4.3"
+    "@types/react" ">=17.0.0 <19.0.0"
+    "@types/react-reconciler" ">=0.26.0 <0.30.0"
 
 "@remote-ui/rpc@^1.3.6", "@remote-ui/rpc@^1.4.3":
   version "1.4.3"
@@ -1977,6 +1988,15 @@
     postcss-media-query-parser "^0.2.3"
     postcss-value-parser "^4.2.0"
 
+"@shopify/ui-extensions-react@2023.10.x":
+  version "2023.10.0"
+  resolved "https://registry.yarnpkg.com/@shopify/ui-extensions-react/-/ui-extensions-react-2023.10.0.tgz#f143846decaf4d6f613e2839e537349265e4e6be"
+  integrity sha512-/i+PyQ0r5XRQZ0buLzvscz5Pn6qGqriyn8deJiXyfZq9WcBuMqS2HwUea3jqAdncv2Ih2F3fstiJ8bhS84R3Kw==
+  dependencies:
+    "@remote-ui/async-subscription" "^2.1.12"
+    "@remote-ui/react" "^5.0.2"
+    "@types/react" ">=18.0.0"
+
 "@shopify/ui-extensions-react@2023.7.x":
   version "2023.7.0"
   resolved "https://registry.npmjs.org/@shopify/ui-extensions-react/-/ui-extensions-react-2023.7.0.tgz"
@@ -1985,6 +2005,14 @@
     "@remote-ui/async-subscription" "^2.1.12"
     "@remote-ui/react" "4.5.x"
     "@types/react" ">=17.0.0 <18.0.0"
+
+"@shopify/ui-extensions@2023.10.x":
+  version "2023.10.0"
+  resolved "https://registry.yarnpkg.com/@shopify/ui-extensions/-/ui-extensions-2023.10.0.tgz#4b277d9a6a0f9ad5fb6ad890bd7bac3c2d29994f"
+  integrity sha512-DG76b60VPcJdOEPsfGVYCi02U2AYEhgnnosfvUPVf22r/LPTJnzM/UlMy5cfXcerM8VjonctC7jGS1BYJLDUlQ==
+  dependencies:
+    "@remote-ui/async-subscription" "^2.1.12"
+    "@remote-ui/core" "^2.2.3"
 
 "@shopify/ui-extensions@2023.7.x":
   version "2023.7.0"
@@ -2191,6 +2219,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-reconciler@>=0.26.0 <0.30.0":
+  version "0.28.8"
+  resolved "https://registry.yarnpkg.com/@types/react-reconciler/-/react-reconciler-0.28.8.tgz#e51710572bcccf214306833c2438575d310b3e98"
+  integrity sha512-SN9c4kxXZonFhbX4hJrZy37yw9e7EIxcpHCxQv5JUS18wDE5ovkQKlqQEkufdJCCMfuI9BnjUJvhYeJ9x5Ra7g==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-reconciler@^0.26.0":
   version "0.26.7"
   resolved "https://registry.npmjs.org/@types/react-reconciler/-/react-reconciler-0.26.7.tgz"
@@ -2214,10 +2249,19 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@>=17.0.0 <18.0.0", "@types/react@^17.0.0":
+"@types/react@>=17.0.0 <18.0.0":
   version "17.0.64"
   resolved "https://registry.npmjs.org/@types/react/-/react-17.0.64.tgz"
   integrity sha512-IlgbX/vglDTwrCRgad6fTCzOT+D/5C0xwuvrzfuqfhg9gJrkFqAGADpUFlEtqbrP1IEo9QLSbo41MaFfoIu9Aw==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@>=17.0.0 <19.0.0", "@types/react@>=18.0.0", "@types/react@^18.0.0":
+  version "18.2.38"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.38.tgz#3605ca41d3daff2c434e0b98d79a2469d4c2dd52"
+  integrity sha512-cBBXHzuPtQK6wNthuVMV6IjHAFkdl/FOPFIlkd81/Cd1+IqkHu/A+w4g43kaQQoYHik/ruaQBDL72HyCy1vuMw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -6566,6 +6610,14 @@ react-query@^3.39.3:
     broadcast-channel "^3.4.1"
     match-sorter "^6.0.2"
 
+react-reconciler@0.29.0, react-reconciler@^0.29.0:
+  version "0.29.0"
+  resolved "https://registry.npmjs.org/react-reconciler/-/react-reconciler-0.29.0.tgz"
+  integrity sha512-wa0fGj7Zht1EYMRhKWwoo1H9GApxYLBuhoAuXN0TlltESAjDssB+Apf0T/DngVqaMyPypDmabL37vw/2aRM98Q==
+  dependencies:
+    loose-envify "^1.1.0"
+    scheduler "^0.23.0"
+
 "react-reconciler@>=0.26.0 <0.27.0":
   version "0.26.2"
   resolved "https://registry.npmjs.org/react-reconciler/-/react-reconciler-0.26.2.tgz"
@@ -6574,14 +6626,6 @@ react-query@^3.39.3:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     scheduler "^0.20.2"
-
-react-reconciler@^0.29.0:
-  version "0.29.0"
-  resolved "https://registry.npmjs.org/react-reconciler/-/react-reconciler-0.29.0.tgz"
-  integrity sha512-wa0fGj7Zht1EYMRhKWwoo1H9GApxYLBuhoAuXN0TlltESAjDssB+Apf0T/DngVqaMyPypDmabL37vw/2aRM98Q==
-  dependencies:
-    loose-envify "^1.1.0"
-    scheduler "^0.23.0"
 
 react-refresh@^0.14.0:
   version "0.14.0"
@@ -6613,20 +6657,12 @@ react-transition-group@^4.4.2:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@18.2.0, react@^18.2.0:
+react@18.2.0, react@^18.0.0, react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
   dependencies:
     loose-envify "^1.1.0"
-
-react@^17.0.0, react@^17.0.2:
-  version "17.0.2"
-  resolved "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
-  integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
 
 read-cmd-shim@^4.0.0:
   version "4.0.0"

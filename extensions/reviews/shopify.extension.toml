@@ -43,23 +43,50 @@ api_access = true
 # your extension. Learn more:
 # https://shopify.dev/docs/api/checkout-ui-extensions/unstable/configuration#settings-definition
 
-# [extensions.settings]
+[extensions.settings]
 [[extensions.settings.fields]]
     key = "title"
     type = "single_line_text_field"
-    name = "Title"
+    name = "Review 1 title"
 
 [[extensions.settings.fields]]
     key = "number"
     type = "single_line_text_field"
-    name = "Review Number"
+    name = "Review 1 Number"
 
 [[extensions.settings.fields]]
     key = "content"
     type = "multi_line_text_field"
-    name = "Review Content"
+    name = "Review 1 Content"
 
 [[extensions.settings.fields]]
     key = "author"
     type = "single_line_text_field"
-    name = "Review Author"
+    name = "Review 1 Author"
+
+[[extensions.settings.fields]]
+    key = "show_review2"
+    type = "boolean"
+    name = "Show Review2"
+
+
+[[extensions.settings.fields]]
+    key = "title2"
+    type = "single_line_text_field"
+    name = "Review 2 title"
+
+[[extensions.settings.fields]]
+    key = "number2"
+    type = "single_line_text_field"
+    name = "Review 2 Number"
+
+[[extensions.settings.fields]]
+    key = "content2"
+    type = "multi_line_text_field"
+    name = "Review 2 Content"
+
+[[extensions.settings.fields]]
+    key = "author2"
+    type = "single_line_text_field"
+    name = "Review 2 Author"
+

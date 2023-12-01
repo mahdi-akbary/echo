@@ -47,7 +47,9 @@ export default function Pricing () {
     "Quantity Modifier",
     "Free Gift with Purchase",
     "Customer Survey in Checkout",
-    "Customer Feedback on Thank You Page"
+    "Customer Feedback on Thank You Page",
+    "Customer Reviews",
+    "Payment icons",
   ]
 
   const loadingMarkup = (

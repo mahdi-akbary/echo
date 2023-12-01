@@ -28,7 +28,7 @@ export const BILLING_PLANS = [
         interval: BillingInterval.Every30Days,
         description: "For growing businesses",
         features: [
-            "Up to 2000 orders per month",
+            "Up to 5000 orders per month",
             "All features",
             "Fast email support"
         ],

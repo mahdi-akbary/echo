@@ -4,6 +4,7 @@ export { NavigationTabs } from "./navigationTabs";
 export { CountChart } from "./countChart"
 export { ProductGiftList } from "./productGiftList"
 export { FreeGift } from "./freeGift"
+export { Functions } from "./functions"
 export { SearchGiftProductModal } from "./searchGiftProductModal"
 export { ColorPickerInput } from "./colorPickerInput"
 export { SurveyCountChart } from "./surveyCountChart"

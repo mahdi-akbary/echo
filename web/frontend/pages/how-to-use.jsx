@@ -141,7 +141,7 @@ export default function HowToUse() {
                             <iframe 
                             src={videoList[activeVideo].link}
                             frameBorder="0" 
-                            webkitallowfullscreen mozallowfullscreen allowfullscreen 
+                            webkitallowfullscreen mozallowfullscreen allowFullScreen 
                             style={
                               {
                                 position: 'absolute',

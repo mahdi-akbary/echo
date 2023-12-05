@@ -1,10 +1,10 @@
 import {
     HomeMajor,
     PaintBrushMajor,
-    GiftCardMajor,
     BillingStatementDollarMajor,
     PlayCircleMajor,
     EmailNewsletterMajor,
+    CodeMajor
   } from '@shopify/polaris-icons';
 
 export const navStructure = [
@@ -14,14 +14,14 @@ export const navStructure = [
         icon: HomeMajor
     },
     {
+        label: "Functions",
+        destination: "/functions",
+        icon: CodeMajor
+    },
+    {
         label: "Branding",
         destination: "/branding",
         icon: PaintBrushMajor
-    },
-    {
-        label: "Free gifts",
-        destination: "/free-gifts",
-        icon: GiftCardMajor
     },
     {
         label: "Pricing",

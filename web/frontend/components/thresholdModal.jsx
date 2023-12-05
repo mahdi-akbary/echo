@@ -22,7 +22,7 @@ export function ThresholdModal({ isOpen, handleClose, discount, refetch }) {
     if (response.ok) {
       refetch();
       setLoading(false);
-      handleClose(false);
+      handleClose();
     } else {
       setLoading(false);
     }
@@ -31,7 +31,7 @@ export function ThresholdModal({ isOpen, handleClose, discount, refetch }) {
   return (
     <Modal
       open={isOpen}
-      onClose={() => handleClose(false)}
+      onClose={() => handleClose()}
       title="Set Threshold"
       primaryAction={{
         content: "Save",
@@ -42,7 +42,7 @@ export function ThresholdModal({ isOpen, handleClose, discount, refetch }) {
       secondaryActions={[
         {
           content: "Close",
-          onAction: () => handleClose(false),
+          onAction: () => handleClose(),
         },
       ]}
     >

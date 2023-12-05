@@ -11,6 +11,8 @@ import {
   Modal,
 } from '@shopify/polaris';
 import { useState } from 'react';
+import { AddFunctionModal } from './index';
+
 
 export function Functions () {
   const [functions, setFunctions] = useState(DATA)
@@ -51,7 +53,7 @@ export function Functions () {
   const tableHeadingMarkup = functions.length &&
     <Box paddingBlockStart="200" paddingBlockEnd="200" paddingInlineStart="300" paddingInlineEnd="300">
       <InlineStack align='space-between' blockAlign='center'>
-        <Text variant="headingMd" >List of functions</Text>
+        <Text variant="headingMd" tone='subdued'>Function List</Text>
         <Box width='30%'>
           <InlineStack align='end'>
             <Button variant='primary' onClick={() => setOpenAddModal(true)}>Add</Button>
@@ -82,29 +84,7 @@ export function Functions () {
         </IndexTable>
       </BlockStack>
 
-      <Modal
-        open={openAddModal}
-        onClose={() => setOpenAddModal(false)}
-        title="Create function"
-        primaryAction={{
-          content: 'Save',
-          onAction: () => { },
-        }}
-        secondaryActions={[
-          {
-            content: 'Cancel',
-            onAction: () => setOpenAddModal(false),
-          },
-        ]}
-      >
-        <Modal.Section>
-          <Text>
-            Use Instagram posts to share your products with millions of
-            people. Let shoppers buy from your store without leaving
-            Instagram.
-          </Text>
-        </Modal.Section>
-      </Modal>
+     <AddFunctionModal open={openAddModal} handleClose={() => setOpenAddModal(false)} />
 
     </Card>
   );

@@ -13,6 +13,7 @@ import brandingApiEndPoints from "./api/branding.api.js"
 import surveyApiEndPoints from "./api/survey.api.js"
 import feedbackApiEndPoints from "./api/feedback.api.js"
 import cors from 'cors'
+import functionApiEndPoints from "./api/function.api.js"
 
 const PORT = parseInt(
   process.env.BACKEND_PORT || process.env.PORT || "3000",
@@ -55,6 +56,7 @@ cartItemApiEndPoints(app)
 surveyApiEndPoints(app)
 feedbackApiEndPoints(app)
 productApiEndPoints(app, shopify)
+functionApiEndPoints(app, shopify)
 brandingApiEndPoints(app, shopify)
 billingApiEndPoints(app, shopify)
 

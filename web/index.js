@@ -69,7 +69,7 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
   return res
     .status(200)
     .set("Content-Type", "text/html")
-    .send(readFileSync('./frontend/dist/index.html'))
+    .send(readFileSync(join(__dirname, 'frontend', 'dist', "index.html")))
 })
 
 

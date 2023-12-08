@@ -14,21 +14,20 @@ import surveyApiEndPoints from "./api/survey.api.js"
 import feedbackApiEndPoints from "./api/feedback.api.js"
 import cors from 'cors'
 import functionApiEndPoints from "./api/function.api.js"
+import path from 'path'
 
 const PORT = parseInt(
   process.env.BACKEND_PORT || process.env.PORT || "3000",
   10
 )
 
-console.log('watch here: ', process.cwd());
 
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
-    ? `/vercel/path0/web/frontend/dist`
-    : `/vercel/path0/web/frontend/`
+    ? `${process.cwd()}/frontend/dist`
+    : `${process.cwd()}/frontend/`
 
-
-export const app = express()
+const app = express()
 app.use(cors())
 bodyParserPrewiring(app, express)
 
@@ -63,13 +62,13 @@ brandingApiEndPoints(app, shopify)
 billingApiEndPoints(app, shopify)
 
 app.use(shopify.cspHeaders())
-// app.use(serveStatic(STATIC_PATH, { index: false }))
+app.use(serveStatic(STATIC_PATH, { index: false }))
 
 app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
   return res
     .status(200)
     .set("Content-Type", "text/html")
-    .send(readFileSync(join(__dirname, 'frontend', 'dist', "index.html")))
+    .send(readFileSync(path.resolve("./frontend/dist/index.html")))
 })
 
 

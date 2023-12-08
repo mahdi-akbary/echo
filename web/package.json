@@ -11,7 +11,8 @@
     "supabase:link": "supabase link --project-ref $(grep SUPAbASE_PROJECT_REF .env | cut -d '=' -f2) -p $(grep SUPAbASE_PROJECT_DB_PASSWORD .env | cut -d '=' -f2)",
     "make:migration": "supabase migration new",
     "migrate": "supabase db push",
-    "db:reset": "supabase db reset --linked"
+    "db:reset": "supabase db reset --linked",
+    "vercel-build": "echo hello"
   },
   "type": "module",
   "engines": {

@@ -4,126 +4,19 @@ const DISCOUNT_NAME = "Checkout_Automatic_Gift_Discount"
 const DISCOUNT_TYPE = "DiscountAutomaticApp"
 
 export default function functionApiEndPoints(app, shopify) {
-    app.get("/api/functions", async (req, res) => {
-        const { session } = res.locals.shopify;
-        try {
-            const { data, error } = await supabase
-                .from('gift_products')
-                .select()
-                .eq('shop', session?.shop)
-            if (error) throw new Error(error.message)
-            res.status(200).send(data);
-        } catch (error) {
-            console.error(error)
-            res.status(500).send(error);
-        }
-    })
-    app.post("/api/products", async (req, res) => {
-        const {variants, discountAmount, discountId} = req.body;
-        const { session } = res.locals.shopify;
-        const client = new shopify.api.clients.Graphql({ session });
-        try {
-            const { error: deleteError } = await supabase
-                .from('gift_products')
-                .delete()
-                .eq('shop', session?.shop)
-            if (deleteError) throw new Error(deleteError.message)
 
-            const preparedData = variants.map(variant => ({
-                shop: session?.shop,
-                variant_id: variant?.id,
-                title: variant?.title,
-                display_name: variant?.displayName,
-                inventory_quantity: variant?.inventoryQuantity,
-                price: variant?.price,
-                image_url: variant?.image?.url || ''
-            }))
-            const { data, error } = await supabase
-                .from('gift_products')
-                .insert(preparedData)
-                .select()
-            if (error) throw new Error(error.message)
-
-            await setMetaFields(client, {
-                shop: session?.shop,
-                amount: discountAmount,
-                discountId: discountId
-            })
-            res.status(200).send(data);
-        } catch (error) {
-            console.error(error)
-            res.status(500).send({ message: error.message });
-        }
-    })
-    app.delete("/api/products/:id", async (req, res) => {
-        try {
-            const { data, error } = await supabase
-                .from('gift_products')
-                .delete()
-                .eq('id', req.params.id)
-            if (error) throw new Error(error.message)
-            res.status(200).send(data);
-        } catch (error) {
-            console.error(error)
-            res.status(500).send(error);
-        }
-    })
-    app.post("/api/products/search", async (req, res) => {
-        const { query } = req.body;
-        const { session } = res.locals.shopify;
-        try {
-            const client = new shopify.api.clients.Graphql({ session });
-            const { body: { data: { productVariants: { edges } } } } = await client.query({
-                data: `query {
-                        productVariants(first: 10, query:"${query}" ) {
-                        edges {
-                            node {
-                                id
-                                title
-                                displayName
-                                price
-                                inventoryQuantity
-                                image {
-                                    url
-                                }
-                                product {
-                                    id
-                                    status
-                                    featuredImage {
-                                        url
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }`,
-            });
-            res.status(200).send(edges);
-        } catch (error) {
-            console.error(error)
-            res.status(500).send(error);
-        }
-    })
-
-    app.get("/api/products/discounts", async (req, res) => {
-        const { session } = res.locals.shopify;
-        try {
-            const { data, error } = await supabase
-                .from('gift_discounts')
-                .select()
-                .eq('shop', session?.shop)
-            if (error) throw new Error(error.message)
-            res.status(200).send(data[0] || {});
-        } catch (error) {
-            console.error(error)
-            res.status(500).send(error);
-        }
-    })
-    app.post("/api/products/discounts", async (req, res) => {
+    app.post("/api/functions", async (req, res) => {
         const body = req.body;
         const { session } = res.locals.shopify;
 
         try {
+
+            /**  
+             * 1- check whether the function exist eg queryAutomaticDiscountAppGraphql()
+             * 2- if not > create the function with function extension ID
+             * 3- the funtion should be applied to all 
+            */
+
             const client = new shopify.api.clients.Graphql({ session });
             const { body: { data: { discountNodes: { edges } } } } =
                 await queryAutomaticDiscountAppGraphql(client)

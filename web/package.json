@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@shopify/shopify-app-express": "^2.1.1",
+    "@shopify/shopify-app-session-storage-postgresql": "^2.0.2",
     "@shopify/shopify-app-session-storage-sqlite": "^1.2.2",
     "@supabase/supabase-js": "^2.25.0",
     "compression": "^1.7.4",

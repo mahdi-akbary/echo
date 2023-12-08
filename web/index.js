@@ -24,7 +24,7 @@ console.log('watch here: ', process.cwd());
 
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
-    ? `${process.cwd()}/frontend/dist`
+    ? `/frontend/dist`
     : `${process.cwd()}/frontend/`
 
 

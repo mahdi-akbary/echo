@@ -5,7 +5,7 @@ import pgPromise from "pg-promise"
 
 const pgp = pgPromise({/* Initialization Options */ });
 // const DB = pgp('postgres://postgres:password@localhost:5433/test')
-const DB = pgp('postgres://default:oAqP7JpmdXc5@ep-jolly-voice-76934282.us-east-1.postgres.vercel-storage.com:5432/verceldb')
+const DB = pgp('postgres://default:oAqP7JpmdXc5@ep-jolly-voice-76934282.us-east-1.postgres.vercel-storage.com:5432/verceldb?ssl=true')
 
 export class PostgresSessionStorage {
     filename = ""

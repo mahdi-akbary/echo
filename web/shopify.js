@@ -27,8 +27,14 @@ const shopify = shopifyApp({
     path: "/api/webhooks",
   },
   // This should be replaced with your preferred storage strategy
-  sessionStorage: new PostgreSQLSessionStorage(
-    'postgres://default:oAqP7JpmdXc5@ep-jolly-voice-76934282.us-east-1.postgres.vercel-storage.com:5432/verceldb?sslmode=require',
+  sessionStorage: PostgreSQLSessionStorage.withCredentials(
+    'ep-jolly-voice-76934282.us-east-1.postgres.vercel-storage.com',
+    'verceldb',
+    'default',
+    'oAqP7JpmdXc5@',
+    { 
+      port: 5432
+    }
   ),
 });
 

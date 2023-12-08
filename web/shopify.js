@@ -28,7 +28,7 @@ const shopify = shopifyApp({
   },
   // This should be replaced with your preferred storage strategy
   sessionStorage: new PostgreSQLSessionStorage(
-    'postgres://default:oAqP7JpmdXc5@ep-jolly-voice-76934282.us-east-1.postgres.vercel-storage.com:5432/verceldb?ssl=no-verify',
+    'postgres://default:oAqP7JpmdXc5@ep-jolly-voice-76934282.us-east-1.postgres.vercel-storage.com:5432/verceldb?sslmode=require',
   ),
 });
 

@@ -4,8 +4,8 @@ import { Session } from '@shopify/shopify-api';
 import pgPromise from "pg-promise"
 
 const pgp = pgPromise({/* Initialization Options */ });
-// const DB = pgp('postgres://postgres:password@localhost:5433/test')
-const DB = pgp('postgres://default:oAqP7JpmdXc5@ep-jolly-voice-76934282.us-east-1.postgres.vercel-storage.com:5432/verceldb?ssl=true')
+const DB = pgp('postgres://postgres:password@localhost:5433/test')
+// const DB = pgp('postgres://default:oAqP7JpmdXc5@ep-jolly-voice-76934282.us-east-1.postgres.vercel-storage.com:5432/verceldb?ssl=true')
 
 export class PostgresSessionStorage {
     filename = ""
@@ -15,32 +15,9 @@ export class PostgresSessionStorage {
 
     async storeSession (session) {
         try {
-
-
-
-                console.log('---------------- adding session --------------', session)
-                // await DB.none(`
-                //     INSERT INTO shopify_sessions(
-                //         shop, 
-                //         state, 
-                //         is_online,
-                //         expires,
-                //         scope,
-                //         access_token,
-                //         online_access_info
-                //     ) VALUES(
-                //         ${session.shop},
-                //         ${session.state},
-                //         ${session.isOnline},
-                //         ${11},
-                //         ${session.scope},
-                //         ${session.accessToken},
-                //         ${'someting'}
-                // `);
-                
-
-                await DB.none('INSERT INTO shopify_sessions(shop, state, is_online, scope, access_token) VALUES( ${shop}, ${state}, ${isOnline}, ${scope}, ${accessToken})', session);
-
+            console.log('---------------- adding session --------------', session)
+            await DB.none('INSERT INTO shopify_sessions(id, shop, state, is_online, scope, access_token) VALUES(${id}, ${shop}, ${state}, ${isOnline}, ${scope}, ${accessToken})', session);
+            return true;
 
         } catch (err) {
             // error on read
@@ -51,20 +28,35 @@ export class PostgresSessionStorage {
 
     async loadSession (id) {
         try {
-            const lines = this.readLines();
+            console.log('************* load session ***************')
+            // const lines = this.readLines();
+            const session = await DB.one('SELECT * FROM shopify_sessions WHERE id = $1', id)
 
-            // process each line
-            for (const line of lines) {
-                // split the line by comma into columns
-                const columns = line.split(',');
-                // check if the id column matches (second column is value of 'id')
-                if (columns[1] === id) {
-                    // if the session id already exists, convert to session and return
-                    return Session.fromPropertyArray(
-                        this.columnsToPropertyArray(columns),
-                    );
+            if (session) {
+                console.log('session exist', session)
+
+                return {
+                    id: session.id,
+                    shop: session.shop,
+                    state: session.state,
+                    isOnline: session.is_online,
+                    scope: session.scope,
+                    accessToken: session.access_token,
+                    isActive: (scope) => true
                 }
             }
+            // // process each line
+            // for (const line of lines) {
+            //     // split the line by comma into columns
+            //     const columns = line.split(',');
+            //     // check if the id column matches (second column is value of 'id')
+            //     if (columns[1] === id) {
+            //         // if the session id already exists, convert to session and return
+            //         return Session.fromPropertyArray(
+            //             this.columnsToPropertyArray(columns),
+            //         );
+            //     }
+            // }
 
             return undefined;
         } catch (err) {
@@ -132,24 +124,25 @@ export class PostgresSessionStorage {
 
     async findSessionsByShop (shop) {
         try {
-            const lines = this.readLines();
+            console.log('************* find session ***************')
+            // const lines = this.readLines();
 
-            const sessions = [];
+            // const sessions = [];
 
-            // process each line
-            for (const line of lines) {
-                // split the line by comma into columns
-                const columns = line.split(',');
-                // check if the shop column matches (fourth column is value of 'shop')
-                if (columns[3] === shop) {
-                    // if the shop matches, convert to session and add to array
-                    sessions.push(
-                        Session.fromPropertyArray(this.columnsToPropertyArray(columns)),
-                    );
-                }
-            }
+            // // process each line
+            // for (const line of lines) {
+            //     // split the line by comma into columns
+            //     const columns = line.split(',');
+            //     // check if the shop column matches (fourth column is value of 'shop')
+            //     if (columns[3] === shop) {
+            //         // if the shop matches, convert to session and add to array
+            //         sessions.push(
+            //             Session.fromPropertyArray(this.columnsToPropertyArray(columns)),
+            //         );
+            //     }
+            // }
 
-            return sessions;
+            // return sessions;
         } catch (err) {
             // error on read
             return [];
@@ -157,13 +150,8 @@ export class PostgresSessionStorage {
     }
 
     init () {
-        // if (!fs.existsSync(this.filename)) {
-        //     fs.writeFileSync(this.filename, '');
-        // }
-
-
         const createSessionTableIfExistsSQL = `CREATE TABLE IF NOT EXISTS shopify_sessions (
-            id serial PRIMARY KEY,
+            id VARCHAR ( 255 ) PRIMARY KEY,
             shop VARCHAR ( 255 ) NOT NULL,
             state VARCHAR ( 255 ) NOT NULL,
             is_online BOOLEAN NOT NULL,

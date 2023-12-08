@@ -20,13 +20,13 @@ const PORT = parseInt(
   10
 )
 
+console.log('watch here: ', process.cwd());
 
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
     ? `${process.cwd()}/frontend/dist`
     : `${process.cwd()}/frontend/`
 
-console.log('watch here: ', process.cwd());
 
 export const app = express()
 app.use(cors())

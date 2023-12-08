@@ -63,13 +63,13 @@ brandingApiEndPoints(app, shopify)
 billingApiEndPoints(app, shopify)
 
 app.use(shopify.cspHeaders())
-app.use(serveStatic(STATIC_PATH, { index: false }))
+// app.use(serveStatic(STATIC_PATH, { index: false }))
 
 app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
   return res
     .status(200)
     .set("Content-Type", "text/html")
-    .send(readFileSync(join(STATIC_PATH, "index.html")))
+    .send(readFileSync('./frontend/dist/index.html'))
 })
 
 

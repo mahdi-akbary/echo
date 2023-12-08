@@ -5,7 +5,6 @@ import pgPromise from "pg-promise"
 
 const pgp = pgPromise({/* Initialization Options */ });
 // const DB = pgp('postgres://postgres:password@localhost:5433/test')
-let text = "test";
 
 const DB = pgp('postgres://default:LE5ZmGaIr0dy@ep-weathered-thunder-87172359.us-east-1.postgres.vercel-storage.com:5432/verceldb?ssl=true')
 

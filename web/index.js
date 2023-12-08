@@ -24,8 +24,8 @@ console.log('watch here: ', process.cwd());
 
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
-    ? `file:///var/task/web/frontend/dist`
-    : `file:///var/task/web//frontend/`
+    ? `/var/task/web/frontend/dist`
+    : `/var/task/web/frontend/`
 
 
 export const app = express()

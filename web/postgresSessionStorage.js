@@ -67,103 +67,63 @@ export class PostgresSessionStorage {
         }
     }
 
-    async deleteSession (id) {
+    async deleteSession(id) {
         try {
-            const lines = this.readLines();
-
-            // process each line
-            for (let i = 0; i < lines.length; i++) {
-                // split the line by comma into columns
-                const columns = lines[i].split(',');
-                // check if the id column matches (second column is value of 'id')
-                if (columns[1] === id) {
-                    // if the session id matches, remove the line
-                    lines.splice(i, 1);
-                    break;
-                }
-            }
-
-            try {
-                this.writeLines(lines);
-                return true;
-            } catch (err) {
-                // error on write
-                return false;
-            }
+            await DB.none('DELETE FROM shopify_sessions WHERE id = $1', id);
+            return true;
         } catch (err) {
-            // error on read
+            console.error(err);
             return false;
         }
     }
 
-    async deleteSessions (ids) {
+    async deleteSessions(ids) {
         try {
-            const lines = this.readLines();
-
-            // process each line
-            for (let i = 0; i < lines.length; i++) {
-                // split the line by comma into columns
-                const columns = lines[i].split(',');
-                // check if the id column matches (second column is value of 'id')
-                if (ids.includes(columns[1])) {
-                    // if the session id already exists, remove the line
-                    lines.splice(i, 1);
-                }
-            }
-
-            try {
-                this.writeLines(lines);
-                return true;
-            } catch (err) {
-                // error on write
-                return false;
-            }
+            await DB.tx(t => {
+                const queries = ids.map(id => {
+                    return t.none('DELETE FROM shopify_sessions WHERE id = $1', id);
+                });
+                return t.batch(queries);
+            });
+            return true;
         } catch (err) {
-            // error on read
+            console.error(err);
             return false;
         }
     }
 
-    async findSessionsByShop (shop) {
+    async findSessionsByShop(shop) {
         try {
-            console.log('************* find session ***************')
-            // const lines = this.readLines();
-
-            // const sessions = [];
-
-            // // process each line
-            // for (const line of lines) {
-            //     // split the line by comma into columns
-            //     const columns = line.split(',');
-            //     // check if the shop column matches (fourth column is value of 'shop')
-            //     if (columns[3] === shop) {
-            //         // if the shop matches, convert to session and add to array
-            //         sessions.push(
-            //             Session.fromPropertyArray(this.columnsToPropertyArray(columns)),
-            //         );
-            //     }
-            // }
-
-            // return sessions;
+            const sessions = await DB.any('SELECT * FROM shopify_sessions WHERE shop = $1', shop);
+            // Map the database rows to session objects
+            return sessions.map(session => ({
+                id: session.id,
+                shop: session.shop,
+                state: session.state,
+                isOnline: session.is_online,
+                scope: session.scope,
+                accessToken: session.access_token,
+                isActive: () => true // Implement logic to determine if the session is active
+            }));
         } catch (err) {
-            // error on read
+            console.error(err);
             return [];
         }
     }
 
-    init () {
-        const createSessionTableIfExistsSQL = `CREATE TABLE IF NOT EXISTS shopify_sessions (
-            id VARCHAR ( 255 ) PRIMARY KEY,
-            shop VARCHAR ( 255 ) NOT NULL,
-            state VARCHAR ( 255 ) NOT NULL,
-            is_online BOOLEAN NOT NULL,
-            expires INT ,
-            scope VARCHAR ( 255 ) NOT NULL,
-            access_token VARCHAR ( 255 ) NOT NULL,
-            online_access_info VARCHAR ( 255 )
-        );`
-        DB.any(createSessionTableIfExistsSQL)
-
+    async init() {
+        const createSessionTableIfExistsSQL = `
+            CREATE TABLE IF NOT EXISTS shopify_sessions (
+                id VARCHAR(255) PRIMARY KEY,
+                shop VARCHAR(255) NOT NULL,
+                state VARCHAR(255) NOT NULL,
+                is_online BOOLEAN NOT NULL,
+                scope VARCHAR(255) NOT NULL,
+                access_token VARCHAR(255) NOT NULL
+            );
+        `;
+        // Await the creation of the table
+        await DB.any(createSessionTableIfExistsSQL);
     }
 
     readLines () {

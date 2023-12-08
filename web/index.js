@@ -24,8 +24,8 @@ console.log('watch here: ', process.cwd());
 
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
-    ? `/web/frontend/dist`
-    : `/web/frontend/`
+    ? `/vercel/path0/web/frontend/dist`
+    : `/vercel/path0/web/frontend/`
 
 
 export const app = express()

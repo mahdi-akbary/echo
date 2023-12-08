@@ -26,6 +26,8 @@ const STATIC_PATH =
     ? `${process.cwd()}/frontend/dist`
     : `${process.cwd()}/frontend/`
 
+console.log('watch here: ', process.cwd());
+
 export const app = express()
 app.use(cors())
 bodyParserPrewiring(app, express)

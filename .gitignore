@@ -22,7 +22,7 @@ yarn.lock
 config/tunnel.pid
 
 # vite build output
-
+dist/
 
 # extensions build output
 extensions/*/build

@@ -11,7 +11,27 @@ import { PostgresSessionStorage } from "./postgresSessionStorage.js";
 // The transactions with Shopify will always be marked as test transactions, unless NODE_ENV is production.
 // See the ensureBilling helper to learn more about billing in this template.
 
-console.log('LATEST_API_VERSION', ApiVersion);
+import { readdir, stat } from 'fs/promises';
+import { join } from 'path';
+
+async function logDirectoryStructure(dir, prefix = '') {
+  const files = await readdir(dir);
+
+  for (const file of files) {
+    const filePath = join(dir, file);
+    const stats = await stat(filePath);
+
+    console.log(prefix + file);
+
+    // If the file is a directory, recurse into it
+    if (stats.isDirectory()) {
+      await logDirectoryStructure(filePath, prefix + '  ');
+    }
+  }
+}
+
+// Start logging from the current directory or specify another starting point
+logDirectoryStructure(process.cwd()).catch(console.error);
 
 const shopify = shopifyApp({
   api: {

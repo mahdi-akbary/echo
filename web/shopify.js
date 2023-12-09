@@ -38,6 +38,7 @@ async function logDirectoryStructure(dir, prefix = '') {
 // Use __dirname to reference the directory where the current file is located
 logDirectoryStructure(__dirname).catch(console.error);
 
+
 const shopify = shopifyApp({
   api: {
     apiVersion: '2023-10',

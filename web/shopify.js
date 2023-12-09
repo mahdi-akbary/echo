@@ -11,8 +11,6 @@ import { PostgresSessionStorage } from "./postgresSessionStorage.js";
 // The transactions with Shopify will always be marked as test transactions, unless NODE_ENV is production.
 // See the ensureBilling helper to learn more about billing in this template.
 
-console.log('LATEST_API_VERSION', ApiVersion);
-
 const shopify = shopifyApp({
   api: {
     apiVersion: '2023-10',

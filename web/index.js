@@ -20,12 +20,21 @@ const PORT = parseInt(
   10
 )
 
+<<<<<<< HEAD
 console.log('watch here: ', process.cwd());
+=======
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+>>>>>>> 8ccd438d58a0d7a710d8d81b9706520ecb468a67
 
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
-    ? `${process.cwd()}/frontend/dist`
-    : `${process.cwd()}/frontend/`
+    ? join(__dirname, 'frontend', 'dist')
+    : join(__dirname, 'frontend');
+
 
 
 export const app = express()
